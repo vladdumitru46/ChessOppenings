@@ -2,31 +2,21 @@ package com.example.models;
 
 import java.io.Serializable;
 
-public abstract class Pieces implements Serializable {
-    private boolean killed = false;
-    private boolean white = false;
+public interface Pieces extends Serializable {
 
-    public Pieces(boolean white) {
-        this.white = white;
-    }
+    boolean isKilled();
 
-    public boolean isKilled() {
-        return killed;
-    }
+    void setKilled(boolean killed);
 
-    public void setKilled(boolean killed) {
-        this.killed = killed;
-    }
+    boolean isWhite();
 
-    public boolean isWhite() {
-        return white;
-    }
+    void setWhite(boolean white);
 
-    public void setWhite(boolean white) {
-        this.white = white;
-    }
-    public abstract boolean canMove(Board board,
-                                    CellOnTheBord start, CellOnTheBord end);
+    boolean canMove(Board board,
+                    CellOnTheBord start, CellOnTheBord end);
 
-    public abstract boolean checkIfPieceIsNotAttacked(Board board, CellOnTheBord start, CellOnTheBord end);
+    boolean checkIfPieceIsNotAttacked(Board board, CellOnTheBord start, CellOnTheBord end);
+
+    boolean canAttackTheKing(Board board,
+                             CellOnTheBord start, CellOnTheBord end, CellOnTheBord cell);
 }

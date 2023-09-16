@@ -1,10 +1,14 @@
 package com.example.models;
 
-import java.util.HashMap;
-import java.util.Map;
-
 public class Board {
 
-    private Map<CellOnTheBord, CellOnTheBord> cellOnTheBordMap;
+    private CellOnTheBord[][] cellOnTheBordMap;
 
+    public CellOnTheBord[][] getCellOnTheBordMap() {
+        return cellOnTheBordMap;
+    }
+
+    public void setCellOnTheBordMap(CellOnTheBord[][] cellOnTheBordMap) {
+        this.cellOnTheBordMap = cellOnTheBordMap;
+    }
 }
