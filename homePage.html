@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <style>
+        .chessboard-container {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .chessboard {
+            width: 400px;
+            height: 400px;
+            display: grid;
+            grid-template-columns: repeat(9, 1fr);
+            grid-template-rows: repeat(9, 1fr);
+            padding-right: 50px;
+        }
+
+        .chessboard div {
+            width: 100px;
+            height: 100px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 20px;
+        }
+
+        .letters {
+            display: flex;
+            size: 4px;
+            color: white;
+        }
+
+        .numbers {
+            display: grid;
+            size: 4px;
+            color: white;
+        }
+
+        .white {
+            background-color: #f0d9b5;
+        }
+
+        .black {
+            background-color: #b58863;
+            color: black;
+        }
+
+        body {
+            background-color: black;
+        }
+
+        .topnav {
+            overflow: hidden;
+            background-color: #333;
+            align-items: left;
+        }
+
+        .topnav a {
+            float: left;
+            color: #f2f2f2;
+            text-align: center;
+            padding: 14px 16px;
+            text-decoration: none;
+            font-size: 17px;
+        }
+
+        .topnav a:hover {
+            background-color: #ddd;
+            color: black;
+        }
+
+        .topnav a.active {
+            background-color: blue;
+            color: white;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="topnav">
+        <a class="active" href="homePage.html">Home</a>
+        <a href="learningPage.html">Learning</a>
+        <a href="#contact">Contact</a>
+        <a href="#about">About</a>
+      </div>
+    <div class="chessboard">
+        <!-- Row 1 -->
+        <div class="numbers">8</div>
+        <div div class="white" id="a1">♜</div>
+        <div class="black" id="a2">♞</div>
+        <div class="white" id="a3">♝</div>
+        <div class="black" id="a4">♛</div>
+        <div class="white" id="a5">♚</div>
+        <div class="black" id="a6">♝</div>
+        <div class="white" id="a7">♞</div>
+        <div class="black" id="a8">♜</div>
+
+        <!-- Row 2 -->
+        <div class="numbers">7 </div>
+        <div class="black" id="b1">♟</div>
+        <div class="white" id="b2">♟</div>
+        <div class="black" id="b3">♟</div>
+        <div class="white" id="b4">♟</div>
+        <div class="black" id="b5">♟</div>
+        <div class="white" id="b6">♟</div>
+        <div class="black" id="b7">♟</div>
+        <div class="white" id="b8">♟</div>
+
+        <!-- Row 3 -->
+        <div class="numbers">6</div>
+        <div class="white" id="c1"></div>
+        <div class="black" id="c2"></div>
+        <div class="white" id="c3"></div>
+        <div class="black" id="c4"></div>
+        <div class="white" id="c5"></div>
+        <div class="black" id="c6"></div>
+        <div class="white" id="c7"></div>
+        <div class="black" id="c8"></div>
+
+        <!-- Row 4 -->
+        <div class="numbers">5</div>
+        <div class="black" id="d1"></div>
+        <div class="white" id="d2"></div>
+        <div class="black" id="d3"></div>
+        <div class="white" id="d4"></div>
+        <div class="black" id="d5"></div>
+        <div class="white" id="d6"></div>
+        <div class="black" id="d7"></div>
+        <div class="white" id="d8"></div>
+
+        <!-- Row 5 -->
+        <div class="numbers">4</div>
+        <div class="white" id="e1"></div>
+        <div class="black" id="e2"></div>
+        <div class="white" id="e3"></div>
+        <div class="black" id="e4"></div>
+        <div class="white" id="e5"></div>
+        <div class="black" id="e6"></div>
+        <div class="white" id="e7"></div>
+        <div class="black" id="e8"></div>
+        <!-- Row 6 -->
+        <div class="numbers">3</div>
+        <div class="black" id="f1"></div>
+        <div class="white" id="f2"></div>
+        <div class="black" id="f3"></div>
+        <div class="white" id="f4"></div>
+        <div class="black" id="f5"></div>
+        <div class="white" id="f6"></div>
+        <div class="black" id="f7"></div>
+        <div class="white" id="f8"></div>
+        <!-- Row 7 -->
+        <div class="numbers">2</div>
+        <div class="white" id="g1">♙</div>
+        <div class="black" id="g2">♙</div>
+        <div class="white" id="g3">♙</div>
+        <div class="black" id="g4">♙</div>
+        <div class="white" id="g5">♙</div>
+        <div class="black" id="g6">♙</div>
+        <div class="white" id="g7">♙</div>
+        <div class="black" id="g8">♙</div>
+        <!-- Row 8 -->
+        <div class="numbers">1</div>
+        <div class="black" id="h1">♖</div>
+        <div class="white" id="h2">♘</div>
+        <div class="black" id="h3">♗</div>
+        <div class="white" id="h4">♕</div>
+        <div class="black" id="h5">♔</div>
+        <div class="white" id="h6">♗</div>
+        <div class="black" id="h7">♘</div>
+        <div class="white" id="h8">♖</div>
+
+        <div></div>
+        <div class="letters">a</div>
+        <div class="letters">b</div>
+        <div class="letters">c</div>
+        <div class="letters">d</div>
+        <div class="letters">e</div>
+        <div class="letters">f</div>
+        <div class="letters">g</div>
+        <div class="letters">h</div>
+    </div>
+
+</body>
+
+</html>
