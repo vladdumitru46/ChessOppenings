@@ -1,8 +1,9 @@
-package org.example.repositoryes;
+package org.example.repositoryes.repos;
 
-import com.example.models.Bishop;
-import com.example.models.Board;
-import com.example.models.CellOnTheBord;
+import com.example.models.board.Board;
+import com.example.models.board.CellOnTheBord;
+import com.example.models.pieces.Bishop;
+import org.example.repositoryes.interfaces.IRepository;
 
 public class BishopRepository implements IRepository<Bishop> {
     @Override

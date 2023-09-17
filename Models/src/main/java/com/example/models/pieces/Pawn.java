@@ -1,4 +1,7 @@
-package com.example.models;
+package com.example.models.pieces;
+
+import com.example.models.board.Board;
+import com.example.models.board.CellOnTheBord;
 
 public class Pawn extends Pieces {
     private boolean canEnPassant = false;

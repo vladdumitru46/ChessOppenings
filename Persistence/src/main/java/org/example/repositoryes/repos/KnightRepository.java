@@ -1,8 +1,9 @@
-package org.example.repositoryes;
+package org.example.repositoryes.repos;
 
-import com.example.models.Board;
-import com.example.models.CellOnTheBord;
-import com.example.models.King;
+import com.example.models.board.Board;
+import com.example.models.board.CellOnTheBord;
+import com.example.models.pieces.King;
+import org.example.repositoryes.interfaces.IRepository;
 
 public class KnightRepository implements IRepository<King> {
     @Override

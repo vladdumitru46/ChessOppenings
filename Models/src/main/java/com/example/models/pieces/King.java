@@ -1,4 +1,7 @@
-package com.example.models;
+package com.example.models.pieces;
+
+import com.example.models.board.Board;
+import com.example.models.board.CellOnTheBord;
 
 public class King extends Pieces {
 
@@ -7,7 +10,7 @@ public class King extends Pieces {
     public King(boolean white) {
         super(white);
     }
-    
+
     @Override
     public boolean canAttackTheKing(Board board, CellOnTheBord start, CellOnTheBord end, CellOnTheBord piece) {
         int lineCoordinate = Math.abs(end.getLineCoordinate() - piece.getLineCoordinate());

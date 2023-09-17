@@ -1,4 +1,6 @@
-package com.example.models;
+package com.example.models.board;
+
+import com.example.models.pieces.Pieces;
 
 public class CellOnTheBord {
 

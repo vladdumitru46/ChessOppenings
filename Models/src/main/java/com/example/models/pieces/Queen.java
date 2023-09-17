@@ -1,7 +1,10 @@
-package com.example.models;
+package com.example.models.pieces;
 
-public class Bishop extends Pieces {
-    public Bishop(boolean white) {
+import com.example.models.board.Board;
+import com.example.models.board.CellOnTheBord;
+
+public class Queen extends Pieces {
+    public Queen(boolean white) {
         super(white);
     }
 
@@ -25,6 +28,29 @@ public class Bishop extends Pieces {
         int currentColumn = startColumn + colIncrement;
 
         while (currentLine != endLine && currentColumn != endColumn) {
+            CellOnTheBord currentCell = board.getCellOnTheBordMap()[currentLine][currentColumn];
+            if (currentCell.getPieces() != null) {
+                return false;
+            }
+
+            currentLine += rowIncrement;
+            currentColumn += colIncrement;
+        }
+        if (start.getLineCoordinate() != piece.getLineCoordinate() && start.getColumnCoordinate() != piece.getColumnCoordinate()) {
+            return false;
+        }
+        startLine = start.getLineCoordinate();
+        startColumn = start.getColumnCoordinate();
+        endLine = piece.getLineCoordinate();
+        endColumn = piece.getColumnCoordinate();
+
+        rowIncrement = (endLine > startLine) ? 1 : (endLine < startLine) ? -1 : 0;
+        colIncrement = (endColumn > startColumn) ? 1 : (endColumn < startColumn) ? -1 : 0;
+
+        currentLine = startLine + rowIncrement;
+        currentColumn = startColumn + colIncrement;
+
+        while (currentLine != endLine || currentColumn != endColumn) {
             CellOnTheBord currentCell = board.getCellOnTheBordMap()[currentLine][currentColumn];
             if (currentCell.getPieces() != null) {
                 return false;

@@ -1,9 +1,10 @@
-package org.example.repositoryes;
+package org.example.repositoryes.repos;
 
-import com.example.models.Board;
-import com.example.models.CellOnTheBord;
-import com.example.models.King;
-import com.example.models.Pieces;
+import com.example.models.board.Board;
+import com.example.models.board.CellOnTheBord;
+import com.example.models.pieces.King;
+import com.example.models.pieces.Pieces;
+import org.example.repositoryes.interfaces.IKingRepository;
 
 public class KingRepository implements IKingRepository {
     @Override
