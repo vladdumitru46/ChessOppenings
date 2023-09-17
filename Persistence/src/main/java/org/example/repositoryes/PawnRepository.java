@@ -1,48 +1,16 @@
-package com.example.models;
+package org.example.repositoryes;
 
-public class Pawn implements Pieces {
-    private boolean canEnPassant = false;
-    private boolean killed = false;
-    private boolean white;
+import com.example.models.Board;
+import com.example.models.CellOnTheBord;
+import com.example.models.Pawn;
+import com.example.models.Pieces;
 
-    public Pawn(boolean white) {
-        this.white = white;
-    }
-
+public class PawnRepository implements IRepository<Pawn> {
     @Override
-    public boolean isKilled() {
-        return killed;
-    }
-
-    @Override
-    public void setKilled(boolean killed) {
-        this.killed = killed;
-    }
-
-    @Override
-    public boolean isWhite() {
-        return white;
-    }
-
-    @Override
-    public void setWhite(boolean white) {
-        this.white = white;
-    }
-
-    //TODO enPassant
-    public void setCanEnPassant(boolean canEnPassant) {
-        this.canEnPassant = canEnPassant;
-    }
-
-    public boolean isCanEnPassant() {
-        return canEnPassant;
-    }
-
-    @Override
-    public boolean canMove(Board board, CellOnTheBord start, CellOnTheBord end) {
+    public boolean canMove(Board board, CellOnTheBord start, CellOnTheBord end, Pawn pawn) {
         Pieces pieces = board.getCellOnTheBordMap()[end.getLineCoordinate()][end.getColumnCoordinate()].getPieces();
 
-        if (white) {
+        if (pawn.isWhite()) {
             if (start.getLineCoordinate() + 1 == end.getLineCoordinate() && pieces == null) {
                 return true;
             }
@@ -61,30 +29,32 @@ public class Pawn implements Pieces {
                 }
             }
         }
-        if (canAttackOtherPiece(board, start, end)) {
+        if (canAttackOtherPiece(board, start, end, pawn)) {
             return true;
         }
         return false;
     }
 
-    private boolean canAttackOtherPiece(Board board, CellOnTheBord start, CellOnTheBord end) {
+    private boolean canAttackOtherPiece(Board board, CellOnTheBord start, CellOnTheBord end, Pawn pawn) {
         for (int i = 0; i < board.getCellOnTheBordMap().length; i++) {
             for (int j = 0; j < board.getCellOnTheBordMap().length; j++) {
                 CellOnTheBord cell = board.getCellOnTheBordMap()[i][j];
                 Pieces piece = cell.getPieces();
-                if (whereCanThePawnAttack(start, end, cell, piece)) return true;
+                if (whereCanThePawnAttack(start, end, cell, piece, pawn)) return true;
             }
         }
         return false;
     }
 
-    private boolean whereCanThePawnAttack(CellOnTheBord start, CellOnTheBord end, CellOnTheBord cell, Pieces piece) {
-        if (piece != null && piece.isWhite() != this.isWhite()) {
+    private boolean whereCanThePawnAttack(CellOnTheBord start, CellOnTheBord end, CellOnTheBord cell, Pieces piece, Pawn pawn) {
+        if (piece != null && piece.isWhite() != pawn.isWhite()) {
             if (end.getLineCoordinate() == cell.getLineCoordinate() && end.getColumnCoordinate() == cell.getColumnCoordinate()) {
                 if (start.getColumnCoordinate() - 1 == cell.getColumnCoordinate() || start.getColumnCoordinate() + 1 == cell.getColumnCoordinate()) {
-                    if (white) {
+                    if (pawn.isWhite()) {
+                        piece.setKilled(true);
                         return start.getLineCoordinate() + 1 == cell.getLineCoordinate();
                     } else {
+                        piece.setKilled(true);
                         return start.getLineCoordinate() - 1 == cell.getLineCoordinate();
                     }
                 }
@@ -93,17 +63,5 @@ public class Pawn implements Pieces {
         return false;
     }
 
-    @Override
-    public boolean checkIfPieceIsNotAttacked(Board board, CellOnTheBord start, CellOnTheBord end) {
-        return false;
-    }
 
-    @Override
-    public boolean canAttackTheKing(Board board, CellOnTheBord start, CellOnTheBord end, CellOnTheBord cell) {
-        Pieces piece = cell.getPieces();
-        if (piece instanceof King) {
-            return whereCanThePawnAttack(start, end, cell, piece);
-        }
-        return false;
-    }
 }
