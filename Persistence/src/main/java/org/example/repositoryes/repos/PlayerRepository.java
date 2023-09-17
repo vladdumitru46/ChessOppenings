@@ -1,14 +1,14 @@
 package org.example.repositoryes.repos;
 
 import com.example.models.courses.Player;
-import org.example.repositoryes.interfaces.ICrudRepository;
+import org.example.repositoryes.interfaces.IRepoPlayer;
 import org.example.repositoryes.utils.Factory;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 
 import java.util.List;
 
-public class PlayerRepository implements ICrudRepository<Integer, Player> {
+public class PlayerRepository implements IRepoPlayer {
     @Override
     public Player add(Player entity) {
         try (Session session = Factory.getProperties()) {
@@ -100,6 +100,25 @@ public class PlayerRepository implements ICrudRepository<Integer, Player> {
                 if (transaction != null) {
                     transaction.rollback();
                     return null;
+                }
+            }
+        }
+        return null;
+    }
+
+    @Override
+    public Player findByEmailAndPassword(String email, String password) {
+        try (Session session = Factory.getProperties()) {
+            Transaction transaction = null;
+            try {
+                transaction = session.beginTransaction();
+                Player employee = session.createQuery("from Player where email = :email and password= :password", Player.class).
+                        setParameter("email", email).setParameter("password", password).setMaxResults(1).uniqueResult();
+                transaction.commit();
+                return employee;
+            } catch (RuntimeException e) {
+                if (transaction != null) {
+                    transaction.rollback();
                 }
             }
         }
