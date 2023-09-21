@@ -9,7 +9,7 @@
         </id>
         <property name="name" column="name" type="java.lang.String"/>
         <property name="description" column="description" type="java.lang.String"/>
-        <property name="board" column="board" type="java.lang.String"/>
+        <property name="getBoardId" column="board" type="java.lang.String"/>
         <property name="movesThatTheComputerWillPlay" column="moves_that_the_computer_will_play"
                   type="java.lang.String"/>
         <property name="movesThatThePlayerShouldPlay" column="moves_that_the_player_should_play"

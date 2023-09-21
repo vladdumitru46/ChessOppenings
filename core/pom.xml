@@ -9,15 +9,21 @@
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
     <groupId>com.example</groupId>
-    <artifactId>Models</artifactId>
+    <artifactId>Core</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <name>Models</name>
+    <name>Core</name>
 
     <properties>
         <java.version>15</java.version>
     </properties>
 
     <dependencies>
+        <dependency>
+            <groupId>com.example</groupId>
+            <artifactId>Models</artifactId>
+            <version>0.0.1-SNAPSHOT</version>
+
+        </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-data-jpa</artifactId>

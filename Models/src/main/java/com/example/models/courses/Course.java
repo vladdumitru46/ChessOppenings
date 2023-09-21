@@ -1,27 +1,74 @@
 package com.example.models.courses;
 
-import com.example.models.board.Board;
+import javax.persistence.Entity;
+import javax.persistence.*;
 
-public class Course extends Entity<Integer> {
+@Entity(name = "Course")
+@Table(name = "course")
+public class Course {
+    @Id
+    @SequenceGenerator(
+            name = "course_sequence",
+            sequenceName = "course_sequence",
+            allocationSize = 1
+    )
+    @GeneratedValue(
+            strategy = GenerationType.SEQUENCE,
+            generator = "course_sequence"
+    )
+    @Column(
+            name = "id",
+            updatable = false
+    )
+    private String id;
+    @Column(
+            name = "name",
+            nullable = false,
+            columnDefinition = "TEXT"
+    )
     private String name;
+    @Column(
+            name = "description",
+            nullable = false,
+            columnDefinition = "TEXT"
+    )
     private String description;
-    private Board board;
+    @Column(
+            name = "board_id",
+            nullable = false
+    )
+    private Integer boardId;
+    @Column(
+            name = "moves_that_the_computer_will_play",
+            nullable = false,
+            columnDefinition = "TEXT"
+    )
     private String movesThatTheComputerWillPlay;
+    @Column(
+            name = "moves_that_the_player_should_play",
+            nullable = false,
+            columnDefinition = "TEXT"
+    )
     private String movesThatThePlayerShouldPlay;
-    private Integer playerId;
-    private CourseStatus courseStatus;
 
-    public Course(String name, String description, Board board, String movesThatTheComputerWillPlay, String movesThatThePlayerShouldPlay, Integer playerId, CourseStatus courseStatus) {
+
+    public Course(String name, String description, Integer board, String movesThatTheComputerWillPlay, String movesThatThePlayerShouldPlay) {
         this.name = name;
         this.description = description;
-        this.board = board;
+        this.boardId = board;
         this.movesThatTheComputerWillPlay = movesThatTheComputerWillPlay;
         this.movesThatThePlayerShouldPlay = movesThatThePlayerShouldPlay;
-        this.playerId = playerId;
-        this.courseStatus = courseStatus;
     }
 
     public Course() {
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
     }
 
     public String getName() {
@@ -40,13 +87,13 @@ public class Course extends Entity<Integer> {
         this.description = description;
     }
 
-    public Board getBoard() {
-        return board;
+    public Integer getBoardId() {
+        return boardId;
     }
 
     //TODO setBoard
-    public void setBoard(Board board) {
-        this.board = board;
+    public void setBoardId(Integer boardId) {
+        this.boardId = boardId;
     }
 
     public String getMovesThatTheComputerWillPlay() {
@@ -65,19 +112,4 @@ public class Course extends Entity<Integer> {
         this.movesThatThePlayerShouldPlay = movesThatThePlayerShouldPlay;
     }
 
-    public Integer getPlayerId() {
-        return playerId;
-    }
-
-    public void setPlayerId(Integer playerId) {
-        this.playerId = playerId;
-    }
-
-    public CourseStatus getCourseStatus() {
-        return courseStatus;
-    }
-
-    public void setCourseStatus(CourseStatus courseStatus) {
-        this.courseStatus = courseStatus;
-    }
 }
