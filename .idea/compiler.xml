@@ -8,6 +8,7 @@
         <outputRelativeToContentRoot value="true" />
         <module name="Persistence" />
         <module name="Models" />
+        <module name="service" />
         <module name="Core" />
       </profile>
     </annotationProcessing>

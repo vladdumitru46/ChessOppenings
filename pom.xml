@@ -12,6 +12,7 @@
         <module>Models</module>
         <module>Persistence</module>
         <module>core</module>
+        <module>service</module>
     </modules>
     <dependencies>
         <dependency>
