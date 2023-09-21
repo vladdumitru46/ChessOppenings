@@ -3,12 +3,10 @@ package com.example.models.pieces;
 import com.example.models.board.Board;
 import com.example.models.board.CellOnTheBord;
 
-import java.io.Serial;
 import java.io.Serializable;
 
 public abstract class Pieces implements Serializable {
 
-    @Serial
     private static final long serialVersionUID = 7331115341259248461L;
 
     private boolean killed = false;

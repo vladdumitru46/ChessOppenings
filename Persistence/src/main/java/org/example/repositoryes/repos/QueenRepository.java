@@ -4,7 +4,9 @@ import com.example.models.board.Board;
 import com.example.models.board.CellOnTheBord;
 import com.example.models.pieces.Queen;
 import org.example.repositoryes.interfaces.IRepository;
+import org.springframework.stereotype.Repository;
 
+@Repository
 public class QueenRepository implements IRepository<Queen> {
     @Override
     public boolean canMove(Board board, CellOnTheBord start, CellOnTheBord end, Queen pieces) {

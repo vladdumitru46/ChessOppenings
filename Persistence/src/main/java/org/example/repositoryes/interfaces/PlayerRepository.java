@@ -9,12 +9,12 @@ import java.util.Optional;
 
 @Repository
 public interface PlayerRepository extends JpaRepository<Player, Integer> {
-    @Query("SELECT p FROM Player p WHERE p.email=? AND p.password=?")
+    @Query("SELECT p FROM Player p WHERE p.email=:email AND p.password=:password")
     Optional<Player> findByEmailAndPassword(String email, String password);
 
-    @Query("SELECT p FROM Player p WHERE p.email=?")
+    @Query("SELECT p FROM Player p WHERE p.email = ?1")
     Optional<Player> findByEmail(String email);
 
-    @Query("SELECT p FROM Player p WHERE p.userName=?")
+    @Query("SELECT p FROM Player p WHERE p.userName = ?1")
     Optional<Player> findByUserName(String userName);
 }

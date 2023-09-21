@@ -4,7 +4,10 @@ import com.example.models.board.Board;
 import com.example.models.board.CellOnTheBord;
 import com.example.models.pieces.Bishop;
 import org.example.repositoryes.interfaces.IRepository;
+import org.springframework.stereotype.Repository;
 
+//TODO loggers
+@Repository
 public class BishopRepository implements IRepository<Bishop> {
     @Override
     public boolean canMove(Board board, CellOnTheBord start, CellOnTheBord end, Bishop pieces) {

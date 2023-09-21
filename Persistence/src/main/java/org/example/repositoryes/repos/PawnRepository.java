@@ -5,7 +5,9 @@ import com.example.models.board.CellOnTheBord;
 import com.example.models.pieces.Pawn;
 import com.example.models.pieces.Pieces;
 import org.example.repositoryes.interfaces.IRepository;
+import org.springframework.stereotype.Repository;
 
+@Repository
 public class PawnRepository implements IRepository<Pawn> {
     @Override
     public boolean canMove(Board board, CellOnTheBord start, CellOnTheBord end, Pawn pawn) {

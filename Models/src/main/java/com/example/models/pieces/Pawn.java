@@ -21,17 +21,12 @@ public class Pawn extends Pieces {
 
     @Override
     public boolean canAttackTheKing(Board board, CellOnTheBord start, CellOnTheBord end, CellOnTheBord cell) {
-        Pieces piece = cell.getPieces();
-        if (piece instanceof King) {
-            if (piece != null && piece.isWhite() != this.isWhite()) {
-                if (end.getLineCoordinate() == cell.getLineCoordinate() && end.getColumnCoordinate() == cell.getColumnCoordinate()) {
-                    if (start.getColumnCoordinate() - 1 == cell.getColumnCoordinate() || start.getColumnCoordinate() + 1 == cell.getColumnCoordinate()) {
-                        if (this.isWhite()) {
-                            return start.getLineCoordinate() + 1 == cell.getLineCoordinate();
-                        } else {
-                            return start.getLineCoordinate() - 1 == cell.getLineCoordinate();
-                        }
-                    }
+        if (end.getLineCoordinate() == cell.getLineCoordinate() && end.getColumnCoordinate() == cell.getColumnCoordinate()) {
+            if (start.getColumnCoordinate() - 1 == cell.getColumnCoordinate() || start.getColumnCoordinate() + 1 == cell.getColumnCoordinate()) {
+                if (this.isWhite()) {
+                    return start.getLineCoordinate() + 1 == cell.getLineCoordinate();
+                } else {
+                    return start.getLineCoordinate() - 1 == cell.getLineCoordinate();
                 }
             }
             return false;

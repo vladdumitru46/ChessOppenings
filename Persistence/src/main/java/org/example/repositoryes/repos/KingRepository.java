@@ -5,7 +5,9 @@ import com.example.models.board.CellOnTheBord;
 import com.example.models.pieces.King;
 import com.example.models.pieces.Pieces;
 import org.example.repositoryes.interfaces.IKingRepository;
+import org.springframework.stereotype.Repository;
 
+@Repository
 public class KingRepository implements IKingRepository {
     @Override
     public boolean canMove(Board board, CellOnTheBord start, CellOnTheBord end, King king) {
