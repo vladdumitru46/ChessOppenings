@@ -1,10 +1,17 @@
 package com.example.models.courses;
 
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
 import javax.persistence.Entity;
 import javax.persistence.*;
 
 @Entity(name = "CourseStartedByPlayer")
 @Table(name = "course_started_by_player")
+@NoArgsConstructor
+@Getter
+@Setter
 public class CourseStartedByPlayer {
     @Id
     @SequenceGenerator(
@@ -31,11 +38,7 @@ public class CourseStartedByPlayer {
             nullable = false
     )
     private Integer courseId;
-    @Column(
-            name = "course_status",
-            nullable = false,
-            columnDefinition = "TEXT"
-    )
+    @Enumerated(EnumType.STRING)
     private CourseStatus courseStatus;
 
     public CourseStartedByPlayer(Integer playerId, Integer courseId, CourseStatus courseStatus) {
@@ -43,39 +46,5 @@ public class CourseStartedByPlayer {
         this.courseId = courseId;
         this.courseStatus = courseStatus;
     }
-
-    public CourseStartedByPlayer() {
-    }
-
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
-    }
-
-    public Integer getPlayerId() {
-        return playerId;
-    }
-
-    public void setPlayerId(Integer playerId) {
-        this.playerId = playerId;
-    }
-
-    public Integer getCourseId() {
-        return courseId;
-    }
-
-    public void setCourseId(Integer courseId) {
-        this.courseId = courseId;
-    }
-
-    public CourseStatus getCourseStatus() {
-        return courseStatus;
-    }
-
-    public void setCourseStatus(CourseStatus courseStatus) {
-        this.courseStatus = courseStatus;
-    }
+    
 }

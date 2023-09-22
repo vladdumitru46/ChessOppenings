@@ -4,14 +4,19 @@ import com.example.models.board.Board;
 import com.example.models.board.CellOnTheBord;
 import com.example.models.pieces.Rook;
 import org.example.repositoryes.interfaces.IRepository;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Repository;
 
 @Repository
 public class RookRepository implements IRepository<Rook> {
+    Logger logger = LoggerFactory.getLogger(QueenRepository.class);
+
     @Override
     public boolean canMove(Board board, CellOnTheBord start, CellOnTheBord end, Rook pieces) {
         if (end.getPieces().isWhite() != pieces.isWhite()) {
             if (start.getLineCoordinate() != end.getLineCoordinate() && start.getColumnCoordinate() != end.getColumnCoordinate()) {
+                logger.info("rook cannot move to this coordinates {}{}, because it's not a straight line", end.getLineCoordinate(), end.getColumnCoordinate());
                 return false;
             }
             int startLine = start.getLineCoordinate();
@@ -28,6 +33,7 @@ public class RookRepository implements IRepository<Rook> {
             while (currentLine != endLine || currentColumn != endColumn) {
                 CellOnTheBord currentCell = board.getCellOnTheBordMap()[currentLine][currentColumn];
                 if (currentCell.getPieces() != null) {
+                    logger.info("rook cannot move to this coordinates {}{}, because there is a piece blocking the way", end.getLineCoordinate(), end.getColumnCoordinate());
                     return false;
                 }
 
@@ -37,6 +43,7 @@ public class RookRepository implements IRepository<Rook> {
 
             return true;
         }
+        logger.info("rook cannot move to this coordinates {}{}, because on te end square is a piece with the same colour as the bishop", end.getLineCoordinate(), end.getColumnCoordinate());
         return false;
     }
 }

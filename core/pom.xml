@@ -17,8 +17,14 @@
     <dependencies>
         <dependency>
             <groupId>com.example</groupId>
-            <artifactId>service</artifactId>
+            <artifactId>server</artifactId>
             <version>0.0.1-SNAPSHOT</version>
+        </dependency>
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <version>1.18.22</version> <!-- Replace with the latest version -->
+            <scope>provided</scope>
         </dependency>
 
         <!--        <dependency>-->

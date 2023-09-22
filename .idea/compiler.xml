@@ -7,15 +7,18 @@
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
         <module name="Persistence" />
+        <module name="server" />
         <module name="Models" />
+        <module name="netwotking" />
         <module name="service" />
         <module name="Core" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
       <module name="ChessOppenings" target="19" />
-      <module name="core" target="19" />
+      <module name="core" target="1.6" />
       <module name="demo" target="15" />
+      <module name="networking" target="19" />
     </bytecodeTargetLevel>
   </component>
   <component name="JavacSettings">
@@ -25,6 +28,8 @@
       <module name="Persistence" options="-parameters" />
       <module name="core" options="-parameters" />
       <module name="demo" options="-parameters" />
+      <module name="netwotking" options="-parameters" />
+      <module name="server" options="-parameters" />
       <module name="service" options="-parameters" />
     </option>
   </component>
