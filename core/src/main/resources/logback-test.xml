@@ -1,9 +1,9 @@
 <configuration>
     <appender name="RollingFile" class="ch.qos.logback.core.rolling.RollingFileAppender">
-        <file>logs/myapp.log</file> <!-- Base log file name -->
+        <file>logs/logger.%d{yyyy-MM-dd_HH-mm-ss}.log</file> <!-- Base log file name -->
         <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
             <!-- Define the FileNamePattern with a timestamp -->
-            <fileNamePattern>logger.%d{yyyy-MM-dd_HH-mm-ss}.log</fileNamePattern>
+            <fileNamePattern>logs/logger.%d{yyyy-MM-dd_HH-mm-ss}.log</fileNamePattern>
             <maxHistory>30</maxHistory> <!-- Number of archived log files to keep -->
         </rollingPolicy>
         <encoder>

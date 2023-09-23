@@ -18,6 +18,7 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
 import java.util.concurrent.BlockingQueue;
+import java.util.concurrent.LinkedBlockingQueue;
 
 public class ObjectProxy implements IService {
     Logger logger = LoggerFactory.getLogger(ObjectProxy.class);
@@ -33,10 +34,10 @@ public class ObjectProxy implements IService {
     private final BlockingQueue<Response> responseBlockingQueue;
     private volatile boolean finished;
 
-    public ObjectProxy(String host, int port, BlockingQueue<Response> responseBlockingQueue) {
+    public ObjectProxy(String host, int port) {
         this.host = host;
         this.port = port;
-        this.responseBlockingQueue = responseBlockingQueue;
+        this.responseBlockingQueue = new LinkedBlockingQueue<>();
     }
 
     @Override

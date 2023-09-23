@@ -1,0 +1,15 @@
+<configuration>
+    <!-- Define the root logger -->
+    <root level="INFO">
+        <appender-ref ref="FILE"/>
+    </root>
+
+    <!-- Define a file appender with a dynamic filename -->
+    <appender name="FILE" class="ch.qos.logback.core.FileAppender">
+        <file>logs/log_%d{yyyyMMdd_HHmmss}.log</file>
+        <encoder>
+            <pattern>%date [%thread] %-5level %logger{35} - %msg%n</pattern>
+        </encoder>
+    </appender>
+
+</configuration>

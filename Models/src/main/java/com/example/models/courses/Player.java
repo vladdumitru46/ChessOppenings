@@ -6,6 +6,7 @@ import lombok.Setter;
 
 import javax.persistence.Entity;
 import javax.persistence.*;
+import java.io.Serializable;
 
 @Entity(name = "Player")
 @Table(
@@ -19,7 +20,7 @@ import javax.persistence.*;
 @Getter
 @Setter
 
-public class Player {
+public class Player implements Serializable {
     @Id
     @SequenceGenerator(
             name = "player_sequence",
@@ -67,5 +68,5 @@ public class Player {
         this.email = email;
         this.password = password;
     }
-    
+
 }

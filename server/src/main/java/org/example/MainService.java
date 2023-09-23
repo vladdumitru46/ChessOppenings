@@ -6,19 +6,26 @@ import com.example.models.courses.Course;
 import com.example.models.courses.CourseStartedByPlayer;
 import com.example.models.courses.Player;
 import com.example.models.pieces.*;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
+import java.util.Map;
 import java.util.Optional;
+import java.util.concurrent.ConcurrentHashMap;
 
-//TODO loggers
 @Service
-public class MainService {
+public class MainService implements IService {
     private final CourseService courseService;
     private final PieceService pieceService;
+    Logger logger = LoggerFactory.getLogger(MainService.class);
+
+    private static Map<Integer, IServiceObserver> observerMap;
 
     public MainService(CourseService courseService, PieceService pieceService) {
         this.courseService = courseService;
         this.pieceService = pieceService;
+        observerMap = new ConcurrentHashMap<>();
     }
 
     public void savePlayer(Player player) {
@@ -75,5 +82,23 @@ public class MainService {
 
     public Optional<Player> searchPlayerByUsername(String userName) {
         return courseService.searchPlayerByUsername(userName);
+    }
+
+    @Override
+    public void logIn(Player player, IServiceObserver client) throws Exception {
+        logger.info("log in player {}", player.getUserName());
+        if (player == null) {
+            throw new Exception("Email or password invalid!");
+        } else {
+            logger.info("player logged in");
+            observerMap.put(player.getId(), client);
+        }
+    }
+
+    @Override
+    public void logOut(Player player, IServiceObserver client) throws Exception {
+        logger.info("log out player {}", player);
+        observerMap.remove(player.getId());
+        logger.info("player logged out!");
     }
 }

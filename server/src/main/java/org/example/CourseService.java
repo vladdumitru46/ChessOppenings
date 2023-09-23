@@ -11,9 +11,8 @@ import org.slf4j.LoggerFactory;
 
 import java.util.Optional;
 
-//TODO loggers
 @org.springframework.stereotype.Service("courseService")
-public class CourseService implements IService {
+public class CourseService {
 
     Logger logger = LoggerFactory.getLogger(CourseService.class);
     private final PlayerRepository playerRepository;
@@ -74,13 +73,4 @@ public class CourseService implements IService {
     }
 
 
-    @Override
-    public void logIn(Player player, IServiceObserver client) throws Exception {
-        
-    }
-
-    @Override
-    public void logOut(Player player, IServiceObserver client) {
-
-    }
 }
