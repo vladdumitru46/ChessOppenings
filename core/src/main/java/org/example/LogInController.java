@@ -10,9 +10,7 @@ import java.util.Properties;
 
 @RestController
 @RequestMapping("/login")
-@CrossOrigin(origins = "http://localhost:63343") // Replace with the actual origin of your frontend application
-
-//@AllArgsConstructor
+@CrossOrigin(origins = "http://localhost:63343")
 public class LogInController implements IServiceObserver {
     private final CourseService courseService;
     private final PieceService pieceService;

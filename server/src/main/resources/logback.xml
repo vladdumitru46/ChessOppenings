@@ -13,11 +13,11 @@
 
     <appender name="fileAppender" class="ch.qos.logback.core.rolling.RollingFileAppender">
         <!-- Specifică numele fișierului de log de bază -->
-        <file>${LOGS}/client.log</file>
+        <file>${LOGS}/server.log</file>
 
         <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
             <!-- Folosește formatul corect pentru a include data curentă -->
-            <fileNamePattern>${LOGS}/client.%d{yyyy-MM-dd}.%i.log</fileNamePattern>
+            <fileNamePattern>${LOGS}/server.%d{yyyy-MM-dd}.%i.log</fileNamePattern>
             <timeBasedFileNamingAndTriggeringPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
                 <maxFileSize>10MB</maxFileSize>
             </timeBasedFileNamingAndTriggeringPolicy>

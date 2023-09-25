@@ -1,29 +1,27 @@
-package com.example.models.board;
+package org.example;
 
+import com.example.models.board.Board;
+import com.example.models.board.CellOnTheBord;
 import com.example.models.pieces.*;
+import org.example.repositoryes.repos.BishopRepository;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
 
-public class Board {
+@SpringBootTest(classes = {MainApplication.class})
+class RepoTest {
+    @Autowired
+    BishopRepository bishopRepository;
 
-    private CellOnTheBord[][] cellOnTheBordMap;
-
-    public Board(CellOnTheBord[][] cellOnTheBordMap) {
-        this.cellOnTheBordMap = cellOnTheBordMap;
-    }
-
-    public Board() {
-        cellOnTheBordMap = setBoard();
-    }
-
-    public CellOnTheBord[][] getCellOnTheBordMap() {
-        return cellOnTheBordMap;
-    }
-
-    public void setCellOnTheBordMap(CellOnTheBord[][] cellOnTheBordMap) {
-        this.cellOnTheBordMap = cellOnTheBordMap;
-    }
+    @Test
+    void canMoveBishop() {
+        Board board = new Board();
+        CellOnTheBord cell = board.getCellOnTheBordMap()[0][2];
+        CellOnTheBord end = board.getCellOnTheBordMap()[1][3];
+        Assertions.assertFalse(bishopRepository.canMove(board, cell, end, new Bishop(true)));
 
 
-    public CellOnTheBord[][] setBoard() {
         CellOnTheBord[][] cellOnTheBordMap = new CellOnTheBord[8][8];
         cellOnTheBordMap[0][0] = new CellOnTheBord(new Rook(true), 0, 0);
         cellOnTheBordMap[0][1] = new CellOnTheBord(new Knight(true), 0, 1);
@@ -37,8 +35,8 @@ public class Board {
         cellOnTheBordMap[1][0] = new CellOnTheBord(new Pawn(true), 1, 0);
         cellOnTheBordMap[1][1] = new CellOnTheBord(new Pawn(true), 1, 1);
         cellOnTheBordMap[1][2] = new CellOnTheBord(new Pawn(true), 1, 2);
-        cellOnTheBordMap[1][3] = new CellOnTheBord(new Pawn(true), 1, 3);
-        cellOnTheBordMap[1][4] = new CellOnTheBord(new Pawn(true), 1, 4);
+        cellOnTheBordMap[1][3] = new CellOnTheBord(new Pawn(false), 1, 3);
+        cellOnTheBordMap[1][4] = new CellOnTheBord(null, 1, 4);
         cellOnTheBordMap[1][5] = new CellOnTheBord(new Pawn(true), 1, 5);
         cellOnTheBordMap[1][6] = new CellOnTheBord(new Pawn(true), 1, 6);
         cellOnTheBordMap[1][7] = new CellOnTheBord(new Pawn(true), 1, 7);
@@ -66,6 +64,15 @@ public class Board {
                 cellOnTheBordMap[i][j] = new CellOnTheBord(null, i, j);
             }
         }
-        return cellOnTheBordMap;
+        cellOnTheBordMap[2][4] = new CellOnTheBord(new Pawn(false), 2, 4);
+
+        board = new Board(cellOnTheBordMap);
+        cell = board.getCellOnTheBordMap()[0][2];
+        end = board.getCellOnTheBordMap()[1][3];
+        Assertions.assertTrue(bishopRepository.canMove(board, cell, end, new Bishop(true)));
+        end = board.getCellOnTheBordMap()[3][5];
+        Assertions.assertFalse(bishopRepository.canMove(board, cell, end, new Bishop(true)));
+        end = board.getCellOnTheBordMap()[5][5];
+        Assertions.assertFalse(bishopRepository.canMove(board, cell, end, new Bishop(true)));
     }
 }

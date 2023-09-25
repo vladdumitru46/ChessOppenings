@@ -1,15 +1,67 @@
-<configuration>
-    <!-- Define the root logger -->
-    <root level="INFO">
-        <appender-ref ref="FILE"/>
-    </root>
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration debug="false">
+    <statusListener class="ch.qos.logback.core.status.NopStatusListener"/>
+    <property name="LOGS" value="./logs"/>
 
-    <!-- Define a file appender with a dynamic filename -->
-    <appender name="FILE" class="ch.qos.logback.core.FileAppender">
-        <file>logs/log_%d{yyyyMMdd_HHmmss}.log</file>
-        <encoder>
-            <pattern>%date [%thread] %-5level %logger{35} - %msg%n</pattern>
+    <appender name="Console" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
+            <pattern>%black(%d{ISO8601}) %highlight(%-5level) [%blue(%t)] %yellow(%-35.35logger{35}): %msg%n%throwable
+            </pattern>
+            <charset>UTF-8</charset>
         </encoder>
     </appender>
 
+    <appender name="fileAppender" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>${LOGS}/%d{yyyy-MM-dd}%i/client_%d{yyyy-MM-dd}.log</file>
+
+
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <!-- rollover daily -->
+            <fileNamePattern>${LOGS}/%d{yyyy-MM-dd}%i/client_%d{yyyy-MM-dd}.log</fileNamePattern>
+            <timeBasedFileNamingAndTriggeringPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
+                <maxFileSize>10MB</maxFileSize>
+            </timeBasedFileNamingAndTriggeringPolicy>
+        </rollingPolicy>
+        <encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
+            <Pattern>%d{yyyy-MM-dd} | %d{HH:mm:ss.SSS} | %-10.10thread | %5p | %-35.35logger{35} | %m{nolookups}%n
+            </Pattern>
+            <immediateFlush>true</immediateFlush>
+            <outputPatternAsHeader>false</outputPatternAsHeader>
+            <charset>UTF-8</charset>
+        </encoder>
+    </appender>
+
+    <logger name="com.example" level="debug" additivity="false">
+        <appender-ref ref="fileAppender"/>
+    </logger>
+
+    <logger name="org.example" level="debug" additivity="false">
+        <appender-ref ref="fileAppender"/>
+    </logger>
+
+    <logger name="org.springframework" level="warn" additivity="false">
+        <appender-ref ref="fileAppender"/>
+        <appender-ref ref="Console"/>
+    </logger>
+    <logger name="org.springframework.security" level="warn" additivity="false">
+        <appender-ref ref="fileAppender"/>
+        <appender-ref ref="Console"/>
+    </logger>
+
+    <logger name="ERROR logger" level="ERROR">
+        <appender-ref ref="Console"/>
+    </logger>
+    <logger name="DEBUG logger" level="DEBUG">
+        <appender-ref ref="Console"/>
+    </logger>
+
+    <logger name="org.example.MainApplication" level="info" additivity="false">
+        <appender-ref ref="fileAppender"/>
+        <appender-ref ref="Console"/>
+    </logger>
+
+    <root level="ERROR">
+        <appender-ref ref="fileAppender"/>
+        <appender-ref ref="Console"/>
+    </root>
 </configuration>
