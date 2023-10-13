@@ -1,0 +1,19 @@
+.oppen-course-page-container {
+  width: 100%;
+  display: flex;
+  overflow: auto;
+  min-height: 100vh;
+  align-items: flex-start;
+  flex-direction: column;
+  justify-content: center;
+  background-color: #000000;
+}
+.oppen-course-page-button {
+  top: 45%;
+  left: 65%;
+  position: absolute;
+}
+.oppen-course-page-textarea {
+  width: 60%;
+  height: 800px;
+}

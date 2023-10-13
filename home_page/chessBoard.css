@@ -4,8 +4,8 @@
 }
 
 .chessboard {
-    width: 400px;
-    height: 400px;
+    width: 50%;
+    height: auto;
     display: grid;
     grid-template-columns: repeat(9, 1fr);
     grid-template-rows: repeat(9, 1fr);
@@ -13,8 +13,8 @@
 }
 
 .chessboard div {
-    width: 100px;
-    height: 100px;
+    width: 100%;
+    height: 100%;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -23,13 +23,11 @@
 
 .letters {
     display: flex;
-    size: 4px;
     color: white;
 }
 
 .numbers {
     display: grid;
-    size: 4px;
     color: white;
 }
 
@@ -71,5 +69,30 @@ body {
 }
 
 img {
-    width: 50px;
+    width: 60%;
+}
+
+.container {
+    display: flex;
+}
+.right-column {
+    flex: 1; /* Ocupă spațiu în partea dreaptă a containerului principal */
+    padding: 20px;
+    background-color: black;
+    color: white;
+    border: 1px solid #ddd;
+    box-sizing: border-box;
+}
+
+.right-column ul {
+    list-style-type: square;
+}
+
+.right-column li {
+    margin: 5px 0;
+}
+
+/* Stilul pentru culoarea textului din lista */
+.right-column li {
+    color: white; /* Setați culoarea textului la alb */
 }
