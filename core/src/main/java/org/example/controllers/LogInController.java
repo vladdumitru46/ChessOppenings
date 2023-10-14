@@ -1,7 +1,9 @@
-package org.example;
+package org.example.controllers;
 
 import com.example.models.courses.Player;
+import org.example.*;
 import org.example.protocols.ObjectProxy;
+import org.example.requests.LogInRequest;
 import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;

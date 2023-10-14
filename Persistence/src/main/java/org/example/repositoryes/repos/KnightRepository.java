@@ -14,14 +14,21 @@ public class KnightRepository implements IRepository<Knight> {
 
     @Override
     public boolean canMove(Board board, CellOnTheBord start, CellOnTheBord end, Knight pieces) {
-        if (end.getPieces().isWhite() == pieces.isWhite()) {
-            logger.info("the knight cannot move in this coordinates {}{}, because there is a piece with the same colour as the king", end.getLineCoordinate(), end.getColumnCoordinate());
+        logger.info("knight tries to move from {}{} to {}{}", start.getLineCoordinate(), start.getColumnCoordinate(), end.getLineCoordinate(), end.getColumnCoordinate());
+        if (end.getPieces() != null) {
+            if (end.getPieces().isWhite() == pieces.isWhite()) {
+                logger.info("the knight cannot move in this coordinates {}{}, because there is a piece with the same colour as the king", end.getLineCoordinate(), end.getColumnCoordinate());
 
-            return false;
+                return false;
+            }
+            int line = Math.abs(start.getLineCoordinate() - end.getColumnCoordinate());
+            int column = Math.abs(start.getColumnCoordinate() - end.getColumnCoordinate());
+            return line * column == 2;
+        } else {
+            int line = Math.abs(start.getLineCoordinate() - end.getColumnCoordinate());
+            int column = Math.abs(start.getColumnCoordinate() - end.getColumnCoordinate());
+            return line * column == 2;
         }
-        int line = Math.abs(start.getLineCoordinate() - end.getColumnCoordinate());
-        int column = Math.abs(start.getLineCoordinate() - end.getColumnCoordinate());
-        return line * column == 2;
     }
 
 }

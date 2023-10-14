@@ -13,6 +13,7 @@ import org.springframework.stereotype.Repository;
 public class PawnRepository implements IRepository<Pawn> {
     Logger logger = LoggerFactory.getLogger(PawnRepository.class);
 
+    //TODO redo to be correct
     @Override
     public boolean canMove(Board board, CellOnTheBord start, CellOnTheBord end, Pawn pawn) {
         Pieces pieces = board.getCellOnTheBordMap()[end.getLineCoordinate()][end.getColumnCoordinate()].getPieces();

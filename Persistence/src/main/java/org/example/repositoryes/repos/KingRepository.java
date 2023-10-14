@@ -15,15 +15,25 @@ public class KingRepository implements IKingRepository {
 
     @Override
     public boolean canMove(Board board, CellOnTheBord start, CellOnTheBord end, King king) {
-        if (end.getPieces().isWhite() == king.isWhite()) {
-            logger.info("the king cannot move in this coordinates {}{}, because there is a piece with the same colour as the king", end.getLineCoordinate(), end.getColumnCoordinate());
-            return false;
-        }
-        int lineCoordinate = Math.abs(start.getLineCoordinate() - end.getLineCoordinate());
-        int columnCoordinate = Math.abs(start.getColumnCoordinate() - end.getColumnCoordinate());
-        if (lineCoordinate + columnCoordinate == 1) {
-            logger.info("check if the king is not in check");
-            return checkIfPieceIsNotAttacked(board, start, end, king);
+        if (end.getPieces() != null) {
+            if (end.getPieces().isWhite() == king.isWhite()) {
+                logger.info("the king cannot move in this coordinates {}{}, because there is a piece with the same colour as the king", end.getLineCoordinate(), end.getColumnCoordinate());
+                return false;
+            }
+            int lineCoordinate = Math.abs(start.getLineCoordinate() - end.getLineCoordinate());
+            int columnCoordinate = Math.abs(start.getColumnCoordinate() - end.getColumnCoordinate());
+            if (lineCoordinate + columnCoordinate == 1) {
+                logger.info("check if the king is not in check");
+                return checkIfPieceIsNotAttacked(board, start, end, king);
+            }
+        } else {
+            int lineCoordinate = Math.abs(start.getLineCoordinate() - end.getLineCoordinate());
+            int columnCoordinate = Math.abs(start.getColumnCoordinate() - end.getColumnCoordinate());
+            if (lineCoordinate + columnCoordinate == 1) {
+                logger.info("check if the king is not in check");
+                return checkIfPieceIsNotAttacked(board, start, end, king);
+            }
+
         }
         return false;
     }

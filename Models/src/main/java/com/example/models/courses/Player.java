@@ -19,7 +19,6 @@ import java.io.Serializable;
 @NoArgsConstructor
 @Getter
 @Setter
-
 public class Player implements Serializable {
     @Id
     @SequenceGenerator(
