@@ -18,14 +18,13 @@ public class KnightRepository implements IRepository<Knight> {
         if (end.getPieces() != null) {
             if (end.getPieces().isWhite() == pieces.isWhite()) {
                 logger.info("the knight cannot move in this coordinates {}{}, because there is a piece with the same colour as the king", end.getLineCoordinate(), end.getColumnCoordinate());
-
                 return false;
             }
-            int line = Math.abs(start.getLineCoordinate() - end.getColumnCoordinate());
+            int line = Math.abs(start.getLineCoordinate() - end.getLineCoordinate());
             int column = Math.abs(start.getColumnCoordinate() - end.getColumnCoordinate());
             return line * column == 2;
         } else {
-            int line = Math.abs(start.getLineCoordinate() - end.getColumnCoordinate());
+            int line = Math.abs(start.getLineCoordinate() - end.getLineCoordinate());
             int column = Math.abs(start.getColumnCoordinate() - end.getColumnCoordinate());
             return line * column == 2;
         }

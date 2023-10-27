@@ -63,7 +63,7 @@ public class QueenRepository implements IRepository<Queen> {
                 while (currentLine != endLine && currentColumn != endColumn) {
                     CellOnTheBord currentCell = board.getCellOnTheBordMap()[currentLine][currentColumn];
                     if (currentCell.getPieces() != null) {
-                        logger.info("queen cannot move to this coordinates {}{}, because there is a piece that blocks the way", end.getLineCoordinate(), end.getColumnCoordinate());
+                        logger.info("queen cannot move to this coordinates {}{} from {}{}, because there is a piece that blocks the way", end.getLineCoordinate(), end.getColumnCoordinate(), start.getLineCoordinate(), start.getColumnCoordinate());
                         return false;
                     }
 
@@ -72,7 +72,7 @@ public class QueenRepository implements IRepository<Queen> {
                 }
                 return true;
             }
-            logger.info("queen cannot move to this coordinates {}{}, because on te end square is a piece with the same colour as the bishop", end.getLineCoordinate(), end.getColumnCoordinate());
+            logger.info("queen cannot move to this coordinates {}{} from {}{}, because on te end square is a piece with the same colour as the bishop", end.getLineCoordinate(), end.getColumnCoordinate(), start.getLineCoordinate(), start.getColumnCoordinate());
             return false;
         } else {
             Integer line = Math.abs(start.getLineCoordinate() - end.getLineCoordinate());
@@ -80,7 +80,7 @@ public class QueenRepository implements IRepository<Queen> {
             if (Math.abs(line - column) != 0) {
                 logger.info("queen cannot move to this coordinates {}{}, because it's not diagonal", end.getLineCoordinate(), end.getColumnCoordinate());
                 if (start.getLineCoordinate() != end.getLineCoordinate() && start.getColumnCoordinate() != end.getColumnCoordinate()) {
-                    logger.info("queen cannot move to this coordinates {}{}, because it's not a straight line", end.getLineCoordinate(), end.getColumnCoordinate());
+                    logger.info("queen cannot move to this coordinates {}{} from {}{}, because it's not a straight line", end.getLineCoordinate(), end.getColumnCoordinate(), start.getLineCoordinate(), start.getColumnCoordinate());
                     return false;
                 }
                 int startLine = start.getLineCoordinate();
@@ -97,7 +97,7 @@ public class QueenRepository implements IRepository<Queen> {
                 while (currentLine != endLine || currentColumn != endColumn) {
                     CellOnTheBord currentCell = board.getCellOnTheBordMap()[currentLine][currentColumn];
                     if (currentCell.getPieces() != null) {
-                        logger.info("queen cannot move to this coordinates {}{}, because there is a piece blocking the way", end.getLineCoordinate(), end.getColumnCoordinate());
+                        logger.info("queen cannot move to this coordinates {}{} from {}{}, because there is a piece blocking the way", end.getLineCoordinate(), end.getColumnCoordinate(), start.getLineCoordinate(), start.getColumnCoordinate());
                         return false;
                     }
 
@@ -122,7 +122,7 @@ public class QueenRepository implements IRepository<Queen> {
             while (currentLine != endLine && currentColumn != endColumn) {
                 CellOnTheBord currentCell = board.getCellOnTheBordMap()[currentLine][currentColumn];
                 if (currentCell.getPieces() != null) {
-                    logger.info("queen cannot move to this coordinates {}{}, because there is a piece that blocks the way", end.getLineCoordinate(), end.getColumnCoordinate());
+                    logger.info("queen cannot move to this coordinates {}{} from {}{}, because there is a piece blocking the way", end.getLineCoordinate(), end.getColumnCoordinate(), start.getLineCoordinate(), start.getColumnCoordinate());
                     return false;
                 }
 

@@ -1,7 +1,9 @@
 package com.example.models.board;
 
 import com.example.models.pieces.*;
+import lombok.ToString;
 
+@ToString
 public class Board {
 
     private CellOnTheBord[][] cellOnTheBordMap;
