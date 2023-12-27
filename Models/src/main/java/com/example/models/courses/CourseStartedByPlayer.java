@@ -46,5 +46,9 @@ public class CourseStartedByPlayer {
         this.courseId = courseId;
         this.courseStatus = courseStatus;
     }
-    
+
+    public CourseStartedByPlayer(Integer playerId, Integer courseId) {
+        this.playerId = playerId;
+        this.courseId = courseId;
+    }
 }

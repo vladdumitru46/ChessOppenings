@@ -10,7 +10,7 @@ import lombok.Setter;
 @NoArgsConstructor
 @AllArgsConstructor
 public class MovePiecesRequest {
-    //    private Board board;
+    
     private String start;
     private String end;
     private String pieceColour;

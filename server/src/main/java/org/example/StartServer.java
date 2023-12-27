@@ -11,13 +11,7 @@ import java.util.Properties;
 @SpringBootApplication
 public class StartServer {
     private static final int defaultPort = 55555;
-    private static CourseService courseService;
-    private static PieceService pieceService;
-
-    public StartServer(CourseService courseService, PieceService pieceService) {
-        this.courseService = courseService;
-        this.pieceService = pieceService;
-    }
+    private static PlayerService playerService;
 
     public static void main(String[] args) {
         Properties serverProperties = new Properties();
@@ -37,7 +31,7 @@ public class StartServer {
             System.err.println("Wrong port number" + e.getMessage());
         }
         System.out.println("Starting server on port: " + serverPort);
-        IService service = new MainService(courseService, pieceService);
+        IService service = playerService;
         System.out.println(service);
         AbstractServer server = new ObjectConcurrentServer(serverPort, service);
         try {

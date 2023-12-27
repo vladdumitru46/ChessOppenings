@@ -58,7 +58,7 @@ public class PieceService {
         return kingRepository.canMove(board, start, end, king);
     }
 
-    public boolean checkIsTheKingIsInCech(Board board, CellOnTheBord start, CellOnTheBord end, Pieces king) {
+    public boolean checkIsTheKingIsInCheck(Board board, CellOnTheBord start, CellOnTheBord end, Pieces king) {
         logger.info("verify is the king is checked");
         return kingRepository.checkIfPieceIsNotAttacked(board, start, end, king);
     }
