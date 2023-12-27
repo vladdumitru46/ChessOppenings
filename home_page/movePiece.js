@@ -1,26 +1,27 @@
-
 let queryString = window.location.search;
 let urlParams = new URLSearchParams(queryString);
 let informationCourseValue = urlParams.get('courseTitle');
+let informationCourseElement = document.getElementById("courseContent");
+let pageTitle = document.getElementById("pageTitle");
 
-let informationCourseElement = document.getElementById("courseTitle");
 if (informationCourseElement && informationCourseValue) {
-    informationCourseElement.textContent = informationCourseValue;
+    let courseData = JSON.parse(informationCourseValue);
+    pageTitle.innerText = courseData.name;
+    informationCourseElement.innerText = courseData.name + " \n\n\n\n" + courseData.description;
 }
-
 
 
 let square1 = null;
 let square2 = null;
 
 function getPiece(square) {
+
     if (square1 == null) {
         square1 = square;
     } else {
         square2 = square;
     }
-
-    if (square1 != null && square2 != null) {
+    if (square1 != null && square2 != null && square1.getAttribute('data-piesa') !== "none") {
         const piesaSquare1 = square1.getAttribute('data-piesa');
         const imageUrlSquare1 = square1.querySelector('img').src;
         const springBootPort = 8080; // Replace with the actual port number
@@ -57,7 +58,7 @@ function getPiece(square) {
                 } else {
                     square1 = null;
                     square2 = null;
-                    alert("Login failed. Please check your credentials.");
+                    console.log("cannot move the piece there! check the backend logs for more information!")
                 }
             })
             .catch(error => {
@@ -65,4 +66,22 @@ function getPiece(square) {
             });
     }
 }
+
+window.addEventListener('beforeunload', function() {
+  fetch('http://localhost:8080/move/reset', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({ /* your data here */ })
+  })
+  .then(response => {
+    // handle the response from the server
+  })
+  .catch(error => {
+    // handle any errors that occur during the request
+  });
+});
+
+
 
