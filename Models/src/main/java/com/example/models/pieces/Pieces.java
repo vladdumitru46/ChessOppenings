@@ -33,5 +33,5 @@ public abstract class Pieces implements Serializable {
         this.white = white;
     }
 
-    public abstract boolean canAttackTheKing(Board board, CellOnTheBord start, CellOnTheBord end, CellOnTheBord piece);
+    public abstract boolean canAttackTheKing(Board board, CellOnTheBord start, CellOnTheBord end, Pieces piece);
 }

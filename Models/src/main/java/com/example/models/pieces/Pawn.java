@@ -20,16 +20,19 @@ public class Pawn extends Pieces {
 
 
     @Override
-    public boolean canAttackTheKing(Board board, CellOnTheBord start, CellOnTheBord end, CellOnTheBord cell) {
-        if (end.getLineCoordinate() == cell.getLineCoordinate() && end.getColumnCoordinate() == cell.getColumnCoordinate()) {
-            if (start.getColumnCoordinate() - 1 == cell.getColumnCoordinate() || start.getColumnCoordinate() + 1 == cell.getColumnCoordinate()) {
-                if (this.isWhite()) {
-                    return start.getLineCoordinate() + 1 == cell.getLineCoordinate();
-                } else {
-                    return start.getLineCoordinate() - 1 == cell.getLineCoordinate();
+    public boolean canAttackTheKing(Board board, CellOnTheBord start, CellOnTheBord end, Pieces cell) {
+        if (start.getPieces().isWhite()) {
+            if (start.getLineCoordinate() == end.getLineCoordinate() - 1) {
+                if (end.getColumnCoordinate() == start.getColumnCoordinate() + 1 || end.getColumnCoordinate() == start.getColumnCoordinate() - 1) {
+                    return true;
                 }
             }
-            return false;
+        } else {
+            if (start.getLineCoordinate() == end.getLineCoordinate() + 1) {
+                if (end.getColumnCoordinate() == start.getColumnCoordinate() + 1 || end.getColumnCoordinate() == start.getColumnCoordinate() - 1) {
+                    return true;
+                }
+            }
         }
         return false;
     }

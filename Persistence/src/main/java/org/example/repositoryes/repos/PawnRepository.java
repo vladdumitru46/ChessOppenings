@@ -4,7 +4,7 @@ import com.example.models.board.Board;
 import com.example.models.board.CellOnTheBord;
 import com.example.models.pieces.Pawn;
 import com.example.models.pieces.Pieces;
-import org.example.repositoryes.interfaces.IRepository;
+import org.example.repositoryes.interfaces.pieces.IRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Repository;

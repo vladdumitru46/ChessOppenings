@@ -3,7 +3,7 @@ package org.example.repositoryes.repos;
 import com.example.models.board.Board;
 import com.example.models.board.CellOnTheBord;
 import com.example.models.pieces.Knight;
-import org.example.repositoryes.interfaces.IRepository;
+import org.example.repositoryes.interfaces.pieces.IRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Repository;
@@ -20,14 +20,10 @@ public class KnightRepository implements IRepository<Knight> {
                 logger.info("the knight cannot move in this coordinates {}{}, because there is a piece with the same colour as the king", end.getLineCoordinate(), end.getColumnCoordinate());
                 return false;
             }
-            int line = Math.abs(start.getLineCoordinate() - end.getLineCoordinate());
-            int column = Math.abs(start.getColumnCoordinate() - end.getColumnCoordinate());
-            return line * column == 2;
-        } else {
-            int line = Math.abs(start.getLineCoordinate() - end.getLineCoordinate());
-            int column = Math.abs(start.getColumnCoordinate() - end.getColumnCoordinate());
-            return line * column == 2;
         }
+        int line = Math.abs(start.getLineCoordinate() - end.getLineCoordinate());
+        int column = Math.abs(start.getColumnCoordinate() - end.getColumnCoordinate());
+        return line * column == 2;
     }
 
 }

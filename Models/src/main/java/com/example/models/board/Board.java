@@ -1,12 +1,17 @@
 package com.example.models.board;
 
 import com.example.models.pieces.*;
+import lombok.Getter;
+import lombok.Setter;
 import lombok.ToString;
 
 @ToString
+@Getter
+@Setter
 public class Board {
 
     private CellOnTheBord[][] cellOnTheBordMap;
+    private boolean whitesTurn = true;
 
     public Board(CellOnTheBord[][] cellOnTheBordMap) {
         this.cellOnTheBordMap = cellOnTheBordMap;
@@ -16,14 +21,19 @@ public class Board {
         cellOnTheBordMap = setBoard();
     }
 
-    public CellOnTheBord[][] getCellOnTheBordMap() {
-        return cellOnTheBordMap;
-    }
 
-    public void setCellOnTheBordMap(CellOnTheBord[][] cellOnTheBordMap) {
-        this.cellOnTheBordMap = cellOnTheBordMap;
+    public CellOnTheBord getKing(boolean isWhite) {
+        for (int i = 0; i < 8; i++) {
+            for (int j = 0; j < 8; j++) {
+                CellOnTheBord cell = cellOnTheBordMap[i][j];
+                Pieces pieces = cell.getPieces();
+                if (pieces instanceof King && pieces.isWhite() == isWhite) {
+                    return cell;
+                }
+            }
+        }
+        return null;
     }
-
 
     public CellOnTheBord[][] setBoard() {
         CellOnTheBord[][] cellOnTheBordMap = new CellOnTheBord[8][8];

@@ -1,4 +1,4 @@
-package org.example.repositoryes.interfaces;
+package org.example.repositoryes.interfaces.pieces;
 
 import com.example.models.board.Board;
 import com.example.models.board.CellOnTheBord;

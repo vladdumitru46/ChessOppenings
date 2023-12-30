@@ -3,7 +3,7 @@ package org.example.repositoryes.repos;
 import com.example.models.board.Board;
 import com.example.models.board.CellOnTheBord;
 import com.example.models.pieces.Rook;
-import org.example.repositoryes.interfaces.IRepository;
+import org.example.repositoryes.interfaces.pieces.IRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Repository;
@@ -15,65 +15,37 @@ public class RookRepository implements IRepository<Rook> {
     @Override
     public boolean canMove(Board board, CellOnTheBord start, CellOnTheBord end, Rook pieces) {
         if (end.getPieces() != null) {
-            if (end.getPieces().isWhite() != pieces.isWhite()) {
-                if (start.getLineCoordinate() != end.getLineCoordinate() && start.getColumnCoordinate() != end.getColumnCoordinate()) {
-                    logger.info("rook cannot move to this coordinates {}{}, because it's not a straight line", end.getLineCoordinate(), end.getColumnCoordinate());
-                    return false;
-                }
-                int startLine = start.getLineCoordinate();
-                int startColumn = start.getColumnCoordinate();
-                int endLine = end.getLineCoordinate();
-                int endColumn = end.getColumnCoordinate();
-
-                int rowIncrement = (endLine > startLine) ? 1 : (endLine < startLine) ? -1 : 0;
-                int colIncrement = (endColumn > startColumn) ? 1 : (endColumn < startColumn) ? -1 : 0;
-
-                int currentLine = startLine + rowIncrement;
-                int currentColumn = startColumn + colIncrement;
-
-                while (currentLine != endLine || currentColumn != endColumn) {
-                    CellOnTheBord currentCell = board.getCellOnTheBordMap()[currentLine][currentColumn];
-                    if (currentCell.getPieces() != null) {
-                        logger.info("rook cannot move to this coordinates {}{}, because there is a piece blocking the way", end.getLineCoordinate(), end.getColumnCoordinate());
-                        return false;
-                    }
-
-                    currentLine += rowIncrement;
-                    currentColumn += colIncrement;
-                }
-
-                return true;
-            }
-            logger.info("rook cannot move to this coordinates {}{}, because on te end square is a piece with the same colour as the bishop", end.getLineCoordinate(), end.getColumnCoordinate());
-            return false;
-        } else {
-            if (start.getLineCoordinate() != end.getLineCoordinate() && start.getColumnCoordinate() != end.getColumnCoordinate()) {
-                logger.info("rook cannot move to this coordinates {}{}, because it's not a straight line", end.getLineCoordinate(), end.getColumnCoordinate());
+            if (end.getPieces().isWhite() == pieces.isWhite()) {
                 return false;
             }
-            int startLine = start.getLineCoordinate();
-            int startColumn = start.getColumnCoordinate();
-            int endLine = end.getLineCoordinate();
-            int endColumn = end.getColumnCoordinate();
+        }
+        if (start.getLineCoordinate() != end.getLineCoordinate() && start.getColumnCoordinate() != end.getColumnCoordinate()) {
+            logger.info("rook cannot move to this coordinates {}{}, because it's not a straight line", end.getLineCoordinate(), end.getColumnCoordinate());
+            return false;
+        }
+        int startLine = start.getLineCoordinate();
+        int startColumn = start.getColumnCoordinate();
+        int endLine = end.getLineCoordinate();
+        int endColumn = end.getColumnCoordinate();
 
-            int rowIncrement = (endLine > startLine) ? 1 : (endLine < startLine) ? -1 : 0;
-            int colIncrement = (endColumn > startColumn) ? 1 : (endColumn < startColumn) ? -1 : 0;
+        int rowIncrement = (endLine > startLine) ? 1 : (endLine < startLine) ? -1 : 0;
+        int colIncrement = (endColumn > startColumn) ? 1 : (endColumn < startColumn) ? -1 : 0;
 
-            int currentLine = startLine + rowIncrement;
-            int currentColumn = startColumn + colIncrement;
+        int currentLine = startLine + rowIncrement;
+        int currentColumn = startColumn + colIncrement;
 
-            while (currentLine != endLine || currentColumn != endColumn) {
-                CellOnTheBord currentCell = board.getCellOnTheBordMap()[currentLine][currentColumn];
-                if (currentCell.getPieces() != null) {
-                    logger.info("rook cannot move to this coordinates {}{}, because there is a piece blocking the way", end.getLineCoordinate(), end.getColumnCoordinate());
-                    return false;
-                }
-
-                currentLine += rowIncrement;
-                currentColumn += colIncrement;
+        while (currentLine != endLine || currentColumn != endColumn) {
+            CellOnTheBord currentCell = board.getCellOnTheBordMap()[currentLine][currentColumn];
+            if (currentCell.getPieces() != null) {
+                logger.info("rook cannot move to this coordinates {}{}, because there is a piece blocking the way", end.getLineCoordinate(), end.getColumnCoordinate());
+                return false;
             }
 
-            return true;
+            currentLine += rowIncrement;
+            currentColumn += colIncrement;
         }
+        pieces.setHasBeenMoved(true);
+        start.setPieces(pieces);
+        return true;
     }
 }
