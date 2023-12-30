@@ -14,7 +14,6 @@ if (informationCourseElement && informationCourseValue) {
 let square1 = null;
 let square2 = null;
 
-//TODO castling animation!!!
 function getPiece(square) {
 
     if (square1 == null) {
