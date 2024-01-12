@@ -35,22 +35,22 @@ public class MovePiecesController {
 
 
         if (Objects.equals(movePiecesRequest.getPieceColour(), "white") && board.isWhitesTurn()) {
-            CellOnTheBord cell = board.getKing(true);
-            King king = (King) cell.getPieces();
+//            CellOnTheBord cell = board.getKing(true);
+//            King king = (King) cell.getPieces();
             if (pieceService.canTheRookMove(board, board.getCellOnTheBordMap()[line][column], board.getCellOnTheBordMap()[line1][column1], (Rook) board.getCellOnTheBordMap()[line][column].getPieces())) {
-                CellOnTheBord beforeMoving = board.getCellOnTheBordMap()[line][column];
-                CellOnTheBord beforeMoving1 = board.getCellOnTheBordMap()[line1][column1];
+//                CellOnTheBord beforeMoving = board.getCellOnTheBordMap()[line][column];
+//                CellOnTheBord beforeMoving1 = board.getCellOnTheBordMap()[line1][column1];
                 board.getCellOnTheBordMap()[line1][column1].setPieces(board.getCellOnTheBordMap()[line][column].getPieces());
                 board.getCellOnTheBordMap()[line][column] = new CellOnTheBord(null, line, column);
-                if (king.isInCheck()) {
-                    if (!pieceService.checkIsTheKingInCheck(board, board.getCellOnTheBordMap()[line][column], cell, king)) {
-                        board.getCellOnTheBordMap()[line1][column1] = beforeMoving1;
-                        board.getCellOnTheBordMap()[line][column] = beforeMoving;
-                        return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-                    } else {
-                        king.setInCheck(false);
-                    }
-                }
+//                if (king.isInCheck()) {
+//                    if (!pieceService.checkIsTheKingInCheck(board, board.getCellOnTheBordMap()[line][column], cell, king)) {
+//                        board.getCellOnTheBordMap()[line1][column1] = beforeMoving1;
+//                        board.getCellOnTheBordMap()[line][column] = beforeMoving;
+//                        return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+//                    } else {
+//                        king.setInCheck(false);
+//                    }
+//                }
                 Rook rook = (Rook) board.getCellOnTheBordMap()[line1][column1].getPieces();
                 CellOnTheBord blackKing = board.getKing(false);
                 if (rook.canAttackTheKing(board, board.getCellOnTheBordMap()[line1][column1], blackKing, rook)) {
@@ -63,22 +63,22 @@ public class MovePiecesController {
                 return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
             }
         } else if (Objects.equals(movePiecesRequest.getPieceColour(), "black") && !board.isWhitesTurn()) {
-            CellOnTheBord cell = board.getKing(false);
-            King king = (King) cell.getPieces();
+//            CellOnTheBord cell = board.getKing(false);
+//            King king = (King) cell.getPieces();
             if (pieceService.canTheRookMove(board, board.getCellOnTheBordMap()[line][column], board.getCellOnTheBordMap()[line1][column1], (Rook) board.getCellOnTheBordMap()[line][column].getPieces())) {
-                CellOnTheBord beforeMoving = board.getCellOnTheBordMap()[line][column];
-                CellOnTheBord beforeMoving1 = board.getCellOnTheBordMap()[line1][column1];
+//                CellOnTheBord beforeMoving = board.getCellOnTheBordMap()[line][column];
+//                CellOnTheBord beforeMoving1 = board.getCellOnTheBordMap()[line1][column1];
                 board.getCellOnTheBordMap()[line1][column1].setPieces(board.getCellOnTheBordMap()[line][column].getPieces());
                 board.getCellOnTheBordMap()[line][column] = new CellOnTheBord(null, line, column);
-                if (king.isInCheck()) {
-                    if (!pieceService.checkIsTheKingInCheck(board, board.getCellOnTheBordMap()[line][column], cell, king)) {
-                        board.getCellOnTheBordMap()[line1][column1] = beforeMoving1;
-                        board.getCellOnTheBordMap()[line][column] = beforeMoving;
-                        return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-                    } else {
-                        king.setInCheck(false);
-                    }
-                }
+//                if (king.isInCheck()) {
+//                    if (!pieceService.checkIsTheKingInCheck(board, board.getCellOnTheBordMap()[line][column], cell, king)) {
+//                        board.getCellOnTheBordMap()[line1][column1] = beforeMoving1;
+//                        board.getCellOnTheBordMap()[line][column] = beforeMoving;
+//                        return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+//                    } else {
+//                        king.setInCheck(false);
+//                    }
+//                }
                 Rook rook = (Rook) board.getCellOnTheBordMap()[line1][column1].getPieces();
                 CellOnTheBord blackKing = board.getKing(true);
                 if (rook.canAttackTheKing(board, board.getCellOnTheBordMap()[line1][column1], blackKing, rook)) {
@@ -105,22 +105,22 @@ public class MovePiecesController {
 
 
         if (Objects.equals(movePiecesRequest.getPieceColour(), "white") && board.isWhitesTurn()) {
-            CellOnTheBord cell = board.getKing(true);
-            King king = (King) cell.getPieces();
+//            CellOnTheBord cell = board.getKing(true);
+//            King king = (King) cell.getPieces();
             if (pieceService.canTheKnightMove(board, board.getCellOnTheBordMap()[line][column], board.getCellOnTheBordMap()[line1][column1], (Knight) board.getCellOnTheBordMap()[line][column].getPieces())) {
-                CellOnTheBord beforeMoving = board.getCellOnTheBordMap()[line][column];
-                CellOnTheBord beforeMoving1 = board.getCellOnTheBordMap()[line1][column1];
+//                CellOnTheBord beforeMoving = board.getCellOnTheBordMap()[line][column];
+//                CellOnTheBord beforeMoving1 = board.getCellOnTheBordMap()[line1][column1];
                 board.getCellOnTheBordMap()[line1][column1].setPieces(board.getCellOnTheBordMap()[line][column].getPieces());
                 board.getCellOnTheBordMap()[line][column] = new CellOnTheBord(null, line, column);
-                if (king.isInCheck()) {
-                    if (!pieceService.checkIsTheKingInCheck(board, board.getCellOnTheBordMap()[line][column], cell, king)) {
-                        board.getCellOnTheBordMap()[line1][column1] = beforeMoving1;
-                        board.getCellOnTheBordMap()[line][column] = beforeMoving;
-                        return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-                    } else {
-                        king.setInCheck(false);
-                    }
-                }
+//                if (king.isInCheck()) {
+//                    if (!pieceService.checkIsTheKingInCheck(board, board.getCellOnTheBordMap()[line][column], cell, king)) {
+//                        board.getCellOnTheBordMap()[line1][column1] = beforeMoving1;
+//                        board.getCellOnTheBordMap()[line][column] = beforeMoving;
+//                        return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+//                    } else {
+//                        king.setInCheck(false);
+//                    }
+//                }
                 Knight knight = (Knight) board.getCellOnTheBordMap()[line1][column1].getPieces();
                 CellOnTheBord blackKing = board.getKing(false);
                 if (knight.canAttackTheKing(board, board.getCellOnTheBordMap()[line1][column1], blackKing, knight)) {
@@ -133,22 +133,22 @@ public class MovePiecesController {
                 return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
             }
         } else if (Objects.equals(movePiecesRequest.getPieceColour(), "black") && !board.isWhitesTurn()) {
-            CellOnTheBord cell = board.getKing(false);
-            King king = (King) cell.getPieces();
+//            CellOnTheBord cell = board.getKing(false);
+//            King king = (King) cell.getPieces();
             if (pieceService.canTheKnightMove(board, board.getCellOnTheBordMap()[line][column], board.getCellOnTheBordMap()[line1][column1], (Knight) board.getCellOnTheBordMap()[line][column].getPieces())) {
                 CellOnTheBord beforeMoving = board.getCellOnTheBordMap()[line][column];
                 CellOnTheBord beforeMoving1 = board.getCellOnTheBordMap()[line1][column1];
                 board.getCellOnTheBordMap()[line1][column1].setPieces(board.getCellOnTheBordMap()[line][column].getPieces());
                 board.getCellOnTheBordMap()[line][column] = new CellOnTheBord(null, line, column);
-                if (king.isInCheck()) {
-                    if (!pieceService.checkIsTheKingInCheck(board, board.getCellOnTheBordMap()[line][column], cell, king)) {
-                        board.getCellOnTheBordMap()[line1][column1] = beforeMoving1;
-                        board.getCellOnTheBordMap()[line][column] = beforeMoving;
-                        return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-                    } else {
-                        king.setInCheck(false);
-                    }
-                }
+//                if (king.isInCheck()) {
+//                    if (!pieceService.checkIsTheKingInCheck(board, board.getCellOnTheBordMap()[line][column], cell, king)) {
+//                        board.getCellOnTheBordMap()[line1][column1] = beforeMoving1;
+//                        board.getCellOnTheBordMap()[line][column] = beforeMoving;
+//                        return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+//                    } else {
+//                        king.setInCheck(false);
+//                    }
+//                }
                 Knight knight = (Knight) board.getCellOnTheBordMap()[line1][column1].getPieces();
                 CellOnTheBord blackKing = board.getKing(true);
                 if (knight.canAttackTheKing(board, board.getCellOnTheBordMap()[line1][column1], blackKing, knight)) {
@@ -175,22 +175,22 @@ public class MovePiecesController {
 
 
         if (Objects.equals(movePiecesRequest.getPieceColour(), "white") && board.isWhitesTurn()) {
-            CellOnTheBord cell = board.getKing(true);
-            King king = (King) cell.getPieces();
+//            CellOnTheBord cell = board.getKing(true);
+//            King king = (King) cell.getPieces();
             if (pieceService.canTheBishopMove(board, board.getCellOnTheBordMap()[line][column], board.getCellOnTheBordMap()[line1][column1], (Bishop) board.getCellOnTheBordMap()[line][column].getPieces())) {
-                CellOnTheBord beforeMoving = board.getCellOnTheBordMap()[line][column];
-                CellOnTheBord beforeMoving1 = board.getCellOnTheBordMap()[line1][column1];
+//                CellOnTheBord beforeMoving = board.getCellOnTheBordMap()[line][column];
+//                CellOnTheBord beforeMoving1 = board.getCellOnTheBordMap()[line1][column1];
                 board.getCellOnTheBordMap()[line1][column1].setPieces(board.getCellOnTheBordMap()[line][column].getPieces());
                 board.getCellOnTheBordMap()[line][column] = new CellOnTheBord(null, line, column);
-                if (king.isInCheck()) {
-                    if (!pieceService.checkIsTheKingInCheck(board, board.getCellOnTheBordMap()[line][column], cell, king)) {
-                        board.getCellOnTheBordMap()[line1][column1] = beforeMoving1;
-                        board.getCellOnTheBordMap()[line][column] = beforeMoving;
-                        return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-                    } else {
-                        king.setInCheck(false);
-                    }
-                }
+//                if (king.isInCheck()) {
+//                    if (!pieceService.checkIsTheKingInCheck(board, board.getCellOnTheBordMap()[line][column], cell, king)) {
+//                        board.getCellOnTheBordMap()[line1][column1] = beforeMoving1;
+//                        board.getCellOnTheBordMap()[line][column] = beforeMoving;
+//                        return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+//                    } else {
+//                        king.setInCheck(false);
+//                    }
+//                }
                 Bishop bishop = (Bishop) board.getCellOnTheBordMap()[line1][column1].getPieces();
                 CellOnTheBord blackKing = board.getKing(false);
                 if (bishop.canAttackTheKing(board, board.getCellOnTheBordMap()[line1][column1], blackKing, bishop)) {
@@ -203,22 +203,22 @@ public class MovePiecesController {
                 return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
             }
         } else if (Objects.equals(movePiecesRequest.getPieceColour(), "black") && !board.isWhitesTurn()) {
-            CellOnTheBord cell = board.getKing(false);
-            King king = (King) cell.getPieces();
+//            CellOnTheBord cell = board.getKing(false);
+//            King king = (King) cell.getPieces();
             if (pieceService.canTheBishopMove(board, board.getCellOnTheBordMap()[line][column], board.getCellOnTheBordMap()[line1][column1], (Bishop) board.getCellOnTheBordMap()[line][column].getPieces())) {
-                CellOnTheBord beforeMoving = board.getCellOnTheBordMap()[line][column];
-                CellOnTheBord beforeMoving1 = board.getCellOnTheBordMap()[line1][column1];
+//                CellOnTheBord beforeMoving = board.getCellOnTheBordMap()[line][column];
+//                CellOnTheBord beforeMoving1 = board.getCellOnTheBordMap()[line1][column1];
                 board.getCellOnTheBordMap()[line1][column1].setPieces(board.getCellOnTheBordMap()[line][column].getPieces());
                 board.getCellOnTheBordMap()[line][column] = new CellOnTheBord(null, line, column);
-                if (king.isInCheck()) {
-                    if (!pieceService.checkIsTheKingInCheck(board, board.getCellOnTheBordMap()[line][column], cell, king)) {
-                        board.getCellOnTheBordMap()[line1][column1] = beforeMoving1;
-                        board.getCellOnTheBordMap()[line][column] = beforeMoving;
-                        return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-                    } else {
-                        king.setInCheck(false);
-                    }
-                }
+//                if (king.isInCheck()) {
+//                    if (!pieceService.checkIsTheKingInCheck(board, board.getCellOnTheBordMap()[line][column], cell, king)) {
+//                        board.getCellOnTheBordMap()[line1][column1] = beforeMoving1;
+//                        board.getCellOnTheBordMap()[line][column] = beforeMoving;
+//                        return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+//                    } else {
+//                        king.setInCheck(false);
+//                    }
+//                }
                 Bishop bishop = (Bishop) board.getCellOnTheBordMap()[line1][column1].getPieces();
                 CellOnTheBord blackKing = board.getKing(true);
                 if (bishop.canAttackTheKing(board, board.getCellOnTheBordMap()[line1][column1], blackKing, bishop)) {
@@ -337,22 +337,22 @@ public class MovePiecesController {
                 return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
             }
         } else if (Objects.equals(movePiecesRequest.getPieceColour(), "black") && !board.isWhitesTurn()) {
-            CellOnTheBord cell = board.getKing(false);
-            King king = (King) cell.getPieces();
+//            CellOnTheBord cell = board.getKing(false);
+//            King king = (King) cell.getPieces();
             if (pieceService.canTheQueenMove(board, board.getCellOnTheBordMap()[line][column], board.getCellOnTheBordMap()[line1][column1], (Queen) board.getCellOnTheBordMap()[line][column].getPieces())) {
-                CellOnTheBord beforeMoving = board.getCellOnTheBordMap()[line][column];
-                CellOnTheBord beforeMoving1 = board.getCellOnTheBordMap()[line1][column1];
+//                CellOnTheBord beforeMoving = board.getCellOnTheBordMap()[line][column];
+//                CellOnTheBord beforeMoving1 = board.getCellOnTheBordMap()[line1][column1];
                 board.getCellOnTheBordMap()[line1][column1].setPieces(board.getCellOnTheBordMap()[line][column].getPieces());
                 board.getCellOnTheBordMap()[line][column] = new CellOnTheBord(null, line, column);
-                if (king.isInCheck()) {
-                    if (!pieceService.checkIsTheKingInCheck(board, board.getCellOnTheBordMap()[line][column], cell, king)) {
-                        board.getCellOnTheBordMap()[line1][column1] = beforeMoving1;
-                        board.getCellOnTheBordMap()[line][column] = beforeMoving;
-                        return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-                    } else {
-                        king.setInCheck(false);
-                    }
-                }
+//                if (king.isInCheck()) {
+//                    if (!pieceService.checkIsTheKingInCheck(board, board.getCellOnTheBordMap()[line][column], cell, king)) {
+//                        board.getCellOnTheBordMap()[line1][column1] = beforeMoving1;
+//                        board.getCellOnTheBordMap()[line][column] = beforeMoving;
+//                        return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+//                    } else {
+//                        king.setInCheck(false);
+//                    }
+//                }
                 Queen queen = (Queen) board.getCellOnTheBordMap()[line1][column1].getPieces();
                 CellOnTheBord blackKing = board.getKing(true);
                 if (queen.canAttackTheKing(board, board.getCellOnTheBordMap()[line1][column1], blackKing, queen)) {
@@ -405,5 +405,18 @@ public class MovePiecesController {
         board.setWhitesTurn(true);
         board.setCellOnTheBordMap(board.setBoard());
         log.info(board.toString());
+    }
+
+
+    @PostMapping("/checkmate")
+    public ResponseEntity<?> checkIfItIsCheckmate() {
+        int nr = pieceService.numberOfPossibleMoves(board);
+        int nrMovesForWhite = pieceService.numberOfPossibleMovesForWhite(board);
+        int nrMovesForBlack = pieceService.numberOfPossibleMovesForBlack(board);
+        if (nr == 0 || nrMovesForWhite == 0 || nrMovesForBlack == 0) {
+            return new ResponseEntity<>(HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
     }
 }

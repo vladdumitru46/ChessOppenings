@@ -8,4 +8,5 @@ public interface IRepository<E extends Pieces> {
     boolean canMove(Board board,
                     CellOnTheBord start, CellOnTheBord end, E pieces);
 
+    int getNrOfMoves(Board board, CellOnTheBord cell, int nr);
 }

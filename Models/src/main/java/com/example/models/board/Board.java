@@ -10,6 +10,7 @@ import lombok.ToString;
 @Setter
 public class Board {
 
+    private Integer id;
     private CellOnTheBord[][] cellOnTheBordMap;
     private boolean whitesTurn = true;
 
@@ -79,5 +80,30 @@ public class Board {
             }
         }
         return cellOnTheBordMap;
+    }
+
+
+    public Integer getTotalPointsForWhite() {
+        int nr = 0;
+        for (int i = 0; i < 8; i++) {
+            for (int j = 0; j < 8; j++) {
+                if (this.getCellOnTheBordMap()[i][j].getPieces() != null && this.getCellOnTheBordMap()[i][j].getPieces().isWhite()) {
+                    nr += this.getCellOnTheBordMap()[i][j].getPieces().getPoints();
+                }
+            }
+        }
+        return nr;
+    }
+
+    public Integer getTotalPointsForBlack() {
+        int nr = 0;
+        for (int i = 0; i < 8; i++) {
+            for (int j = 0; j < 8; j++) {
+                if (this.getCellOnTheBordMap()[i][j].getPieces() != null && !this.getCellOnTheBordMap()[i][j].getPieces().isWhite()) {
+                    nr += this.getCellOnTheBordMap()[i][j].getPieces().getPoints();
+                }
+            }
+        }
+        return nr;
     }
 }

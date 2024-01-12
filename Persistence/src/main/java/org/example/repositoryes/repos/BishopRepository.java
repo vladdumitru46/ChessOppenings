@@ -3,6 +3,7 @@ package org.example.repositoryes.repos;
 import com.example.models.board.Board;
 import com.example.models.board.CellOnTheBord;
 import com.example.models.pieces.Bishop;
+import com.example.models.pieces.King;
 import org.example.repositoryes.interfaces.pieces.IRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -11,6 +12,7 @@ import org.springframework.stereotype.Repository;
 @Repository
 public class BishopRepository implements IRepository<Bishop> {
     Logger logger = LoggerFactory.getLogger(BishopRepository.class);
+
 
     @Override
     public boolean canMove(Board board, CellOnTheBord start, CellOnTheBord end, Bishop pieces) {
@@ -46,6 +48,29 @@ public class BishopRepository implements IRepository<Bishop> {
             currentColumn += colIncrement;
         }
         logger.info("the bishop can move!");
+        KingRepository kingRepository = new KingRepository();
+        CellOnTheBord kingsCell = board.getKing(pieces.isWhite());
+        King king = (King) kingsCell.getPieces();
+        if (king.isInCheck()) {
+            if (!kingRepository.checkIfTheKingIsInCheck(board,
+                    board.getCellOnTheBordMap()[end.getLineCoordinate()][end.getColumnCoordinate()], kingsCell, king)) {
+                return false;
+            } else {
+                king.setInCheck(false);
+            }
+        }
         return true;
+    }
+
+    @Override
+    public int getNrOfMoves(Board board, CellOnTheBord cell, int nr) {
+        for (int i = 0; i < 8; i++) {
+            for (int j = 0; j < 8; j++) {
+                if (canMove(board, cell, board.getCellOnTheBordMap()[i][j], (Bishop) cell.getPieces())) {
+                    nr++;
+                }
+            }
+        }
+        return nr;
     }
 }

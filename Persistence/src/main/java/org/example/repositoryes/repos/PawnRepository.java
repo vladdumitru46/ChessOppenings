@@ -2,6 +2,7 @@ package org.example.repositoryes.repos;
 
 import com.example.models.board.Board;
 import com.example.models.board.CellOnTheBord;
+import com.example.models.pieces.King;
 import com.example.models.pieces.Pawn;
 import com.example.models.pieces.Pieces;
 import org.example.repositoryes.interfaces.pieces.IRepository;
@@ -13,40 +14,59 @@ import org.springframework.stereotype.Repository;
 public class PawnRepository implements IRepository<Pawn> {
     Logger logger = LoggerFactory.getLogger(PawnRepository.class);
 
-    //TODO redo to be correct
     @Override
     public boolean canMove(Board board, CellOnTheBord start, CellOnTheBord end, Pawn pawn) {
         Pieces pieces = board.getCellOnTheBordMap()[end.getLineCoordinate()][end.getColumnCoordinate()].getPieces();
+        if (!canAttackOtherPiece(board, start, end, pawn)) {
+            if (pawn.isWhite()) {
+                if (start.getLineCoordinate() + 1 != end.getLineCoordinate() &&
+                        (start.getLineCoordinate() != 1 && end.getLineCoordinate() != 3 && end.getColumnCoordinate() != start.getColumnCoordinate())) {
+                    return false;
+                } else {
+                    if (start.getColumnCoordinate() != end.getColumnCoordinate()) {
+                        return false;
+                    } else if (pieces != null) {
+                        return false;
+                    }
+                }
+            } else {
+                if (start.getLineCoordinate() - 1 != end.getLineCoordinate() &&
+                        (start.getLineCoordinate() != 6 && end.getLineCoordinate() != 4 && end.getColumnCoordinate() != start.getColumnCoordinate())) {
+                    return false;
+                } else {
+                    if (start.getColumnCoordinate() != end.getColumnCoordinate()) {
+                        return false;
+                    } else if (pieces != null) {
+                        return false;
+                    }
+                }
 
-        if (pawn.isWhite()) {
-            if (start.getLineCoordinate() + 1 == end.getLineCoordinate() && pieces == null) {
-                logger.info("the pawn can move");
-                return true;
-            }
-            if (start.getLineCoordinate() == 1) {
-                if (end.getLineCoordinate() == 3 && end.getColumnCoordinate() == start.getColumnCoordinate()) {
-                    logger.info("the pawn can move");
-                    return true;
-                }
-            }
-        } else {
-            if (start.getLineCoordinate() - 1 == end.getLineCoordinate() && pieces == null) {
-                logger.info("the pawn can move");
-                return true;
-            }
-            if (start.getLineCoordinate() == 6) {
-                if (end.getLineCoordinate() == 4 && end.getColumnCoordinate() == start.getColumnCoordinate()) {
-                    logger.info("the pawn can move");
-                    return true;
-                }
             }
         }
-        if (canAttackOtherPiece(board, start, end, pawn)) {
-            logger.info("the pawn can move");
-            return true;
+        KingRepository kingRepository = new KingRepository();
+        CellOnTheBord kingsCell = board.getKing(pawn.isWhite());
+        King king = (King) kingsCell.getPieces();
+        if (king.isInCheck()) {
+            if (!kingRepository.checkIfTheKingIsInCheck(board, board.getCellOnTheBordMap()[end.getLineCoordinate()][end.getColumnCoordinate()], kingsCell, king)) {
+                return false;
+            } else {
+                king.setInCheck(false);
+            }
         }
         logger.info("the pawn cannot move to this square {}{}", end.getLineCoordinate(), end.getColumnCoordinate());
-        return false;
+        return true;
+    }
+
+    @Override
+    public int getNrOfMoves(Board board, CellOnTheBord cell, int nr) {
+        for (int i = 0; i < 8; i++) {
+            for (int j = 0; j < 8; j++) {
+                if (canMove(board, cell, board.getCellOnTheBordMap()[i][j], (Pawn) cell.getPieces())) {
+                    nr++;
+                }
+            }
+        }
+        return nr;
     }
 
     private boolean canAttackOtherPiece(Board board, CellOnTheBord start, CellOnTheBord end, Pawn pawn) {

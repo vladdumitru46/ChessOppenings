@@ -2,6 +2,7 @@ package org.example.repositoryes.repos;
 
 import com.example.models.board.Board;
 import com.example.models.board.CellOnTheBord;
+import com.example.models.pieces.King;
 import com.example.models.pieces.Rook;
 import org.example.repositoryes.interfaces.pieces.IRepository;
 import org.slf4j.Logger;
@@ -46,6 +47,30 @@ public class RookRepository implements IRepository<Rook> {
         }
         pieces.setHasBeenMoved(true);
         start.setPieces(pieces);
+
+        KingRepository kingRepository = new KingRepository();
+        CellOnTheBord kingsCell = board.getKing(pieces.isWhite());
+        King king = (King) kingsCell.getPieces();
+        if (king.isInCheck()) {
+            if (!kingRepository.checkIfTheKingIsInCheck(board, board.getCellOnTheBordMap()[endLine][endColumn], kingsCell, king)) {
+                return false;
+            } else {
+                king.setInCheck(false);
+            }
+        }
+
         return true;
+    }
+
+    @Override
+    public int getNrOfMoves(Board board, CellOnTheBord cell, int nr) {
+        for (int i = 0; i < 8; i++) {
+            for (int j = 0; j < 8; j++) {
+                if (canMove(board, cell, board.getCellOnTheBordMap()[i][j], (Rook) cell.getPieces())) {
+                    nr++;
+                }
+            }
+        }
+        return nr;
     }
 }

@@ -2,10 +2,15 @@ package com.example.models.pieces;
 
 import com.example.models.board.Board;
 import com.example.models.board.CellOnTheBord;
+import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
+@Getter
 public class Queen extends Pieces {
+    
+    private final Integer points = 3;
+
     public Queen(boolean white) {
         super(white);
     }

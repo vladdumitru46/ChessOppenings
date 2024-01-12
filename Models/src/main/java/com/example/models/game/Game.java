@@ -44,6 +44,12 @@ public class Game {
     private Integer blackPlayerId;
 
     @Column(
+            name = "boardId",
+            nullable = false
+    )
+    private Integer boardId;
+
+    @Column(
             name = "moveNumber",
             nullable = false
     )
@@ -61,11 +67,18 @@ public class Game {
     )
     private String blackMove;
 
-    public Game(Integer whitePlayerId, Integer blackPlayerId, Integer moveNumber, String whiteMove, String blackMove) {
+
+    @Enumerated(EnumType.STRING)
+    private GameStatus gameStatus;
+
+    public Game(Integer whitePlayerId, Integer blackPlayerId, Integer boardId, Integer moveNumber,
+                String whiteMove, String blackMove, GameStatus gameStatus) {
         this.whitePlayerId = whitePlayerId;
         this.blackPlayerId = blackPlayerId;
+        this.boardId = boardId;
         this.moveNumber = moveNumber;
         this.whiteMove = whiteMove;
         this.blackMove = blackMove;
+        this.gameStatus = gameStatus;
     }
 }

@@ -66,4 +66,59 @@ public class PieceService {
     public boolean canCastle(Board board, CellOnTheBord start, CellOnTheBord end, Pieces king) {
         return kingRepository.canCastle(board, start, end, (King) king);
     }
+
+    public Integer numberOfPossibleMoves(Board board) {
+        int nr = 0;
+        for (int i = 0; i < 8; i++) {
+            for (int j = 0; j < 8; j++) {
+                if (board.getCellOnTheBordMap()[i][j].getPieces() != null) {
+                    nr += numberOfPossibleMovesForAPiece(board, board.getCellOnTheBordMap()[i][j]);
+                }
+            }
+        }
+        return nr;
+    }
+
+    public Integer numberOfPossibleMovesForBlack(Board board) {
+        int nr = 0;
+        for (int i = 0; i < 8; i++) {
+            for (int j = 0; j < 8; j++) {
+                if (board.getCellOnTheBordMap()[i][j].getPieces() != null && !board.getCellOnTheBordMap()[i][j].getPieces().isWhite()) {
+                    nr += numberOfPossibleMovesForAPiece(board, board.getCellOnTheBordMap()[i][j]);
+                }
+            }
+        }
+        return nr;
+    }
+
+    public Integer numberOfPossibleMovesForWhite(Board board) {
+        int nr = 0;
+        for (int i = 0; i < 8; i++) {
+            for (int j = 0; j < 8; j++) {
+                if (board.getCellOnTheBordMap()[i][j].getPieces() != null && board.getCellOnTheBordMap()[i][j].getPieces().isWhite()) {
+                    nr += numberOfPossibleMovesForAPiece(board, board.getCellOnTheBordMap()[i][j]);
+                }
+            }
+        }
+        return nr;
+    }
+
+    public Integer numberOfPossibleMovesForAPiece(Board board, CellOnTheBord cell) {
+        int nr = 0;
+        if (cell.getPieces() instanceof King) {
+            nr = kingRepository.getNrOfMoves(board, cell, nr);
+        } else if (cell.getPieces() instanceof Queen) {
+            nr = queenRepository.getNrOfMoves(board, cell, nr);
+        } else if (cell.getPieces() instanceof Bishop) {
+            nr = bishopRepository.getNrOfMoves(board, cell, nr);
+        } else if (cell.getPieces() instanceof Knight) {
+            nr = knightRepository.getNrOfMoves(board, cell, nr);
+        } else if (cell.getPieces() instanceof Rook) {
+            nr = rookRepository.getNrOfMoves(board, cell, nr);
+        } else if (cell.getPieces() instanceof Pawn) {
+            nr = pawnRepository.getNrOfMoves(board, cell, nr);
+        }
+        return nr;
+    }
+
 }

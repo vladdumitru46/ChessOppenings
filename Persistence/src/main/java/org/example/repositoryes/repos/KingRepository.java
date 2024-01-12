@@ -58,6 +58,18 @@ public class KingRepository implements IKingRepository {
     }
 
     @Override
+    public int getNrOfMoves(Board board, CellOnTheBord cell, int nr) {
+        for (int i = 0; i < 8; i++) {
+            for (int j = 0; j < 8; j++) {
+                if (canMove(board, cell, board.getCellOnTheBordMap()[i][j], (King) cell.getPieces())) {
+                    nr++;
+                }
+            }
+        }
+        return nr;
+    }
+
+    @Override
     public boolean checkIfTheKingIsInCheck(Board board, CellOnTheBord start, CellOnTheBord end, Pieces king) {
         for (int i = 0; i < board.getCellOnTheBordMap().length; i++) {
             for (int j = 0; j < board.getCellOnTheBordMap().length; j++) {

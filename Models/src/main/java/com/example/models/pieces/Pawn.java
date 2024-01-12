@@ -2,20 +2,17 @@ package com.example.models.pieces;
 
 import com.example.models.board.Board;
 import com.example.models.board.CellOnTheBord;
+import lombok.Getter;
+import lombok.Setter;
 
+@Getter
+@Setter
 public class Pawn extends Pieces {
     private boolean canEnPassant = false;
+    private final Integer points = 1;
 
     public Pawn(boolean white) {
         super(white);
-    }
-
-    public void setCanEnPassant(boolean canEnPassant) {
-        this.canEnPassant = canEnPassant;
-    }
-
-    public boolean isCanEnPassant() {
-        return canEnPassant;
     }
 
 
