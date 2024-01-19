@@ -120,7 +120,7 @@ public class Board {
         return "";
     }
 
-    public String transformMoveToCorrectNotation( CellOnTheBord start, CellOnTheBord end) {
+    public String transformMoveToCorrectNotation(CellOnTheBord start, CellOnTheBord end) {
         String notation = "";
         if (start.getPieces() instanceof King) {
             notation += "K";
@@ -150,7 +150,7 @@ public class Board {
             }
             notation += "x";
         }
-        notation += transformLinesToLetters(end) + end.getColumnCoordinate();
+        notation += transformLinesToLetters(end) + (end.getColumnCoordinate() + 1);
         return notation;
     }
 }

@@ -10,4 +10,12 @@ import lombok.Setter;
 public class Move {
     private CellOnTheBord start;
     private CellOnTheBord end;
+
+    @Override
+    public String toString() {
+        return "Move " +
+                start.getLineCoordinate() + start.getColumnCoordinate() +
+                "->" + end.getLineCoordinate() + end.getColumnCoordinate() +
+                "piece: " + start.getPieces();
+    }
 }

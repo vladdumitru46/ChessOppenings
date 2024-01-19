@@ -8,7 +8,7 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 @Getter
 public class Queen extends Pieces {
-    
+
     private final Integer points = 3;
 
     public Queen(boolean white) {
@@ -60,7 +60,6 @@ public class Queen extends Pieces {
 
         int currentLine = startLine + rowIncrement;
         int currentColumn = startColumn + colIncrement;
-        int ok = 1;
         while (currentLine != endLine && currentColumn != endColumn) {
             CellOnTheBord currentCell = board.getCellOnTheBordMap()[currentLine][currentColumn];
             if (currentCell.getPieces() != null) {

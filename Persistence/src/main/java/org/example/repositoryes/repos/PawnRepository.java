@@ -2,7 +2,6 @@ package org.example.repositoryes.repos;
 
 import com.example.models.board.Board;
 import com.example.models.board.CellOnTheBord;
-import com.example.models.pieces.King;
 import com.example.models.pieces.Pawn;
 import com.example.models.pieces.Pieces;
 import org.example.repositoryes.interfaces.pieces.IRepository;
@@ -20,23 +19,28 @@ public class PawnRepository implements IRepository<Pawn> {
     public boolean canMove(Board board, CellOnTheBord start, CellOnTheBord end, Pawn pawn) {
         Pieces pieces = board.getCellOnTheBordMap()[end.getLineCoordinate()][end.getColumnCoordinate()].getPieces();
         if (!canAttackOtherPiece(board, start, end, pawn)) {
+            if (start.getColumnCoordinate() != end.getColumnCoordinate()) {
+                return false;
+            }
             if (pawn.isWhite()) {
-                if (start.getLineCoordinate() + 1 != end.getLineCoordinate() &&
-                        (start.getLineCoordinate() != 1 && end.getLineCoordinate() != 3 && end.getColumnCoordinate() != start.getColumnCoordinate())) {
-                    return false;
+                if (start.getLineCoordinate() == 1) {
+                    if (start.getLineCoordinate() + 1 != end.getLineCoordinate() && end.getLineCoordinate() != 3) {
+                        return false;
+                    }
                 } else {
-                    if (start.getColumnCoordinate() != end.getColumnCoordinate()) {
+                    if (start.getLineCoordinate() + 1 != end.getLineCoordinate()) {
                         return false;
                     } else if (pieces != null) {
                         return false;
                     }
                 }
             } else {
-                if (start.getLineCoordinate() - 1 != end.getLineCoordinate() &&
-                        (start.getLineCoordinate() != 6 && end.getLineCoordinate() != 4 && end.getColumnCoordinate() != start.getColumnCoordinate())) {
-                    return false;
+                if (start.getLineCoordinate() == 6) {
+                    if (start.getLineCoordinate() - 1 != end.getLineCoordinate() && end.getLineCoordinate() != 4) {
+                        return false;
+                    }
                 } else {
-                    if (start.getColumnCoordinate() != end.getColumnCoordinate()) {
+                    if (start.getLineCoordinate() - 1 != end.getLineCoordinate()) {
                         return false;
                     } else if (pieces != null) {
                         return false;

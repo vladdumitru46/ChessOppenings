@@ -243,6 +243,12 @@ public class MovePiecesController {
 
         if (Objects.equals(movePiecesRequest.getPieceColour(), "white") && board.isWhitesTurn()) {
             if (pieceService.canTheQueenMove(board, board.getCellOnTheBordMap()[line][column], board.getCellOnTheBordMap()[line1][column1], (Queen) board.getCellOnTheBordMap()[line][column].getPieces())) {
+                board.getCellOnTheBordMap()[line1][column1].setPieces(board.getCellOnTheBordMap()[line][column].getPieces());
+                board.getCellOnTheBordMap()[line][column] = new CellOnTheBord(null, line, column);
+                System.out.println(pieceService.numberOfPossibleMovesForBlack(board));
+                pieceService.getAllPossibleMovesForBlack(board).forEach(System.out::println);
+                System.out.println(pieceService.numberOfPossibleMovesForWhite(board));
+                pieceService.getAllPossibleMovesForWhite(board).forEach(System.out::println);
 
                 Queen queen = (Queen) board.getCellOnTheBordMap()[line1][column1].getPieces();
                 CellOnTheBord blackKing = board.getKing(false);
@@ -257,9 +263,10 @@ public class MovePiecesController {
             }
         } else if (Objects.equals(movePiecesRequest.getPieceColour(), "black") && !board.isWhitesTurn()) {
             if (pieceService.canTheQueenMove(board, board.getCellOnTheBordMap()[line][column], board.getCellOnTheBordMap()[line1][column1], (Queen) board.getCellOnTheBordMap()[line][column].getPieces())) {
-
                 board.getCellOnTheBordMap()[line1][column1].setPieces(board.getCellOnTheBordMap()[line][column].getPieces());
                 board.getCellOnTheBordMap()[line][column] = new CellOnTheBord(null, line, column);
+                System.out.println(pieceService.numberOfPossibleMovesForBlack(board));
+                System.out.println(pieceService.numberOfPossibleMovesForWhite(board));
 
                 Queen queen = (Queen) board.getCellOnTheBordMap()[line1][column1].getPieces();
                 CellOnTheBord blackKing = board.getKing(true);

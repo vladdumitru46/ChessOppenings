@@ -13,8 +13,6 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
-import java.util.stream.IntStream;
-import java.util.stream.Stream;
 
 
 @Service("pieceService")
@@ -76,15 +74,6 @@ public class PieceService {
     }
 
     public Integer numberOfPossibleMoves(Board board) {
-//        int nr = 0;
-//        for (int i = 0; i < 8; i++) {
-//            for (int j = 0; j < 8; j++) {
-//                if (board.getCellOnTheBordMap()[i][j].getPieces() != null) {
-//                    nr += numberOfPossibleMovesForAPiece(board, board.getCellOnTheBordMap()[i][j]);
-//                }
-//            }
-//        }
-//        return nr;
 
         return Arrays.stream(board.getCellOnTheBordMap())
                 .flatMap(Arrays::stream)
@@ -93,16 +82,9 @@ public class PieceService {
                 .sum();
     }
 
+    //todo: vezi de ce nu face bine nr de piese pt negru
     public Integer numberOfPossibleMovesForBlack(Board board) {
-//        int nr = 0;
-//        for (int i = 0; i < 8; i++) {
-//            for (int j = 0; j < 8; j++) {
-//                if (board.getCellOnTheBordMap()[i][j].getPieces() != null && !board.getCellOnTheBordMap()[i][j].getPieces().isWhite()) {
-//                    nr += numberOfPossibleMovesForAPiece(board, board.getCellOnTheBordMap()[i][j]);
-//                }
-//            }
-//        }
-//        return nr;
+
         return Arrays.stream(board.getCellOnTheBordMap())
                 .flatMap(Arrays::stream)
                 .filter(i -> i.getPieces() != null && !i.getPieces().isWhite())
@@ -112,15 +94,7 @@ public class PieceService {
     }
 
     public Integer numberOfPossibleMovesForWhite(Board board) {
-//        int nr = 0;
-//        for (int i = 0; i < 8; i++) {
-//            for (int j = 0; j < 8; j++) {
-//                if (board.getCellOnTheBordMap()[i][j].getPieces() != null && board.getCellOnTheBordMap()[i][j].getPieces().isWhite()) {
-//                    nr += numberOfPossibleMovesForAPiece(board, board.getCellOnTheBordMap()[i][j]);
-//                }
-//            }
-//        }
-//        return nr;
+
         return Arrays.stream(board.getCellOnTheBordMap())
                 .flatMap(Arrays::stream)
                 .filter(i -> i.getPieces() != null && i.getPieces().isWhite())
@@ -147,73 +121,38 @@ public class PieceService {
     }
 
 
-    public List<String> getAllPossibleMovesForWhite(Board board) {
+    public List<Move> getAllPossibleMovesForWhite(Board board) {
         List<CellOnTheBord> collect = Arrays.stream(board.getCellOnTheBordMap())
                 .flatMap(Arrays::stream)
                 .filter(i -> i.getPieces() != null && i.getPieces().isWhite())
                 .collect(Collectors.toList());
 
-        List<String> possibleMoves = new ArrayList<>();
-//        for (var piece : collect) {
-//            for (int i = 0; i < 8; i++) {
-//                for (int j = 0; j < 8; j++) {
-//                    CellOnTheBord endCell = board.getCellOnTheBordMap()[i][j];
-//                    if (possibleMovesForAPiece(board, piece, endCell)) {
-//                        possibleMoves.add(board.transformMoveToCorrectNotation(piece, endCell));
-//                    }
-//                }
-//            }
-//        }
-        collect.stream()
-                .flatMap(piece -> IntStream.range(0, 8)
-                        .boxed()
-                        .flatMap(i -> IntStream.range(0, 8)
-                                .mapToObj(j -> board.getCellOnTheBordMap()[i][j])
-                                .filter(endCell -> possibleMovesForAPiece(board, piece, endCell))
-                                .map(endCell -> board.transformMoveToCorrectNotation(piece, endCell))))
-                .forEach(possibleMoves::add);
-        return possibleMoves;
+        List<Move> possibleMoves = new ArrayList<>();
+
+        return collect.stream()
+                .flatMap(piece -> Arrays.stream(board.getCellOnTheBordMap())
+                        .flatMap(Arrays::stream)
+                        .filter(endCell -> !piece.equals(endCell) && possibleMovesForAPiece(board, piece, endCell))
+                        .map(endCell -> new Move(piece, endCell)))
+                .collect(Collectors.toList());
     }
 
-    public List<String> getAllPossibleMovesForBlack(Board board) {
+    public List<Move> getAllPossibleMovesForBlack(Board board) {
         List<CellOnTheBord> collect = Arrays.stream(board.getCellOnTheBordMap())
                 .flatMap(Arrays::stream)
                 .filter(i -> i.getPieces() != null && !i.getPieces().isWhite())
                 .collect(Collectors.toList());
 
-        List<String> possibleMoves = new ArrayList<>();
-//        for (var piece : collect) {
-//            for (int i = 0; i < 8; i++) {
-//                for (int j = 0; j < 8; j++) {
-//                    CellOnTheBord endCell = board.getCellOnTheBordMap()[i][j];
-//                    if (possibleMovesForAPiece(board, piece, endCell)) {
-//                        possibleMoves.add(board.transformMoveToCorrectNotation(piece, endCell));
-//                    }
-//                }
-//            }
-//        }
-        collect.stream()
-                .flatMap(piece -> IntStream.range(0, 8)
-                        .boxed()
-                        .flatMap(i -> IntStream.range(0, 8)
-                                .mapToObj(j -> board.getCellOnTheBordMap()[i][j])
-                                .filter(endCell -> possibleMovesForAPiece(board, piece, endCell))
-                                .map(endCell -> board.transformMoveToCorrectNotation(piece, endCell))))
-                .forEach(possibleMoves::add);
-        return possibleMoves;
+        List<Move> possibleMoves = new ArrayList<>();
+        return collect.stream()
+                .flatMap(piece -> Arrays.stream(board.getCellOnTheBordMap())
+                        .flatMap(Arrays::stream)
+                        .filter(endCell -> !piece.equals(endCell) && possibleMovesForAPiece(board, piece, endCell))
+                        .map(endCell -> new Move(piece, endCell)))
+                .collect(Collectors.toList());
     }
 
     public List<Move> getAllPossibleMoves(Board board) {
-//        for (var piece : collect) {
-//            for (int i = 0; i < 8; i++) {
-//                for (int j = 0; j < 8; j++) {
-//                    CellOnTheBord endCell = board.getCellOnTheBordMap()[i][j];
-//                    if (possibleMovesForAPiece(board, piece, endCell)) {
-//                        possibleMoves.add(board.transformMoveToCorrectNotation(piece, endCell));
-//                    }
-//                }
-//            }
-//        }
         List<CellOnTheBord> collect = Arrays.stream(board.getCellOnTheBordMap())
                 .flatMap(Arrays::stream)
                 .filter(i -> i.getPieces() != null)
@@ -222,7 +161,7 @@ public class PieceService {
         return collect.stream()
                 .flatMap(piece -> Arrays.stream(board.getCellOnTheBordMap())
                         .flatMap(Arrays::stream)
-                        .filter(endCell -> possibleMovesForAPiece(board, piece, endCell))
+                        .filter(endCell -> !piece.equals(endCell) && possibleMovesForAPiece(board, piece, endCell))
                         .map(endCell -> new Move(piece, endCell)))
                 .collect(Collectors.toList());
     }
