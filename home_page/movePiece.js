@@ -188,29 +188,59 @@ function getPiece(square) {
                 })
 
             };
-            // alert(square1.getAttribute("data-piesa") + "\n" + square2.getAttribute("data-piesa"))
-            // Send the POST request to the correct URL
-            fetch(springBootURL, requestData)
-                .then(response => {
-                    if (response.ok) {
-                        square2.setAttribute('data-piesa', piesaSquare1);
-                        square2.querySelector('img').src = imageUrlSquare1;
 
-                        square1.setAttribute('data-piesa', 'none');
-                        square1.querySelector('img').src = "";
-
-                        square1 = null;
-                        square2 = null;
-                    } else {
-                        square1 = null;
-                        square2 = null;
-                        console.log("cannot move the piece there! check the backend logs for more information!")
-                    }
-                })
-                .catch(error => {
-                    console.error("Error:", error);
-                });
+            let checkMateCheck = "http://localhost:8080/move/checkmate"
+            makeMoves(springBootURL, imageUrlSquare1, requestData, piesaSquare1, checkMateCheck, atributes[0])
         }
+    }
+}
+
+
+async function makeMoves(springBootURL, imageUrlSquare1, requestData, piesaSquare1, checkMateCheck, colour) {
+    try {
+        bestMove = "";
+        let ai = "http://localhost:8080/move/ai/bestMove";
+        console.log(ai);
+        response3 = await fetch(ai, {
+            method: "POST",
+            body: JSON.stringify({
+                isWhite: colour
+            })
+        })
+        if (response3.ok) {
+            bestMove = await response3.text();
+            console.log(bestMove);
+        } else {
+            // Handle other cases if needed
+        }
+        const response1 = await fetch(springBootURL, requestData);
+
+        if (response1.ok) {
+            square2.setAttribute('data-piesa', piesaSquare1);
+            square2.querySelector('img').src = imageUrlSquare1;
+
+            square1.setAttribute('data-piesa', 'none');
+            square1.querySelector('img').src = "";
+
+            square1 = null;
+            square2 = null;
+            const response2 = await fetch(checkMateCheck, {method: "POST"});
+
+            if (response2.ok) {
+                window.alert("Check mate!");
+            } else {
+                // handle other cases if needed
+            }
+            window.alert("best move for " + colour + " is: " + bestMove);
+        } else {
+            square1 = null;
+            square2 = null;
+            console.log("cannot move the piece there! check the backend logs for more information!");
+        }
+
+
+    } catch (error) {
+        console.error("Error:", error);
     }
 }
 
