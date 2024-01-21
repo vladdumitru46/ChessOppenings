@@ -2,6 +2,7 @@ package org.example.repositoryes.repos;
 
 import com.example.models.board.Board;
 import com.example.models.board.CellOnTheBord;
+import com.example.models.pieces.King;
 import com.example.models.pieces.Pawn;
 import com.example.models.pieces.Pieces;
 import org.example.repositoryes.interfaces.pieces.IRepository;
@@ -17,7 +18,13 @@ public class PawnRepository implements IRepository<Pawn> {
 
     @Override
     public boolean canMove(Board board, CellOnTheBord start, CellOnTheBord end, Pawn pawn) {
-        Pieces pieces = board.getCellOnTheBordMap()[end.getLineCoordinate()][end.getColumnCoordinate()].getPieces();
+        if (pawn == null) {
+            return false;
+        }
+
+        if (end.getPieces() instanceof King) {
+            return false;
+        }
         if (!canAttackOtherPiece(board, start, end, pawn)) {
             if (start.getColumnCoordinate() != end.getColumnCoordinate()) {
                 return false;
@@ -26,8 +33,11 @@ public class PawnRepository implements IRepository<Pawn> {
                 if (start.getLineCoordinate() == 1) {
                     if (start.getLineCoordinate() + 1 != end.getLineCoordinate() && end.getLineCoordinate() != 3) {
                         return false;
+                    } else if (board.getCellOnTheBordMap()[3][start.getColumnCoordinate()].getPieces() != null || board.getCellOnTheBordMap()[2][start.getColumnCoordinate()].getPieces() != null) {
+                        return false;
                     }
                 } else {
+                    Pieces pieces = board.getCellOnTheBordMap()[end.getLineCoordinate()][end.getColumnCoordinate()].getPieces();
                     if (start.getLineCoordinate() + 1 != end.getLineCoordinate()) {
                         return false;
                     } else if (pieces != null) {
@@ -38,8 +48,11 @@ public class PawnRepository implements IRepository<Pawn> {
                 if (start.getLineCoordinate() == 6) {
                     if (start.getLineCoordinate() - 1 != end.getLineCoordinate() && end.getLineCoordinate() != 4) {
                         return false;
+                    } else if (board.getCellOnTheBordMap()[5][start.getColumnCoordinate()].getPieces() != null || board.getCellOnTheBordMap()[4][start.getColumnCoordinate()].getPieces() != null) {
+                        return false;
                     }
                 } else {
+                    Pieces pieces = board.getCellOnTheBordMap()[end.getLineCoordinate()][end.getColumnCoordinate()].getPieces();
                     if (start.getLineCoordinate() - 1 != end.getLineCoordinate()) {
                         return false;
                     } else if (pieces != null) {

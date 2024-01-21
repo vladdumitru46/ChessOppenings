@@ -5,6 +5,7 @@ import com.example.models.board.CellOnTheBord;
 import com.example.models.board.Move;
 import org.example.PieceService;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class MiniMax {
@@ -18,7 +19,7 @@ public class MiniMax {
         int bestValue = isWhite ? Integer.MIN_VALUE : Integer.MAX_VALUE;
         Move bestMove = null;
 
-        for (var move : moves) {
+        for (Move move : moves) {
             Board newBoard = cloneBoard(board);
             pieceService.makeMove(newBoard, move);
 
@@ -34,15 +35,17 @@ public class MiniMax {
     }
 
     private int miniMax(Board board, int depth, int alpha, int beta, boolean isMaximizing, PieceService pieceService) {
-        if (depth == 0 || isGameOver(board, pieceService)) {
+        if (depth == 0 || isGameOver(board, pieceService)) {// || isCheckmateIn2(board, isMaximizing, pieceService)) {
             return new Evaluation().evaluationScore(board, pieceService, isMaximizing);
         }
 
-        List<Move> moves = pieceService.getAllPossibleMoves(board);
 
         if (isMaximizing) {
+
+            List<Move> moves = pieceService.getAllPossibleMovesForWhite(board);
+
             int maxEval = Integer.MIN_VALUE;
-            for (var move : moves) {
+            for (Move move : moves) {
                 Board newBoard = cloneBoard(board);
                 pieceService.makeMove(newBoard, move);
                 int eval = miniMax(newBoard, depth - 1, alpha, beta, false, pieceService);
@@ -54,8 +57,9 @@ public class MiniMax {
             }
             return maxEval;
         } else {
+            List<Move> moves = pieceService.getAllPossibleMovesForBlack(board);
             int minEval = Integer.MAX_VALUE;
-            for (var move : moves) {
+            for (Move move : moves) {
                 Board newBoard = cloneBoard(board);
                 pieceService.makeMove(newBoard, move);
                 int eval = miniMax(newBoard, depth - 1, alpha, beta, true, pieceService);
@@ -84,7 +88,54 @@ public class MiniMax {
     }
 
     private boolean isGameOver(Board board, PieceService pieceService) {
-        return pieceService.numberOfPossibleMovesForWhite(board) == 0 || pieceService.numberOfPossibleMovesForBlack(board) == 0;
+        return pieceService.getAllPossibleMovesForWhite(board).size() == 0
+                || pieceService.getAllPossibleMovesForBlack(board).size() == 0;
     }
 
+    public boolean isCheckmateIn2(Board board, boolean isWhite, PieceService pieceService) {
+        List<Move> moves = new ArrayList<>();
+        if (isWhite) {
+            moves = pieceService.getAllPossibleMovesForWhite(board);
+        } else {
+            moves = pieceService.getAllPossibleMovesForBlack(board);
+        }
+        for (Move move1 : moves) {
+            Board boardAfterMove1 = cloneBoard(board);
+            pieceService.makeMove(boardAfterMove1, move1);
+
+            List<Move> opponentMovesAfterMove1 = new ArrayList<>();
+            if (isWhite) {
+                opponentMovesAfterMove1 = pieceService.getAllPossibleMovesForBlack(board);
+            } else {
+                opponentMovesAfterMove1 = pieceService.getAllPossibleMovesForWhite(board);
+            }
+            for (Move move2 : opponentMovesAfterMove1) {
+                Board boardAfterMove2 = cloneBoard(boardAfterMove1);
+                pieceService.makeMove(boardAfterMove2, move2);
+
+                List<Move> opponentMovesAfterMove2 = new ArrayList<>();
+                if (isWhite) {
+                    opponentMovesAfterMove2 = pieceService.getAllPossibleMovesForWhite(board);
+                } else {
+                    opponentMovesAfterMove2 = pieceService.getAllPossibleMovesForBlack(board);
+                }
+                int nr = 0;
+                for (Move move3 : opponentMovesAfterMove2) {
+                    Board boardAfterMove3 = cloneBoard(boardAfterMove1);
+                    pieceService.makeMove(boardAfterMove3, move2);
+
+                    if (isGameOver(boardAfterMove2, pieceService)) {
+                        nr++;
+                    }
+
+                }
+                if (nr == opponentMovesAfterMove2.size()) {
+                    return true;
+                }
+            }
+
+        }
+        return false;
+
+    }
 }

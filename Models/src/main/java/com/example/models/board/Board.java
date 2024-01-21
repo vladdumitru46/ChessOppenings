@@ -25,13 +25,23 @@ public class Board {
     }
 
 
-    public CellOnTheBord getKing(final boolean isWhite) {
-        return Arrays.stream(cellOnTheBordMap)
-                .flatMap(Arrays::stream)
-                .filter(i -> i.getPieces() instanceof King && i.getPieces().isWhite() == isWhite)
-                .findFirst()
-                .orElse(null);
+    public CellOnTheBord getKing(boolean isWhite) {
+//        return Arrays.stream(cellOnTheBordMap)
+//                .flatMap(Arrays::stream)
+//                .filter(i -> i.getPieces() instanceof King && i.getPieces().isWhite() == isWhite)
+//                .findFirst()
+//                .orElse(null);
 
+        for (int i = 0; i < 8; i++) {
+            for (int j = 0; j < 8; j++) {
+                if (cellOnTheBordMap[i][j].getPieces() instanceof King) {
+                    if (cellOnTheBordMap[i][j].getPieces().isWhite() == isWhite) {
+                        return cellOnTheBordMap[i][j];
+                    }
+                }
+            }
+        }
+        return null;
     }
 
     public CellOnTheBord[][] setBoard() {
@@ -98,59 +108,4 @@ public class Board {
     }
 
 
-    public String transformLinesToLetters(CellOnTheBord cell) {
-        switch (cell.getLineCoordinate()) {
-            case 0:
-                return "a";
-            case 1:
-                return "b";
-            case 2:
-                return "c";
-            case 3:
-                return "d";
-            case 4:
-                return "e";
-            case 5:
-                return "f";
-            case 6:
-                return "g";
-            case 7:
-                return "h";
-        }
-        return "";
-    }
-
-    public String transformMoveToCorrectNotation(CellOnTheBord start, CellOnTheBord end) {
-        String notation = "";
-        if (start.getPieces() instanceof King) {
-            notation += "K";
-        } else if (start.getPieces() instanceof Queen) {
-            notation += "Q";
-        } else if (start.getPieces() instanceof Rook) {
-            notation += "R";
-        } else if (start.getPieces() instanceof Bishop) {
-            notation += "B";
-        } else if (start.getPieces() instanceof Knight) {
-            notation += "N";
-        }
-
-        if (!(start.getPieces() instanceof Pawn)) {
-
-            for (int j = 0; j < 8; j++) {
-                CellOnTheBord endCell = getCellOnTheBordMap()[start.getLineCoordinate()][j];
-                if (start.getPieces() == endCell.getPieces()) {
-                    notation += transformLinesToLetters(start);
-                    break;
-                }
-            }
-        }
-        if (end.getPieces() != null) {
-            if (start.getPieces() instanceof Pawn) {
-                notation += transformLinesToLetters(start);
-            }
-            notation += "x";
-        }
-        notation += transformLinesToLetters(end) + (end.getColumnCoordinate() + 1);
-        return notation;
-    }
 }

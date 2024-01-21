@@ -22,6 +22,10 @@ public class RookRepository implements IRepository<Rook> {
                 return false;
             }
         }
+
+        if (end.getPieces() instanceof King) {
+            return false;
+        }
         if (start.getLineCoordinate() != end.getLineCoordinate() && start.getColumnCoordinate() != end.getColumnCoordinate()) {
             logger.info("rook cannot move to this coordinates {}{}, because it's not a straight line", end.getLineCoordinate(), end.getColumnCoordinate());
             return false;

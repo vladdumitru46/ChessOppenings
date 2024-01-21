@@ -34,6 +34,9 @@ public class Bishop extends Pieces {
         int currentColumn = startColumn + colIncrement;
         log.info("verify if it's any piece that blocks the bishop");
         while (currentLine != endLine && currentColumn != endColumn) {
+            if (currentColumn == -1 || currentLine == -1) {
+                return false;
+            }
             CellOnTheBord currentCell = board.getCellOnTheBordMap()[currentLine][currentColumn];
             if (currentCell.getPieces() != null) {
                 log.info("bishop cannot move to this coordinates {}{}, because there is a piece that blocks the way", end.getLineCoordinate(), end.getColumnCoordinate());

@@ -2,6 +2,7 @@ package org.example.repositoryes.repos;
 
 import com.example.models.board.Board;
 import com.example.models.board.CellOnTheBord;
+import com.example.models.pieces.King;
 import com.example.models.pieces.Queen;
 import org.example.repositoryes.interfaces.pieces.IRepository;
 import org.slf4j.Logger;
@@ -20,6 +21,10 @@ public class QueenRepository implements IRepository<Queen> {
             if (end.getPieces().isWhite() == pieces.isWhite()) {
                 return false;
             }
+        }
+
+        if (end.getPieces() instanceof King) {
+            return false;
         }
         Integer line = Math.abs(start.getLineCoordinate() - end.getLineCoordinate());
         Integer column = Math.abs(start.getColumnCoordinate() - end.getColumnCoordinate());

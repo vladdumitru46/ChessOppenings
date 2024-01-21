@@ -23,6 +23,9 @@ public class BishopRepository implements IRepository<Bishop> {
                 return false;
             }
         }
+        if (end.getPieces() instanceof King) {
+            return false;
+        }
         Integer line = Math.abs(start.getLineCoordinate() - end.getLineCoordinate());
         Integer column = Math.abs(start.getColumnCoordinate() - end.getColumnCoordinate());
         if (line - column != 0) {

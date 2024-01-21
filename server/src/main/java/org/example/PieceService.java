@@ -9,10 +9,10 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 
 @Service("pieceService")
@@ -73,61 +73,12 @@ public class PieceService {
         return kingRepository.canCastle(board, start, end, (King) king);
     }
 
-    public Integer numberOfPossibleMoves(Board board) {
-
-        return Arrays.stream(board.getCellOnTheBordMap())
-                .flatMap(Arrays::stream)
-                .filter(i -> i.getPieces() != null)
-                .mapToInt(i -> numberOfPossibleMovesForAPiece(board, i))
-                .sum();
-    }
-
-    //todo: vezi de ce nu face bine nr de piese pt negru
-    public Integer numberOfPossibleMovesForBlack(Board board) {
-
-        return Arrays.stream(board.getCellOnTheBordMap())
-                .flatMap(Arrays::stream)
-                .filter(i -> i.getPieces() != null && !i.getPieces().isWhite())
-                .mapToInt(i -> numberOfPossibleMovesForAPiece(board, i))
-                .sum();
-
-    }
-
-    public Integer numberOfPossibleMovesForWhite(Board board) {
-
-        return Arrays.stream(board.getCellOnTheBordMap())
-                .flatMap(Arrays::stream)
-                .filter(i -> i.getPieces() != null && i.getPieces().isWhite())
-                .mapToInt(i -> numberOfPossibleMovesForAPiece(board, i))
-                .sum();
-    }
-
-    public Integer numberOfPossibleMovesForAPiece(Board board, CellOnTheBord cell) {
-        int nr = 0;
-        if (cell.getPieces() instanceof King) {
-            nr = kingRepository.getNrOfMoves(board, cell, nr);
-        } else if (cell.getPieces() instanceof Queen) {
-            nr = queenRepository.getNrOfMoves(board, cell, nr);
-        } else if (cell.getPieces() instanceof Bishop) {
-            nr = bishopRepository.getNrOfMoves(board, cell, nr);
-        } else if (cell.getPieces() instanceof Knight) {
-            nr = knightRepository.getNrOfMoves(board, cell, nr);
-        } else if (cell.getPieces() instanceof Rook) {
-            nr = rookRepository.getNrOfMoves(board, cell, nr);
-        } else if (cell.getPieces() instanceof Pawn) {
-            nr = pawnRepository.getNrOfMoves(board, cell, nr);
-        }
-        return nr;
-    }
-
 
     public List<Move> getAllPossibleMovesForWhite(Board board) {
         List<CellOnTheBord> collect = Arrays.stream(board.getCellOnTheBordMap())
                 .flatMap(Arrays::stream)
                 .filter(i -> i.getPieces() != null && i.getPieces().isWhite())
                 .collect(Collectors.toList());
-
-        List<Move> possibleMoves = new ArrayList<>();
 
         return collect.stream()
                 .flatMap(piece -> Arrays.stream(board.getCellOnTheBordMap())
@@ -143,7 +94,6 @@ public class PieceService {
                 .filter(i -> i.getPieces() != null && !i.getPieces().isWhite())
                 .collect(Collectors.toList());
 
-        List<Move> possibleMoves = new ArrayList<>();
         return collect.stream()
                 .flatMap(piece -> Arrays.stream(board.getCellOnTheBordMap())
                         .flatMap(Arrays::stream)
@@ -192,4 +142,102 @@ public class PieceService {
                 new CellOnTheBord(null, move.getStart().getLineCoordinate(), move.getStart().getColumnCoordinate());
 
     }
+
+
+    public String transformMoveToCorrectNotation(CellOnTheBord start, CellOnTheBord end, Board board) {
+        String notation = "";
+        if (start.getPieces() instanceof King) {
+            notation += "K";
+        } else if (start.getPieces() instanceof Queen) {
+            notation += "Q";
+        } else if (start.getPieces() instanceof Rook) {
+            notation += "R";
+        } else if (start.getPieces() instanceof Bishop) {
+            notation += "B";
+        } else if (start.getPieces() instanceof Knight) {
+            notation += "N";
+        }
+
+        if (!(start.getPieces() instanceof Pawn)) {
+
+            for (int j = 0; j < 8; j++) {
+                CellOnTheBord endCell = board.getCellOnTheBordMap()[start.getLineCoordinate()][j];
+                if (start.getPieces() == endCell.getPieces()) {
+                    notation += transformColumnToLetters(start);
+                    break;
+                }
+            }
+        }
+        if (end.getPieces() != null) {
+            if (start.getPieces() instanceof Pawn) {
+                notation += transformColumnToLetters(start);
+            }
+            notation += "x";
+        }
+        notation += transformColumnToLetters(end) + (end.getLineCoordinate() + 1);
+
+        King king = (King) board.getKing(!start.getPieces().isWhite()).getPieces();
+
+        Pieces pieceOnStart = board.getCellOnTheBordMap()[start.getLineCoordinate()][start.getColumnCoordinate()].getPieces();
+        Pieces pieceOnEnd = board.getCellOnTheBordMap()[end.getLineCoordinate()][end.getColumnCoordinate()].getPieces();
+        board.getCellOnTheBordMap()[end.getLineCoordinate()][end.getColumnCoordinate()].setPieces(pieceOnStart);
+        board.getCellOnTheBordMap()[start.getLineCoordinate()][start.getColumnCoordinate()].setPieces(null);
+
+        if (checkIsTheKingInCheck(board, start, end, king)) {
+            notation += "+";
+        }
+        board.getCellOnTheBordMap()[end.getLineCoordinate()][end.getColumnCoordinate()].setPieces(pieceOnEnd);
+        board.getCellOnTheBordMap()[start.getLineCoordinate()][start.getColumnCoordinate()].setPieces(pieceOnStart);
+
+
+        return notation;
+    }
+
+    public String transformColumnToLetters(CellOnTheBord cell) {
+        switch (cell.getColumnCoordinate()) {
+            case 0:
+                return "a";
+            case 1:
+                return "b";
+            case 2:
+                return "c";
+            case 3:
+                return "d";
+            case 4:
+                return "e";
+            case 5:
+                return "f";
+            case 6:
+                return "g";
+            case 7:
+                return "h";
+        }
+        return "";
+    }
+
+
+    public Integer numberOfCenterSquaresAttackedForWhite(Board board) {
+        return (int) Arrays.stream(board.getCellOnTheBordMap())
+                .flatMap(Arrays::stream)
+                .filter(cell -> cell.getPieces() != null && cell.getPieces().isWhite())
+                .filter(cell -> IntStream.range(4, 8)
+                        .anyMatch(i -> IntStream.range(0, 8)
+                                .anyMatch(j -> possibleMovesForAPiece(board, cell, board.getCellOnTheBordMap()[i][j]))
+                        )
+                )
+                .count();
+    }
+
+    public Integer numberOfCenterSquaresAttackedForBlack(Board board) {
+        return (int) Arrays.stream(board.getCellOnTheBordMap())
+                .flatMap(Arrays::stream)
+                .filter(cell -> cell.getPieces() != null && !cell.getPieces().isWhite())
+                .filter(cell -> IntStream.range(0, 4)
+                        .anyMatch(i -> IntStream.range(0, 8)
+                                .anyMatch(j -> possibleMovesForAPiece(board, cell, board.getCellOnTheBordMap()[i][j]))
+                        )
+                )
+                .count();
+    }
+
 }

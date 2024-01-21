@@ -61,6 +61,9 @@ public class Queen extends Pieces {
         int currentLine = startLine + rowIncrement;
         int currentColumn = startColumn + colIncrement;
         while (currentLine != endLine && currentColumn != endColumn) {
+            if (currentColumn == -1 || currentLine == -1) {
+                return false;
+            }
             CellOnTheBord currentCell = board.getCellOnTheBordMap()[currentLine][currentColumn];
             if (currentCell.getPieces() != null) {
                 log.info("queen cannot move to this coordinates {}{} from {}{}, because there is a piece that blocks the way", end.getLineCoordinate(), end.getColumnCoordinate(), start.getLineCoordinate(), start.getColumnCoordinate());

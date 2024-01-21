@@ -18,6 +18,10 @@ public class KnightRepository implements IRepository<Knight> {
     @Override
     public boolean canMove(Board board, CellOnTheBord start, CellOnTheBord end, Knight pieces) {
         logger.info("knight tries to move from {}{} to {}{}", start.getLineCoordinate(), start.getColumnCoordinate(), end.getLineCoordinate(), end.getColumnCoordinate());
+
+        if (end.getPieces() instanceof King) {
+            return false;
+        }
         if (end.getPieces() != null) {
             if (end.getPieces().isWhite() == pieces.isWhite()) {
                 logger.info("the knight cannot move in this coordinates {}{}, because there is a piece with the same colour as the king", end.getLineCoordinate(), end.getColumnCoordinate());
