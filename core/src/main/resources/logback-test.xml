@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration debug="false">
+    <statusListener class="ch.qos.logback.core.status.NopStatusListener"/>
+    <property name="LOGS" value="./logs"/>
+
+    <appender name="Console" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
+            <pattern>%black(%d{ISO8601}) %highlight(%-5level) [%blue(%t)] %yellow(%-35.35logger{35}): %msg%n%throwable
+            </pattern>
+            <charset>UTF-8</charset>
+        </encoder>
+    </appender>
+
+    <appender name="fileAppender" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <!-- Specifică numele fișierului de log de bază -->
+        <file>${LOGS}/client.log</file>
+
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <!-- Folosește formatul corect pentru a include data curentă -->
+            <fileNamePattern>${LOGS}/client.%d{yyyy-MM-dd}.%i.log</fileNamePattern>
+            <timeBasedFileNamingAndTriggeringPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
+                <maxFileSize>10MB</maxFileSize>
+            </timeBasedFileNamingAndTriggeringPolicy>
+        </rollingPolicy>
+        <encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
+            <Pattern>%d{yyyy-MM-dd} | %d{HH:mm:ss.SSS} | %-10.10thread | %5p | %-35.35logger{35} | %m{nolookups}%n
+            </Pattern>
+            <immediateFlush>true</immediateFlush>
+            <outputPatternAsHeader>false</outputPatternAsHeader>
+            <charset>UTF-8</charset>
+        </encoder>
+    </appender>
+
+    <logger name="com.example" level="debug" additivity="false">
+        <appender-ref ref="fileAppender"/>
+    </logger>
+
+    <logger name="org.example" level="debug" additivity="false">
+        <appender-ref ref="fileAppender"/>
+    </logger>
+
+    <logger name="org.springframework" level="warn" additivity="false">
+        <appender-ref ref="fileAppender"/>
+        <appender-ref ref="Console"/>
+    </logger>
+    <logger name="org.springframework.security" level="warn" additivity="false">
+        <appender-ref ref="fileAppender"/>
+        <appender-ref ref="Console"/>
+    </logger>
+
+    <logger name="ERROR logger" level="ERROR">
+        <appender-ref ref="Console"/>
+    </logger>
+    <logger name="DEBUG logger" level="DEBUG">
+        <appender-ref ref="Console"/>
+    </logger>
+
+    <logger name="org.example.MainApplication" level="info" additivity="false">
+        <appender-ref ref="fileAppender"/>
+        <appender-ref ref="Console"/>
+    </logger>
+
+    <root level="ERROR">
+        <appender-ref ref="fileAppender"/>
+        <appender-ref ref="Console"/>
+    </root>
+</configuration>
