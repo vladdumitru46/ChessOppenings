@@ -33,6 +33,7 @@ public class AiController {
         } catch (Exception e) {
             return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
         }
+
         MiniMax miniMax = new MiniMax();
         Move move;
         if (isWhite.contains("w")) {
