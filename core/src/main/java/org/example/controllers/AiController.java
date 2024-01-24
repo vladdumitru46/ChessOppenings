@@ -22,6 +22,7 @@ public class AiController {
     @PostMapping("/bestMove")
     public ResponseEntity<?> bestMove(@RequestBody String isWhite, @RequestBody String boardId) {
         String[] list = boardId.split(":");
+
         String[] list2 = list[1].split("}");
 
         int endIndex = list2[0].lastIndexOf("\"");
