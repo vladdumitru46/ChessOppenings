@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController()
 @AllArgsConstructor
-@RequestMapping("/move/ai")
+@RequestMapping("/chess/move/ai")
 @CrossOrigin(origins = "*")
 public class AiController {
 

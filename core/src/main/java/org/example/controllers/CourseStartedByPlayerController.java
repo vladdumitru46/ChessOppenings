@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @AllArgsConstructor
-@RequestMapping("/startCourse")
+@RequestMapping("/chess/startCourse")
 @CrossOrigin(origins = "*")
 public class CourseStartedByPlayerController {
 

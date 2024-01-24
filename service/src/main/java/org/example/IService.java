@@ -1,6 +1,6 @@
 package org.example;
 
-import com.example.models.courses.Player;
+import com.example.models.player.Player;
 
 public interface IService {
     void logIn(Player player, IServiceObserver client) throws Exception;

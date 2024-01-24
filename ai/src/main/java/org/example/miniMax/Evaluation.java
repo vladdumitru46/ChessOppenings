@@ -15,7 +15,8 @@ public class Evaluation {
         if (isWhite) {
             return (board.getTotalPointsForWhite() + pieceService.getAllPossibleMovesForWhite(board).size()
                     + pieceService.numberOfCenterSquaresAttackedForWhite(board)
-                    + pieceService.canABlackPieceBeCaptured(board))
+                    + pieceService.canABlackPieceBeCaptured(board)
+                    + pieceService.canTheKingBeCheckedInNextMove(board, isWhite))
                     - (board.getTotalPointsForBlack() + pieceService.getAllPossibleMovesForBlack(board).size()
                     + pieceService.numberOfCenterSquaresAttackedForBlack(board)
                     + pieceService.canAWhitePieceBeCaptured(board));
@@ -25,7 +26,8 @@ public class Evaluation {
                     + pieceService.canABlackPieceBeCaptured(board))
                     + (board.getTotalPointsForBlack() + pieceService.getAllPossibleMovesForBlack(board).size()
                     + pieceService.numberOfCenterSquaresAttackedForBlack(board)
-                    + pieceService.canAWhitePieceBeCaptured(board));
+                    + pieceService.canAWhitePieceBeCaptured(board)
+                    + pieceService.canTheKingBeCheckedInNextMove(board, isWhite));
         }
     }
 

@@ -4,10 +4,11 @@ import com.example.models.courses.Course;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.example.repositoryes.interfaces.CourseRepository;
+import org.springframework.stereotype.Service;
 
 import java.util.Optional;
 
-@org.springframework.stereotype.Service("courseService")
+@Service("courseService")
 @AllArgsConstructor
 @Slf4j
 public class CourseService {

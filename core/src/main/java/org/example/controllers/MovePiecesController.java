@@ -8,18 +8,15 @@ import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.example.BoardService;
 import org.example.PieceService;
-import org.example.miniMax.MiniMax;
 import org.example.requests.MovePiecesRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Arrays;
-import java.util.List;
 import java.util.Objects;
 
 @RestController
-@RequestMapping("/move")
+@RequestMapping("/chess/move")
 @CrossOrigin(origins = "*")
 @AllArgsConstructor
 @Slf4j
@@ -354,7 +351,6 @@ public class MovePiecesController {
             return new ResponseEntity<>("continue", HttpStatus.OK);
         }
     }
-
 
 
 }

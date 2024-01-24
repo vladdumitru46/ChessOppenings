@@ -1,7 +1,7 @@
 package org.example.requestClasses;
 
 
-import com.example.models.courses.Player;
+import com.example.models.player.Player;
 import org.example.interfaces.Request;
 
 public class LogInRequestPlayer implements Request {

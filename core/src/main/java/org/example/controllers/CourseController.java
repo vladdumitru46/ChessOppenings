@@ -10,7 +10,7 @@ import java.util.Optional;
 
 @RestController
 @AllArgsConstructor
-@RequestMapping("/course")
+@RequestMapping("/chess/course")
 @CrossOrigin(origins = "*")
 public class CourseController {
     private final CourseService courseService;

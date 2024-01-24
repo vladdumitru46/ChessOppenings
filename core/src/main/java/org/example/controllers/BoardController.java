@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController()
 @AllArgsConstructor
-@RequestMapping("/board")
+@RequestMapping("/chess/board")
 @CrossOrigin(origins = "*")
 public class BoardController {
 

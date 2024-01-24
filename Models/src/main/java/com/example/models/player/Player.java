@@ -1,10 +1,9 @@
-package com.example.models.courses;
+package com.example.models.player;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import javax.persistence.Entity;
 import javax.persistence.*;
 import java.io.Serializable;
 
@@ -60,6 +59,9 @@ public class Player implements Serializable {
             columnDefinition = "TEXT"
     )
     private String password;
+
+
+    private boolean locked;
 
     public Player(String name, String userName, String email, String password) {
         this.name = name;

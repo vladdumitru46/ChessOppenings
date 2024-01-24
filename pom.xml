@@ -16,6 +16,8 @@
         <module>networking</module>
         <module>server</module>
         <module>ai</module>
+        <module>security</module>
+        <module>validators</module>
     </modules>
     <dependencies>
         <dependency>

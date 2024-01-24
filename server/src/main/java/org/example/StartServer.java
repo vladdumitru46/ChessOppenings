@@ -1,8 +1,5 @@
 package org.example;
 
-import org.example.utils.AbstractServer;
-import org.example.utils.ObjectConcurrentServer;
-import org.example.utils.ServerException;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 import java.io.IOException;
@@ -31,13 +28,13 @@ public class StartServer {
             System.err.println("Wrong port number" + e.getMessage());
         }
         System.out.println("Starting server on port: " + serverPort);
-        IService service = playerService;
-        System.out.println(service);
-        AbstractServer server = new ObjectConcurrentServer(serverPort, service);
-        try {
-            server.start();
-        } catch (ServerException e) {
-            throw new RuntimeException(e.getMessage());
-        }
+//        IService service = playerService;
+//        System.out.println(service);
+//        AbstractServer server = new ObjectConcurrentServer(serverPort, service);
+//        try {
+//            server.start();
+//        } catch (ServerException e) {
+//            throw new RuntimeException(e.getMessage());
+//        }
     }
 }

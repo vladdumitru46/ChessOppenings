@@ -1,6 +1,6 @@
 package org.example.protocols;
 
-import com.example.models.courses.Player;
+import com.example.models.player.Player;
 import org.example.IService;
 import org.example.IServiceObserver;
 import org.example.interfaces.Request;
