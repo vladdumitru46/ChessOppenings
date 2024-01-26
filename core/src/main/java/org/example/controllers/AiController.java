@@ -36,13 +36,13 @@ public class AiController {
         } catch (Exception e) {
             return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
         }
+
+        MiniMax miniMax = new MiniMax();
         Move move;
-        if (board.isWhitesTurn()) {
-            MiniMax miniMax = new MiniMax(board, 3, true, pieceService, data.getNumberOfThreads());
-            move = miniMax.getBestMove();
+        if (isWhite.contains("w")) {
+            move = miniMax.getBestMove(board, 3, true, pieceService);
         } else {
-            MiniMax miniMax = new MiniMax(board, 3, false, pieceService, data.getNumberOfThreads());
-            move = miniMax.getBestMove();
+            move = miniMax.getBestMove(board, 3, false, pieceService);
         }
         System.out.println(move);
         String moveTransformed = pieceService.transformMoveToCorrectNotation(move.getStart(), move.getEnd(), board);
@@ -65,14 +65,13 @@ public class AiController {
         } catch (Exception e) {
             return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
         }
+        MiniMax miniMax = new MiniMax();
         Move move;
         System.out.println(board.isWhitesTurn());
         if (board.isWhitesTurn()) {
-            MiniMax miniMax = new MiniMax(board, 3, true, pieceService, data.getNumberOfThreads());
-            move = miniMax.getBestMove();
+            move = miniMax.getBestMove(board, 1, true, pieceService);
         } else {
-            MiniMax miniMax = new MiniMax(board, 3, false, pieceService, data.getNumberOfThreads());
-            move = miniMax.getBestMove();
+            move = miniMax.getBestMove(board, 3, false, pieceService);
         }
         System.out.println(move);
         if (move != null) {

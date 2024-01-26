@@ -6,78 +6,53 @@ import com.example.models.pieces.Pieces;
 import org.example.PieceService;
 
 import java.util.List;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
 
 public class MiniMax {
-    //TODO: fix error NullPointerException
+    //TODO: cu threaduri ca la ppd tema4, faci cu ExecuterService pe fiecare mutare intiala si de acolo tot mergi
     private int nodesVisited;
 
-    private final Board board;
-    private final int depth;
-    private final boolean isWhite;
-    private final PieceService pieceService;
-    private final int numberOfThreads;
-
-    public MiniMax(Board board, int depth, boolean isWhite, PieceService pieceService, int numberOfThreads) {
-        this.board = board;
-        this.depth = depth;
-        this.isWhite = isWhite;
-        this.pieceService = pieceService;
-        this.numberOfThreads = numberOfThreads;
-    }
-
-    public Move getBestMove() {
+    public Move getBestMove(Board board, int depth, boolean isWhite, PieceService pieceService) {
         nodesVisited = 0;
-        final Move bestMove = new Move();
+        Move bestMove = null;
 
-        int alpha = Integer.MIN_VALUE;
-        int beta = Integer.MAX_VALUE;
+        for (int currentDepth = 1; currentDepth <= depth; currentDepth++) {
+            int alpha = Integer.MIN_VALUE;
+            int beta = Integer.MAX_VALUE;
 
-        List<Move> moves = isWhite ? pieceService.getAllPossibleMovesForWhite(board) : pieceService.getAllPossibleMovesForBlack(board);
+            List<Move> moves = isWhite ? pieceService.getAllPossibleMovesForWhite(board) : pieceService.getAllPossibleMovesForBlack(board);
 
-        int bestValue = isWhite ? Integer.MIN_VALUE : Integer.MAX_VALUE;
+            int bestValue = isWhite ? Integer.MIN_VALUE : Integer.MAX_VALUE;
 
-        ExecutorService executorService = Executors.newFixedThreadPool(numberOfThreads);
-        for (Move move : moves) {
-            Pieces pieceOnEnd = move.getEnd().getPieces();
-            pieceService.makeMove(board, move);
-            executorService.execute(() -> {
-                Move m = bestMove(alpha, beta, bestValue, move, pieceOnEnd);
-                if (m != null) {
-                    bestMove.setStart(m.getStart());
-                    bestMove.setEnd(m.getEnd());
+            for (Move move : moves) {
+                Pieces pieceOnEnd = move.getEnd().getPieces();
+                pieceService.makeMove(board, move);
+
+                int value = miniMax(board, currentDepth - 1, alpha, beta, !isWhite, pieceService);
+
+                pieceService.undoMove(board, move, pieceOnEnd);
+
+                if ((isWhite && value > bestValue) || (!isWhite && value < bestValue)) {
+                    bestValue = value;
+                    bestMove = move;
                 }
-            });
-            pieceService.undoMove(board, move, pieceOnEnd);
+
+                if (isWhite) {
+                    alpha = Math.max(alpha, bestValue);
+                } else {
+                    beta = Math.min(beta, bestValue);
+                }
+
+                if (beta <= alpha) {
+                    break;
+                }
+            }
         }
-        executorService.shutdown();
 
         System.out.println("Nodes visited: " + nodesVisited);
         return bestMove;
     }
 
-    private synchronized Move bestMove(int alpha, int beta, int bestValue, Move move, Pieces pieceOnEnd) {
-        Move bestMove = null;
-        int value = miniMax(board, depth - 1, alpha, beta, !isWhite, pieceService);
-        if ((isWhite && value > bestValue) || (!isWhite && value < bestValue)) {
-            bestValue = value;
-            bestMove = move;
-        }
-
-        if (isWhite) {
-            alpha = Math.max(alpha, bestValue);
-        } else {
-            beta = Math.min(beta, bestValue);
-        }
-
-        if (beta <= alpha) {
-            return null;
-        }
-        return bestMove;
-    }
-
-    private synchronized int miniMax(Board board, int depth, int alpha, int beta, boolean isMaximizing, PieceService pieceService) {
+    private int miniMax(Board board, int depth, int alpha, int beta, boolean isMaximizing, PieceService pieceService) {
         nodesVisited++;
 
         if (depth == 0 || isGameOver(board, pieceService, isMaximizing)) {
@@ -136,7 +111,7 @@ public class MiniMax {
                 pieceService.getAllPossibleMovesForWhite(board).isEmpty();
     }
 
-    public synchronized boolean isCheckMateIn1(Board board, boolean isWhite, PieceService pieceService) {
+    public boolean isCheckMateIn1(Board board, boolean isWhite, PieceService pieceService) {
         List<Move> moves = (isWhite) ? pieceService.getAllPossibleMovesForWhite(board) :
                 pieceService.getAllPossibleMovesForBlack(board);
 
