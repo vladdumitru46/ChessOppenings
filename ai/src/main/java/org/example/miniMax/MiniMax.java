@@ -8,7 +8,7 @@ import org.example.PieceService;
 import java.util.List;
 
 public class MiniMax {
-
+    //TODO: cu threaduri ca la ppd tema4, faci cu ExecuterService pe fiecare mutare intiala si de acolo tot mergi
     private int nodesVisited;
 
     public Move getBestMove(Board board, int depth, boolean isWhite, PieceService pieceService) {
