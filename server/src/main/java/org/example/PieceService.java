@@ -136,7 +136,7 @@ public class PieceService {
     }
 
 
-    public void makeMove(Board board, Move move) {
+    public synchronized void makeMove(Board board, Move move) {
         King king = (King) board.getKing(!board.getCellOnTheBoardMap()[move.getStart().getLineCoordinate()][move.getStart().getColumnCoordinate()].getPieces().isWhite())
                 .getPieces();
         board.getCellOnTheBoardMap()[move.getEnd().getLineCoordinate()][move.getEnd().getColumnCoordinate()]
@@ -147,7 +147,7 @@ public class PieceService {
 
     }
 
-    private void updateKingStatus(Board board, Move move, King king) {
+    private synchronized void updateKingStatus(Board board, Move move, King king) {
         if (!kingRepository.checkIfTheKingIsInCheck(board, board.getCellOnTheBoardMap()[move.getStart().getLineCoordinate()][move.getStart().getColumnCoordinate()],
                 board.getCellOnTheBoardMap()[move.getEnd().getLineCoordinate()][move.getEnd().getColumnCoordinate()],
                 king)) {
@@ -155,7 +155,7 @@ public class PieceService {
         }
     }
 
-    public void undoMove(Board board, Move move, Pieces pieceOnEnd) {
+    public synchronized void undoMove(Board board, Move move, Pieces pieceOnEnd) {
         King king = (King) board.getKing(!board.getCellOnTheBoardMap()[move.getEnd().getLineCoordinate()][move.getEnd().getColumnCoordinate()]
                 .getPieces().isWhite()).getPieces();
         board.getCellOnTheBoardMap()[move.getStart().getLineCoordinate()][move.getStart().getColumnCoordinate()]

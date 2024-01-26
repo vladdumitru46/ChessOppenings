@@ -1,4 +1,6 @@
 spring:
+  profiles:
+    active: dev
   datasource:
     url: jdbc:postgresql://localhost:5432/Licenta
     username: postgres
@@ -11,3 +13,7 @@ spring:
       hibernate:
         dialect: org.hibernate.dialect.PostgreSQLDialect
         format_sql: true
+
+
+custom:
+  numberOfThreads: 4
