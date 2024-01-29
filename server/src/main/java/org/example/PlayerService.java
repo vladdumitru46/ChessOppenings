@@ -93,13 +93,17 @@ public class PlayerService implements UserDetailsService {
         BCryptPasswordEncoder cryptPasswordEncoder = new BCryptPasswordEncoder();
         if (playerOptional.isEmpty()) {
             playerOptional = playerRepository.findByUserName(emailOrUsername);
-            if (playerOptional.isEmpty() || !cryptPasswordEncoder.matches(password, playerOptional.get().getPassword())) {
-                throw new IllegalAccessException("email or password are invalid!");
-            }
-            if (playerOptional.get().isLocked()) {
-                throw new PlayerValidationException("Account is not yet verified!");
+            if (playerOptional.isEmpty()) {
+                throw new PlayerValidationException("email or password are invalid!");
             }
         }
+        if (!cryptPasswordEncoder.matches(password, playerOptional.get().getPassword())) {
+            throw new IllegalAccessException("email or password are invalid!");
+        }
+        if (playerOptional.get().isLocked()) {
+            throw new PlayerValidationException("Account is not yet verified!");
+        }
+
     }
 
     public void logOut(Player player, IServiceObserver client) throws Exception {
