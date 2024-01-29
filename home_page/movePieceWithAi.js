@@ -11,22 +11,11 @@ if (informationCourseElement && informationCourseValue) {
 }
 
 
-let boardUrl = "http://localhost:8080/board/save";
+let boardUrl = "http://localhost:8080/chess/board/save";
 console.log(boardUrl);
-// r = fetch(boardUrl, { method: "POST" })
-// if (r.ok) {
-//     try {
-//         let id = r.text();
-//         console.log('ID:', id);
-//         localStorage.setItem('boardId', id);
-//     } catch (error) {
-//         console.error('Eroare la extragerea textului:', error);
-//     }
-// } else {
-//     console.log('Răspuns incorect:', r.status);
-// }
+
 async function fetchData() {
-    let boardUrl = "http://localhost:8080/board/save";
+    let boardUrl = "http://localhost:8080/chess/board/save";
     console.log(boardUrl);
 
     try {
@@ -53,7 +42,7 @@ fetchData();
 let square1 = null;
 let square2 = null;
 
-function getPiece(square) {
+async function getPiece(square) {
 
     if (square1 == null) {
         square1 = square;
@@ -68,7 +57,7 @@ function getPiece(square) {
             const imageUrlSquare1 = square1.querySelector('img').src;
             const springBootPort = 8080; // Replace with the actual port number
             const atributes = piesaSquare1.split(' ');
-            const springBootURL = `http://localhost:${springBootPort}/move/castle`;
+            const springBootURL = `http://localhost:${springBootPort}/chess/move/castle`;
             // Construct the request object
             const requestData = {
                 method: "POST",
@@ -83,136 +72,16 @@ function getPiece(square) {
                 })
 
             };
-
-            if (square2.getAttribute("id") === "02") {
-                fetch(springBootURL, requestData)
-                    .then(response => {
-                        if (response.ok) {
-                            square2.setAttribute('data-piesa', piesaSquare1);
-                            square2.querySelector('img').src = imageUrlSquare1;
-
-                            square1.setAttribute('data-piesa', 'none');
-                            square1.querySelector('img').src = "";
-
-                            var rookSquare = document.getElementById("00");
-                            var rookNewSquare = document.getElementById("03");
-                            rookNewSquare.setAttribute('data-piesa', rookSquare.getAttribute('data-piesa'));
-                            rookNewSquare.querySelector('img').src = rookSquare.querySelector('img').src;
-
-                            rookSquare.setAttribute('data-piesa', 'none');
-                            rookSquare.querySelector('img').src = "";
-
-                            square1 = null;
-                            square2 = null;
-                            ok = 1;
-                        } else {
-                            square1 = null;
-                            square2 = null;
-                            console.log("cannot move the piece there! check the backend logs for more information!")
-                        }
-                    })
-                    .catch(error => {
-                        console.error("Error:", error);
-                    });
-            }
-            if (square2.getAttribute("id") === "06") {
-                fetch(springBootURL, requestData)
-                    .then(response => {
-                        if (response.ok) {
-                            square2.setAttribute('data-piesa', piesaSquare1);
-                            square2.querySelector('img').src = imageUrlSquare1;
-
-                            square1.setAttribute('data-piesa', 'none');
-                            square1.querySelector('img').src = "";
-
-                            var rookSquare = document.getElementById("07");
-                            var rookNewSquare = document.getElementById("05");
-                            rookNewSquare.setAttribute('data-piesa', rookSquare.getAttribute('data-piesa'));
-                            rookNewSquare.querySelector('img').src = rookSquare.querySelector('img').src;
-
-                            rookSquare.setAttribute('data-piesa', 'none');
-                            rookSquare.querySelector('img').src = "";
-
-                            square1 = null;
-                            square2 = null;
-                            ok = 1;
-                        } else {
-                            square1 = null;
-                            square2 = null;
-                            console.log("cannot move the piece there! check the backend logs for more information!")
-                        }
-                    })
-                    .catch(error => {
-                        console.error("Error:", error);
-                    });
-            }
-            if (square2.getAttribute("id") === "72") {
-                fetch(springBootURL, requestData)
-                    .then(response => {
-                        if (response.ok) {
-                            square2.setAttribute('data-piesa', piesaSquare1);
-                            square2.querySelector('img').src = imageUrlSquare1;
-                            var rookSquare = document.getElementById("70");
-                            var rookNewSquare = document.getElementById("73");
-                            rookNewSquare.setAttribute('data-piesa', rookSquare.getAttribute('data-piesa'));
-                            rookNewSquare.querySelector('img').src = rookSquare.querySelector('img').src;
-
-                            rookSquare.setAttribute('data-piesa', 'none');
-                            rookSquare.querySelector('img').src = "";
-
-                            square1.setAttribute('data-piesa', 'none');
-                            square1.querySelector('img').src = "";
-
-                            square1 = null;
-                            square2 = null;
-                            ok = 1;
-                        } else {
-                            square1 = null;
-                            square2 = null;
-                            console.log("cannot move the piece there! check the backend logs for more information!")
-                        }
-                    })
-                    .catch(error => {
-                        console.error("Error:", error);
-                    });
-            }
-            if (square2.getAttribute("id") === "76") {
-                fetch(springBootURL, requestData)
-                    .then(response => {
-                        if (response.ok) {
-                            square2.setAttribute('data-piesa', piesaSquare1);
-                            square2.querySelector('img').src = imageUrlSquare1;
-
-                            square1.setAttribute('data-piesa', 'none');
-                            square1.querySelector('img').src = "";
-
-                            var rookSquare = document.getElementById("77");
-                            var rookNewSquare = document.getElementById("75");
-                            rookNewSquare.setAttribute('data-piesa', rookSquare.getAttribute('data-piesa'));
-                            rookNewSquare.querySelector('img').src = rookSquare.querySelector('img').src;
-
-                            rookSquare.setAttribute('data-piesa', 'none');
-                            rookSquare.querySelector('img').src = "";
-                            square1 = null;
-                            square2 = null;
-                            ok = 1;
-                        } else {
-                            square1 = null;
-                            square2 = null;
-                            console.log("cannot move the piece there! check the backend logs for more information!")
-                        }
-                    })
-                    .catch(error => {
-                        console.error("Error:", error);
-                    });
-            }
+            ok = await castle(piesaSquare1, imageUrlSquare1, springBootURL, requestData, ok)
         }
+
         if (ok == 0) {
+            console.log("de ce intrii aici?")
             const piesaSquare1 = square1.getAttribute('data-piesa');
             const imageUrlSquare1 = square1.querySelector('img').src;
             const springBootPort = 8080; // Replace with the actual port number
             const atributes = piesaSquare1.split(' ');
-            const springBootURL = `http://localhost:${springBootPort}/move/${atributes[1]}`;
+            const springBootURL = `http://localhost:${springBootPort}/chess/move/${atributes[1]}`;
             console.log(springBootURL);
 
             // Construct the request object
@@ -230,10 +99,123 @@ function getPiece(square) {
 
             };
 
-            let checkMateCheck = "http://localhost:8080/move/checkmate"
+            let checkMateCheck = "http://localhost:8080/chess/move/checkmate"
             makeMoves(springBootURL, imageUrlSquare1, requestData, piesaSquare1, checkMateCheck, atributes[0])
         }
     }
+}
+
+async function castle(piesaSquare1, imageUrlSquare1, springBootURL, requestData, ok) {
+    console.log(springBootURL)
+    if (square2.getAttribute("id") === "02") {
+        let response = await fetch(springBootURL, requestData)
+        if (response.ok) {
+            square2.setAttribute('data-piesa', piesaSquare1);
+            square2.querySelector('img').src = imageUrlSquare1;
+
+            square1.setAttribute('data-piesa', 'none');
+            square1.querySelector('img').src = "";
+
+            var rookSquare = document.getElementById("00");
+            var rookNewSquare = document.getElementById("03");
+            rookNewSquare.setAttribute('data-piesa', rookSquare.getAttribute('data-piesa'));
+            rookNewSquare.querySelector('img').src = rookSquare.querySelector('img').src;
+
+            rookSquare.setAttribute('data-piesa', 'none');
+            rookSquare.querySelector('img').src = "";
+
+            square1 = null;
+            square2 = null;
+            ok = 1;
+        } else {
+            square1 = null;
+            square2 = null;
+            console.log("cannot move the piece there! check the backend logs for more information!")
+        }
+
+    }
+    else if (square2.getAttribute("id") === "06") {
+        let response = await fetch(springBootURL, requestData)
+        if (response.ok) {
+            console.log("BA")
+            square2.setAttribute('data-piesa', piesaSquare1);
+            square2.querySelector('img').src = imageUrlSquare1;
+
+            square1.setAttribute('data-piesa', 'none');
+            square1.querySelector('img').src = "";
+
+            var rookSquare = document.getElementById("07");
+            var rookNewSquare = document.getElementById("05");
+            rookNewSquare.setAttribute('data-piesa', rookSquare.getAttribute('data-piesa'));
+            rookNewSquare.querySelector('img').src = rookSquare.querySelector('img').src;
+
+            rookSquare.setAttribute('data-piesa', 'none');
+            rookSquare.querySelector('img').src = "";
+
+            square1 = null;
+            square2 = null;
+            ok = 1;
+            console.log(ok)
+        } else {
+            square1 = null;
+            square2 = null;
+            console.log("cannot move the piece there! check the backend logs for more information!")
+        }
+
+    }
+    else if (square2.getAttribute("id") === "72") {
+        let response = await fetch(springBootURL, requestData)
+        if (response.ok) {
+            square2.setAttribute('data-piesa', piesaSquare1);
+            square2.querySelector('img').src = imageUrlSquare1;
+            var rookSquare = document.getElementById("70");
+            var rookNewSquare = document.getElementById("73");
+            rookNewSquare.setAttribute('data-piesa', rookSquare.getAttribute('data-piesa'));
+            rookNewSquare.querySelector('img').src = rookSquare.querySelector('img').src;
+
+            rookSquare.setAttribute('data-piesa', 'none');
+            rookSquare.querySelector('img').src = "";
+
+            square1.setAttribute('data-piesa', 'none');
+            square1.querySelector('img').src = "";
+
+            square1 = null;
+            square2 = null;
+            ok = 1;
+        } else {
+            square1 = null;
+            square2 = null;
+            console.log("cannot move the piece there! check the backend logs for more information!")
+        }
+
+    }
+    else if (square2.getAttribute("id") === "76") {
+        let response = await fetch(springBootURL, requestData)
+        if (response.ok) {
+            square2.setAttribute('data-piesa', piesaSquare1);
+            square2.querySelector('img').src = imageUrlSquare1;
+
+            square1.setAttribute('data-piesa', 'none');
+            square1.querySelector('img').src = "";
+
+            var rookSquare = document.getElementById("77");
+            var rookNewSquare = document.getElementById("75");
+            rookNewSquare.setAttribute('data-piesa', rookSquare.getAttribute('data-piesa'));
+            rookNewSquare.querySelector('img').src = rookSquare.querySelector('img').src;
+
+            rookSquare.setAttribute('data-piesa', 'none');
+            rookSquare.querySelector('img').src = "";
+            square1 = null;
+            square2 = null;
+            ok = 1;
+        } else {
+            square1 = null;
+            square2 = null;
+            console.log("cannot move the piece there! check the backend logs for more information!")
+        }
+
+    }
+    return ok;
 }
 
 
@@ -267,7 +249,7 @@ async function makeMoves(springBootURL, imageUrlSquare1, requestData, piesaSquar
                 // handle other cases if needed
             }
 
-            let ai = "http://localhost:8080/move/ai/makeMove";
+            let ai = "http://localhost:8080/chess/move/ai/makeMove";
             console.log(ai);
             response3 = await fetch(ai, {
                 method: "POST",
@@ -310,7 +292,10 @@ async function makeMoves(springBootURL, imageUrlSquare1, requestData, piesaSquar
                 });
 
                 if (response2.ok) {
-                    window.alert("Check mate!");
+                    let res = await response2.text();
+                    if (res !== "continue") {
+                        window.alert(res);
+                    }
                 } else {
                     // handle other cases if needed
                 }
@@ -332,7 +317,7 @@ async function makeMoves(springBootURL, imageUrlSquare1, requestData, piesaSquar
 }
 
 window.addEventListener('beforeunload', function () {
-    fetch('http://localhost:8080/move/reset', {
+    fetch('http://localhost:8080/chess/move/reset', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
@@ -346,5 +331,4 @@ window.addEventListener('beforeunload', function () {
             // handle any errors that occur during the request
         });
 });
-
 
