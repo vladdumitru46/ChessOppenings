@@ -35,7 +35,7 @@ public class KnightRepository implements IRepository<Knight> {
             return false;
         }
         KingRepository kingRepository = new KingRepository();
-        return kingRepository.checkIfTheKIngIsInCheckAfterMove(board, start, end, pieces.isWhite(), kingRepository);
+        return kingRepository.checkIfTheKingIsInCheckAfterMove(board, start, end, pieces.isWhite(), kingRepository);
     }
 
     @Override

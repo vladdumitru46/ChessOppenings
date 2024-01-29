@@ -51,11 +51,9 @@ public class RookRepository implements IRepository<Rook> {
             currentLine += rowIncrement;
             currentColumn += colIncrement;
         }
-        pieces.setHasBeenMoved(true);
-        start.setPieces(pieces);
 
         KingRepository kingRepository = new KingRepository();
-        return kingRepository.checkIfTheKIngIsInCheckAfterMove(board, start, end, pieces.isWhite(), kingRepository);
+        return kingRepository.checkIfTheKingIsInCheckAfterMove(board, start, end, pieces.isWhite(), kingRepository);
     }
 
     @Override

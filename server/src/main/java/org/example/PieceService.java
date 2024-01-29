@@ -41,7 +41,14 @@ public class PieceService {
 
     public boolean canTheRookMove(Board board, CellOnTheBoard start, CellOnTheBoard end, Rook rook) {
         logger.info("verify if the rook can move");
-        return rookRepository.canMove(board, start, end, rook);
+
+        if (rookRepository.canMove(board, start, end, rook)) {
+            rook.setHasBeenMoved(true);
+            start.setPieces(rook);
+            return true;
+        } else {
+            return false;
+        }
     }
 
     public boolean canTheKnightMove(Board board, CellOnTheBoard start, CellOnTheBoard end, Knight knight) {
@@ -61,7 +68,13 @@ public class PieceService {
 
     public boolean canTheKingMove(Board board, CellOnTheBoard start, CellOnTheBoard end, King king) {
         logger.info("verify if the king can move");
-        return kingRepository.canMove(board, start, end, king);
+        if (kingRepository.canMove(board, start, end, king)) {
+            king.setHasBeenMoved(true);
+            start.setPieces(king);
+            return true;
+        } else {
+            return false;
+        }
     }
 
     public boolean checkIsTheKingInCheck(Board board, CellOnTheBoard start, CellOnTheBoard end, Pieces king) {
@@ -69,8 +82,41 @@ public class PieceService {
         return kingRepository.checkIfTheKingIsInCheck(board, start, end, king);
     }
 
-    public boolean canCastle(Board board, CellOnTheBoard start, CellOnTheBoard end, Pieces king) {
-        return kingRepository.canCastle(board, start, end, (King) king);
+    public boolean canCastle(Board board, CellOnTheBoard start, CellOnTheBoard end, King king) {
+        if (kingRepository.canCastle(board, start, end, king)) {
+            king.setHasBeenMoved(true);
+            start.setPieces(king);
+
+            if (king.isWhite()) {
+                if (end.getColumnCoordinate() == 2) {
+                    Rook rook = (Rook) board.getCellOnTheBoardMap()[0][0].getPieces();
+                    rook.setHasBeenMoved(true);
+                    board.getCellOnTheBoardMap()[0][3].setPieces(rook);
+                    board.getCellOnTheBoardMap()[0][0] = new CellOnTheBoard(null, 0, 0);
+                }
+                if (end.getColumnCoordinate() == 6) {
+                    Rook rook = (Rook) board.getCellOnTheBoardMap()[0][7].getPieces();
+                    rook.setHasBeenMoved(true);
+                    board.getCellOnTheBoardMap()[0][5].setPieces(rook);
+                    board.getCellOnTheBoardMap()[0][7] = new CellOnTheBoard(null, 0, 0);
+                }
+            } else {
+                if (end.getColumnCoordinate() == 2) {
+                    Rook rook = (Rook) board.getCellOnTheBoardMap()[7][0].getPieces();
+                    rook.setHasBeenMoved(true);
+                    board.getCellOnTheBoardMap()[7][3].setPieces(rook);
+                    board.getCellOnTheBoardMap()[7][0] = new CellOnTheBoard(null, 7, 0);
+                } else if (end.getColumnCoordinate() == 6) {
+                    Rook rook = (Rook) board.getCellOnTheBoardMap()[7][7].getPieces();
+                    rook.setHasBeenMoved(true);
+                    board.getCellOnTheBoardMap()[7][5].setPieces(rook);
+                    board.getCellOnTheBoardMap()[7][7] = new CellOnTheBoard(null, 7, 0);
+                }
+            }
+            return true;
+        } else {
+            return false;
+        }
     }
 
 
@@ -152,14 +198,16 @@ public class PieceService {
                 board.getCellOnTheBoardMap()[move.getEnd().getLineCoordinate()][move.getEnd().getColumnCoordinate()],
                 king)) {
             king.setInCheck(true);
+        } else {
+            king.setInCheck(false);
         }
     }
 
-    public synchronized void undoMove(Board board, Move move, Pieces pieceOnEnd) {
+    public synchronized void undoMove(Board board, Move move, Pieces pieceOnStart, Pieces pieceOnEnd) {
         King king = (King) board.getKing(!board.getCellOnTheBoardMap()[move.getEnd().getLineCoordinate()][move.getEnd().getColumnCoordinate()]
                 .getPieces().isWhite()).getPieces();
         board.getCellOnTheBoardMap()[move.getStart().getLineCoordinate()][move.getStart().getColumnCoordinate()]
-                .setPieces(board.getCellOnTheBoardMap()[move.getEnd().getLineCoordinate()][move.getEnd().getColumnCoordinate()].getPieces());
+                .setPieces(pieceOnStart);
         board.getCellOnTheBoardMap()[move.getEnd().getLineCoordinate()][move.getEnd().getColumnCoordinate()].setPieces(pieceOnEnd);
 
 
@@ -169,6 +217,8 @@ public class PieceService {
 
 
     public String transformMoveToCorrectNotation(CellOnTheBoard start, CellOnTheBoard end, Board board) {
+        Pieces pieceOnStart = start.getPieces();
+        Pieces pieceOnEnd = end.getPieces();
         String notation = "";
         if (start.getPieces() instanceof King) {
             notation += "K";
@@ -200,23 +250,12 @@ public class PieceService {
         }
         notation += transformColumnToLetters(end) + (end.getLineCoordinate() + 1);
 
-//        King king = (King) board.getKing(!start.getPieces().isWhite()).getPieces();
-//
-//        Pieces pieceOnStart = board.getCellOnTheBordMap()[start.getLineCoordinate()][start.getColumnCoordinate()].getPieces();
-//        Pieces pieceOnEnd = board.getCellOnTheBordMap()[end.getLineCoordinate()][end.getColumnCoordinate()].getPieces();
-//        board.getCellOnTheBordMap()[end.getLineCoordinate()][end.getColumnCoordinate()].setPieces(pieceOnStart);
-//        board.getCellOnTheBordMap()[start.getLineCoordinate()][start.getColumnCoordinate()].setPieces(null);
-//
-//        if (checkIsTheKingInCheck(board, start, end, king)) {
-//            notation += "+";
-//        }
-//        board.getCellOnTheBordMap()[end.getLineCoordinate()][end.getColumnCoordinate()].setPieces(pieceOnEnd);
-//        board.getCellOnTheBordMap()[start.getLineCoordinate()][start.getColumnCoordinate()].setPieces(pieceOnStart);
         makeMove(board, new Move(board.getCellOnTheBoardMap()[start.getLineCoordinate()][start.getColumnCoordinate()], board.getCellOnTheBoardMap()[end.getLineCoordinate()][end.getColumnCoordinate()]));
         King king = (King) board.getKing(!start.getPieces().isWhite()).getPieces();
         if (king.isInCheck()) {
             notation += "+";
         }
+        undoMove(board, new Move(board.getCellOnTheBoardMap()[start.getLineCoordinate()][start.getColumnCoordinate()], board.getCellOnTheBoardMap()[end.getLineCoordinate()][end.getColumnCoordinate()]), pieceOnStart, pieceOnEnd);
         return notation;
     }
 
@@ -303,7 +342,7 @@ public class PieceService {
                 if (cell.getPieces() != null && cell.getPieces().isWhite() != isWhite) {
                     for (int k = 0; k < 8; k++) {
                         for (int l = 0; l < 8; l++) {
-                            if (kingRepository.checkIfTheKIngIsInCheckAfterMove(board, cell,
+                            if (kingRepository.checkIfTheKingIsInCheckAfterMove(board, cell,
                                     board.getCellOnTheBoardMap()[k][l], isWhite, kingRepository)) {
                                 return 0;
                             }

@@ -16,7 +16,7 @@ import java.util.stream.IntStream;
 @Repository
 public class KingRepository implements IKingRepository {
     Logger logger = LoggerFactory.getLogger(KingRepository.class);
-
+//TODO: vezi daca merge kingInCheck si sa poti bloca cu pionii sahul
     @Override
     public boolean canMove(Board board, CellOnTheBoard start, CellOnTheBoard end, King king) {
         if (end.getPieces() != null) {
@@ -35,8 +35,6 @@ public class KingRepository implements IKingRepository {
                 logger.info("king cannot move to this coordinates {}{} because there will be in check", end.getLineCoordinate(), end.getColumnCoordinate());
                 return false;
             } else {
-                king.setHasBeenMoved(true);
-                start.setPieces(king);
                 return true;
             }
         } else {
@@ -48,8 +46,6 @@ public class KingRepository implements IKingRepository {
                         logger.info("king cannot move to this coordinates {}{} because there will be in check", end.getLineCoordinate(), end.getColumnCoordinate());
                         return false;
                     } else {
-                        king.setHasBeenMoved(true);
-                        start.setPieces(king);
                         return true;
                     }
                 }
@@ -84,7 +80,7 @@ public class KingRepository implements IKingRepository {
 
     }
 
-    public boolean checkIfTheKIngIsInCheckAfterMove(Board board, CellOnTheBoard start, CellOnTheBoard end, boolean isWhite, KingRepository kingRepository) {
+    public boolean checkIfTheKingIsInCheckAfterMove(Board board, CellOnTheBoard start, CellOnTheBoard end, boolean isWhite, KingRepository kingRepository) {
         CellOnTheBoard kingsCell = board.getKing(isWhite);
         King king = (King) kingsCell.getPieces();
         Pieces pieceOnStart = board.getCellOnTheBoardMap()[start.getLineCoordinate()][start.getColumnCoordinate()].getPieces();
@@ -125,14 +121,7 @@ public class KingRepository implements IKingRepository {
                     if (rook.isHasBeenMoved()) {
                         return false;
                     }
-                    if (board.getCellOnTheBoardMap()[0][1].getPieces() != null || board.getCellOnTheBoardMap()[0][2].getPieces() != null || board.getCellOnTheBoardMap()[0][3].getPieces() != null) {
-                        return false;
-                    }
-                    rook.setHasBeenMoved(true);
-                    king.setHasBeenMoved(true);
-                    start.setPieces(king);
-                    board.getCellOnTheBoardMap()[0][3].setPieces(rook);
-                    board.getCellOnTheBoardMap()[0][0] = new CellOnTheBoard(null, 0, 0);
+                    return board.getCellOnTheBoardMap()[0][1].getPieces() == null && board.getCellOnTheBoardMap()[0][2].getPieces() == null && board.getCellOnTheBoardMap()[0][3].getPieces() == null;
                 } else if (end.getColumnCoordinate() == 6) {
                     Rook rook = (Rook) board.getCellOnTheBoardMap()[0][7].getPieces();
                     if (rook == null) {
@@ -141,14 +130,7 @@ public class KingRepository implements IKingRepository {
                     if (rook.isHasBeenMoved()) {
                         return false;
                     }
-                    if (board.getCellOnTheBoardMap()[0][5].getPieces() != null || board.getCellOnTheBoardMap()[0][6].getPieces() != null) {
-                        return false;
-                    }
-                    rook.setHasBeenMoved(true);
-                    king.setHasBeenMoved(true);
-                    start.setPieces(king);
-                    board.getCellOnTheBoardMap()[0][5].setPieces(rook);
-                    board.getCellOnTheBoardMap()[0][7] = new CellOnTheBoard(null, 0, 0);
+                    return board.getCellOnTheBoardMap()[0][5].getPieces() == null && board.getCellOnTheBoardMap()[0][6].getPieces() == null;
                 } else {
                     return false;
                 }
@@ -161,14 +143,7 @@ public class KingRepository implements IKingRepository {
                     if (rook.isHasBeenMoved()) {
                         return false;
                     }
-                    if (board.getCellOnTheBoardMap()[7][1].getPieces() != null || board.getCellOnTheBoardMap()[7][2].getPieces() != null || board.getCellOnTheBoardMap()[7][3].getPieces() != null) {
-                        return false;
-                    }
-                    rook.setHasBeenMoved(true);
-                    king.setHasBeenMoved(true);
-                    start.setPieces(king);
-                    board.getCellOnTheBoardMap()[7][3].setPieces(rook);
-                    board.getCellOnTheBoardMap()[7][0] = new CellOnTheBoard(null, 7, 0);
+                    return board.getCellOnTheBoardMap()[7][1].getPieces() == null && board.getCellOnTheBoardMap()[7][2].getPieces() == null && board.getCellOnTheBoardMap()[7][3].getPieces() == null;
                 } else if (end.getColumnCoordinate() == 6) {
                     Rook rook = (Rook) board.getCellOnTheBoardMap()[7][7].getPieces();
                     if (rook == null) {
@@ -177,20 +152,12 @@ public class KingRepository implements IKingRepository {
                     if (rook.isHasBeenMoved()) {
                         return false;
                     }
-                    if (board.getCellOnTheBoardMap()[7][5].getPieces() != null || board.getCellOnTheBoardMap()[7][6].getPieces() != null) {
-                        return false;
-                    }
-                    rook.setHasBeenMoved(true);
-                    king.setHasBeenMoved(true);
-                    start.setPieces(king);
-                    board.getCellOnTheBoardMap()[7][5].setPieces(rook);
-                    board.getCellOnTheBoardMap()[7][7] = new CellOnTheBoard(null, 7, 0);
+                    return board.getCellOnTheBoardMap()[7][5].getPieces() == null && board.getCellOnTheBoardMap()[7][6].getPieces() == null;
                 } else {
                     return false;
                 }
             }
-            return true;
         }
-        return false;
+        return true;
     }
 }

@@ -63,7 +63,7 @@ public class PawnRepository implements IRepository<Pawn> {
             }
         }
         KingRepository kingRepository = new KingRepository();
-        return kingRepository.checkIfTheKIngIsInCheckAfterMove(board, start, end, pawn.isWhite(), kingRepository);
+        return kingRepository.checkIfTheKingIsInCheckAfterMove(board, start, end, pawn.isWhite(), kingRepository);
     }
 
     @Override

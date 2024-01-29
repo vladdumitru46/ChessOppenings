@@ -79,7 +79,7 @@ public class QueenRepository implements IRepository<Queen> {
             }
         }
         KingRepository kingRepository = new KingRepository();
-        return kingRepository.checkIfTheKIngIsInCheckAfterMove(board, start, end, pieces.isWhite(), kingRepository);
+        return kingRepository.checkIfTheKingIsInCheckAfterMove(board, start, end, pieces.isWhite(), kingRepository);
 
     }
 
