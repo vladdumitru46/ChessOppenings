@@ -1,0 +1,66 @@
+.log-in-container {
+  width: 100%;
+  display: flex;
+  overflow: auto;
+  min-height: 100vh;
+  align-items: center;
+  flex-direction: column;
+  justify-content: center;
+  background-color: #0c0c0c;
+  background-image: url('../pieces/background.jpg');
+  /* Replace 'path/to/your/image.jpg' with the actual path to your image file */
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+.log-in-textinput {
+  top: 35%;
+  left: 32%;
+  color: #000000;
+  right: 30%;
+  width: 30%;
+  position: absolute;
+  background-color: #ffffff;
+}
+.log-in-textinput1 {
+  top: 45%;
+  left: 32%;
+  color: #000000;
+  right: 35%;
+  width: 30%;
+  position: absolute;
+  background-color: #ffffff;
+}
+.log-in-button {
+  top: 75%;
+  left: 32%;
+  position: absolute;
+}
+.log-in-button1 {
+  top: 55%;
+  left: 42%;
+  width: 10%;
+  position: absolute;
+}
+.log-in-log-in {
+  top: 20%;
+  left: 38%;
+  color: rgb(241, 241, 241);
+  width: 20%;
+  height: 10%;
+  position: absolute;
+  font-size: 4em;
+  font-style: normal;
+  text-align: center;
+  font-family: "Times New Roman";
+  font-weight: 900;
+  text-transform: capitalize;
+}
+.log-in-text09 {
+  top: 70%;
+  left: 30%;
+  color: rgb(255, 255, 255);
+  bottom: 30%;
+  position: absolute;
+  font-size: 20px;
+}

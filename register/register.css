@@ -1,0 +1,99 @@
+.register-container {
+  width: 100%;
+  display: flex;
+  overflow: auto;
+  min-height: 100vh;
+  align-items: center;
+  flex-direction: column;
+  justify-content: center;
+  background-color: #000000;
+  background-image: url('../pieces/background.jpg');
+  /* Replace 'path/to/your/image.jpg' with the actual path to your image file */
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+.register-text {
+  top: 10%;
+  left: 40%;
+  color: rgb(255, 255, 255);
+  right: 30%;
+  bottom: 80%;
+  position: absolute;
+  font-size: 80px;
+}
+.register-textinput {
+  top: 30%;
+  left: 40%;
+  right: 30%;
+  width: 20%;
+  bottom: 65%;
+  height: 5%;
+  position: absolute;
+}
+.register-textinput1 {
+  top: 40%;
+  left: 40%;
+  right: 30%;
+  width: 20%;
+  bottom: 45%;
+  height: 5%;
+  position: absolute;
+}
+.register-textinput2 {
+  top: 50%;
+  left: 40%;
+  right: 30%;
+  width: 20%;
+  bottom: 35%;
+  height: 5%;
+  position: absolute;
+}
+.register-textinput3 {
+  top: 60%;
+  left: 40%;
+  right: 30%;
+  width: 20%;
+  bottom: 30%;
+  height: 5%;
+  position: absolute;
+}
+.register-button {
+  top: 70%;
+  left: 45%;
+  right: 55%;
+  width: 10%;
+  bottom: 25%;
+  position: absolute;
+}
+@media(max-width: 1600px) {
+  .register-container {
+    background-color: #000000;
+  }
+  .register-text {
+    top: 10%;
+    left: 40%;
+    color: rgb(255, 255, 255);
+    right: 50%;
+    position: absolute;
+  }
+  .register-text1 {
+    font-size: 80px;
+  }
+  .register-text2 {
+    font-size: 80px;
+  }
+}
+@media(max-width: 1200px) {
+  .register-text {
+    right: 30%;
+  }
+}
+@media(max-width: 991px) {
+  .register-text1 {
+    font-size: 80px;
+  }
+  .register-text2 {
+    font-size: 80px;
+  }
+}
