@@ -73,8 +73,8 @@ public class AiController {
             MiniMax miniMax = new MiniMax(board, data.getDepthForAi(), false, pieceService, data.getNumberOfThreads());
             move = miniMax.getBestMove();
         }
-        System.out.println(move);
         if (move != null) {
+            System.out.println(move);
             pieceService.makeMove(board, move);
             String moveToBePlayed = move.getStart() + " " + move.getEnd();
             board.setWhitesTurn(!board.isWhitesTurn());

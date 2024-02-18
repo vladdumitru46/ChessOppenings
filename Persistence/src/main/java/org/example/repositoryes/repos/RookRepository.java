@@ -53,7 +53,7 @@ public class RookRepository implements IRepository<Rook> {
         }
 
         KingRepository kingRepository = new KingRepository();
-        return kingRepository.checkIfTheKingIsInCheckAfterMove(board, start, end, pieces.isWhite(), kingRepository);
+        return kingRepository.checkIfTheKingIsInCheckAfterMove(board, start, end, pieces.isWhite());
     }
 
     @Override

@@ -9,6 +9,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.example.BoardService;
 import org.example.PieceService;
 import org.example.requests.MovePiecesRequest;
+import org.example.requests.PromotePawn;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -21,43 +22,33 @@ import java.util.Objects;
 @AllArgsConstructor
 @Slf4j
 public class MovePiecesController {
-    private final PieceService pieceService;
-//    private final Board board = new Board();
 
+    private final PieceService pieceService;
     private final BoardService boardService;
 
     @PostMapping("/rook")
     public ResponseEntity<?> moveRook(@RequestBody MovePiecesRequest movePiecesRequest) {
 
-        Board board = null;
+        Board board;
         try {
             board = boardService.findById(Integer.parseInt(movePiecesRequest.getBoardId()));
         } catch (Exception e) {
             return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
         }
-        String start1 = movePiecesRequest.getStart();
-        int line = start1.charAt(0) - '0';
-        int column = start1.charAt(1) - '0';
+        String start = movePiecesRequest.getStart();
+        int startLine = start.charAt(0) - '0';
+        int startColumn = start.charAt(1) - '0';
         String end1 = movePiecesRequest.getEnd();
-        int line1 = end1.charAt(0) - '0';
-        int column1 = end1.charAt(1) - '0';
+        int endLine = end1.charAt(0) - '0';
+        int endColumn = end1.charAt(1) - '0';
 
-
-        if (Objects.equals(movePiecesRequest.getPieceColour(), "white") && board.isWhitesTurn()) {
-
-            if (pieceService.canTheRookMove(board, board.getCellOnTheBoardMap()[line][column], board.getCellOnTheBoardMap()[line1][column1], (Rook) board.getCellOnTheBoardMap()[line][column].getPieces())) {
-                pieceService.makeMove(board, new Move(board.getCellOnTheBoardMap()[line][column], board.getCellOnTheBoardMap()[line1][column1]));
-                board.setWhitesTurn(false);
-                boardService.updateBoard(board);
-                return new ResponseEntity<>(HttpStatus.OK);
-            } else {
-                return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-            }
-        } else if (Objects.equals(movePiecesRequest.getPieceColour(), "black") && !board.isWhitesTurn()) {
-            if (pieceService.canTheRookMove(board, board.getCellOnTheBoardMap()[line][column], board.getCellOnTheBoardMap()[line1][column1], (Rook) board.getCellOnTheBoardMap()[line][column].getPieces())) {
-
-                pieceService.makeMove(board, new Move(board.getCellOnTheBoardMap()[line][column], board.getCellOnTheBoardMap()[line1][column1]));
-                board.setWhitesTurn(true);
+        boolean colour = Objects.equals(movePiecesRequest.getPieceColour(), "white");
+        if (colour == board.isWhitesTurn()) {
+            CellOnTheBoard startCell = board.getCellOnTheBoardMap()[startLine][startColumn];
+            CellOnTheBoard endCell = board.getCellOnTheBoardMap()[endLine][endColumn];
+            if (pieceService.canTheRookMove(board, startCell, endCell, (Rook) startCell.getPieces())) {
+                pieceService.makeMove(board, new Move(startCell, endCell));
+                board.setWhitesTurn(!colour);
                 boardService.updateBoard(board);
                 return new ResponseEntity<>(HttpStatus.OK);
             } else {
@@ -69,37 +60,25 @@ public class MovePiecesController {
 
     @PostMapping("/knight")
     public ResponseEntity<?> moveKnight(@RequestBody MovePiecesRequest movePiecesRequest) {
-        Board board = null;
+        Board board;
         try {
             board = boardService.findById(Integer.parseInt(movePiecesRequest.getBoardId()));
         } catch (Exception e) {
             return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
         }
-        String start1 = movePiecesRequest.getStart();
-        int line = start1.charAt(0) - '0';
-        int column = start1.charAt(1) - '0';
-        String end1 = movePiecesRequest.getEnd();
-        int line1 = end1.charAt(0) - '0';
-        int column1 = end1.charAt(1) - '0';
-
-
-        if (Objects.equals(movePiecesRequest.getPieceColour(), "white") && board.isWhitesTurn()) {
-
-            if (pieceService.canTheKnightMove(board, board.getCellOnTheBoardMap()[line][column], board.getCellOnTheBoardMap()[line1][column1], (Knight) board.getCellOnTheBoardMap()[line][column].getPieces())) {
-
-                pieceService.makeMove(board, new Move(board.getCellOnTheBoardMap()[line][column], board.getCellOnTheBoardMap()[line1][column1]));
-
-                board.setWhitesTurn(false);
-                boardService.updateBoard(board);
-                return new ResponseEntity<>(HttpStatus.OK);
-            } else {
-                return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-            }
-        } else if (Objects.equals(movePiecesRequest.getPieceColour(), "black") && !board.isWhitesTurn()) {
-            if (pieceService.canTheKnightMove(board, board.getCellOnTheBoardMap()[line][column], board.getCellOnTheBoardMap()[line1][column1], (Knight) board.getCellOnTheBoardMap()[line][column].getPieces())) {
-                pieceService.makeMove(board, new Move(board.getCellOnTheBoardMap()[line][column], board.getCellOnTheBoardMap()[line1][column1]));
-
-                board.setWhitesTurn(true);
+        String start = movePiecesRequest.getStart();
+        int startLine = start.charAt(0) - '0';
+        int startColumn = start.charAt(1) - '0';
+        String end = movePiecesRequest.getEnd();
+        int endLine = end.charAt(0) - '0';
+        int endColumn = end.charAt(1) - '0';
+        boolean colour = Objects.equals(movePiecesRequest.getPieceColour(), "white");
+        if (colour == board.isWhitesTurn()) {
+            CellOnTheBoard startCell = board.getCellOnTheBoardMap()[startLine][startColumn];
+            CellOnTheBoard endCell = board.getCellOnTheBoardMap()[endLine][endColumn];
+            if (pieceService.canTheKnightMove(board, startCell, endCell, (Knight) startCell.getPieces())) {
+                pieceService.makeMove(board, new Move(startCell, endCell));
+                board.setWhitesTurn(!colour);
                 boardService.updateBoard(board);
                 return new ResponseEntity<>(HttpStatus.OK);
             } else {
@@ -111,37 +90,26 @@ public class MovePiecesController {
 
     @PostMapping("/bishop")
     public ResponseEntity<?> moveBishop(@RequestBody MovePiecesRequest movePiecesRequest) {
-        Board board = null;
+        Board board;
         try {
             board = boardService.findById(Integer.parseInt(movePiecesRequest.getBoardId()));
         } catch (Exception e) {
             return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
         }
-        String start1 = movePiecesRequest.getStart();
-        int line = start1.charAt(0) - '0';
-        int column = start1.charAt(1) - '0';
+        String start = movePiecesRequest.getStart();
+        int startLine = start.charAt(0) - '0';
+        int startColumn = start.charAt(1) - '0';
         String end1 = movePiecesRequest.getEnd();
-        int line1 = end1.charAt(0) - '0';
-        int column1 = end1.charAt(1) - '0';
+        int endLine = end1.charAt(0) - '0';
+        int endColumn = end1.charAt(1) - '0';
 
-
-        if (Objects.equals(movePiecesRequest.getPieceColour(), "white") && board.isWhitesTurn()) {
-
-            if (pieceService.canTheBishopMove(board, board.getCellOnTheBoardMap()[line][column], board.getCellOnTheBoardMap()[line1][column1], (Bishop) board.getCellOnTheBoardMap()[line][column].getPieces())) {
-
-                pieceService.makeMove(board, new Move(board.getCellOnTheBoardMap()[line][column], board.getCellOnTheBoardMap()[line1][column1]));
-
-                board.setWhitesTurn(false);
-                boardService.updateBoard(board);
-                return new ResponseEntity<>(HttpStatus.OK);
-            } else {
-                return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-            }
-        } else if (Objects.equals(movePiecesRequest.getPieceColour(), "black") && !board.isWhitesTurn()) {
-            if (pieceService.canTheBishopMove(board, board.getCellOnTheBoardMap()[line][column], board.getCellOnTheBoardMap()[line1][column1], (Bishop) board.getCellOnTheBoardMap()[line][column].getPieces())) {
-                pieceService.makeMove(board, new Move(board.getCellOnTheBoardMap()[line][column], board.getCellOnTheBoardMap()[line1][column1]));
-
-                board.setWhitesTurn(true);
+        boolean colour = Objects.equals(movePiecesRequest.getPieceColour(), "white");
+        if (colour == board.isWhitesTurn()) {
+            CellOnTheBoard startCell = board.getCellOnTheBoardMap()[startLine][startColumn];
+            CellOnTheBoard endCell = board.getCellOnTheBoardMap()[endLine][endColumn];
+            if (pieceService.canTheBishopMove(board, startCell, endCell, (Bishop) startCell.getPieces())) {
+                pieceService.makeMove(board, new Move(startCell, endCell));
+                board.setWhitesTurn(!colour);
                 boardService.updateBoard(board);
                 return new ResponseEntity<>(HttpStatus.OK);
             } else {
@@ -153,33 +121,26 @@ public class MovePiecesController {
 
     @PostMapping("/king")
     public ResponseEntity<?> moveKing(@RequestBody MovePiecesRequest movePiecesRequest) {
-        Board board = null;
+        Board board;
         try {
             board = boardService.findById(Integer.parseInt(movePiecesRequest.getBoardId()));
         } catch (Exception e) {
             return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
         }
-        String start1 = movePiecesRequest.getStart();
-        int line = start1.charAt(0) - '0';
-        int column = start1.charAt(1) - '0';
+        String start = movePiecesRequest.getStart();
+        int startLine = start.charAt(0) - '0';
+        int startColumn = start.charAt(1) - '0';
         String end1 = movePiecesRequest.getEnd();
-        int line1 = end1.charAt(0) - '0';
-        int column1 = end1.charAt(1) - '0';
+        int endLine = end1.charAt(0) - '0';
+        int endColumn = end1.charAt(1) - '0';
 
-
-        if (Objects.equals(movePiecesRequest.getPieceColour(), "white") && board.isWhitesTurn()) {
-            if (pieceService.canTheKingMove(board, board.getCellOnTheBoardMap()[line][column], board.getCellOnTheBoardMap()[line1][column1], (King) board.getCellOnTheBoardMap()[line][column].getPieces())) {
-                pieceService.makeMove(board, new Move(board.getCellOnTheBoardMap()[line][column], board.getCellOnTheBoardMap()[line1][column1]));
-                board.setWhitesTurn(false);
-                boardService.updateBoard(board);
-                return new ResponseEntity<>(HttpStatus.OK);
-            } else {
-                return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-            }
-        } else if (Objects.equals(movePiecesRequest.getPieceColour(), "black") && !board.isWhitesTurn()) {
-            if (pieceService.canTheKingMove(board, board.getCellOnTheBoardMap()[line][column], board.getCellOnTheBoardMap()[line1][column1], (King) board.getCellOnTheBoardMap()[line][column].getPieces())) {
-                pieceService.makeMove(board, new Move(board.getCellOnTheBoardMap()[line][column], board.getCellOnTheBoardMap()[line1][column1]));
-                board.setWhitesTurn(true);
+        boolean colour = Objects.equals(movePiecesRequest.getPieceColour(), "white");
+        if (colour == board.isWhitesTurn()) {
+            CellOnTheBoard startCell = board.getCellOnTheBoardMap()[startLine][startColumn];
+            CellOnTheBoard endCell = board.getCellOnTheBoardMap()[endLine][endColumn];
+            if (pieceService.canTheKingMove(board, startCell, endCell, (King) startCell.getPieces())) {
+                pieceService.makeMove(board, new Move(startCell, endCell));
+                board.setWhitesTurn(!colour);
                 boardService.updateBoard(board);
                 return new ResponseEntity<>(HttpStatus.OK);
             } else {
@@ -191,33 +152,26 @@ public class MovePiecesController {
 
     @PostMapping("/castle")
     public ResponseEntity<?> castle(@RequestBody MovePiecesRequest movePiecesRequest) {
-        Board board = null;
+        Board board;
         try {
             board = boardService.findById(Integer.parseInt(movePiecesRequest.getBoardId()));
         } catch (Exception e) {
             return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
         }
-        String start1 = movePiecesRequest.getStart();
-        int line = start1.charAt(0) - '0';
-        int column = start1.charAt(1) - '0';
+        String start = movePiecesRequest.getStart();
+        int startLine = start.charAt(0) - '0';
+        int startColumn = start.charAt(1) - '0';
         String end1 = movePiecesRequest.getEnd();
-        int line1 = end1.charAt(0) - '0';
-        int column1 = end1.charAt(1) - '0';
+        int endLine = end1.charAt(0) - '0';
+        int endColumn = end1.charAt(1) - '0';
 
-
-        if (Objects.equals(movePiecesRequest.getPieceColour(), "white") && board.isWhitesTurn()) {
-            if (pieceService.canCastle(board, board.getCellOnTheBoardMap()[line][column], board.getCellOnTheBoardMap()[line1][column1], (King) board.getCellOnTheBoardMap()[line][column].getPieces())) {
-                pieceService.makeMove(board, new Move(board.getCellOnTheBoardMap()[line][column], board.getCellOnTheBoardMap()[line1][column1]));
-                board.setWhitesTurn(false);
-                boardService.updateBoard(board);
-                return new ResponseEntity<>(HttpStatus.OK);
-            } else {
-                return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-            }
-        } else if (Objects.equals(movePiecesRequest.getPieceColour(), "black") && !board.isWhitesTurn()) {
-            if (pieceService.canCastle(board, board.getCellOnTheBoardMap()[line][column], board.getCellOnTheBoardMap()[line1][column1], (King) board.getCellOnTheBoardMap()[line][column].getPieces())) {
-                pieceService.makeMove(board, new Move(board.getCellOnTheBoardMap()[line][column], board.getCellOnTheBoardMap()[line1][column1]));
-                board.setWhitesTurn(true);
+        boolean colour = Objects.equals(movePiecesRequest.getPieceColour(), "white");
+        if (colour == board.isWhitesTurn()) {
+            CellOnTheBoard startCell = board.getCellOnTheBoardMap()[startLine][startColumn];
+            CellOnTheBoard endCell = board.getCellOnTheBoardMap()[endLine][endColumn];
+            if (pieceService.canCastle(board, startCell, endCell, (King) startCell.getPieces())) {
+                pieceService.makeMove(board, new Move(startCell, endCell));
+                board.setWhitesTurn(!colour);
                 boardService.updateBoard(board);
                 return new ResponseEntity<>(HttpStatus.OK);
             } else {
@@ -229,36 +183,26 @@ public class MovePiecesController {
 
     @PostMapping("/queen")
     public ResponseEntity<?> moveQueen(@RequestBody MovePiecesRequest movePiecesRequest) {
-        Board board = null;
+        Board board;
         try {
             board = boardService.findById(Integer.parseInt(movePiecesRequest.getBoardId()));
         } catch (Exception e) {
             return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
         }
-        String start1 = movePiecesRequest.getStart();
-        int line = start1.charAt(0) - '0';
-        int column = start1.charAt(1) - '0';
+        String start = movePiecesRequest.getStart();
+        int startLine = start.charAt(0) - '0';
+        int startColumn = start.charAt(1) - '0';
         String end1 = movePiecesRequest.getEnd();
-        int line1 = end1.charAt(0) - '0';
-        int column1 = end1.charAt(1) - '0';
+        int endLine = end1.charAt(0) - '0';
+        int endColumn = end1.charAt(1) - '0';
 
-
-        if (Objects.equals(movePiecesRequest.getPieceColour(), "white") && board.isWhitesTurn()) {
-            if (pieceService.canTheQueenMove(board, board.getCellOnTheBoardMap()[line][column], board.getCellOnTheBoardMap()[line1][column1], (Queen) board.getCellOnTheBoardMap()[line][column].getPieces())) {
-                pieceService.makeMove(board, new Move(board.getCellOnTheBoardMap()[line][column], board.getCellOnTheBoardMap()[line1][column1]));
-
-                board.setWhitesTurn(false);
-                boardService.updateBoard(board);
-                return new ResponseEntity<>(HttpStatus.OK);
-            } else {
-                return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-            }
-        } else if (Objects.equals(movePiecesRequest.getPieceColour(), "black") && !board.isWhitesTurn()) {
-            if (pieceService.canTheQueenMove(board, board.getCellOnTheBoardMap()[line][column], board.getCellOnTheBoardMap()[line1][column1], (Queen) board.getCellOnTheBoardMap()[line][column].getPieces())) {
-                pieceService.makeMove(board, new Move(board.getCellOnTheBoardMap()[line][column], board.getCellOnTheBoardMap()[line1][column1]));
-                System.out.println(pieceService.getAllPossibleMovesForBlack(board).size());
-
-                board.setWhitesTurn(true);
+        boolean colour = Objects.equals(movePiecesRequest.getPieceColour(), "white");
+        if (board.isWhitesTurn() == colour) {
+            CellOnTheBoard startCell = board.getCellOnTheBoardMap()[startLine][startColumn];
+            CellOnTheBoard endCell = board.getCellOnTheBoardMap()[endLine][endColumn];
+            if (pieceService.canTheQueenMove(board, startCell, endCell, (Queen) startCell.getPieces())) {
+                pieceService.makeMove(board, new Move(startCell, endCell));
+                board.setWhitesTurn(!colour);
                 boardService.updateBoard(board);
                 return new ResponseEntity<>(HttpStatus.OK);
             } else {
@@ -270,55 +214,86 @@ public class MovePiecesController {
 
     @PostMapping("/pawn")
     public ResponseEntity<?> movePawn(@RequestBody MovePiecesRequest movePiecesRequest) {
-        Board board = null;
+        Board board;
         try {
             board = boardService.findById(Integer.parseInt(movePiecesRequest.getBoardId()));
         } catch (Exception e) {
             return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
         }
-        String start1 = movePiecesRequest.getStart();
-        int line = start1.charAt(0) - '0';
-        int column = start1.charAt(1) - '0';
+        String start = movePiecesRequest.getStart();
+        int startLine = start.charAt(0) - '0';
+        int startColumn = start.charAt(1) - '0';
         String end1 = movePiecesRequest.getEnd();
-        int line1 = end1.charAt(0) - '0';
-        int column1 = end1.charAt(1) - '0';
+        int endLine = end1.charAt(0) - '0';
+        int endColumn = end1.charAt(1) - '0';
 
-
-        if (Objects.equals(movePiecesRequest.getPieceColour(), "white") && board.isWhitesTurn()) {
-            if (pieceService.canThePawnMove(board, board.getCellOnTheBoardMap()[line][column], board.getCellOnTheBoardMap()[line1][column1], (Pawn) board.getCellOnTheBoardMap()[line][column].getPieces())) {
-                pieceService.makeMove(board, new Move(board.getCellOnTheBoardMap()[line][column], board.getCellOnTheBoardMap()[line1][column1]));
-                board.setWhitesTurn(false);
+        boolean colour = Objects.equals(movePiecesRequest.getPieceColour(), "white");
+        if (board.isWhitesTurn() == colour) {
+            CellOnTheBoard startCell = board.getCellOnTheBoardMap()[startLine][startColumn];
+            CellOnTheBoard endCell = board.getCellOnTheBoardMap()[endLine][endColumn];
+            if (pieceService.canThePawnPromote(board, startCell, endCell)) {
+                pieceService.makeMove(board, new Move(startCell, endCell));
+                board.setWhitesTurn(!colour);
                 boardService.updateBoard(board);
                 return new ResponseEntity<>(HttpStatus.OK);
             } else {
-                return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-            }
-        } else if (Objects.equals(movePiecesRequest.getPieceColour(), "black") && !board.isWhitesTurn()) {
-            if (pieceService.canThePawnMove(board, board.getCellOnTheBoardMap()[line][column], board.getCellOnTheBoardMap()[line1][column1], (Pawn) board.getCellOnTheBoardMap()[line][column].getPieces())) {
-                pieceService.makeMove(board, new Move(board.getCellOnTheBoardMap()[line][column], board.getCellOnTheBoardMap()[line1][column1]));
-                board.setWhitesTurn(true);
-                boardService.updateBoard(board);
-                return new ResponseEntity<>(HttpStatus.OK);
-            } else {
-                return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+                if (pieceService.canThePawnMove(board, startCell, endCell, (Pawn) startCell.getPieces())) {
+                    pieceService.makeMove(board, new Move(startCell, endCell));
+                    board.setWhitesTurn(!colour);
+                    boardService.updateBoard(board);
+                    return new ResponseEntity<>(HttpStatus.OK);
+                } else {
+                    return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+                }
             }
         }
         return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
     }
 
+    @PostMapping("/promote")
+    public ResponseEntity<?> promotePawn(@RequestBody PromotePawn promotePawn) {
+        Board board;
+        try {
+            board = boardService.findById(promotePawn.getBoardId());
+        } catch (Exception e) {
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
+        }
+        int line = Integer.parseInt(String.valueOf(promotePawn.getCoordinates().charAt(0)));
+        int column = Integer.parseInt(String.valueOf(promotePawn.getCoordinates().charAt(1)));
+
+        CellOnTheBoard pawn = board.getCellOnTheBoardMap()[line][column];
+        switch (promotePawn.getNewPiece()) {
+            case "Queen":
+                pawn.setPieces(new Queen(pawn.getPieces().isWhite()));
+                break;
+            case "Rook":
+                pawn.setPieces(new Rook(pawn.getPieces().isWhite()));
+                break;
+            case "Bishop":
+                pawn.setPieces(new Bishop(pawn.getPieces().isWhite()));
+                break;
+            case "Knight":
+                pawn.setPieces(new Knight(pawn.getPieces().isWhite()));
+                break;
+        }
+        board.setWhitesTurn(!pawn.getPieces().isWhite());
+        board.getCellOnTheBoardMap()[line][column].setPieces(pawn.getPieces());
+        boardService.updateBoard(board);
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
     @PostMapping("/reset")
     public void resetBoard(@RequestBody Integer boardId) {
-        Board board = null;
         try {
-            board = boardService.findById(boardId);
+            Board board = boardService.findById(boardId);
+            board.setWhitesTurn(true);
+            board.setCellOnTheBoardMap(board.setBoard());
+
+            boardService.updateBoard(board);
+            log.info(board.toString());
         } catch (Exception e) {
-
+            log.error(e.getMessage());
         }
-        board.setWhitesTurn(true);
-        board.setCellOnTheBoardMap(board.setBoard());
-
-        boardService.updateBoard(board);
-        log.info(board.toString());
     }
 
 
@@ -329,7 +304,7 @@ public class MovePiecesController {
 
         int endIndex = list2[0].lastIndexOf("\"");
         String extractedContent = list2[0].substring(1, endIndex);
-        Board board = null;
+        Board board;
         try {
             board = boardService.findById(Integer.parseInt(extractedContent));
         } catch (Exception e) {
@@ -337,11 +312,19 @@ public class MovePiecesController {
         }
         CellOnTheBoard blackKingCell = board.getKing(false);
         King blackKing = (King) blackKingCell.getPieces();
+
         CellOnTheBoard whiteKingCell = board.getKing(true);
         King whiteKing = (King) whiteKingCell.getPieces();
-        int nrMovesForWhite = pieceService.getAllPossibleMovesForWhite(board).size();
-        int nrMovesForBlack = pieceService.getAllPossibleMovesForBlack(board).size();
-        if ((nrMovesForWhite == 0 && whiteKing.isInCheck())) {
+
+        int nrMovesForWhite = pieceService.getAllPossibleMoves(board, true).size();
+        int nrMovesForBlack = pieceService.getAllPossibleMoves(board, false).size();
+
+//        System.out.println("white");
+//        pieceService.getAllPossibleMoves(board, true).forEach(System.out::println);
+//        System.out.println("black");
+//        pieceService.getAllPossibleMoves(board, false).forEach(System.out::println);
+//        System.out.println();
+        if (nrMovesForWhite == 0 && whiteKing.isInCheck()) {
             return ResponseEntity.ok("CheckMate - Black won");
         } else if (nrMovesForBlack == 0 && blackKing.isInCheck()) {
             return ResponseEntity.ok("CheckMate - White won");

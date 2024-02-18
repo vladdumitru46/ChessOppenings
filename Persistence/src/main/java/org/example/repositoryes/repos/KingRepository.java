@@ -16,7 +16,7 @@ import java.util.stream.IntStream;
 @Repository
 public class KingRepository implements IKingRepository {
     Logger logger = LoggerFactory.getLogger(KingRepository.class);
-//TODO: vezi daca merge kingInCheck si sa poti bloca cu pionii sahul
+
     @Override
     public boolean canMove(Board board, CellOnTheBoard start, CellOnTheBoard end, King king) {
         if (end.getPieces() != null) {
@@ -27,28 +27,41 @@ public class KingRepository implements IKingRepository {
         }
         int lineCoordinate = Math.abs(start.getLineCoordinate() - end.getLineCoordinate());
         int columnCoordinate = Math.abs(start.getColumnCoordinate() - end.getColumnCoordinate());
-        if (lineCoordinate + columnCoordinate == 1) {
-            logger.info("check if the king is not in check");
-            if (!checkIfTheKingIsInCheck(board, start, end, king)) {
-                king.setInCheck(true);
-                start.setPieces(king);
-                logger.info("king cannot move to this coordinates {}{} because there will be in check", end.getLineCoordinate(), end.getColumnCoordinate());
-                return false;
+
+        if (start.getLineCoordinate() == end.getLineCoordinate()) {
+            if (columnCoordinate == 1) {
+                logger.info("check if the king is not in check");
+                if (!checkIfTheKingIsInCheckAfterMove(board, start, end, king.isWhite())) {
+                    logger.info("king cannot move to this coordinates {}{} because there will be in check", end.getLineCoordinate(), end.getColumnCoordinate());
+                    return false;
+                } else {
+                    return true;
+                }
             } else {
-                return true;
+                return false;
+            }
+        } else if (start.getColumnCoordinate() == end.getColumnCoordinate()) {
+            if (lineCoordinate == 1) {
+                logger.info("check if the king is not in check");
+                if (!checkIfTheKingIsInCheckAfterMove(board, start, end, king.isWhite())) {
+                    logger.info("king cannot move to this coordinates {}{} because there will be in check", end.getLineCoordinate(), end.getColumnCoordinate());
+                    return false;
+                } else {
+                    return true;
+                }
+            } else {
+                return false;
             }
         } else {
-            if (start.getLineCoordinate() != end.getLineCoordinate() && start.getColumnCoordinate() != end.getColumnCoordinate()) {
-                if (lineCoordinate + columnCoordinate == 2) {
-                    logger.info("check if the king is not in check");
-                    if (!checkIfTheKingIsInCheck(board, start, end, (King) king)) {
-                        king.setInCheck(true);
-                        logger.info("king cannot move to this coordinates {}{} because there will be in check", end.getLineCoordinate(), end.getColumnCoordinate());
-                        return false;
-                    } else {
-                        return true;
-                    }
+            if (lineCoordinate == 1 && columnCoordinate == 1) {
+                logger.info("check if the king is not in check");
+                if (!checkIfTheKingIsInCheckAfterMove(board, start, end, king.isWhite())) {
+                    logger.info("king cannot move to this coordinates {}{} because there will be in check", end.getLineCoordinate(), end.getColumnCoordinate());
+                    return false;
+                } else {
+                    return true;
                 }
+
             } else {
                 logger.info("king cannot move to this coordinates {}{}", end.getLineCoordinate(), end.getColumnCoordinate());
             }
@@ -65,38 +78,30 @@ public class KingRepository implements IKingRepository {
     }
 
     @Override
-    public boolean checkIfTheKingIsInCheck(Board board, CellOnTheBoard start, CellOnTheBoard end, Pieces king) {
-        boolean isKingInCheck = Arrays.stream(board.getCellOnTheBoardMap())
+    public boolean checkIfTheKingIsInCheck(Board board, CellOnTheBoard start, CellOnTheBoard end, Pieces isWhite) {
+        CellOnTheBoard king = board.getKing(isWhite.isWhite());
+
+        return Arrays.stream(board.getCellOnTheBoardMap())
                 .flatMap(Arrays::stream)
-                .filter(i -> i.getPieces() != null && i.getPieces().isWhite() != king.isWhite()
-                        && i.getPieces().canAttackTheKing(board, i, end, i.getPieces()))
-                .anyMatch(i -> true);
-
-        if (isKingInCheck) {
-            logger.info("the king is in check on this square {}{}", end.getLineCoordinate(), end.getColumnCoordinate());
-            return false;
-        }
-        return true;
-
+                .filter(cell -> cell.getPieces() != null && cell.getPieces().isWhite() != isWhite.isWhite())
+                .noneMatch(cell -> cell.getPieces().canAttackTheKing(board, cell, king, cell.getPieces()));
     }
 
-    public boolean checkIfTheKingIsInCheckAfterMove(Board board, CellOnTheBoard start, CellOnTheBoard end, boolean isWhite, KingRepository kingRepository) {
+    public boolean checkIfTheKingIsInCheckAfterMove(Board board, CellOnTheBoard start, CellOnTheBoard end, boolean isWhite) {
         CellOnTheBoard kingsCell = board.getKing(isWhite);
         King king = (King) kingsCell.getPieces();
         Pieces pieceOnStart = board.getCellOnTheBoardMap()[start.getLineCoordinate()][start.getColumnCoordinate()].getPieces();
         Pieces pieceOnEnd = board.getCellOnTheBoardMap()[end.getLineCoordinate()][end.getColumnCoordinate()].getPieces();
         board.getCellOnTheBoardMap()[end.getLineCoordinate()][end.getColumnCoordinate()].setPieces(pieceOnStart);
         board.getCellOnTheBoardMap()[start.getLineCoordinate()][start.getColumnCoordinate()].setPieces(null);
-        if (king.isInCheck()) {
-            if (!kingRepository.checkIfTheKingIsInCheck(board,
-                    board.getCellOnTheBoardMap()[end.getLineCoordinate()][end.getColumnCoordinate()], kingsCell, king)) {
-                board.getCellOnTheBoardMap()[end.getLineCoordinate()][end.getColumnCoordinate()].setPieces(pieceOnEnd);
-                board.getCellOnTheBoardMap()[start.getLineCoordinate()][start.getColumnCoordinate()].setPieces(pieceOnStart);
-                return false;
-            } else {
-                king.setInCheck(false);
-            }
+
+        if (!checkIfTheKingIsInCheck(board,
+                board.getCellOnTheBoardMap()[end.getLineCoordinate()][end.getColumnCoordinate()], kingsCell, king)) {
+            board.getCellOnTheBoardMap()[end.getLineCoordinate()][end.getColumnCoordinate()].setPieces(pieceOnEnd);
+            board.getCellOnTheBoardMap()[start.getLineCoordinate()][start.getColumnCoordinate()].setPieces(pieceOnStart);
+            return false;
         }
+
         board.getCellOnTheBoardMap()[end.getLineCoordinate()][end.getColumnCoordinate()].setPieces(pieceOnEnd);
         board.getCellOnTheBoardMap()[start.getLineCoordinate()][start.getColumnCoordinate()].setPieces(pieceOnStart);
         return true;
@@ -114,19 +119,21 @@ public class KingRepository implements IKingRepository {
             }
             if (king.isWhite()) {
                 if (end.getColumnCoordinate() == 2) {
-                    Rook rook = (Rook) board.getCellOnTheBoardMap()[0][0].getPieces();
-                    if (rook == null) {
+                    Pieces pieces = board.getCellOnTheBoardMap()[0][0].getPieces();
+                    if (!(pieces instanceof Rook)) {
                         return false;
                     }
+                    Rook rook = (Rook) pieces;
                     if (rook.isHasBeenMoved()) {
                         return false;
                     }
                     return board.getCellOnTheBoardMap()[0][1].getPieces() == null && board.getCellOnTheBoardMap()[0][2].getPieces() == null && board.getCellOnTheBoardMap()[0][3].getPieces() == null;
                 } else if (end.getColumnCoordinate() == 6) {
-                    Rook rook = (Rook) board.getCellOnTheBoardMap()[0][7].getPieces();
-                    if (rook == null) {
+                    Pieces pieces = board.getCellOnTheBoardMap()[0][7].getPieces();
+                    if (!(pieces instanceof Rook)) {
                         return false;
                     }
+                    Rook rook = (Rook) pieces;
                     if (rook.isHasBeenMoved()) {
                         return false;
                     }
@@ -136,19 +143,21 @@ public class KingRepository implements IKingRepository {
                 }
             } else {
                 if (end.getColumnCoordinate() == 2) {
-                    Rook rook = (Rook) board.getCellOnTheBoardMap()[7][0].getPieces();
-                    if (rook == null) {
+                    Pieces pieces = board.getCellOnTheBoardMap()[7][0].getPieces();
+                    if (!(pieces instanceof Rook)) {
                         return false;
                     }
+                    Rook rook = (Rook) pieces;
                     if (rook.isHasBeenMoved()) {
                         return false;
                     }
                     return board.getCellOnTheBoardMap()[7][1].getPieces() == null && board.getCellOnTheBoardMap()[7][2].getPieces() == null && board.getCellOnTheBoardMap()[7][3].getPieces() == null;
                 } else if (end.getColumnCoordinate() == 6) {
-                    Rook rook = (Rook) board.getCellOnTheBoardMap()[7][7].getPieces();
-                    if (rook == null) {
+                    Pieces pieces = board.getCellOnTheBoardMap()[7][7].getPieces();
+                    if (!(pieces instanceof Rook)) {
                         return false;
                     }
+                    Rook rook = (Rook) pieces;
                     if (rook.isHasBeenMoved()) {
                         return false;
                     }
@@ -160,4 +169,42 @@ public class KingRepository implements IKingRepository {
         }
         return true;
     }
+
+//    public boolean canCastle(Board board, CellOnTheBoard start, CellOnTheBoard end, King king) {
+//        if (!king.isCastlingDone() && !king.isHasBeenMoved()) {
+//            int startLine = start.getLineCoordinate();
+//            int endColumn = end.getColumnCoordinate();
+//
+//            if ((startLine == 0 || startLine == 7) && (endColumn == 2 || endColumn == 6)) {
+//                int rookColumn = (endColumn == 2) ? 0 : 7;
+//
+//                return validateRookAndEmptyCells(board, startLine, rookColumn, endColumn);
+//            }
+//        }
+//
+//        return false;
+//    }
+//
+//    private boolean validateRookAndEmptyCells(Board board, int line, int rookColumn, int targetColumn) {
+//        Pieces rookPieces = board.getCellOnTheBoardMap()[line][rookColumn].getPieces();
+//
+//        if (rookPieces instanceof Rook) {
+//            Rook rook = (Rook) rookPieces;
+//
+//            if (!rook.isHasBeenMoved()) {
+//                int startColumn = (targetColumn == 2) ? 0 : 7;
+//
+//                for (int col = startColumn + 1; col < targetColumn; col++) {
+//                    if (board.getCellOnTheBoardMap()[line][col].getPieces() != null) {
+//                        return false;
+//                    }
+//                }
+//
+//                return true;
+//            }
+//        }
+//
+//        return false;
+//    }
+
 }

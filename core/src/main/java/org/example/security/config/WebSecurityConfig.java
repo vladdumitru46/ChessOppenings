@@ -1,4 +1,4 @@
-package org.example.config;
+package org.example.security.config;
 
 import lombok.AllArgsConstructor;
 import org.example.PlayerService;

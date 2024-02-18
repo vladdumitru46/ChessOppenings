@@ -114,18 +114,10 @@ public class Board {
     }
 
 
-    public Integer getTotalPointsForWhite() {
+    public Integer getTotalPoints(boolean isWhite) {
         return Arrays.stream(cellOnTheBoardMap)
                 .flatMap(Arrays::stream)
-                .filter(i -> i.getPieces() != null && i.getPieces().isWhite())
-                .mapToInt(i -> i.getPieces().getPoints())
-                .sum();
-    }
-
-    public Integer getTotalPointsForBlack() {
-        return Arrays.stream(cellOnTheBoardMap)
-                .flatMap(Arrays::stream)
-                .filter(i -> i.getPieces() != null && !i.getPieces().isWhite())
+                .filter(i -> i.getPieces() != null && i.getPieces().isWhite() == isWhite)
                 .mapToInt(i -> i.getPieces().getPoints())
                 .sum();
     }

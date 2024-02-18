@@ -6,7 +6,7 @@ import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.example.email.EmailSender;
 import org.example.exceptions.PlayerValidationException;
-import org.example.repositoryes.interfaces.PlayerRepository;
+import org.example.repositoryes.interfaces.player.PlayerRepository;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -78,14 +78,25 @@ public class PlayerService implements UserDetailsService {
         return player.get();
     }
 
-    public Optional<Player> searchPlayerById(Integer id) {
+    public Player searchPlayerById(Integer id) throws Exception {
         log.info("search player by id {}", id);
-        return playerRepository.findById(id);
+        Optional<Player> player = playerRepository.findById(id);
+        if (player.isEmpty()) {
+            throw new Exception("A player with that id does not exist!");
+        }
+        return player.get();
     }
 
-    public Optional<Player> searchPlayerByUsername(String userName) {
-        log.info("search player by username {}", userName);
-        return playerRepository.findByUserName(userName);
+    public Player searchPlayerByUsernameOrEmail(String emailOrUserName) throws Exception {
+        log.info("search player by username {}", emailOrUserName);
+        Optional<Player> player = playerRepository.findByUserName(emailOrUserName);
+        if (player.isEmpty()) {
+            player = playerRepository.findByEmail(emailOrUserName);
+            if (player.isEmpty()) {
+                throw new Exception("There is no player with that userName!");
+            }
+        }
+        return player.get();
     }
 
     public void logIn(String emailOrUsername, String password) throws Exception {
@@ -94,11 +105,11 @@ public class PlayerService implements UserDetailsService {
         if (playerOptional.isEmpty()) {
             playerOptional = playerRepository.findByUserName(emailOrUsername);
             if (playerOptional.isEmpty()) {
-                throw new PlayerValidationException("email or password are invalid!");
+                throw new PlayerValidationException("email does not exist");
             }
         }
         if (!cryptPasswordEncoder.matches(password, playerOptional.get().getPassword())) {
-            throw new IllegalAccessException("email or password are invalid!");
+            throw new IllegalAccessException("password is invalid!");
         }
         if (playerOptional.get().isLocked()) {
             throw new PlayerValidationException("Account is not yet verified!");
@@ -135,10 +146,8 @@ public class PlayerService implements UserDetailsService {
 
         Optional<Player> player = playerRepository.findByEmail(confirmationToken.getPlayer().getEmail());
 
-        if (player.isPresent()) {
-            player.get().setLocked(false);
-//            playerRepository.update(player.get().getId(), player.get().isLocked());
-        }
+        //            playerRepository.update(player.get().getId(), player.get().isLocked());
+        player.ifPresent(value -> value.setLocked(false));
         return "The email has been confirmed!\nPlease go back and try to logIn in the application!";
     }
 

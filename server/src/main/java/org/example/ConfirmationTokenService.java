@@ -2,7 +2,7 @@ package org.example;
 
 import com.example.models.player.registration.ConfirmationToken;
 import lombok.AllArgsConstructor;
-import org.example.repositoryes.interfaces.ConfirmationTokenRepository;
+import org.example.repositoryes.interfaces.player.ConfirmationTokenRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
@@ -26,8 +26,5 @@ public class ConfirmationTokenService {
         throw new Exception("token does not exist!");
     }
 
-    public void updateToken(ConfirmationToken confirmationToken) {
-        confirmationTokenRepository.update(confirmationToken.getId(), confirmationToken.getConfirmedAt());
-    }
 }
 

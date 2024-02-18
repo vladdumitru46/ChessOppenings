@@ -63,7 +63,7 @@ public class PawnRepository implements IRepository<Pawn> {
             }
         }
         KingRepository kingRepository = new KingRepository();
-        return kingRepository.checkIfTheKingIsInCheckAfterMove(board, start, end, pawn.isWhite(), kingRepository);
+        return kingRepository.checkIfTheKingIsInCheckAfterMove(board, start, end, pawn.isWhite());
     }
 
     @Override
@@ -102,6 +102,46 @@ public class PawnRepository implements IRepository<Pawn> {
             }
         }
         return false;
+    }
+
+    public boolean canPromote(Board board, CellOnTheBoard start, CellOnTheBoard end) {
+        if (start.getPieces().isWhite()) {
+            if (start.getLineCoordinate() != 6) {
+                return false;
+            }
+            if (end.getLineCoordinate() != 7) {
+                return false;
+            }
+            if (start.getColumnCoordinate() != end.getColumnCoordinate()) {
+                if(start.getColumnCoordinate()!=end.getColumnCoordinate() - 1){
+                    if (start.getColumnCoordinate()!=end.getColumnCoordinate() + 1){
+                        return false;
+                    }
+                }
+            }
+            if (end.getPieces() != null) {
+                return false;
+            }
+            return true;
+        }else{
+            if (start.getLineCoordinate() != 1) {
+                return false;
+            }
+            if (end.getLineCoordinate() != 0) {
+                return false;
+            }
+            if (start.getColumnCoordinate() != end.getColumnCoordinate()) {
+                if(start.getColumnCoordinate()!=end.getColumnCoordinate() - 1){
+                    if (start.getColumnCoordinate()!=end.getColumnCoordinate() + 1){
+                        return false;
+                    }
+                }
+            }
+            if (end.getPieces() != null) {
+                return false;
+            }
+            return true;
+        }
     }
 
 

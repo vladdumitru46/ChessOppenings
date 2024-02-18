@@ -9,8 +9,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
-import java.util.Arrays;
-import java.util.List;
+import java.util.*;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
@@ -24,6 +23,8 @@ public class PieceService {
     private final BishopRepository bishopRepository;
     private final QueenRepository queenRepository;
     private final KingRepository kingRepository;
+    private Map<String, Boolean> pawnPromotion = new HashMap<>();
+
 
     public PieceService(PawnRepository pawnRepository, RookRepository rookRepository, KnightRepository knightRepository, BishopRepository bishopRepository, QueenRepository queenRepository, KingRepository kingRepository) {
         this.pawnRepository = pawnRepository;
@@ -32,6 +33,10 @@ public class PieceService {
         this.bishopRepository = bishopRepository;
         this.queenRepository = queenRepository;
         this.kingRepository = kingRepository;
+    }
+
+    public void setPawnPromotion(Map<String, Boolean> pawnPromotion) {
+        this.pawnPromotion = pawnPromotion;
     }
 
     public boolean canThePawnMove(Board board, CellOnTheBoard start, CellOnTheBoard end, Pawn pawn) {
@@ -77,10 +82,10 @@ public class PieceService {
         }
     }
 
-    public boolean checkIsTheKingInCheck(Board board, CellOnTheBoard start, CellOnTheBoard end, Pieces king) {
-        logger.info("verify is the king is checked");
-        return kingRepository.checkIfTheKingIsInCheck(board, start, end, king);
+    public boolean canThePawnPromote(Board board, CellOnTheBoard cell, CellOnTheBoard end) {
+        return pawnRepository.canPromote(board, cell, end);
     }
+
 
     public boolean canCastle(Board board, CellOnTheBoard start, CellOnTheBoard end, King king) {
         if (kingRepository.canCastle(board, start, end, king)) {
@@ -120,53 +125,46 @@ public class PieceService {
     }
 
 
-    public List<Move> getAllPossibleMovesForWhite(Board board) {
+    public List<Move> getAllPossibleMoves(Board board, boolean isWhite) {
         List<CellOnTheBoard> collect = Arrays.stream(board.getCellOnTheBoardMap())
                 .flatMap(Arrays::stream)
-                .filter(i -> i.getPieces() != null && i.getPieces().isWhite())
+                .filter(i -> i.getPieces() != null && i.getPieces().isWhite() == isWhite)
                 .collect(Collectors.toList());
 
-        return collect.stream()
-                .flatMap(piece -> Arrays.stream(board.getCellOnTheBoardMap())
-                        .flatMap(Arrays::stream)
-                        .filter(endCell -> !piece.equals(endCell) && possibleMovesForAPiece(board, piece, endCell))
-                        .map(endCell -> new Move(piece, endCell)))
-                .collect(Collectors.toList());
+        List<Move> moveList = new ArrayList<>();
+        for (var piece : collect) {
+            for (int i = 0; i < 8; i++) {
+                for (int j = 0; j < 8; j++) {
+                    CellOnTheBoard endCell = board.getCellOnTheBoardMap()[i][j];
+                    if (piece != endCell) {
+                        int ok = 0;
+                        if (piece.getPieces() instanceof Pawn) {
+                            if (pawnRepository.canPromote(board, piece, endCell)) {
+                                moveList.addAll(promotePawns(piece, endCell));
+                                ok = 1;
+                            }
+                        }
+                        if (ok == 0) {
+                            if (possibleMovesForAPiece(board, piece, endCell)) {
+                                moveList.add(new Move(piece, endCell));
+                            }
+                        }
+
+                    }
+                }
+            }
+        }
+        return moveList;
     }
 
-    public List<Move> getAllPossibleMovesForBlack(Board board) {
-        List<CellOnTheBoard> collect = Arrays.stream(board.getCellOnTheBoardMap())
-                .flatMap(Arrays::stream)
-                .filter(i -> i.getPieces() != null && !i.getPieces().isWhite())
-                .collect(Collectors.toList());
-
-        return collect.stream()
-                .flatMap(piece -> Arrays.stream(board.getCellOnTheBoardMap())
-                        .flatMap(Arrays::stream)
-                        .filter(endCell -> !piece.equals(endCell) && possibleMovesForAPiece(board, piece, endCell))
-                        .map(endCell -> new Move(piece, endCell)))
-                .collect(Collectors.toList());
-    }
-
-    public List<Move> getAllPossibleMoves(Board board) {
-        List<CellOnTheBoard> collect = Arrays.stream(board.getCellOnTheBoardMap())
-                .flatMap(Arrays::stream)
-                .filter(i -> i.getPieces() != null)
-                .collect(Collectors.toList());
-
-        return collect.stream()
-                .flatMap(piece -> Arrays.stream(board.getCellOnTheBoardMap())
-                        .flatMap(Arrays::stream)
-                        .filter(endCell -> endCell.getPieces().isWhite() != piece.getPieces().isWhite())
-                        .filter(endCell -> !piece.equals(endCell) && possibleMovesForAPiece(board, piece, endCell))
-                        .map(endCell -> new Move(piece, endCell)))
-                .collect(Collectors.toList());
-    }
-
-
+    //todo: vezo de ce da eroare atunci cand se intra pe cazul de rocada
     public boolean possibleMovesForAPiece(Board board, CellOnTheBoard startCell, CellOnTheBoard endCell) {
         if (startCell.getPieces() instanceof King) {
-            return kingRepository.canMove(board, startCell, endCell, (King) startCell.getPieces());
+            if (!kingRepository.canMove(board, startCell, endCell, (King) startCell.getPieces())) {
+                return kingRepository.canCastle(board, startCell, endCell, (King) startCell.getPieces());
+            } else {
+                return true;
+            }
         } else if (startCell.getPieces() instanceof Queen) {
             return queenRepository.canMove(board, startCell, endCell, (Queen) startCell.getPieces());
         } else if (startCell.getPieces() instanceof Bishop) {
@@ -181,6 +179,36 @@ public class PieceService {
         return false;
     }
 
+    private List<Move> promotePawns(CellOnTheBoard startCell, CellOnTheBoard endCell) {
+
+        List<Move> promotePawnsList = new ArrayList<>();
+
+        pawnPromotion.put("knight", false);
+        pawnPromotion.put("bishop", false);
+        pawnPromotion.put("rook", false);
+        pawnPromotion.put("queen", false);
+        int i = 0;
+        while (i < 4) {
+            CellOnTheBoard piecesOnStart = new CellOnTheBoard(null, startCell.getLineCoordinate(), startCell.getColumnCoordinate());
+            if (!pawnPromotion.get("knight")) {
+                piecesOnStart.setPieces(new Knight(startCell.getPieces().isWhite()));
+                pawnPromotion.put("knight", true);
+            } else if (!pawnPromotion.get("bishop")) {
+                piecesOnStart.setPieces(new Bishop(startCell.getPieces().isWhite()));
+                pawnPromotion.put("bishop", true);
+            } else if (!pawnPromotion.get("rook")) {
+                piecesOnStart.setPieces(new Rook(startCell.getPieces().isWhite()));
+                pawnPromotion.put("rook", true);
+            } else if (!pawnPromotion.get("queen")) {
+                piecesOnStart.setPieces(new Queen(startCell.getPieces().isWhite()));
+                pawnPromotion.put("queen", true);
+            }
+            promotePawnsList.add(new Move(piecesOnStart, endCell));
+            i++;
+        }
+        return promotePawnsList;
+    }
+
 
     public synchronized void makeMove(Board board, Move move) {
         King king = (King) board.getKing(!board.getCellOnTheBoardMap()[move.getStart().getLineCoordinate()][move.getStart().getColumnCoordinate()].getPieces().isWhite())
@@ -190,7 +218,6 @@ public class PieceService {
         board.getCellOnTheBoardMap()[move.getStart().getLineCoordinate()][move.getStart().getColumnCoordinate()].setPieces(null);
 
         updateKingStatus(board, move, king);
-
     }
 
     private synchronized void updateKingStatus(Board board, Move move, King king) {
@@ -210,9 +237,7 @@ public class PieceService {
                 .setPieces(pieceOnStart);
         board.getCellOnTheBoardMap()[move.getEnd().getLineCoordinate()][move.getEnd().getColumnCoordinate()].setPieces(pieceOnEnd);
 
-
         updateKingStatus(board, move, king);
-
     }
 
 
@@ -251,7 +276,7 @@ public class PieceService {
         notation += transformColumnToLetters(end) + (end.getLineCoordinate() + 1);
 
         makeMove(board, new Move(board.getCellOnTheBoardMap()[start.getLineCoordinate()][start.getColumnCoordinate()], board.getCellOnTheBoardMap()[end.getLineCoordinate()][end.getColumnCoordinate()]));
-        King king = (King) board.getKing(!start.getPieces().isWhite()).getPieces();
+        King king = (King) board.getKing(!pieceOnStart.isWhite()).getPieces();
         if (king.isInCheck()) {
             notation += "+";
         }
@@ -282,10 +307,10 @@ public class PieceService {
     }
 
 
-    public Integer numberOfCenterSquaresAttackedForWhite(Board board) {
+    public Integer numberOfCenterSquaresAttacked(Board board, boolean isWhite) {
         return (int) Arrays.stream(board.getCellOnTheBoardMap())
                 .flatMap(Arrays::stream)
-                .filter(cell -> cell.getPieces() != null && cell.getPieces().isWhite())
+                .filter(cell -> cell.getPieces() != null && cell.getPieces().isWhite() == isWhite)
                 .filter(cell -> IntStream.range(4, 8)
                         .anyMatch(i -> IntStream.range(0, 8)
                                 .anyMatch(j -> possibleMovesForAPiece(board, cell, board.getCellOnTheBoardMap()[i][j]))
@@ -294,41 +319,15 @@ public class PieceService {
                 .count();
     }
 
-    public Integer numberOfCenterSquaresAttackedForBlack(Board board) {
-        return (int) Arrays.stream(board.getCellOnTheBoardMap())
-                .flatMap(Arrays::stream)
-                .filter(cell -> cell.getPieces() != null && !cell.getPieces().isWhite())
-                .filter(cell -> IntStream.range(0, 4)
-                        .anyMatch(i -> IntStream.range(0, 8)
-                                .anyMatch(j -> possibleMovesForAPiece(board, cell, board.getCellOnTheBoardMap()[i][j]))
-                        )
-                )
-                .count();
-    }
 
-
-    public Integer canAWhitePieceBeCaptured(Board board) {
-        return (int) Arrays.stream(board.getCellOnTheBoardMap())
-                .flatMap(Arrays::stream)
-                .filter(cell -> cell.getPieces() != null && cell.getPieces().isWhite())
-                .filter(cell -> IntStream.range(0, 8)
-                        .anyMatch(i -> IntStream.range(0, 8)
-                                .anyMatch(j -> board.getCellOnTheBoardMap()[i][j].getPieces() != null
-                                        && !board.getCellOnTheBoardMap()[i][j].getPieces().isWhite()
-                                        && possibleMovesForAPiece(board, cell, board.getCellOnTheBoardMap()[i][j]))
-                        )
-                )
-                .count();
-    }
-
-    public Integer canABlackPieceBeCaptured(Board board) {
+    public Integer canAnEnemyPieceBeCaptured(Board board, boolean isWhite) {
         return (int) Arrays.stream(board.getCellOnTheBoardMap())
                 .flatMap(Arrays::stream)
                 .filter(cell -> cell.getPieces() != null && !cell.getPieces().isWhite())
                 .filter(cell -> IntStream.range(0, 8)
                         .anyMatch(i -> IntStream.range(0, 8)
                                 .anyMatch(j -> board.getCellOnTheBoardMap()[i][j].getPieces() != null
-                                        && board.getCellOnTheBoardMap()[i][j].getPieces().isWhite()
+                                        && board.getCellOnTheBoardMap()[i][j].getPieces().isWhite() != isWhite
                                         && possibleMovesForAPiece(board, cell, board.getCellOnTheBoardMap()[i][j]))
                         )
                 )
@@ -343,7 +342,7 @@ public class PieceService {
                     for (int k = 0; k < 8; k++) {
                         for (int l = 0; l < 8; l++) {
                             if (kingRepository.checkIfTheKingIsInCheckAfterMove(board, cell,
-                                    board.getCellOnTheBoardMap()[k][l], isWhite, kingRepository)) {
+                                    board.getCellOnTheBoardMap()[k][l], isWhite)) {
                                 return 0;
                             }
                         }
@@ -353,5 +352,42 @@ public class PieceService {
         }
         return 900;
     }
+
+    public Integer verifyPawnStructure(Board board, boolean isWhite) {
+        return (int) Arrays.stream(board.getCellOnTheBoardMap())
+                .flatMap(Arrays::stream)
+                .filter(cell -> cell.getPieces() instanceof Pawn && cell.getPieces().isWhite() == isWhite)
+                .filter(cell -> verifyIfThePawnHasAPawnToHisRight(board, cell.getColumnCoordinate() + 1, isWhite))
+                .count() + 1;
+    }
+
+    private boolean verifyIfThePawnHasAPawnToHisRight(Board board, int column, boolean isWhite) {
+        if (column < 8) {
+            for (int i = 0; i < 8; i++) {
+                if (board.getCellOnTheBoardMap()[i][column].getPieces() instanceof Pawn && board.getCellOnTheBoardMap()[i][column].getPieces().isWhite() == isWhite) {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
+    public int verifyIfThereAreDoublePawns(Board board, boolean isWhite) {
+        return (int) Arrays.stream(board.getCellOnTheBoardMap())
+                .flatMap(Arrays::stream)
+                .filter(cell -> cell.getPieces() instanceof Pawn && cell.getPieces().isWhite() == isWhite)
+                .filter(cell -> verifyIfThePawnHasAPawnInFrontOfHim(board, cell.getColumnCoordinate(), cell.getLineCoordinate(), isWhite))
+                .count();
+    }
+
+    private boolean verifyIfThePawnHasAPawnInFrontOfHim(Board board, int column, int line, boolean isWhite) {
+        for (int i = line + 1; i < 8; i++) {
+            if (board.getCellOnTheBoardMap()[i][column].getPieces() instanceof Pawn && board.getCellOnTheBoardMap()[i][column].getPieces().isWhite() == isWhite) {
+                return true;
+            }
+        }
+        return false;
+    }
+
 
 }

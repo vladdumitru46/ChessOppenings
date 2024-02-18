@@ -20,13 +20,16 @@ public class King extends Pieces {
 
     @Override
     public boolean canAttackTheKing(Board board, CellOnTheBoard start, CellOnTheBoard end, Pieces piece) {
-        int lineCoordinate = Math.abs(end.getLineCoordinate() - start.getLineCoordinate());
-        int columnCoordinate = Math.abs(end.getColumnCoordinate() - start.getColumnCoordinate());
-        if (start.getLineCoordinate() == end.getLineCoordinate() || start.getColumnCoordinate() == end.getColumnCoordinate()) {
-            return !(lineCoordinate + columnCoordinate > 1);
-        } else {
-            return lineCoordinate + columnCoordinate == 2;
+        if (end != null) {
+            int lineCoordinate = Math.abs(end.getLineCoordinate() - start.getLineCoordinate());
+            int columnCoordinate = Math.abs(end.getColumnCoordinate() - start.getColumnCoordinate());
+            if (start.getLineCoordinate() == end.getLineCoordinate() || start.getColumnCoordinate() == end.getColumnCoordinate()) {
+                return !(lineCoordinate + columnCoordinate > 1);
+            } else {
+                return lineCoordinate + columnCoordinate == 2;
+            }
         }
+        return false;
     }
 
 }

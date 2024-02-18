@@ -4,8 +4,11 @@ import com.example.models.courses.CourseStartedByPlayer;
 import com.example.models.courses.CourseStatus;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.example.repositoryes.interfaces.CourseStartedByPlayerRepository;
+import org.example.repositoryes.interfaces.course.CourseStartedByPlayerRepository;
 import org.springframework.stereotype.Service;
+
+import javax.transaction.Transactional;
+import java.util.Optional;
 
 @Service("courseStartedByPlayerService")
 @AllArgsConstructor
@@ -23,8 +26,22 @@ public class CourseStartedByPlayerService {
     public void finishCourse(CourseStartedByPlayer courseStartedByPlayer) {
         log.info("player has finished the course");
         courseStartedByPlayer.setCourseStatus(CourseStatus.COMPLETED);
-        courseStartedByPlayerRepository.updateCourseStartedByPlayer(courseStartedByPlayer.getPlayerId(), courseStartedByPlayer.getCourseStatus());
         log.info("Course has been updated!");
+    }
+
+    public CourseStartedByPlayer getCourseStartedByPlayerAfterPlayerIdAndCourseName(Integer playerId, String courseName, Integer boardId) throws Exception {
+        Optional<CourseStartedByPlayer> courseStartedByPlayer = courseStartedByPlayerRepository.findByPlayerIdAndCourseName(playerId, courseName, boardId);
+        if (courseStartedByPlayer.isEmpty()) {
+            throw new Exception("The course does bot exist!");
+        }
+        return courseStartedByPlayer.get();
+    }
+
+    @Transactional
+    public void update(CourseStartedByPlayer courseStartedByPlayer) {
+//        courseStartedByPlayerRepository.updateCourseStartedByPlayer(courseStartedByPlayer.getId(), courseStartedByPlayer.getMoveNumber());
+        courseStartedByPlayer.setMoveNumber(courseStartedByPlayer.getMoveNumber());
+        courseStartedByPlayer.setCourseStatus(courseStartedByPlayer.getCourseStatus());
     }
 
 }

@@ -241,15 +241,9 @@ public class MovePieceTest {
 
 //        boardService.save(new Board());
 
-        Board board1 = null;
-        try {
-            board1 = boardService.findById(1);
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
-        Arrays.stream(board1.getCellOnTheBoardMap())
-                .flatMap(Arrays::stream)
-                .forEach(System.out::println);
+        board.getCellOnTheBoardMap()[2][1].setPieces(new Pawn(true));
+        board.getCellOnTheBoardMap()[3][1].setPieces(new Pawn(true));
+        System.out.println(pieceService.verifyIfThereAreDoublePawns(board, true));
 
     }
 

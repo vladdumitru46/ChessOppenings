@@ -31,6 +31,18 @@ public class MiniMax {
     }
 
     public Move getBestMove() {
+
+        Map<String, Boolean> piecePromotionMap = new HashMap<>();
+        piecePromotionMap.put("knight", false);
+        piecePromotionMap.put("bishop", false);
+        piecePromotionMap.put("rook", false);
+        piecePromotionMap.put("queen", false);
+
+        pieceService.setPawnPromotion(piecePromotionMap);
+
+        if (isGameOver(board, pieceService, isWhite)) {
+            return null;
+        }
         nodesVisited = 0;
         mapOfMoves = new LinkedHashMap<>();
         final Move bestMove = new Move();
@@ -38,20 +50,22 @@ public class MiniMax {
         int alpha = Integer.MIN_VALUE;
         int beta = Integer.MAX_VALUE;
 
-        List<Move> moves = isWhite ? pieceService.getAllPossibleMovesForWhite(board) : pieceService.getAllPossibleMovesForBlack(board);
+        List<Move> moves = isWhite ? pieceService.getAllPossibleMoves(board, true) : pieceService.getAllPossibleMoves(board, false);
 
         int bestValue = isWhite ? Integer.MIN_VALUE : Integer.MAX_VALUE;
 
         ExecutorService executorService = Executors.newFixedThreadPool(numberOfThreads);
         for (Move move : moves) {
-            executorService.execute(() -> {
+            if (move.getStart().getPieces() != null) {
+                executorService.execute(() -> {
 
-                bestMove(alpha, beta, bestValue, move);
+                    bestMove(alpha, beta, bestValue, move);
 //                if (m != null) {
 //                    bestMove.setStart(m.getStart());
 //                    bestMove.setEnd(m.getEnd());
 //                }
-            });
+                });
+            }
         }
         executorService.shutdown();
         try {
@@ -61,7 +75,7 @@ public class MiniMax {
         }
         List<Map.Entry<Integer, Move>> list = new LinkedList<>(mapOfMoves.entrySet());
 
-        Collections.sort(list, Map.Entry.comparingByKey());
+        list.sort(Map.Entry.comparingByKey());
 
         LinkedHashMap<Integer, Move> result = new LinkedHashMap<>();
         for (Map.Entry<Integer, Move> entry : list) {
@@ -75,27 +89,27 @@ public class MiniMax {
             }
             m = lastEntry.getValue();
         } else {
-
             m = result.entrySet().iterator().next().getValue();
-            result.forEach((i, j) -> System.out.println(i + " " + j));
-            System.out.println(m);
         }
         System.out.println("Nodes visited: " + nodesVisited);
         return m;
     }
 
     private synchronized void bestMove(int alpha, int beta, int bestValue, Move move) {
-        Pieces pieceOnStart = move.getStart().getPieces();
-        Pieces pieceOnEnd = move.getEnd().getPieces();
-        pieceService.makeMove(board, move);
-        Move bestMove = null;
-        int value = miniMax(board, depth - 1, alpha, beta, !isWhite, pieceService);
-        pieceService.undoMove(board, move, pieceOnStart, pieceOnEnd);
-        if ((isWhite && value > bestValue) || (!isWhite && value < bestValue)) {
-            bestValue = value;
-            bestMove = move;
-            mapOfMoves.put(bestValue, move);
+        if (move.getStart().getPieces() != null) {
+//            System.out.println(move);
+            Pieces pieceOnStart = move.getStart().getPieces();
+            Pieces pieceOnEnd = move.getEnd().getPieces();
+            pieceService.makeMove(board, move);
+            Move bestMove = null;
+            int value = miniMax(board, depth - 1, alpha, beta, !isWhite, pieceService);
+            pieceService.undoMove(board, move, pieceOnStart, pieceOnEnd);
+            if ((isWhite && value > bestValue) || (!isWhite && value < bestValue)) {
+                bestValue = value;
+                bestMove = move;
+                mapOfMoves.put(bestValue, move);
 
+            }
         }
 
 //        return bestMove;
@@ -110,7 +124,7 @@ public class MiniMax {
             return new Evaluation().evaluationScore(board, pieceService, isMaximizing);
         }
 
-        List<Move> moves = isMaximizing ? pieceService.getAllPossibleMovesForWhite(board) : pieceService.getAllPossibleMovesForBlack(board);
+        List<Move> moves = isMaximizing ? pieceService.getAllPossibleMoves(board, true) : pieceService.getAllPossibleMoves(board, false);
 
         if (isMaximizing) {
             int maxEval = Integer.MIN_VALUE;
@@ -158,40 +172,42 @@ public class MiniMax {
     }
 
     private boolean isGameOver(Board board, PieceService pieceService, boolean isWhite) {
-        return isWhite ? pieceService.getAllPossibleMovesForBlack(board).isEmpty() :
-                pieceService.getAllPossibleMovesForWhite(board).isEmpty();
+        return isWhite ? pieceService.getAllPossibleMoves(board, false).isEmpty() :
+                pieceService.getAllPossibleMoves(board, true).isEmpty();
     }
 
     public synchronized boolean isCheckMateIn1(Board board, boolean isWhite, PieceService pieceService) {
-        List<Move> moves = (isWhite) ? pieceService.getAllPossibleMovesForWhite(board) :
-                pieceService.getAllPossibleMovesForBlack(board);
+        List<Move> moves = (isWhite) ? pieceService.getAllPossibleMoves(board, true) : pieceService.getAllPossibleMoves(board, false);
 
         for (Move move1 : moves) {
-            nodesVisited++;
-            Pieces pieceOnStart = move1.getStart().getPieces();
-            Pieces pieceOnEnd = move1.getEnd().getPieces();
-            pieceService.makeMove(board, move1);
+            System.out.println(move1);
+            if (move1.getStart().getPieces() != null) {
+                nodesVisited++;
+                Pieces pieceOnStart = move1.getStart().getPieces();
+                Pieces pieceOnEnd = move1.getEnd().getPieces();
+                pieceService.makeMove(board, move1);
 
-            if (isGameOver(board, pieceService, isWhite)) {
+                if (isGameOver(board, pieceService, isWhite)) {
+                    pieceService.undoMove(board, move1, pieceOnStart, pieceOnEnd);
+                    return true;
+                }
+
                 pieceService.undoMove(board, move1, pieceOnStart, pieceOnEnd);
-                return true;
             }
-
-            pieceService.undoMove(board, move1, pieceOnStart, pieceOnEnd);
         }
 
         return false;
     }
 
     public boolean isCheckMateIn2(Board board, boolean isWhite, PieceService pieceService) {
-        List<Move> moves = (isWhite) ? pieceService.getAllPossibleMovesForWhite(board) : pieceService.getAllPossibleMovesForBlack(board);
+        List<Move> moves = (isWhite) ? pieceService.getAllPossibleMoves(board, true) : pieceService.getAllPossibleMoves(board, false);
 
         for (Move move1 : moves) {
             Pieces pieceOnStart = move1.getStart().getPieces();
             Pieces pieceOnEnd = move1.getEnd().getPieces();
             pieceService.makeMove(board, move1);
 
-            List<Move> opponentMovesAfterMove1 = (isWhite) ? pieceService.getAllPossibleMovesForWhite(board) : pieceService.getAllPossibleMovesForBlack(board);
+            List<Move> opponentMovesAfterMove1 = (isWhite) ? pieceService.getAllPossibleMoves(board, true) : pieceService.getAllPossibleMoves(board, false);
             int nr = 0;
             for (Move move2 : opponentMovesAfterMove1) {
                 Pieces pieceOnStart2 = move2.getStart().getPieces();

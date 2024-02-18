@@ -2,7 +2,7 @@ package org.example;
 
 import com.example.models.game.Game;
 import lombok.AllArgsConstructor;
-import org.example.repositoryes.interfaces.GameRepository;
+import org.example.repositoryes.interfaces.game.GameRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;

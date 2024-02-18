@@ -17,11 +17,11 @@ public class CourseController {
 
     @GetMapping("/getCourse")
     private ResponseEntity<?> getCourse(@RequestParam String name) {
-        Optional<Course> course = courseService.findCourseByName(name);
-        if (course.isPresent()) {
-            return ResponseEntity.ok(course.get());
-        } else {
-            return ResponseEntity.badRequest().body("Course does not exist!");
+        try {
+            Course course = courseService.findCourseByName(name);
+            return ResponseEntity.ok(course);
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
         }
     }
 

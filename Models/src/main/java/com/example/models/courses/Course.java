@@ -6,13 +6,14 @@ import lombok.Setter;
 
 import javax.persistence.Entity;
 import javax.persistence.*;
+import java.io.Serializable;
 
 @Entity(name = "Course")
 @Table(name = "course")
 @NoArgsConstructor
 @Getter
 @Setter
-public class Course {
+public class Course implements Serializable {
     @Id
     @SequenceGenerator(
             name = "course_sequence",
@@ -40,9 +41,11 @@ public class Course {
             columnDefinition = "TEXT"
     )
     private String description;
+
     @Column(
-            name = "board_id",
-            nullable = false
+            name = "moves_that_the_computer_will_play",
+            nullable = false,
+            columnDefinition = "TEXT"
     )
     private String movesThatTheComputerWillPlay;
     @Column(
@@ -53,11 +56,11 @@ public class Course {
     private String movesThatThePlayerShouldPlay;
 
 
+
     public Course(String name, String description, String movesThatTheComputerWillPlay, String movesThatThePlayerShouldPlay) {
         this.name = name;
         this.description = description;
         this.movesThatTheComputerWillPlay = movesThatTheComputerWillPlay;
         this.movesThatThePlayerShouldPlay = movesThatThePlayerShouldPlay;
     }
-
 }

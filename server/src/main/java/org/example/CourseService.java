@@ -3,9 +3,10 @@ package org.example;
 import com.example.models.courses.Course;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.example.repositoryes.interfaces.CourseRepository;
+import org.example.repositoryes.interfaces.course.CourseRepository;
 import org.springframework.stereotype.Service;
 
+import javax.swing.text.html.Option;
 import java.util.Optional;
 
 @Service("courseService")
@@ -19,9 +20,15 @@ public class CourseService {
         return courseRepository.findById(id);
     }
 
-    public Optional<Course> findCourseByName(String name) {
+    public Course findCourseByName(String name) throws Exception {
         log.info("getting course by name!");
-        return courseRepository.findCourseByName(name);
+        Optional<Course> course =  courseRepository.findCourseByName(name);
+        if(course.isEmpty()){
+            throw new Exception("Course does not exist");
+        }
+        return course.get();
     }
+
+
 
 }
