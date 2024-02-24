@@ -13,7 +13,7 @@ import jakarta.mail.internet.MimeMessage;
 @Service("emailSender")
 @Slf4j
 @AllArgsConstructor
-public final class EmailService implements EmailSender {
+public non-sealed class EmailService implements EmailSender {
 
     private final JavaMailSender mailSender;
 
