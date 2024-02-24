@@ -1,22 +1,10 @@
 package org.example.miniMax;
 
 import com.example.models.board.Board;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.Setter;
-import org.example.PieceService;
+import org.example.board.PieceService;
 
-@Getter
-@Setter
-@AllArgsConstructor
 public class Evaluation {
 
-//    Mobilitatea Pieselor:
-//
-//    Acordă puncte pentru mobilitatea și flexibilitatea pieselor. Piese care au mai multe opțiuni și flexibilitate în mișcare pot fi evaluate mai bine.
-//    Activitatea Pieselor:
-//
-//    Cu cât piesele sunt mai active și au mai multe posibilități de mișcare, cu atât pot fi evaluate mai pozitiv.
 //    Coordonarea Pieselor:
 //
 //    Evaluează coordonarea între piese. Piese care lucrează împreună pentru a ataca sau apăra pot primi puncte suplimentare.
@@ -28,21 +16,35 @@ public class Evaluation {
 //    Evaluează dacă jocul este în faza de deschidere, mijloc sau final. Poți adapta evaluarea în funcție de stadiul jocului.
 
     public int evaluationScore(Board board, PieceService pieceService, boolean isWhite) {
-        if (isWhite) {
-            return score(board, pieceService, true) + pieceService.canTheKingBeCheckedInNextMove(board, true)
-                    - score(board, pieceService, false);
-        } else {
-            return score(board, pieceService, true) +
-                    score(board, pieceService, false) + pieceService.canTheKingBeCheckedInNextMove(board, false);
-        }
+
+        return isWhite ?
+                scoreForWhite(board, pieceService) - scoreForBlack(board, pieceService) :
+                scoreForWhite(board, pieceService) + scoreForBlack(board, pieceService);
+
     }
 
-    private static int score(Board board, PieceService pieceService, boolean isWhite) {
-        return (board.getTotalPoints(isWhite) + pieceService.getAllPossibleMoves(board, isWhite).size()
-                + pieceService.numberOfCenterSquaresAttacked(board, isWhite)
-                + pieceService.canAnEnemyPieceBeCaptured(board, isWhite))
-                + pieceService.verifyPawnStructure(board, isWhite)
-                - (pieceService.verifyIfThereAreDoublePawns(board, isWhite) * 10);
+    private int scoreForWhite(Board board, PieceService pieceService) {
+        return (board.getTotalPoints(true) + pieceService.getAllPossibleMoves(board, true).size()
+                + pieceService.numberOfCenterSquaresAttacked(board, true)
+                + pieceService.canAnEnemyPieceBeCaptured(board, true))
+                + pieceService.verifyPawnStructure(board, true)
+                + pieceService.isTheEnemyKingInCheck(board, false)
+                - (pieceService.verifyIfThereAreDoublePawns(board, true) * 10)
+                - pieceService.canTheKingBeCheckedInNextMove(board, true)
+                - pieceService.canAPieceBeCaptured(board, true) * 10;
+    }
+
+
+    private int scoreForBlack(Board board, PieceService pieceService) {
+        return board.getTotalPoints(false)
+                + pieceService.getAllPossibleMoves(board, false).size()
+                + pieceService.numberOfCenterSquaresAttacked(board, false)
+                + pieceService.canAnEnemyPieceBeCaptured(board, false)
+                + pieceService.verifyPawnStructure(board, false)
+                + pieceService.isTheEnemyKingInCheck(board, true)
+                - (pieceService.verifyIfThereAreDoublePawns(board, false) * 10)
+                - pieceService.canTheKingBeCheckedInNextMove(board, false)
+                - pieceService.canAPieceBeCaptured(board, false) * 10;
     }
 
 }

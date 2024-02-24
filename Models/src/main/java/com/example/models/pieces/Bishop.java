@@ -7,7 +7,7 @@ import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 @Getter
-public class Bishop extends Pieces {
+public final class Bishop extends Pieces {
 
     private final Integer points = 3;
 

@@ -1,13 +1,5 @@
 package org.example.requests;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
+public record PromotePawn(Integer boardId, String newPiece, String coordinates) {
 
-@Getter
-@AllArgsConstructor
-public class PromotePawn {
-
-    private final Integer boardId;
-    private final String newPiece;
-    private final String coordinates;
 }

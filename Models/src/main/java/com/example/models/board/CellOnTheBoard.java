@@ -3,7 +3,7 @@ package com.example.models.board;
 import com.example.models.pieces.Pieces;
 import lombok.*;
 
-import javax.persistence.*;
+import jakarta.persistence.*;
 import java.io.Serializable;
 import java.util.Objects;
 

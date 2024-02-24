@@ -5,11 +5,18 @@ import com.example.models.board.CellOnTheBoard;
 import com.example.models.board.Move;
 import com.example.models.courses.Course;
 import com.example.models.courses.CourseStartedByPlayer;
+import com.example.models.courses.SubCourse;
 import com.example.models.pieces.*;
 import com.example.models.player.Player;
 import lombok.AllArgsConstructor;
-import org.example.*;
+import org.example.board.BoardService;
+import org.example.board.PieceService;
+import org.example.course.CourseService;
+import org.example.course.CourseStartedByPlayerService;
+import org.example.course.SubCourseService;
+import org.example.player.PlayerService;
 import org.example.requests.MovePiecesRequest;
+import org.example.requests.ResetBoard;
 import org.example.requests.StartCourseRequest;
 import org.example.requests.VerifyMoveRequest;
 import org.springframework.http.HttpStatus;
@@ -24,6 +31,7 @@ public class CourseStartedByPlayerController {
 
     private final CourseStartedByPlayerService courseStartedByPlayerService;
     private final CourseService courseService;
+    private final SubCourseService subCourseService;
     private final PieceService pieceService;
     private final BoardService boardService;
     private final PlayerService playerService;
@@ -31,13 +39,14 @@ public class CourseStartedByPlayerController {
     @PostMapping("/start")
     private ResponseEntity<?> startCourse(@RequestBody StartCourseRequest startCourseRequest) {
         try {
-            Player player = playerService.searchPlayerByUsernameOrEmail(startCourseRequest.getPlayerUsername());
-            Course course = courseService.findCourseByName(startCourseRequest.getCourseName());
+            Player player = playerService.searchPlayerByUsernameOrEmail(startCourseRequest.playerUsername());
+            Course course = courseService.findCourseByName(startCourseRequest.courseName());
             Board board = new Board();
             boardService.save(board);
             CourseStartedByPlayer courseStartedByPlayer = new CourseStartedByPlayer(player, course, board);
             courseStartedByPlayerService.addPlayerThatStartedTheCourse(courseStartedByPlayer);
             return new ResponseEntity<>(board.getId(), HttpStatus.OK);
+
         } catch (Exception e) {
             return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
         }
@@ -46,17 +55,17 @@ public class CourseStartedByPlayerController {
     @PostMapping("/verifyMove")
     public ResponseEntity<?> verifyMovePlayedByPlayer(@RequestBody VerifyMoveRequest verifyMoveRequest) {
         try {
-            Course course = courseService.findCourseByName(verifyMoveRequest.getCourseName());
-            Board board = boardService.findById(verifyMoveRequest.getBoardId());
-            Player player = playerService.searchPlayerByUsernameOrEmail(verifyMoveRequest.getPlayerUsernameOrEmail());
+            SubCourse course = subCourseService.getByName(verifyMoveRequest.subCourseName(), verifyMoveRequest.courseName());
+            Board board = boardService.findById(verifyMoveRequest.boardId());
+            Player player = playerService.searchPlayerByUsernameOrEmail(verifyMoveRequest.playerUsernameOrEmail());
             CourseStartedByPlayer courseStartedByPlayer = courseStartedByPlayerService.getCourseStartedByPlayerAfterPlayerIdAndCourseName(player.getId(),
-                    verifyMoveRequest.getCourseName(), verifyMoveRequest.getBoardId());
+                    verifyMoveRequest.courseName(), verifyMoveRequest.boardId());
 
             int moveNumber = courseStartedByPlayer.getMoveNumber();
-            String start1 = verifyMoveRequest.getStart();
+            String start1 = verifyMoveRequest.start();
             int line = start1.charAt(0) - '0';
             int column = start1.charAt(1) - '0';
-            String end1 = verifyMoveRequest.getEnd();
+            String end1 = verifyMoveRequest.end();
             int line1 = end1.charAt(0) - '0';
             int column1 = end1.charAt(1) - '0';
 
@@ -75,8 +84,14 @@ public class CourseStartedByPlayerController {
                 if (board.isWhitesTurn()) {
                     int a = moveNumber + 1;
                     courseStartedByPlayer.setMoveNumber(a);
-                }if (moveNumber + 1 > listOfMoves.length) {
-                    courseStartedByPlayerService.finishCourse(courseStartedByPlayer);
+                }
+                if (moveNumber + 1 > listOfMoves.length) {
+                    courseStartedByPlayer.setSubCoursesCompleted(courseStartedByPlayer.getSubCoursesCompleted() + 1);
+                    if (courseStartedByPlayer.getSubCoursesCompleted() == subCourseService.getAllSubCourses(verifyMoveRequest.courseName()).size()) {
+                        courseStartedByPlayerService.finishCourse(courseStartedByPlayer);
+                    }
+                    courseStartedByPlayerService.update(courseStartedByPlayer);
+                    return new ResponseEntity<>("You have finished the course!", HttpStatus.OK);
                 }
                 courseStartedByPlayerService.update(courseStartedByPlayer);
                 return new ResponseEntity<>(HttpStatus.OK);
@@ -89,9 +104,9 @@ public class CourseStartedByPlayerController {
     }
 
     @GetMapping("/computerMove")
-    public ResponseEntity<?> computerMove(@RequestParam String courseName, @RequestParam Integer boardId, @RequestParam String userName) {
+    public ResponseEntity<?> computerMove(@RequestParam String courseName, @RequestParam String subCourseName, @RequestParam Integer boardId, @RequestParam String userName) {
         try {
-            Course course = courseService.findCourseByName(courseName);
+            SubCourse course = subCourseService.getByName(subCourseName, courseName);
             Board board = boardService.findById(boardId);
             Player player = playerService.searchPlayerByUsernameOrEmail(userName);
             CourseStartedByPlayer courseStartedByPlayer = courseStartedByPlayerService.getCourseStartedByPlayerAfterPlayerIdAndCourseName(player.getId(),
@@ -110,8 +125,14 @@ public class CourseStartedByPlayerController {
             if (board.isWhitesTurn()) {
                 int a = moveNumber + 1;
                 courseStartedByPlayer.setMoveNumber(a);
-            }if (moveNumber + 1 > listOfMoves.length) {
-                courseStartedByPlayerService.finishCourse(courseStartedByPlayer);
+            }
+            if (moveNumber > listOfMoves.length) {
+                courseStartedByPlayer.setSubCoursesCompleted(courseStartedByPlayer.getSubCoursesCompleted() + 1);
+                if (courseStartedByPlayer.getSubCoursesCompleted() == subCourseService.getAllSubCourses(courseName).size()) {
+                    courseStartedByPlayerService.finishCourse(courseStartedByPlayer);
+                }
+                courseStartedByPlayerService.update(courseStartedByPlayer);
+                return new ResponseEntity<>("You have finished the course!", HttpStatus.OK);
             }
             courseStartedByPlayerService.update(courseStartedByPlayer);
             return new ResponseEntity<>(moveThatShouldBePlayed, HttpStatus.OK);
@@ -124,14 +145,14 @@ public class CourseStartedByPlayerController {
     public ResponseEntity<?> isTheMoveLegal(@RequestBody MovePiecesRequest movePiecesRequest) {
         Board board = null;
         try {
-            board = boardService.findById(Integer.parseInt(movePiecesRequest.getBoardId()));
+            board = boardService.findById(Integer.parseInt(movePiecesRequest.boardId()));
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
-        String start1 = movePiecesRequest.getStart();
+        String start1 = movePiecesRequest.start();
         int line = start1.charAt(0) - '0';
         int column = start1.charAt(1) - '0';
-        String end1 = movePiecesRequest.getEnd();
+        String end1 = movePiecesRequest.end();
         int line1 = end1.charAt(0) - '0';
         int column1 = end1.charAt(1) - '0';
 
@@ -164,6 +185,20 @@ public class CourseStartedByPlayerController {
             }
         }
         return new ResponseEntity<>("cannot move", HttpStatus.BAD_REQUEST);
+    }
+
+    @PostMapping("/reset")
+    public void reset(@RequestBody ResetBoard resetBoard) {
+        try {
+            Player player = playerService.searchPlayerByUsernameOrEmail(resetBoard.playerId());
+            CourseStartedByPlayer courseStartedByPlayer = courseStartedByPlayerService.getCourseStartedByPlayerAfterPlayerIdAndCourseName(player.getId(),
+                    resetBoard.courseName(), resetBoard.boardId());
+            courseStartedByPlayer.setMoveNumber(1);
+            courseStartedByPlayerService.update(courseStartedByPlayer);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+
     }
 
 }

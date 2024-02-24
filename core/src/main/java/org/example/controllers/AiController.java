@@ -3,8 +3,8 @@ package org.example.controllers;
 import com.example.models.board.Board;
 import com.example.models.board.Move;
 import lombok.AllArgsConstructor;
-import org.example.BoardService;
-import org.example.PieceService;
+import org.example.board.BoardService;
+import org.example.board.PieceService;
 import org.example.data.Data;
 import org.example.miniMax.MiniMax;
 import org.springframework.http.HttpStatus;
@@ -37,13 +37,13 @@ public class AiController {
             return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
         }
         Move move;
+        MiniMax miniMax;
         if (board.isWhitesTurn()) {
-            MiniMax miniMax = new MiniMax(board, 3, true, pieceService, data.getNumberOfThreads());
-            move = miniMax.getBestMove();
+            miniMax = new MiniMax(board, 3, true, pieceService, data.getNumberOfThreads());
         } else {
-            MiniMax miniMax = new MiniMax(board, 3, false, pieceService, data.getNumberOfThreads());
-            move = miniMax.getBestMove();
+            miniMax = new MiniMax(board, 3, false, pieceService, data.getNumberOfThreads());
         }
+        move = miniMax.getBestMove();
         System.out.println(move);
         String moveTransformed = pieceService.transformMoveToCorrectNotation(move.getStart(), move.getEnd(), board);
         boardService.updateBoard(board);
@@ -65,14 +65,13 @@ public class AiController {
             return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
         }
         Move move;
-        System.out.println(board.isWhitesTurn());
+        MiniMax miniMax;
         if (board.isWhitesTurn()) {
-            MiniMax miniMax = new MiniMax(board, data.getDepthForAi(), true, pieceService, data.getNumberOfThreads());
-            move = miniMax.getBestMove();
+            miniMax = new MiniMax(board, data.getDepthForAi(), true, pieceService, data.getNumberOfThreads());
         } else {
-            MiniMax miniMax = new MiniMax(board, data.getDepthForAi(), false, pieceService, data.getNumberOfThreads());
-            move = miniMax.getBestMove();
+            miniMax = new MiniMax(board, data.getDepthForAi(), false, pieceService, data.getNumberOfThreads());
         }
+        move = miniMax.getBestMove();
         if (move != null) {
             System.out.println(move);
             pieceService.makeMove(board, move);

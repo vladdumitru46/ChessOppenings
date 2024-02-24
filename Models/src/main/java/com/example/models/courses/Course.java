@@ -4,8 +4,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import javax.persistence.Entity;
-import javax.persistence.*;
+import jakarta.persistence.Entity;
+import jakarta.persistence.*;
 import java.io.Serializable;
 
 @Entity(name = "Course")
@@ -42,25 +42,9 @@ public class Course implements Serializable {
     )
     private String description;
 
-    @Column(
-            name = "moves_that_the_computer_will_play",
-            nullable = false,
-            columnDefinition = "TEXT"
-    )
-    private String movesThatTheComputerWillPlay;
-    @Column(
-            name = "moves_that_the_player_should_play",
-            nullable = false,
-            columnDefinition = "TEXT"
-    )
-    private String movesThatThePlayerShouldPlay;
 
-
-
-    public Course(String name, String description, String movesThatTheComputerWillPlay, String movesThatThePlayerShouldPlay) {
+    public Course(String name, String description) {
         this.name = name;
         this.description = description;
-        this.movesThatTheComputerWillPlay = movesThatTheComputerWillPlay;
-        this.movesThatThePlayerShouldPlay = movesThatThePlayerShouldPlay;
     }
 }

@@ -16,12 +16,11 @@ public class PlayerValidator {
 
         if (result != ValidationResult.SUCCESS) {
             switch (result) {
-                case INVALID_USERNAME:
-                    throw new PlayerValidationException("Username cannot be empty");
-                case INVALID_EMAIL:
-                    throw new PlayerValidationException("Email is not in correct format!");
-                case INVALID_PASSWORD:
-                    throw new PlayerValidationException("Password must contain at least an uppercase letter, a special character, a number, and must be at least 8 characters");
+                case INVALID_USERNAME -> throw new PlayerValidationException("Username cannot be empty");
+                case INVALID_EMAIL -> throw new PlayerValidationException("Email is not in correct format!");
+                case INVALID_PASSWORD ->
+                        throw new PlayerValidationException("Password must contain at least an uppercase letter, a special character, a number, and must be at least" +
+                                " 8 characters");
             }
 
         }

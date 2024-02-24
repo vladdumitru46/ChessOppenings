@@ -6,8 +6,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import javax.persistence.Entity;
-import javax.persistence.*;
+import jakarta.persistence.Entity;
+import jakarta.persistence.*;
 
 @Entity(name = "CourseStartedByPlayer")
 @Table(name = "course_started_by_player")
@@ -56,7 +56,12 @@ public class CourseStartedByPlayer {
     @Enumerated(EnumType.STRING)
     private CourseStatus courseStatus;
 
+    @JoinColumn(
+            nullable = false,
+            name = "move_number"
+    )
     private Integer moveNumber = 1;
+    private Integer subCoursesCompleted = 0;
 
     public CourseStartedByPlayer(Player playerId, Course courseName, Board boardId, CourseStatus courseStatus) {
         this.playerId = playerId;

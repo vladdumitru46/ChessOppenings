@@ -5,7 +5,7 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 
-import javax.persistence.*;
+import jakarta.persistence.*;
 import java.util.Arrays;
 
 @ToString
@@ -31,6 +31,11 @@ public class Board {
     )
     private Integer id;
 
+    @Column(
+            name = "cell_on_the_board_map",
+            nullable = false,
+            columnDefinition = "bytea[]"
+    )
     private CellOnTheBoard[][] cellOnTheBoardMap;
 
     @Column(

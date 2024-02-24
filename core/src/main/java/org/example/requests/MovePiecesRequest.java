@@ -1,18 +1,5 @@
 package org.example.requests;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+public record MovePiecesRequest(String boardId, String start, String end, String pieceColour) {
 
-@Getter
-@Setter
-@NoArgsConstructor
-@AllArgsConstructor
-public class MovePiecesRequest {
-
-    private String boardId;
-    private String start;
-    private String end;
-    private String pieceColour;
 }

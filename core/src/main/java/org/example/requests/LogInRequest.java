@@ -1,16 +1,6 @@
 package org.example.requests;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
 
-@Getter
-@Setter
-@NoArgsConstructor
-@AllArgsConstructor
-public class LogInRequest {
+public record LogInRequest(String email, String password) {
 
-    private String email;
-    private String password;
 }

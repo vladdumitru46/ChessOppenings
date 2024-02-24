@@ -7,7 +7,7 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class King extends Pieces {
+public final class King extends Pieces {
 
     private boolean castlingDone = false;
     private boolean inCheck = false;

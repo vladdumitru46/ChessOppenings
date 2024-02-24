@@ -2,7 +2,7 @@ package org.example.controllers;
 
 import com.example.models.board.Board;
 import lombok.AllArgsConstructor;
-import org.example.BoardService;
+import org.example.board.BoardService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;

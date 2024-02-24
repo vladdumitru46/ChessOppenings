@@ -30,4 +30,4 @@ spring:
 custom:
   numberOfThreads: 4
   depthForAi: 3
-  from: vladdumitru46@yahoo.com
+  emailFrom: vladdumitru46@yahoo.com

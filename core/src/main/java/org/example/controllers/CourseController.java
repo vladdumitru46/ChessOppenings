@@ -2,11 +2,9 @@ package org.example.controllers;
 
 import com.example.models.courses.Course;
 import lombok.AllArgsConstructor;
-import org.example.CourseService;
+import org.example.course.CourseService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.Optional;
 
 @RestController
 @AllArgsConstructor

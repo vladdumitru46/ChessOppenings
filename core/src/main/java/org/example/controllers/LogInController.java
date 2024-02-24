@@ -6,7 +6,7 @@ import io.jsonwebtoken.security.Keys;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.example.IServiceObserver;
-import org.example.PlayerService;
+import org.example.player.PlayerService;
 import org.example.requests.LogInRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -26,8 +26,8 @@ public class LogInController implements IServiceObserver {
 
         try {
 //            Player player = playerService.searchPlayerByEmailAndPassword(logInRequest.getEmail(), logInRequest.getPassword());
-            playerService.logIn(logInRequest.getEmail(), logInRequest.getPassword());
-            return new ResponseEntity<>(generateToken(logInRequest.getEmail()), HttpStatus.OK);
+            playerService.logIn(logInRequest.email(), logInRequest.password());
+            return new ResponseEntity<>(generateToken(logInRequest.email()), HttpStatus.OK);
         } catch (Exception e) {
             return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
         }

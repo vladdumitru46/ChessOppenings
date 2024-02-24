@@ -7,7 +7,7 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class Pawn extends Pieces {
+public final class Pawn extends Pieces {
     private boolean canEnPassant = false;
     private final Integer points = 1;
 

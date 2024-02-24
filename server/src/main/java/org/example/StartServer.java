@@ -1,5 +1,6 @@
 package org.example;
 
+import org.example.player.PlayerService;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 import java.io.IOException;

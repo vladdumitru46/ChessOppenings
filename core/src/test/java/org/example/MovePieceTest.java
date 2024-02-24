@@ -1,15 +1,12 @@
 package org.example;
 
 import com.example.models.board.Board;
-import com.example.models.board.CellOnTheBoard;
 import com.example.models.pieces.*;
-import org.example.miniMax.MiniMax;
-import org.junit.jupiter.api.Assertions;
+import org.example.board.BoardService;
+import org.example.board.PieceService;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-
-import java.util.Arrays;
 
 @SpringBootTest(classes = {MainApplication.class})
 public class MovePieceTest {
@@ -19,7 +16,7 @@ public class MovePieceTest {
     Board board = new Board();
 
     @Autowired
-     BoardService boardService;
+    BoardService boardService;
 
 //    @Test
 //    public void testAllPossibleMoves() {
