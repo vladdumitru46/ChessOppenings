@@ -12,7 +12,7 @@ public final class King extends Pieces {
     private boolean castlingDone = false;
     private boolean inCheck = false;
     private boolean hasBeenMoved = false;
-    private final Integer points = 900;
+    private final Integer points = 0;
 
     public King(boolean white) {
         super(white);

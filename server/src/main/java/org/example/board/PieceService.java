@@ -33,9 +33,6 @@ public class PieceService {
         this.kingRepository = kingRepository;
     }
 
-    public void setPawnPromotion(Map<String, Boolean> pawnPromotion) {
-        this.pawnPromotion = pawnPromotion;
-    }
 
     public boolean canThePawnMove(Board board, CellOnTheBoard start, CellOnTheBoard end, Pawn pawn) {
         log.info("verify if the pawn can move");
@@ -287,30 +284,35 @@ public class PieceService {
 
 
     public Integer numberOfCenterSquaresAttacked(Board board, boolean isWhite) {
-        return (int) Arrays.stream(board.getCellOnTheBoardMap())
-                .flatMap(Arrays::stream)
-                .filter(cell -> cell.getPieces() != null && cell.getPieces().isWhite() == isWhite)
-                .filter(cell -> IntStream.range(4, 8)
-                        .anyMatch(i -> IntStream.range(0, 8)
-                                .anyMatch(j -> possibleMovesForAPiece(board, cell, board.getCellOnTheBoardMap()[i][j]))
-                        )
-                )
-                .count();
-    }
+        int center = isWhite ? 4 : 0;
+        int endCenter = isWhite ? 8 : 4;
 
-
-    public Integer canAnEnemyPieceBeCaptured(Board board, boolean isWhite) {
-        return (int) Arrays.stream(board.getCellOnTheBoardMap())
-                .flatMap(Arrays::stream)
-                .filter(cell -> cell.getPieces() != null && !cell.getPieces().isWhite())
-                .filter(cell -> IntStream.range(0, 8)
-                        .anyMatch(i -> IntStream.range(0, 8)
-                                .anyMatch(j -> board.getCellOnTheBoardMap()[i][j].getPieces() != null
-                                        && board.getCellOnTheBoardMap()[i][j].getPieces().isWhite() != isWhite
-                                        && possibleMovesForAPiece(board, cell, board.getCellOnTheBoardMap()[i][j]))
-                        )
-                )
-                .count();
+//        return (int) Arrays.stream(board.getCellOnTheBoardMap())
+//                .flatMap(Arrays::stream)
+//                .filter(cell -> cell.getPieces() != null && cell.getPieces().isWhite() == isWhite)
+//                .filter(cell -> IntStream.range(center, endCenter)
+//                        .anyMatch(i -> IntStream.range(0, 8)
+//                                .anyMatch(j -> possibleMovesForAPiece(board, cell, board.getCellOnTheBoardMap()[i][j]))
+//                        )
+//                )
+//                .count();
+        int nr = 0;
+        for (int i = 0; i < 8; i++) {
+            for (int j = 0; j < 8; j++) {
+                CellOnTheBoard enemyCell = board.getCellOnTheBoardMap()[i][j];
+                if (enemyCell.getPieces() != null && enemyCell.getPieces().isWhite() == isWhite) {
+                    for (int m = center; m < endCenter; m++) {
+                        for (int n = 0; n < 8; n++) {
+                            CellOnTheBoard cell = board.getCellOnTheBoardMap()[m][n];
+                            if(possibleMovesForAPiece(board, enemyCell, cell)){
+                                nr++;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        return nr;
     }
 
     public Integer canTheKingBeCheckedInNextMove(Board board, boolean isWhite) {
@@ -369,17 +371,35 @@ public class PieceService {
     }
 
     public Integer canAPieceBeCaptured(Board board, boolean isWhite) {
-        return (int) Arrays.stream(board.getCellOnTheBoardMap())
-                .flatMap(Arrays::stream)
-                .filter(cell -> cell.getPieces() != null && cell.getPieces().isWhite() == isWhite)
-                .filter(cell -> IntStream.range(0, 8)
-                        .anyMatch(i -> IntStream.range(0, 8)
-                                .anyMatch(j -> board.getCellOnTheBoardMap()[i][j].getPieces() != null
-                                        && board.getCellOnTheBoardMap()[i][j].getPieces().isWhite() != isWhite
-                                        && possibleMovesForAPiece(board, cell, board.getCellOnTheBoardMap()[i][j]))
-                        )
-                )
-                .count();
+//        return (int) Arrays.stream(board.getCellOnTheBoardMap())
+//                .flatMap(Arrays::stream)
+//                .filter(enemyCell -> enemyCell.getPieces() != null && enemyCell.getPieces().isWhite() != isWhite)
+//                .filter(enemyCell -> IntStream.range(0, 8)
+//                        .anyMatch(i -> IntStream.range(0, 8)
+//                                .anyMatch(j -> board.getCellOnTheBoardMap()[i][j].getPieces() != null
+//                                        && board.getCellOnTheBoardMap()[i][j].getPieces().isWhite() == isWhite
+//                                        && possibleMovesForAPiece(board, board.getCellOnTheBoardMap()[i][j], enemyCell))
+//                        )
+//                )
+//                .count();
+
+        int nr = 0;
+        for (int i = 0; i < 8; i++) {
+            for (int j = 0; j < 8; j++) {
+                CellOnTheBoard enemyCell = board.getCellOnTheBoardMap()[i][j];
+                if (enemyCell.getPieces() != null && enemyCell.getPieces().isWhite() != isWhite) {
+                    for (int m = 0; m < 8; m++) {
+                        for (int n = 0; n < 8; n++) {
+                            CellOnTheBoard cell = board.getCellOnTheBoardMap()[m][n];
+                            if (cell.getPieces() != null && cell.getPieces().isWhite() == isWhite && possibleMovesForAPiece(board, cell, enemyCell)) {
+                                nr++;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        return nr;
     }
 
     public Integer isTheEnemyKingInCheck(Board board, boolean isWhite) {

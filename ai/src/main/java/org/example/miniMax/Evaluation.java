@@ -24,9 +24,9 @@ public class Evaluation {
     }
 
     private int scoreForWhite(Board board, PieceService pieceService) {
-        return (board.getTotalPoints(true) + pieceService.getAllPossibleMoves(board, true).size()
+        return board.getTotalPoints(true)
+                + pieceService.getAllPossibleMoves(board, true).size()
                 + pieceService.numberOfCenterSquaresAttacked(board, true)
-                + pieceService.canAnEnemyPieceBeCaptured(board, true))
                 + pieceService.verifyPawnStructure(board, true)
                 + pieceService.isTheEnemyKingInCheck(board, false)
                 - (pieceService.verifyIfThereAreDoublePawns(board, true) * 10)
@@ -39,7 +39,6 @@ public class Evaluation {
         return board.getTotalPoints(false)
                 + pieceService.getAllPossibleMoves(board, false).size()
                 + pieceService.numberOfCenterSquaresAttacked(board, false)
-                + pieceService.canAnEnemyPieceBeCaptured(board, false)
                 + pieceService.verifyPawnStructure(board, false)
                 + pieceService.isTheEnemyKingInCheck(board, true)
                 - (pieceService.verifyIfThereAreDoublePawns(board, false) * 10)
