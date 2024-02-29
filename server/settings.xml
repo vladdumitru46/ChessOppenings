@@ -1,0 +1,9 @@
+<settings>
+    <repositories>
+        <repository>
+            <id>my-repo</id>
+            <name>My Repository</name>
+            <url>https://repo.maven.apache.org/maven2/</url>
+        </repository>
+    </repositories>
+</settings>

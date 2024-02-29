@@ -1,11 +1,8 @@
 package com.example.models.game;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
-import javax.persistence.*;
+import jakarta.persistence.*;
 
 @NoArgsConstructor
 @AllArgsConstructor
@@ -15,6 +12,7 @@ import javax.persistence.*;
 @Table(
         name = "game"
 )
+@ToString
 public class Game {
     @Id
     @SequenceGenerator(
@@ -32,16 +30,10 @@ public class Game {
     )
     private Long id;
     @Column(
-            name = "whitePlayerId",
+            name = "playerId",
             nullable = false
     )
-    private Integer whitePlayerId;
-
-    @Column(
-            name = "blackPlayerId",
-            nullable = false
-    )
-    private Integer blackPlayerId;
+    private Integer playerId;
 
     @Column(
             name = "boardId",
@@ -53,32 +45,32 @@ public class Game {
             name = "moveNumber",
             nullable = false
     )
-    private Integer moveNumber;
+    private Integer moveNumber = 1;
     @Column(
             name = "whiteMove",
             nullable = false,
             columnDefinition = "TEXT"
     )
-    private String whiteMove;
+    private String whiteMove = "";
     @Column(
             name = "blackMove",
             nullable = false,
             columnDefinition = "TEXT"
     )
-    private String blackMove;
+    private String blackMove = "";
 
+    @Column(
+            name = "whites_turn",
+            nullable = false
+    )
+    private boolean whitesTurn = true;
 
     @Enumerated(EnumType.STRING)
     private GameStatus gameStatus;
 
-    public Game(Integer whitePlayerId, Integer blackPlayerId, Integer boardId, Integer moveNumber,
-                String whiteMove, String blackMove, GameStatus gameStatus) {
-        this.whitePlayerId = whitePlayerId;
-        this.blackPlayerId = blackPlayerId;
+    public Game(Integer playerId, Integer boardId, GameStatus gameStatus) {
+        this.playerId = playerId;
         this.boardId = boardId;
-        this.moveNumber = moveNumber;
-        this.whiteMove = whiteMove;
-        this.blackMove = blackMove;
         this.gameStatus = gameStatus;
     }
 }

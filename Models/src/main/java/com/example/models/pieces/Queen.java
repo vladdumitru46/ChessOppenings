@@ -1,14 +1,14 @@
 package com.example.models.pieces;
 
 import com.example.models.board.Board;
-import com.example.models.board.CellOnTheBord;
+import com.example.models.board.CellOnTheBoard;
 import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 @Getter
-public class Queen extends Pieces {
-    
+public final class Queen extends Pieces {
+
     private final Integer points = 3;
 
     public Queen(boolean white) {
@@ -16,7 +16,7 @@ public class Queen extends Pieces {
     }
 
     @Override
-    public boolean canAttackTheKing(Board board, CellOnTheBord start, CellOnTheBord end, Pieces piece) {
+    public boolean canAttackTheKing(Board board, CellOnTheBoard start, CellOnTheBoard end, Pieces piece) {
         Integer line = Math.abs(start.getLineCoordinate() - end.getLineCoordinate());
         Integer column = Math.abs(start.getColumnCoordinate() - end.getColumnCoordinate());
         if (Math.abs(line - column) != 0) {
@@ -37,7 +37,7 @@ public class Queen extends Pieces {
             int currentColumn = startColumn + colIncrement;
 
             while (currentLine != endLine || currentColumn != endColumn) {
-                CellOnTheBord currentCell = board.getCellOnTheBordMap()[currentLine][currentColumn];
+                CellOnTheBoard currentCell = board.getCellOnTheBoardMap()[currentLine][currentColumn];
                 if (currentCell.getPieces() != null) {
                     log.info("queen cannot move to this coordinates {}{}, because there is a piece blocking the way", end.getLineCoordinate(), end.getColumnCoordinate());
                     return false;
@@ -60,9 +60,11 @@ public class Queen extends Pieces {
 
         int currentLine = startLine + rowIncrement;
         int currentColumn = startColumn + colIncrement;
-        int ok = 1;
         while (currentLine != endLine && currentColumn != endColumn) {
-            CellOnTheBord currentCell = board.getCellOnTheBordMap()[currentLine][currentColumn];
+            if (currentColumn == -1 || currentLine == -1) {
+                return false;
+            }
+            CellOnTheBoard currentCell = board.getCellOnTheBoardMap()[currentLine][currentColumn];
             if (currentCell.getPieces() != null) {
                 log.info("queen cannot move to this coordinates {}{} from {}{}, because there is a piece that blocks the way", end.getLineCoordinate(), end.getColumnCoordinate(), start.getLineCoordinate(), start.getColumnCoordinate());
                 return false;

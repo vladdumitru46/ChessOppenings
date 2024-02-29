@@ -1,11 +1,13 @@
 package com.example.models.courses;
 
+import com.example.models.board.Board;
+import com.example.models.player.Player;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import javax.persistence.Entity;
-import javax.persistence.*;
+import jakarta.persistence.Entity;
+import jakarta.persistence.*;
 
 @Entity(name = "CourseStartedByPlayer")
 @Table(name = "course_started_by_player")
@@ -28,27 +30,60 @@ public class CourseStartedByPlayer {
             updatable = false
     )
     private Integer id;
-    @Column(
-            name = "player_id",
-            nullable = false
+    @ManyToOne
+    @JoinColumn(
+            nullable = false,
+            name = "player_id"
     )
-    private Integer playerId;
-    @Column(
-            name = "course_id",
-            nullable = false
+    private Player playerId;
+    @ManyToOne
+    @JoinColumn(
+            nullable = false,
+            name = "course_name",
+            referencedColumnName = "name"
     )
-    private Integer courseId;
+    private Course courseName;
+
+
+    @ManyToOne
+    @JoinColumn(
+            nullable = false,
+            name = "board_id"
+    )
+    private Board boardId;
+
+
     @Enumerated(EnumType.STRING)
     private CourseStatus courseStatus;
 
-    public CourseStartedByPlayer(Integer playerId, Integer courseId, CourseStatus courseStatus) {
+    @JoinColumn(
+            nullable = false,
+            name = "move_number"
+    )
+    private Integer moveNumber = 1;
+    private Integer subCoursesCompleted = 0;
+
+    @Column(
+            name = "whites_turn",
+            nullable = false
+    )
+    private boolean whitesTurn = true;
+
+    public CourseStartedByPlayer(Player playerId, Course courseName, Board boardId, CourseStatus courseStatus) {
         this.playerId = playerId;
-        this.courseId = courseId;
+        this.courseName = courseName;
+        this.boardId = boardId;
         this.courseStatus = courseStatus;
     }
 
-    public CourseStartedByPlayer(Integer playerId, Integer courseId) {
+    public CourseStartedByPlayer(Player playerId, Course courseName) {
         this.playerId = playerId;
-        this.courseId = courseId;
+        this.courseName = courseName;
+    }
+
+    public CourseStartedByPlayer(Player playerId, Course courseName, Board boardId) {
+        this.playerId = playerId;
+        this.courseName = courseName;
+        this.boardId = boardId;
     }
 }

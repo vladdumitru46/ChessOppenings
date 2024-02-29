@@ -1,13 +1,13 @@
 package com.example.models.pieces;
 
 import com.example.models.board.Board;
-import com.example.models.board.CellOnTheBord;
+import com.example.models.board.CellOnTheBoard;
 import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 @Getter
-public class Bishop extends Pieces {
+public final class Bishop extends Pieces {
 
     private final Integer points = 3;
 
@@ -16,7 +16,7 @@ public class Bishop extends Pieces {
     }
 
     @Override
-    public boolean canAttackTheKing(Board board, CellOnTheBord start, CellOnTheBord end, Pieces piece) {
+    public boolean canAttackTheKing(Board board, CellOnTheBoard start, CellOnTheBoard end, Pieces piece) {
         Integer line = Math.abs(start.getLineCoordinate() - end.getLineCoordinate());
         Integer column = Math.abs(start.getColumnCoordinate() - end.getColumnCoordinate());
         if (line - column != 0) {
@@ -34,7 +34,10 @@ public class Bishop extends Pieces {
         int currentColumn = startColumn + colIncrement;
         log.info("verify if it's any piece that blocks the bishop");
         while (currentLine != endLine && currentColumn != endColumn) {
-            CellOnTheBord currentCell = board.getCellOnTheBordMap()[currentLine][currentColumn];
+            if (currentColumn == -1 || currentLine == -1) {
+                return false;
+            }
+            CellOnTheBoard currentCell = board.getCellOnTheBoardMap()[currentLine][currentColumn];
             if (currentCell.getPieces() != null) {
                 log.info("bishop cannot move to this coordinates {}{}, because there is a piece that blocks the way", end.getLineCoordinate(), end.getColumnCoordinate());
                 return false;

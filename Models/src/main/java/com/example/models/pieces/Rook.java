@@ -1,7 +1,7 @@
 package com.example.models.pieces;
 
 import com.example.models.board.Board;
-import com.example.models.board.CellOnTheBord;
+import com.example.models.board.CellOnTheBoard;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
@@ -9,7 +9,7 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 @Getter
 @Setter
-public class Rook extends Pieces {
+public final class Rook extends Pieces {
     private boolean hasBeenMoved = false;
     private final Integer points = 3;
 
@@ -18,7 +18,7 @@ public class Rook extends Pieces {
     }
 
     @Override
-    public boolean canAttackTheKing(Board board, CellOnTheBord start, CellOnTheBord end, Pieces piece) {
+    public boolean canAttackTheKing(Board board, CellOnTheBoard start, CellOnTheBoard end, Pieces piece) {
         if (start.getLineCoordinate() != end.getLineCoordinate() && start.getColumnCoordinate() != end.getColumnCoordinate()) {
             log.info("rook cannot move to this coordinates {}{}, because it's not a straight line", end.getLineCoordinate(), end.getColumnCoordinate());
             return false;
@@ -35,7 +35,7 @@ public class Rook extends Pieces {
         int currentColumn = startColumn + colIncrement;
 
         while (currentLine != endLine || currentColumn != endColumn) {
-            CellOnTheBord currentCell = board.getCellOnTheBordMap()[currentLine][currentColumn];
+            CellOnTheBoard currentCell = board.getCellOnTheBoardMap()[currentLine][currentColumn];
             if (currentCell.getPieces() != null) {
                 log.info("rook cannot move to this coordinates {}{}, because there is a piece blocking the way", end.getLineCoordinate(), end.getColumnCoordinate());
                 return false;

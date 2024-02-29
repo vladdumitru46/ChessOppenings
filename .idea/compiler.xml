@@ -9,9 +9,10 @@
         <outputRelativeToContentRoot value="true" />
         <module name="Persistence" />
         <module name="server" />
-        <module name="Models" />
-        <module name="networking" />
         <module name="service" />
+        <module name="validators" />
+        <module name="Ai" />
+        <module name="Models" />
         <module name="Core" />
       </profile>
     </annotationProcessing>
@@ -19,11 +20,13 @@
       <module name="ChessOppenings" target="19" />
       <module name="core" target="1.6" />
       <module name="demo" target="15" />
+      <module name="networking" target="16" />
       <module name="netwotking" target="19" />
     </bytecodeTargetLevel>
   </component>
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
+      <module name="Ai" options="-parameters" />
       <module name="Core" options="-parameters" />
       <module name="Models" options="-parameters" />
       <module name="Persistence" options="-parameters" />
@@ -33,6 +36,7 @@
       <module name="netwotking" options="-parameters" />
       <module name="server" options="-parameters" />
       <module name="service" options="-parameters" />
+      <module name="validators" options="-parameters" />
     </option>
   </component>
 </project>
