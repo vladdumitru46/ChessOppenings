@@ -86,13 +86,25 @@ img {
 }
 
 .right-column {
-    flex: 1;
-    /* Ocupă spațiu în partea dreaptă a containerului principal */
-    padding: 20px;
+    /* flex: 1; */
+    /* padding: 20px; */
     background-color: transparent;
     color: white;
     box-sizing: border-box;
     padding-top: 10%;
+    max-height: 60%;
+    overflow-y: auto;
+    width: 30%;
+    position: absolute;
+    left: 60%;
+    top: 15%;
+}
+
+#courseContent {
+    max-height: 60%;
+    overflow-y: auto;
+    padding-top: 0; /* Elimină padding-ul implicit al listei */
+    /* flex-direction: column-reverse; */
 }
 
 .right-column ul {
@@ -100,15 +112,19 @@ img {
 }
 
 .right-column li {
-    margin: 5px 0;
+    font-size: 150%;
 }
 
-/* Stilul pentru culoarea textului din lista */
 .right-column li {
     color: white;
-    /* Setați culoarea textului la alb */
 }
 
+#courseTitle {
+    top: 10%;
+    color: white;
+    left: 70%;
+    position: absolute;
+}
 
 #promotePawn {
     position: absolute;
@@ -341,4 +357,15 @@ img {
     .open-course-page-mobile-menu {
         padding: 16px;
     }
+}
+
+#courseList li {
+    color: white;
+    /* Culoarea inițială */
+    cursor: pointer;
+}
+
+#courseList li.selected {
+    color: blue;
+    /* Culoarea atunci când elementul este selectat */
 }

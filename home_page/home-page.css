@@ -7,11 +7,13 @@
   flex-direction: column;
   justify-content: center;
   background-color: #000000;
-  background-image: url('../pieces/background.jpg'); /* Replace 'path/to/your/image.jpg' with the actual path to your image file */
+  background-image: url('../pieces/background.jpg');
+  /* Replace 'path/to/your/image.jpg' with the actual path to your image file */
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
 }
+
 .home-page-text {
   top: 10%;
   left: 45%;
@@ -23,30 +25,45 @@
   position: absolute;
   font-size: 80px;
 }
+
 .home-page-image {
   top: 30%;
-  left: 10%;
+  left: 5%;
   right: 20%;
-  width: 30%;
+  width: 20%;
   bottom: 50%;
-  height: 50%;
+  height: 40%;
   position: absolute;
   object-fit: cover;
 }
+
 .home-page-image1 {
   top: 30%;
-  left: 60%;
+  left: 40%;
   right: 20%;
-  width: 30%;
+  width: 20%;
   bottom: 50%;
-  height: 50%;
+  height: 40%;
   position: absolute;
   object-fit: cover;
 }
+
+.home-page-image2 {
+  top: 30%;
+  left: 75%;
+  right: 5%;
+  width: 20%;
+  bottom: 50%;
+  height: 40%;
+  position: absolute;
+  object-fit: cover;
+}
+
 @media(max-width: 1600px) {
   .home-page-container {
     background-color: #0a0a0a;
   }
+
   .home-page-text {
     top: 10%;
     left: 45%;
@@ -58,25 +75,58 @@
     position: absolute;
     font-size: 40%;
   }
+
   .home-page-text1 {
     font-size: 80px;
   }
+
   .home-page-image {
     top: 30%;
-    left: 10%;
+    left: 5%;
     right: 50%;
-    width: 30%;
+    width: 20%;
     bottom: 20%;
-    height: 50%;
+    height: 40%;
     position: absolute;
   }
+
   .home-page-image1 {
     top: 30%;
-    left: 60%;
-    right: 20%;
-    width: 30%;
-    bottom: 25%;
-    height: 50%;
+    left: 40%;
+    width: 20%;
+    height: 40%;
     position: absolute;
   }
+
+  .home-page-image2 {
+    right: 5%;
+    width: 20%;
+    bottom: 50%;
+    height: 40%;
+    position: absolute;
+  }
+}
+
+#learningPage {
+  color: white;
+  font-size: 100%;
+  position: absolute;
+  top: 25%;
+  left: 10%;
+}
+
+#playAi {
+  color: white;
+  font-size: 100%;
+  position: absolute;
+  top: 25%;
+  left: 45%;
+}
+
+#hist {
+  color: white;
+  font-size: 100%;
+  position: absolute;
+  top: 25%;
+  left: 80%;
 }

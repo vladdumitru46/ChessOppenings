@@ -97,3 +97,12 @@
     font-size: 80px;
   }
 }
+
+
+.show {
+  position: absolute;
+  top: 62%;
+  width: 2%;
+  height: 2%;
+  left: 58%;
+}

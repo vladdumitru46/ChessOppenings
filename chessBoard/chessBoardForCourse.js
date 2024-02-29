@@ -3,11 +3,98 @@ let urlParams = new URLSearchParams(queryString);
 let informationCourseValue = urlParams.get('courseTitle');
 let informationCourseElement = document.getElementById("courseContent");
 let pageTitle = document.getElementById("pageTitle");
+let subCourseName = "";
+async function loadData() {
+    if (informationCourseElement && informationCourseValue) {
+        pageTitle.innerText = informationCourseValue;
 
-if (informationCourseElement && informationCourseValue) {
-    let courseData = JSON.parse(informationCourseValue);
-    pageTitle.innerText = courseData.name;
-    informationCourseElement.innerText = courseData.name + " \n\n\n\n" + courseData.description;
+        let subcoursesString = await getSubcourses(informationCourseValue);
+        let subcourses = subcoursesString.split(',');
+        informationCourseElement.innerHTML = `
+            <h2 id="courseTitle2">${informationCourseValue}</h2>
+            <ul id="courseList">
+                ${subcourses.map((subcourse, index) => `<li class="${index === 0 ? 'selected' : ''}">${subcourse}</li>`).join('')}
+            </ul>
+        `;
+
+        let firstListItem = document.querySelector("#courseList li:first-child");
+        subCourseName = firstListItem.innerText;
+        console.log(informationCourseElement.innerText);
+
+        document.getElementById("courseList").addEventListener("click", async function (event) {
+            if (event.target.tagName === "LI") {
+
+                let listItems = document.querySelectorAll("#courseList li");
+                listItems.forEach(item => item.classList.remove("selected"));
+
+                event.target.classList.add("selected");
+
+                subCourseName = event.target.innerText;
+
+                await fetch("http://localhost:8080/chess/startCourse/reset", {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json"
+                    },
+                    body: JSON.stringify({
+                        playerId: localStorage.getItem("player"),
+                        courseName: pageTitle.innerText,
+                        boardId: localStorage.getItem('boardId')
+                    })
+                });
+                console.log(subCourseName);
+                setBoard();
+            }
+        });
+    }
+}
+loadData();
+async function getSubcourses(courseName) {
+
+    let resp = await fetch("http://localhost:8080/chess/subCourses?courseName=" + courseName, null);
+    if (resp.ok) {
+        const list = await resp.text();
+        console.log(list)
+        return list;
+    } else {
+        console.log("BLA BLA")
+    }
+
+}
+async function setBoard() {
+
+    let gameId = localStorage.getItem("boardId");
+    let respone = await fetch("http://localhost:8080/chess/board/boardConfiguration?boardId=" + gameId, null);
+    if (respone.ok) {
+        let board = await respone.text();
+        console.log(board)
+        board = board.split('\n')
+        for (var row in board) {
+            let cell = board[row].split(",")
+            for (var c in cell) {
+                let ce = cell[c].split(" ")
+                // console.log(ce)
+                let element = document.getElementById(ce[0]);
+                if (ce.length > 2) {
+                    element.setAttribute("data-piesa", ce[1] + " " + ce[2])
+                    let piesa;
+                    switch (ce[2]) {
+                        case "king": piesa = "King"; break;
+                        case "queen": piesa = "Queen"; break;
+                        case "rook": piesa = "Rook"; break;
+                        case "bishop": piesa = "Bishop"; break;
+                        case "knight": piesa = "Knight"; break;
+                        case "pawn": piesa = "Pawn"; break;
+                    }
+                    element.querySelector('img').src = "../pieces/" + ce[1] + piesa + ".png";
+                } else if (ce != '') {
+                    element.setAttribute("data-piesa", ce[1]);
+                    element.querySelector('img').src = "";
+                }
+            }
+        }
+    }
+
 }
 
 let courseUrl = "http://localhost:8080/chess/startCourse/"
@@ -83,7 +170,7 @@ async function getPiece(square) {
                     "Content-Type": "application/json"
                 },
                 body: JSON.stringify({
-                    boardId: localStorage.getItem('boardId'),
+                    gameId: localStorage.getItem('boardId'),
                     start: square1.getAttribute("id"),
                     end: square2.getAttribute("id"),
                     pieceColour: atributes[0]
@@ -270,7 +357,7 @@ async function makeMoves(springBootURL, imageUrlSquare1, requestData, piesaSquar
                             "Content-Type": "application/json"
                         },
                         body: JSON.stringify({
-                            boardId: localStorage.getItem('boardId'),
+                            gameId: localStorage.getItem('boardId'),
                             newPiece: newPiece,
                             coordinates: square2.getAttribute("id")
                         })
@@ -297,6 +384,8 @@ async function makeMoves(springBootURL, imageUrlSquare1, requestData, piesaSquar
 
                     square1.setAttribute('data-piesa', piesaSquare1);
                     square1.querySelector('img').src = imageUrlSquare1;
+                    square1 = null;
+                    square2 = null;
                 } else {
                     square1 = null;
                     square2 = null;
@@ -323,13 +412,15 @@ async function makeMoves(springBootURL, imageUrlSquare1, requestData, piesaSquar
 
                     square1.setAttribute('data-piesa', piesaSquare1);
                     square1.querySelector('img').src = imageUrlSquare1;
+                    square1 = null;
+                    square2 = null;
                 } else {
                     square1 = null;
                     square2 = null;
                     const response2 = await fetch(checkMateCheck, {
                         method: "POST",
                         body: JSON.stringify({
-                            boardId: localStorage.getItem('boardId')
+                            gameId: localStorage.getItem('boardId')
                         })
                     });
 
@@ -340,9 +431,12 @@ async function makeMoves(springBootURL, imageUrlSquare1, requestData, piesaSquar
                         }
                     } else {
                         // handle other cases if needed
+                        square1 = null;
+                        square2 = null;
                     }
-
-                    await computerMove();
+                    if (a !== "finish") {
+                        await computerMove();
+                    }
                 }
             } else {
                 square1 = null;
@@ -360,6 +454,7 @@ async function makeMoves(springBootURL, imageUrlSquare1, requestData, piesaSquar
 
 async function verifyMove(square1, square2, atributes) {
     let url = courseUrl + "verifyMove";
+    console.log("course " + subCourseName)
     const requestData = {
         method: "POST",
         headers: {
@@ -367,6 +462,7 @@ async function verifyMove(square1, square2, atributes) {
         },
         body: JSON.stringify({
             playerUsernameOrEmail: localStorage.getItem("player"),
+            subCourseName: subCourseName,
             courseName: pageTitle.innerText,
             boardId: localStorage.getItem('boardId'),
             start: square1.getAttribute("id"),
@@ -376,18 +472,20 @@ async function verifyMove(square1, square2, atributes) {
     };
 
     let verifyMoveRequest = await fetch(url, requestData);
-    if (!verifyMoveRequest.ok) {
-        let res = await verifyMoveRequest.text();
-        if (res !== "continue") {
-            window.alert(res);
-            return "nu";
-        }
+    let res = await verifyMoveRequest.text();
+    console.log(res)
+    if (res === "You have finished the course!") {
+        window.alert(res);
+        return "finish"
     }
+    if (!verifyMoveRequest.ok) {
 
+        return "nu"
+    }
 }
 
 async function computerMove() {
-    let url = courseUrl + "computerMove?courseName=" + pageTitle.innerText + "&boardId=" + localStorage.getItem('boardId') + "&userName=" + localStorage.getItem("player");
+    let url = courseUrl + "computerMove?courseName=" + pageTitle.innerText + "&subCourseName=" + subCourseName + "&boardId=" + localStorage.getItem('boardId') + "&userName=" + localStorage.getItem("player");
 
     let computerMoveResponse = await fetch(url, null);
     if (computerMoveResponse.ok) {
@@ -429,3 +527,8 @@ document.getElementById('homeLink').addEventListener('click', function () {
 document.getElementById('playAgainstAiLink').addEventListener('click', function () {
     window.location.href = '../chessBoard/chessBoard.html';
 });
+
+function logOut() {
+    localStorage.clear();
+    window.location.replace('../logIn/log-in.html');
+}

@@ -43,5 +43,9 @@ document.getElementById('homeLink').addEventListener('click', function () {
 });
 
 document.getElementById('playAgainstAiLink').addEventListener('click', function () {
-    window.location.href = '../chessBoard/chessBoard.html';
+    window.location.href = '../chessBoard/chessBoard.html?newGame=yes';
 });
+function logOut(){
+    localStorage.clear();
+    window.location.replace('../logIn/log-in.html');
+}

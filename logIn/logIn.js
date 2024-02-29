@@ -24,7 +24,8 @@ function logIn() {
                 localStorage.setItem("player", username)
                 window.location.href = '../home_page/home-page.html'
             } else {
-                alert("Login failed. Please check your credentials.");
+                let res = response.text();
+                alert(res);
             }
         })
         .catch(error => {
@@ -36,3 +37,16 @@ function logIn() {
 function register() {
     window.location.href = "../register/register.html"
 }
+
+function togglePasswordVisibility() {
+    var passwordInput = document.getElementById("password");
+    var showPasswordCheckbox = document.getElementById("showPassword");
+
+    if (showPasswordCheckbox.checked) {
+        passwordInput.type = "text";
+    } else {
+        passwordInput.type = "password";
+    }
+}
+
+  

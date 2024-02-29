@@ -135,27 +135,32 @@
         <span class="home-page-text1">Hello</span>
         <br />
       </span>
-      <img id="learning_page" src="../pieces/learning_page.png" alt="image" class="home-page-image" />
-      <img id="ai" src="../pieces/playAgainstAi.png" alt="image" class="home-page-image1" />
+      <p id = "learningPage">Learn Openings</p>
+      <p id = "playAi">Play against ai</p>
+      <p id = "hist">Game history</p>
+      <img id="learning_page" alt="image" src="../pieces/learning_page.png" class="home-page-image" />
+      <img id="ai" alt="image" src="../pieces/playAgainstAi.png" class="home-page-image1" />
+      <img id="history" alt="image" src="../pieces/hisotryPage.png" class="home-page-image2" />
     </div>
   </div>
 
   <script>
-    // Obține referințe la cele două imagini
     var learningImage = document.getElementById('learning_page');
     var aiImage = document.getElementById('ai');
+    var historyImage = document.getElementById('history');
 
-    // Adaugă un eveniment de click pentru prima imagine
     learningImage.addEventListener('click', function () {
       window.location.href = "../learning_page/learning_page.html";
     });
 
-    // Adaugă un eveniment de click pentru a doua imagine
     aiImage.addEventListener('click', function () {
-      window.location.href = "../chessBoard/chessBoard.html";
+      window.location.href = "../chessBoard/chessBoard.html?newGame=yes";
     });
 
-    // Funcție pentru a deschide o fereastră nouă cu imaginea dată
+    historyImage.addEventListener('click', function () {
+      window.location.href = "../history_page/historypage.html";
+    });
+
     function openNewWindow(imageSrc) {
       window.open(imageSrc, '_blank');
     }

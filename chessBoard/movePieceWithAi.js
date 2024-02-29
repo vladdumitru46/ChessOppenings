@@ -1,25 +1,34 @@
 let queryString = window.location.search;
 let urlParams = new URLSearchParams(queryString);
-let informationCourseValue = urlParams.get('courseTitle');
-let informationCourseElement = document.getElementById("courseContent");
+let newGame = urlParams.get('newGame');
 let pageTitle = document.getElementById("pageTitle");
-
-if (informationCourseElement && informationCourseValue) {
-    let courseData = JSON.parse(informationCourseValue);
-    pageTitle.innerText = courseData.name;
-    informationCourseElement.innerText = courseData.name + " \n\n\n\n" + courseData.description;
+let player = localStorage.getItem("player")
+pageTitle.innerText = player + " vs AI";
+let boardUrl = "http://localhost:8080/chess/game";
+console.log(boardUrl);
+if (newGame) {
+    fetchData()
+} else {
+    setBoard();
 }
 
 
-let boardUrl = "http://localhost:8080/chess/board/save";
-console.log(boardUrl);
 
 async function fetchData() {
-    let boardUrl = "http://localhost:8080/chess/board/save";
+    let player = localStorage.getItem("player")
     console.log(boardUrl);
 
     try {
-        let r = await fetch(boardUrl, { method: "POST" });
+        let r = await fetch(boardUrl, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+                playerEmailOrUsername: player
+
+            })
+        });
 
         if (r.ok) {
             try {
@@ -37,7 +46,73 @@ async function fetchData() {
     }
 }
 
-fetchData();
+// fetchData();
+//vezi de ce nu merge
+async function setBoard() {
+    let gameId = localStorage.getItem("boardId");
+    let respone = await fetch("http://localhost:8080/chess/board/getBoardConfiguration?gameId=" + gameId, null);
+    if (respone.ok) {
+        let board = await respone.text();
+        board = board.split('\n')
+        for (var row in board) {
+            let cell = board[row].split(",")
+            for (var c in cell) {
+                let ce = cell[c].split(" ")
+                // console.log(ce)
+                let element = document.getElementById(ce[0]);
+                if (ce.length > 2) {
+                    element.setAttribute("data-piesa", ce[1] + " " + ce[2])
+                    let piesa;
+                    switch (ce[2]) {
+                        case "king": piesa = "King"; break;
+                        case "queen": piesa = "Queen"; break;
+                        case "rook": piesa = "Rook"; break;
+                        case "bishop": piesa = "Bishop"; break;
+                        case "knight": piesa = "Knight"; break;
+                        case "pawn": piesa = "Pawn"; break;
+                    }
+                    element.querySelector('img').src = "../pieces/" + ce[1] + piesa + ".png";
+                } else if (ce != '') {
+                    element.setAttribute("data-piesa", ce[1]);
+                    element.querySelector('img').src = "";
+                }
+            }
+        }
+
+        let response1 = await fetch("http://localhost:8080/chess/game/moves?gameId=" + gameId, null);
+        if (response1.ok) {
+            let r = await response1.text();
+            let moves = r.split(",")
+            // for (var i = 1; i < moves.length; i++) {
+            //     let element = document.getElementById("courseContent");
+            //     element.innerText += '\n' + moves[i];
+            // }
+            // Assuming 'moves' is an array containing your moves
+            for (var i = 1; i < moves.length; i++) {
+                let ulElement = document.getElementById("courseContent");
+                let newItem = document.createElement("li");
+
+                // newItem.className = "historypage-li list-item";
+
+                let spanElement = document.createElement("span");
+                let m = '';
+                if (moves[i].charAt(moves[i].length - 1) === ']') {
+                    m = moves[i].slice(1, moves[i].length - 2);
+                } else {
+                    m = moves[i].slice(1, moves[i].length - 1);
+                }
+                spanElement.textContent = m;
+
+                newItem.appendChild(spanElement);
+                ulElement.appendChild(newItem);
+            }
+
+        }
+
+    }
+
+}
+// setBoard();
 
 let square1 = null;
 let square2 = null;
@@ -65,7 +140,7 @@ async function getPiece(square) {
                     "Content-Type": "application/json"
                 },
                 body: JSON.stringify({
-                    boardId: localStorage.getItem('boardId'),
+                    gameId: localStorage.getItem('boardId'),
                     start: square1.getAttribute("id"),
                     end: square2.getAttribute("id"),
                     pieceColour: atributes[0]
@@ -76,7 +151,6 @@ async function getPiece(square) {
         }
 
         if (ok == 0) {
-            console.log("de ce intrii aici?")
             const piesaSquare1 = square1.getAttribute('data-piesa');
             const imageUrlSquare1 = square1.querySelector('img').src;
             const springBootPort = 8080; // Replace with the actual port number
@@ -91,7 +165,7 @@ async function getPiece(square) {
                     "Content-Type": "application/json"
                 },
                 body: JSON.stringify({
-                    boardId: localStorage.getItem('boardId'),
+                    gameId: localStorage.getItem('boardId'),
                     start: square1.getAttribute("id"),
                     end: square2.getAttribute("id"),
                     pieceColour: atributes[0]
@@ -137,7 +211,6 @@ async function castle(piesaSquare1, imageUrlSquare1, springBootURL, requestData,
     else if (square2.getAttribute("id") === "06") {
         let response = await fetch(springBootURL, requestData)
         if (response.ok) {
-            console.log("BA")
             square2.setAttribute('data-piesa', piesaSquare1);
             square2.querySelector('img').src = imageUrlSquare1;
 
@@ -155,7 +228,6 @@ async function castle(piesaSquare1, imageUrlSquare1, springBootURL, requestData,
             square1 = null;
             square2 = null;
             ok = 1;
-            console.log(ok)
         } else {
             square1 = null;
             square2 = null;
@@ -218,7 +290,7 @@ async function castle(piesaSquare1, imageUrlSquare1, springBootURL, requestData,
     return ok;
 }
 
-
+let m = 1;
 async function makeMoves(springBootURL, imageUrlSquare1, requestData, piesaSquare1, checkMateCheck, colour) {
     try {
         let ok = 0;
@@ -314,6 +386,23 @@ async function makeMoves(springBootURL, imageUrlSquare1, requestData, piesaSquar
                 square1.setAttribute('data-piesa', 'none');
                 square1.querySelector('img').src = "";
 
+                let res = await response1.text();
+                // let element = document.getElementById("courseContent");
+                // element.innerText = element.innerText + '\n' + m + '.' + ' ' + res;
+
+                let ulElement = document.getElementById("courseContent");
+                let newItem = document.createElement("li");
+
+                newItem.className = "historypage-li list-item";
+
+                let spanElement = document.createElement("span");
+
+                spanElement.textContent = res;
+
+                newItem.appendChild(spanElement);
+                ulElement.appendChild(newItem);
+
+                m++;
                 square1 = null;
                 square2 = null;
                 const response2 = await fetch(checkMateCheck, {
@@ -378,6 +467,24 @@ async function makeMoves(springBootURL, imageUrlSquare1, requestData, piesaSquar
 
             square1 = null;
             square2 = null;
+            // let element = document.getElementById("courseContent");
+            // element.innerText = element.innerText + "    " + coordonates[2];
+            // let ulElement = document.getElementById("courseContent");
+
+            let lastLi = document.querySelector('#courseContent li:last-child');
+
+            // Verifică dacă există deja un <span> în ultimul <li>
+            let spanElement = lastLi.querySelector('span');
+
+            // Dacă nu există, creează unul
+            if (!spanElement) {
+                spanElement = document.createElement("span");
+                lastLi.appendChild(spanElement);
+            }
+
+            // Adaugă coordonates[2] la textul deja existent
+            spanElement.textContent += " " + coordonates[2];
+
             const response2 = await fetch(checkMateCheck, {
                 method: "POST",
                 headers: {
@@ -403,33 +510,11 @@ async function makeMoves(springBootURL, imageUrlSquare1, requestData, piesaSquar
     }
 }
 
-window.addEventListener('beforeunload', function () {
-
-    let token = this.localStorage.getItem("token")
-    if(token!=null){
-    fetch('http://localhost:8080/chess/move/reset', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({ /* your data here */ })
-    })
-        .then(response => {
-            // handle the response from the server
-        })
-        .catch(error => {
-            // handle any errors that occur during the request
-        });
-    }
-    else{
-        window.location.href = '../logIn/logInPage.html'
-    }
-});
 
 document.addEventListener('DOMContentLoaded', function () {
     let token = localStorage.getItem("token");
     if (token === null) {
-        
+
         window.location.replace('../logIn/log-in.html');
     }
 });
@@ -441,3 +526,8 @@ document.getElementById('homeLink').addEventListener('click', function () {
 document.getElementById('playAgainstAiLink').addEventListener('click', function () {
     window.location.href = '../learning_page/learning_page.html';
 });
+
+function logOut() {
+    localStorage.clear();
+    window.location.replace('../logIn/log-in.html');
+}
