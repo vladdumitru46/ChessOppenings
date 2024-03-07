@@ -3,7 +3,7 @@ spring:
     active: dev
 #    database connection details
   datasource:
-    url: jdbc:postgresql://localhost:5432/chessopenings
+    url: jdbc:postgresql://chessopenings.cty0eiakmrz0.eu-central-1.rds.amazonaws.com:5432/chessopenings
     username: postgres
     password: postgres
   jpa:
