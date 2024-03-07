@@ -9,7 +9,6 @@ import jakarta.persistence.*;
 import java.io.Serializable;
 import java.util.Arrays;
 
-@Getter
 @Setter
 @Entity(name = "Board")
 @Table(name = "boards")
@@ -47,18 +46,30 @@ public class Board implements Serializable {
         cellOnTheBoardMap = setBoard();
     }
 
+    public Integer getId() {
+        return id;
+    }
+
+    public CellOnTheBoard[][] getCellOnTheBoardMap() {
+        return cellOnTheBoardMap;
+    }
 
     public CellOnTheBoard getKing(boolean isWhite) {
-        for (int i = 0; i < 8; i++) {
-            for (int j = 0; j < 8; j++) {
-                if (cellOnTheBoardMap[i][j].getPieces() instanceof King) {
-                    if (cellOnTheBoardMap[i][j].getPieces().isWhite() == isWhite) {
-                        return cellOnTheBoardMap[i][j];
-                    }
-                }
-            }
-        }
-        return null;
+//        for (int i = 0; i < 8; i++) {
+//            for (int j = 0; j < 8; j++) {
+//                if (cellOnTheBoardMap[i][j].getPieces() instanceof King) {
+//                    if (cellOnTheBoardMap[i][j].getPieces().isWhite() == isWhite) {
+//                        return cellOnTheBoardMap[i][j];
+//                    }
+//                }
+//            }
+//        }
+//        return null;
+        return Arrays.stream(this.getCellOnTheBoardMap())
+                .flatMap(Arrays::stream)
+                .filter(cell -> cell.getPieces() instanceof King && cell.getPieces().isWhite() == isWhite)
+                .findFirst()
+                .orElse(null);
     }
 
     public CellOnTheBoard[][] setBoard() {

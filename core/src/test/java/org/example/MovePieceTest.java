@@ -21,19 +21,15 @@ public class MovePieceTest {
 
     @Autowired
     GameService gameService;
+
     @Test
     public void isCheckMateIn2Test() {
-//        board.getCellOnTheBoardMap()[2][1].setPieces(new Queen(false));
-//        board.getCellOnTheBoardMap()[2][4].setPieces(new Queen(false));
-        System.out.println(board);
-//        try {
-//            System.out.println(gameService.getAfterPlayerId(25));
-//        } catch (Exception e) {
-//            throw new RuntimeException(e);
-//        }
-
-////        board.getCellOnTheBoardMap()[2][4].setPieces(new Queen(false));
-//        System.out.println(pieceService.canAPieceBeCaptured(board, false));
+        try {
+            board = boardService.findById(27);
+            System.out.println(board);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
     }
 
 

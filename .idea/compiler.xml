@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="CompilerConfiguration">
+    <option name="USE_RELEASE_OPTION" value="false" />
     <annotationProcessing>
       <profile default="true" name="Default" enabled="true" />
       <profile name="Maven default annotation processors profile" enabled="true">
@@ -17,11 +18,7 @@
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
-      <module name="ChessOppenings" target="19" />
-      <module name="core" target="1.6" />
-      <module name="demo" target="15" />
       <module name="networking" target="16" />
-      <module name="netwotking" target="19" />
     </bytecodeTargetLevel>
   </component>
   <component name="JavacSettings">
@@ -30,12 +27,9 @@
       <module name="Core" options="-parameters" />
       <module name="Models" options="-parameters" />
       <module name="Persistence" options="-parameters" />
-      <module name="core" options="-parameters" />
-      <module name="demo" options="-parameters" />
-      <module name="networking" options="-parameters" />
-      <module name="netwotking" options="-parameters" />
       <module name="server" options="-parameters" />
       <module name="service" options="-parameters" />
+      <module name="untitled" options="-parameters" />
       <module name="validators" options="-parameters" />
     </option>
   </component>

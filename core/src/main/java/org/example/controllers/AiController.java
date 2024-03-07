@@ -13,6 +13,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Objects;
+
 @RestController()
 @AllArgsConstructor
 @RequestMapping("/chess/move/ai")
@@ -82,8 +84,8 @@ public class AiController {
         }
         move = miniMax.getBestMove();
         if (move != null) {
-            System.out.println(move);
             String moveNotation = pieceService.transformMoveToCorrectNotation(move.getStart(), move.getEnd(), board);
+            System.out.println(moveNotation);
             if (game.isWhitesTurn()) {
                 game.setWhiteMove(game.getWhiteMove() + ", " + moveNotation);
             } else {
@@ -92,11 +94,18 @@ public class AiController {
             }
             pieceService.makeMove(board, move);
             String moveToBePlayed = move.getStart() + " " + move.getEnd() + " " + moveNotation;
+            setMoveAsString(game, move, "");
             game.setWhitesTurn(!game.isWhitesTurn());
-            System.out.println(pieceService.canAPieceBeCaptured(board, true));
             boardService.updateBoard(board);
             return new ResponseEntity<>(moveToBePlayed, HttpStatus.OK);
         }
         return null;
+    }
+
+    private void setMoveAsString(Game game, Move move, String action) {
+        String moveAsString = move.getStart().toString() + " " + move.getEnd().toString();
+        moveAsString += !Objects.equals(action, "") ? " " + action : "";
+        moveAsString += game.isWhitesTurn() ? ";" : ", ";
+        game.setMoves(game.getMoves() + moveAsString);
     }
 }

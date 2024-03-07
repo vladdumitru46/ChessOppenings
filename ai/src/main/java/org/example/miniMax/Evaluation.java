@@ -10,8 +10,7 @@ public class Evaluation {
 
     }
 
-    //development square
-    //engameBonus
+    //endgameBonus
     private float score(Board board, PieceService pieceService, boolean isWhite) {
         return board.getTotalPoints(isWhite) * 0.3f
                 + pieceService.getAllPossibleMoves(board, isWhite).size() * 0.1f
@@ -20,6 +19,7 @@ public class Evaluation {
                 + pieceService.isTheEnemyKingInCheck(board, false) * 0.1f
                 + pieceService.canAPieceBeCaptured(board, isWhite) * 0.1f
                 + pieceService.canTheKingBeCheckedInNextMove(board, isWhite) * 0.2f
+                + pieceService.developmentBonus(board, isWhite) * 0.1f
                 - pieceService.verifyIfThereAreDoublePawns(board, isWhite) * 0.2f
                 - pieceService.canAPieceBeCaptured(board, !isWhite) * 0.5f;
     }

@@ -1,12 +1,16 @@
 package org.example.controllers;
 
 import com.example.models.board.Board;
+import com.example.models.board.CellOnTheBoard;
+import com.example.models.board.Move;
 import com.example.models.game.Game;
 import com.example.models.game.GameStatus;
+import com.example.models.pieces.*;
 import com.example.models.player.Player;
 import jakarta.persistence.criteria.CriteriaBuilder;
 import lombok.AllArgsConstructor;
 import org.example.board.BoardService;
+import org.example.board.PieceService;
 import org.example.game.GameService;
 import org.example.player.PlayerService;
 import org.example.requests.GameRequest;
@@ -26,6 +30,7 @@ public class GameController {
     private final GameService gameService;
     private final PlayerService playerService;
     private final BoardService boardService;
+    private final PieceService pieceService;
 
     @PostMapping
     public ResponseEntity<?> saveGame(@RequestBody GameRequest gameRequest) {
@@ -66,6 +71,97 @@ public class GameController {
                 moves.add(movesByWhite[movesByWhite.length - 1]);
             }
             return new ResponseEntity<>(moves, HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
+        }
+    }
+
+    //TODO: make the move before work for white, and also make a move forward + see how you can make it so you can go until the start of the game with move before
+    @GetMapping("/moveBefore")
+    public ResponseEntity<?> getMoveBefore(@RequestParam int gameId, @RequestParam int moveNumber) {
+        try {
+            Game game = gameService.getGameById(gameId);
+            Board newBoard = new Board();
+            String[] moves = game.getMoves().split(", ");
+            for (int i = 0; i < moveNumber; i++) {
+                String[] bothMoves = moves[i].split(";");
+                if (bothMoves.length == 2) {
+                    String[] move = bothMoves[0].split(" ");
+                    takeMoveDataAndUndoIt(newBoard, move);
+                    if (i != moveNumber - 1) {
+                        move = bothMoves[1].split(" ");
+                        takeMoveDataAndUndoIt(newBoard, move);
+                    }
+                } else {
+                    if (i != moveNumber - 1) {
+                        String[] move = bothMoves[0].split(" ");
+                        takeMoveDataAndUndoIt(newBoard, move);
+                    }
+                }
+            }
+            return new ResponseEntity<>(newBoard.toString(), HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
+        }
+    }
+
+    @GetMapping("/movesHistory")
+    public ResponseEntity<?> gameHistory(@RequestParam int gameId, @RequestParam int moveNumber) {
+        try {
+            Game game = gameService.getGameById(gameId);
+            Board newBoard = new Board();
+            String[] moves = game.getMoves().split(", ");
+            for (int i = 0; i < moveNumber; i++) {
+                String[] bothMoves = moves[i].split(";");
+                String[] move = bothMoves[0].split(" ");
+                takeMoveDataAndUndoIt(newBoard, move);
+                if (bothMoves.length == 2) {
+                    move = bothMoves[1].split(" ");
+                    takeMoveDataAndUndoIt(newBoard, move);
+                }
+            }
+            return new ResponseEntity<>(newBoard.toString(), HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
+        }
+    }
+
+    private void takeMoveDataAndUndoIt(Board board, String[] move) {
+        int startLine = move[0].charAt(0) - '0';
+        int startColumn = move[0].charAt(1) - '0';
+        int endLine = move[1].charAt(0) - '0';
+        int endColumn = move[1].charAt(1) - '0';
+
+        CellOnTheBoard startCell = board.getCellOnTheBoardMap()[startLine][startColumn];
+        CellOnTheBoard endCell = board.getCellOnTheBoardMap()[endLine][endColumn];
+
+        if (move.length == 3) {
+            switch (move[2]) {
+                case "castleShort" -> {
+                    board.getCellOnTheBoardMap()[startLine][5].setPieces(board.getCellOnTheBoardMap()[startLine][7].getPieces());
+                    board.getCellOnTheBoardMap()[startLine][7].setPieces(null);
+                }
+                case "castleLong" -> {
+                    board.getCellOnTheBoardMap()[startLine][3].setPieces(board.getCellOnTheBoardMap()[startLine][0].getPieces());
+                    board.getCellOnTheBoardMap()[startLine][0].setPieces(null);
+                }
+                case "Queen" -> endCell.setPieces(new Queen(startCell.getPieces().isWhite()));
+                case "Rook" -> endCell.setPieces(new Rook(startCell.getPieces().isWhite()));
+                case "Bishop" -> endCell.setPieces(new Bishop(startCell.getPieces().isWhite()));
+                case "Knight" -> endCell.setPieces(new Knight(startCell.getPieces().isWhite()));
+
+            }
+        }
+
+        Move moveMade = new Move(startCell, endCell);
+        pieceService.makeMove(board, moveMade);
+    }
+
+    @GetMapping("/getMoveNumber")
+    public ResponseEntity<?> getMoveNumber(@RequestParam Integer gameId) {
+        try {
+            Game game = gameService.getGameById(gameId);
+            return new ResponseEntity<>(game.getMoveNumber(), HttpStatus.OK);
         } catch (Exception e) {
             return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
         }

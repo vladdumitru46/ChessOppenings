@@ -4,6 +4,9 @@ import lombok.*;
 
 import jakarta.persistence.*;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter
@@ -52,12 +55,14 @@ public class Game {
             columnDefinition = "TEXT"
     )
     private String whiteMove = "";
+
     @Column(
             name = "blackMove",
             nullable = false,
             columnDefinition = "TEXT"
     )
     private String blackMove = "";
+
 
     @Column(
             name = "whites_turn",
@@ -67,6 +72,11 @@ public class Game {
 
     @Enumerated(EnumType.STRING)
     private GameStatus gameStatus;
+
+    @Column(
+            name = "moves"
+    )
+    private String moves = "";
 
     public Game(Integer playerId, Integer boardId, GameStatus gameStatus) {
         this.playerId = playerId;

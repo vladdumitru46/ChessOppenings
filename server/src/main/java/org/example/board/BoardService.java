@@ -33,4 +33,5 @@ public class BoardService {
 //        boardRepository.update(board.getId(), board.getCellOnTheBoardMap(), board.isWhitesTurn());
         board.setCellOnTheBoardMap(board.getCellOnTheBoardMap());
     }
+
 }

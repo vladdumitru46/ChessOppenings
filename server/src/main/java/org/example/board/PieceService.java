@@ -151,6 +151,7 @@ public class PieceService {
         }
         return moveList;
     }
+
     //todo: castling for ai
     public boolean possibleMovesForAPiece(Board board, CellOnTheBoard startCell, CellOnTheBoard endCell) {
 
@@ -196,23 +197,21 @@ public class PieceService {
 
 
     public synchronized void makeMove(Board board, Move move) {
-        King king = (King) board.getKing(!board.getCellOnTheBoardMap()[move.getStart().getLineCoordinate()][move.getStart().getColumnCoordinate()].getPieces().isWhite())
-                .getPieces();
+        CellOnTheBoard kingsCell = board.getKing(!move.getStart().getPieces().isWhite());
+        King king = (King) kingsCell.getPieces();
+
         board.getCellOnTheBoardMap()[move.getEnd().getLineCoordinate()][move.getEnd().getColumnCoordinate()]
-                .setPieces(board.getCellOnTheBoardMap()[move.getStart().getLineCoordinate()][move.getStart().getColumnCoordinate()].getPieces());
+                .setPieces(move.getStart().getPieces());
         board.getCellOnTheBoardMap()[move.getStart().getLineCoordinate()][move.getStart().getColumnCoordinate()].setPieces(null);
 
         updateKingStatus(board, move, king);
     }
 
     private synchronized void updateKingStatus(Board board, Move move, King king) {
-        if (!kingRepository.checkIfTheKingIsInCheck(board, board.getCellOnTheBoardMap()[move.getStart().getLineCoordinate()][move.getStart().getColumnCoordinate()],
+        king.setInCheck(!kingRepository.checkIfTheKingIsInCheck(board,
+                board.getCellOnTheBoardMap()[move.getStart().getLineCoordinate()][move.getStart().getColumnCoordinate()],
                 board.getCellOnTheBoardMap()[move.getEnd().getLineCoordinate()][move.getEnd().getColumnCoordinate()],
-                king)) {
-            king.setInCheck(true);
-        } else {
-            king.setInCheck(false);
-        }
+                king));
     }
 
     public synchronized void undoMove(Board board, Move move, Pieces pieceOnStart, Pieces pieceOnEnd) {
@@ -231,6 +230,10 @@ public class PieceService {
         Pieces pieceOnEnd = end.getPieces();
         String notation = "";
 
+        if (start.getPieces() == null) {
+            System.out.println(start);
+            System.out.println(board);
+        }
         switch (start.getPieces()) {
             case King ignored -> notation += "K";
             case Queen ignored -> notation += "Q";
@@ -375,7 +378,16 @@ public class PieceService {
 
     public Integer isTheEnemyKingInCheck(Board board, boolean isWhite) {
         King king = (King) board.getKing(isWhite).getPieces();
-        return king.isInCheck() ? 200 : 0;
+        return king.isInCheck() ? 100 : 0;
     }
 
+
+    public int developmentBonus(Board board, boolean isWhite) {
+        return (int) Arrays.stream(board.getCellOnTheBoardMap())
+                .flatMap(Arrays::stream)
+                .filter(cell -> cell.getPieces() != null && !(cell.getPieces() instanceof King) && !(cell.getPieces() instanceof Pawn))
+                .filter(cell -> (isWhite && cell.getPieces().isWhite() && cell.getLineCoordinate() > 1) ||
+                        (!isWhite && !cell.getPieces().isWhite() && cell.getLineCoordinate() < 6))
+                .count();
+    }
 }

@@ -38,7 +38,7 @@ public class GameService {
 
     public List<Game> getAfterPlayerId(Integer playerId) throws Exception {
         Optional<List<Game>> games = gameRepository.findByPlayerId(playerId);
-        if(games.isEmpty()){
+        if (games.isEmpty() || games.get().size() == 0) {
             throw new Exception("There are no games played by this player");
         }
         return games.get();
@@ -51,5 +51,7 @@ public class GameService {
         game.setMoveNumber(game.getMoveNumber());
         game.setGameStatus(game.getGameStatus());
         game.setWhitesTurn(game.isWhitesTurn());
+        game.setMoves(game.getMoves());
     }
+
 }

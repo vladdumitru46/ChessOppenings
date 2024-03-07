@@ -53,7 +53,7 @@ public class MovePiecesController {
             CellOnTheBoard endCell = board.getCellOnTheBoardMap()[endLine][endColumn];
             if (pieceService.canTheRookMove(board, startCell, endCell, (Rook) startCell.getPieces())) {
                 String move = pieceService.transformMoveToCorrectNotation(startCell, endCell, board);
-                
+
                 pieceService.makeMove(board, new Move(startCell, endCell));
                 if (colour) {
                     game.setWhiteMove(game.getWhiteMove() + ", " + move);
@@ -61,6 +61,7 @@ public class MovePiecesController {
                     game.setBlackMove(game.getBlackMove() + ", " + move);
                     game.setMoveNumber(game.getMoveNumber() + 1);
                 }
+                setMoveAsString(game, new Move(startCell, endCell), "");
                 game.setWhitesTurn(!colour);
                 gameService.updateGame(game);
                 boardService.updateBoard(board);
@@ -94,7 +95,7 @@ public class MovePiecesController {
             CellOnTheBoard endCell = board.getCellOnTheBoardMap()[endLine][endColumn];
             if (pieceService.canTheKnightMove(board, startCell, endCell, (Knight) startCell.getPieces())) {
                 String move = pieceService.transformMoveToCorrectNotation(startCell, endCell, board);
-                
+
                 pieceService.makeMove(board, new Move(startCell, endCell));
                 if (colour) {
                     game.setWhiteMove(game.getWhiteMove() + ", " + move);
@@ -102,6 +103,7 @@ public class MovePiecesController {
                     game.setBlackMove(game.getBlackMove() + ", " + move);
                     game.setMoveNumber(game.getMoveNumber() + 1);
                 }
+                setMoveAsString(game, new Move(startCell, endCell), "");
                 game.setWhitesTurn(!colour);
                 boardService.updateBoard(board);
                 gameService.updateGame(game);
@@ -136,7 +138,7 @@ public class MovePiecesController {
             CellOnTheBoard endCell = board.getCellOnTheBoardMap()[endLine][endColumn];
             if (pieceService.canTheBishopMove(board, startCell, endCell, (Bishop) startCell.getPieces())) {
                 String move = pieceService.transformMoveToCorrectNotation(startCell, endCell, board);
-                
+
                 pieceService.makeMove(board, new Move(startCell, endCell));
                 if (colour) {
                     game.setWhiteMove(game.getWhiteMove() + ", " + move);
@@ -144,6 +146,7 @@ public class MovePiecesController {
                     game.setBlackMove(game.getBlackMove() + ", " + move);
                     game.setMoveNumber(game.getMoveNumber() + 1);
                 }
+                setMoveAsString(game, new Move(startCell, endCell), "");
                 game.setWhitesTurn(!colour);
                 boardService.updateBoard(board);
                 gameService.updateGame(game);
@@ -178,7 +181,7 @@ public class MovePiecesController {
             CellOnTheBoard endCell = board.getCellOnTheBoardMap()[endLine][endColumn];
             if (pieceService.canTheKingMove(board, startCell, endCell, (King) startCell.getPieces())) {
                 String move = pieceService.transformMoveToCorrectNotation(startCell, endCell, board);
-                
+
                 pieceService.makeMove(board, new Move(startCell, endCell));
                 if (colour) {
                     game.setWhiteMove(game.getWhiteMove() + ", " + move);
@@ -186,6 +189,7 @@ public class MovePiecesController {
                     game.setBlackMove(game.getBlackMove() + ", " + move);
                     game.setMoveNumber(game.getMoveNumber() + 1);
                 }
+                setMoveAsString(game, new Move(startCell, endCell), "");
                 game.setWhitesTurn(!colour);
                 boardService.updateBoard(board);
                 gameService.updateGame(game);
@@ -222,8 +226,10 @@ public class MovePiecesController {
                 String move;
                 if (endColumn > 0) {
                     move = "0-0";
+                    setMoveAsString(game, new Move(startCell, endCell), "castleShort");
                 } else {
                     move = "0-0-0";
+                    setMoveAsString(game, new Move(startCell, endCell), "castleLong");
                 }
                 pieceService.makeMove(board, new Move(startCell, endCell));
                 if (colour) {
@@ -235,7 +241,7 @@ public class MovePiecesController {
                 game.setWhitesTurn(!colour);
                 boardService.updateBoard(board);
                 gameService.updateGame(game);
-                return new ResponseEntity<>(HttpStatus.OK);
+                return new ResponseEntity<>(move, HttpStatus.OK);
             } else {
                 return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
             }
@@ -266,7 +272,7 @@ public class MovePiecesController {
             CellOnTheBoard endCell = board.getCellOnTheBoardMap()[endLine][endColumn];
             if (pieceService.canTheQueenMove(board, startCell, endCell, (Queen) startCell.getPieces())) {
                 String move = pieceService.transformMoveToCorrectNotation(startCell, endCell, board);
-                
+
                 pieceService.makeMove(board, new Move(startCell, endCell));
                 if (colour) {
                     game.setWhiteMove(game.getWhiteMove() + ", " + move);
@@ -274,6 +280,7 @@ public class MovePiecesController {
                     game.setBlackMove(game.getBlackMove() + ", " + move);
                     game.setMoveNumber(game.getMoveNumber() + 1);
                 }
+                setMoveAsString(game, new Move(startCell, endCell), "");
                 game.setWhitesTurn(!colour);
                 boardService.updateBoard(board);
                 gameService.updateGame(game);
@@ -308,6 +315,7 @@ public class MovePiecesController {
             CellOnTheBoard endCell = board.getCellOnTheBoardMap()[endLine][endColumn];
             if (pieceService.canThePawnPromote(board, startCell, endCell)) {
                 pieceService.makeMove(board, new Move(startCell, endCell));
+                setMoveAsString(game, new Move(startCell, endCell), "");
                 game.setWhitesTurn(!colour);
                 boardService.updateBoard(board);
                 return new ResponseEntity<>(HttpStatus.OK);
@@ -321,6 +329,7 @@ public class MovePiecesController {
                         game.setBlackMove(game.getBlackMove() + ", " + move);
                         game.setMoveNumber(game.getMoveNumber() + 1);
                     }
+                    setMoveAsString(game, new Move(startCell, endCell), "");
                     game.setWhitesTurn(!colour);
                     gameService.updateGame(game);
                     boardService.updateBoard(board);
@@ -347,16 +356,38 @@ public class MovePiecesController {
         int column = Integer.parseInt(String.valueOf(promotePawn.coordinates().charAt(1)));
 
         CellOnTheBoard pawn = board.getCellOnTheBoardMap()[line][column];
+        String notation = pieceService.transformColumnToLetters(pawn);
+        notation += (column + 1);
         switch (promotePawn.newPiece()) {
-            case "Queen" -> pawn.setPieces(new Queen(pawn.getPieces().isWhite()));
-            case "Rook" -> pawn.setPieces(new Rook(pawn.getPieces().isWhite()));
-            case "Bishop" -> pawn.setPieces(new Bishop(pawn.getPieces().isWhite()));
-            case "Knight" -> pawn.setPieces(new Knight(pawn.getPieces().isWhite()));
+            case "Queen" -> {
+                pawn.setPieces(new Queen(pawn.getPieces().isWhite()));
+                notation += "=Q";
+            }
+            case "Rook" -> {
+                pawn.setPieces(new Rook(pawn.getPieces().isWhite()));
+                notation += "=R";
+            }
+            case "Bishop" -> {
+                pawn.setPieces(new Bishop(pawn.getPieces().isWhite()));
+                notation += "=B";
+            }
+            case "Knight" -> {
+                pawn.setPieces(new Knight(pawn.getPieces().isWhite()));
+                notation += "=N";
+            }
         }
-        game.setWhitesTurn(!pawn.getPieces().isWhite());
+        String move = game.getMoves();
+        char lastChar = move.charAt(move.length() - 1);
+        StringBuilder newMove = new StringBuilder();
+        for (int i = 0; i < move.length() - 1; i++) {
+            newMove.append(move.charAt(i));
+        }
+        newMove.append(" ").append(promotePawn.newPiece()).append(lastChar);
+        game.setMoves(newMove.toString());
         board.getCellOnTheBoardMap()[line][column].setPieces(pawn.getPieces());
+        gameService.updateGame(game);
         boardService.updateBoard(board);
-        return new ResponseEntity<>(HttpStatus.OK);
+        return new ResponseEntity<>(notation, HttpStatus.OK);
     }
 
 
@@ -391,6 +422,14 @@ public class MovePiecesController {
         } else {
             return new ResponseEntity<>("continue", HttpStatus.OK);
         }
+    }
+
+
+    private void setMoveAsString(Game game, Move move, String action) {
+        String moveAsString = move.getStart().toString() + " " + move.getEnd().toString();
+        moveAsString += !Objects.equals(action, "") ? " " + action : "";
+        moveAsString += game.isWhitesTurn() ? ";" : ", ";
+        game.setMoves(game.getMoves() + moveAsString);
     }
 
 

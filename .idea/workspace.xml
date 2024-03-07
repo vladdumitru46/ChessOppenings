@@ -4,81 +4,33 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="1ea836f5-d1a1-4a90-9895-e19d086bce91" name="Changes" comment="added subcourse logic and also refactored the code, made ai better, added jdk 21">
-      <change beforePath="$PROJECT_DIR$/.idea/.gitignore" beforeDir="false" />
+    <list default="true" id="75b936ac-d5b0-4178-bee6-f97885357906" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/.idea/jarRepositories.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/compiler.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/compiler.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/dataSources.xml" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/encodings.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/encodings.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/jarRepositories.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/modules.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/uiDesigner.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Models/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/Models/pom.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Models/src/main/java/com/example/models/board/Board.java" beforeDir="false" afterPath="$PROJECT_DIR$/Models/src/main/java/com/example/models/board/Board.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Models/src/main/java/com/example/models/board/CellOnTheBord.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Models/src/main/java/com/example/models/courses/Course.java" beforeDir="false" afterPath="$PROJECT_DIR$/Models/src/main/java/com/example/models/courses/Course.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Models/src/main/java/com/example/models/courses/CourseStartedByPlayer.java" beforeDir="false" afterPath="$PROJECT_DIR$/Models/src/main/java/com/example/models/courses/CourseStartedByPlayer.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Models/src/main/java/com/example/models/courses/Entity.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Models/src/main/java/com/example/models/courses/Player.java" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/Models/src/main/java/com/example/models/game/Game.java" beforeDir="false" afterPath="$PROJECT_DIR$/Models/src/main/java/com/example/models/game/Game.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Models/src/main/java/com/example/models/game/GameStatus.java" beforeDir="false" afterPath="$PROJECT_DIR$/Models/src/main/java/com/example/models/game/GameStatus.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Models/src/main/java/com/example/models/pieces/Bishop.java" beforeDir="false" afterPath="$PROJECT_DIR$/Models/src/main/java/com/example/models/pieces/Bishop.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Models/src/main/java/com/example/models/pieces/King.java" beforeDir="false" afterPath="$PROJECT_DIR$/Models/src/main/java/com/example/models/pieces/King.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Models/src/main/java/com/example/models/pieces/Knight.java" beforeDir="false" afterPath="$PROJECT_DIR$/Models/src/main/java/com/example/models/pieces/Knight.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Models/src/main/java/com/example/models/pieces/Pawn.java" beforeDir="false" afterPath="$PROJECT_DIR$/Models/src/main/java/com/example/models/pieces/Pawn.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Models/src/main/java/com/example/models/pieces/Pieces.java" beforeDir="false" afterPath="$PROJECT_DIR$/Models/src/main/java/com/example/models/pieces/Pieces.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Models/src/main/java/com/example/models/pieces/Queen.java" beforeDir="false" afterPath="$PROJECT_DIR$/Models/src/main/java/com/example/models/pieces/Queen.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Models/src/main/java/com/example/models/pieces/Rook.java" beforeDir="false" afterPath="$PROJECT_DIR$/Models/src/main/java/com/example/models/pieces/Rook.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Persistence/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/Persistence/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Persistence/src/main/java/org/example/repositoryes/interfaces/CourseRepository.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Persistence/src/main/java/org/example/repositoryes/interfaces/CourseStartedByPlayerRepository.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Persistence/src/main/java/org/example/repositoryes/interfaces/PlayerRepository.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Persistence/src/main/java/org/example/repositoryes/interfaces/pieces/IKingRepository.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Persistence/src/main/java/org/example/repositoryes/interfaces/pieces/IRepository.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Persistence/src/main/java/org/example/repositoryes/repos/BishopRepository.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Persistence/src/main/java/org/example/repositoryes/repos/KingRepository.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Persistence/src/main/java/org/example/repositoryes/repos/KnightRepository.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Persistence/src/main/java/org/example/repositoryes/repos/PawnRepository.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Persistence/src/main/java/org/example/repositoryes/repos/QueenRepository.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Persistence/src/main/java/org/example/repositoryes/repos/RookRepository.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ai/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/ai/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ai/src/main/java/org/example/miniMax/Evaluation.java" beforeDir="false" afterPath="$PROJECT_DIR$/ai/src/main/java/org/example/miniMax/Evaluation.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ai/src/main/java/org/example/miniMax/MiniMax.java" beforeDir="false" afterPath="$PROJECT_DIR$/ai/src/main/java/org/example/miniMax/MiniMax.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/core/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/core/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/core/src/main/java/org/example/MainApplication.java" beforeDir="false" afterPath="$PROJECT_DIR$/core/src/main/java/org/example/MainApplication.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/core/src/main/java/org/example/controllers/CourseController.java" beforeDir="false" afterPath="$PROJECT_DIR$/core/src/main/java/org/example/controllers/CourseController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/core/src/main/java/org/example/controllers/CourseStartedByPlayerController.java" beforeDir="false" afterPath="$PROJECT_DIR$/core/src/main/java/org/example/controllers/CourseStartedByPlayerController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/core/src/main/java/org/example/controllers/LogInController.java" beforeDir="false" afterPath="$PROJECT_DIR$/core/src/main/java/org/example/controllers/LogInController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/src/main/java/org/example/controllers/AiController.java" beforeDir="false" afterPath="$PROJECT_DIR$/core/src/main/java/org/example/controllers/AiController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/src/main/java/org/example/controllers/GameController.java" beforeDir="false" afterPath="$PROJECT_DIR$/core/src/main/java/org/example/controllers/GameController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/core/src/main/java/org/example/controllers/MovePiecesController.java" beforeDir="false" afterPath="$PROJECT_DIR$/core/src/main/java/org/example/controllers/MovePiecesController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/core/src/main/java/org/example/requests/LogInRequest.java" beforeDir="false" afterPath="$PROJECT_DIR$/core/src/main/java/org/example/requests/LogInRequest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/core/src/main/java/org/example/requests/MovePiecesRequest.java" beforeDir="false" afterPath="$PROJECT_DIR$/core/src/main/java/org/example/requests/MovePiecesRequest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/core/src/main/java/org/example/requests/StartCourseRequest.java" beforeDir="false" afterPath="$PROJECT_DIR$/core/src/main/java/org/example/requests/StartCourseRequest.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/core/src/main/resources/application.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/core/src/main/resources/application.yaml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/core/src/main/resources/logback-test.xml" beforeDir="false" afterPath="$PROJECT_DIR$/core/src/main/resources/logback-test.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/core/src/main/resources/logback.xml" beforeDir="false" afterPath="$PROJECT_DIR$/core/src/main/resources/logback.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/core/src/test/java/org/example/RepoTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/core/src/test/java/org/example/RepoTest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/networking/pom.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/networking/src/main/java/org/example/Main.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/networking/src/main/java/org/example/interfaces/Request.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/networking/src/main/java/org/example/interfaces/Response.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/networking/src/main/java/org/example/interfaces/UpdateResponse.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/networking/src/main/java/org/example/protocols/ObjectProxy.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/networking/src/main/java/org/example/protocols/ObjectWorker.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/networking/src/main/java/org/example/requestClasses/LogInRequestPlayer.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/networking/src/main/java/org/example/requestClasses/LogOutRequestPlayer.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/networking/src/main/java/org/example/responseClasses/ErrorResponse.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/networking/src/main/java/org/example/responseClasses/OkResponse.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/networking/src/main/java/org/example/utils/AbsConcurrentServer.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/networking/src/main/java/org/example/utils/AbstractServer.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/networking/src/main/java/org/example/utils/ObjectConcurrentServer.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/networking/src/main/java/org/example/utils/ServerException.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/src/test/java/org/example/MovePieceTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/core/src/test/java/org/example/MovePieceTest.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/server/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/server/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/src/main/java/org/example/CourseService.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/src/main/java/org/example/CourseStartedByPlayerService.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/src/main/java/org/example/PieceService.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/src/main/java/org/example/PlayerService.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/src/main/java/org/example/StartServer.java" beforeDir="false" afterPath="$PROJECT_DIR$/server/src/main/java/org/example/StartServer.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/src/main/java/org/example/board/BoardService.java" beforeDir="false" afterPath="$PROJECT_DIR$/server/src/main/java/org/example/board/BoardService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/src/main/java/org/example/board/PieceService.java" beforeDir="false" afterPath="$PROJECT_DIR$/server/src/main/java/org/example/board/PieceService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/src/main/java/org/example/game/GameService.java" beforeDir="false" afterPath="$PROJECT_DIR$/server/src/main/java/org/example/game/GameService.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/service/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/service/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/service/src/main/java/org/example/IService.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/validators/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/validators/pom.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -88,31 +40,15 @@
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
-        <option value="Enum" />
         <option value="Class" />
-        <option value="Interface" />
+        <option value="Record" />
       </list>
     </option>
   </component>
   <component name="Git.Settings">
-    <option name="RECENT_BRANCH_BY_REPOSITORY">
-      <map>
-        <entry key="$PROJECT_DIR$" value="ai-brach-improved" />
-      </map>
-    </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
-  <component name="HighlightingSettingsPerFile">
-    <setting file="file://$PROJECT_DIR$/Persistence/src/main/java/org/example/repositoryes/repos/KingRepository.java" root0="FORCE_HIGHLIGHTING" />
-  </component>
-  <component name="MavenImportPreferences">
-    <option name="generalSettings">
-      <MavenGeneralSettings>
-        <option name="mavenHome" value="$PROJECT_DIR$/../../../../../../Program Files/Maven/apache-maven-3.9.2" />
-      </MavenGeneralSettings>
-    </option>
-  </component>
-  <component name="ProjectId" id="2bfOxZoRZBFLsoClRKS9roKB0Qp" />
+  <component name="ProjectId" id="2ctRP6AGqGMS93wZSZPhrJrP8Q9" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
@@ -121,42 +57,35 @@
   "keyToString": {
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
+    "ToolWindowRun.ShowToolbar": "false",
     "WebServerToolWindowFactoryState": "false",
     "git-widget-placeholder": "master",
-    "jdk.selected.JAVA_MODULE": "21",
-    "last_opened_file_path": "C:/Users/VladDumitru/Downloads/demo (1)/demo",
+    "last_opened_file_path": "C:/workspace/migrationToll/migration",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
     "node.js.selected.package.tslint": "(autodetect)",
-    "project.structure.last.edited": "Project",
+    "project.structure.last.edited": "Modules",
     "project.structure.proportion": "0.15",
     "project.structure.side.proportion": "0.2",
-    "settings.editor.selected.configurable": "reference.projectsettings.compiler.javacompiler",
-    "spring.configuration.checksum": "9d20394760b85ac65ccf05d4cdf4eba7",
+    "spring.configuration.checksum": "2f7a94031affc885418ecfb366b17f55",
     "vue.rearranger.settings.migration": "true"
+  },
+  "keyToStringList": {
+    "DatabaseDriversLRU": [
+      "postgresql"
+    ]
   }
 }]]></component>
-  <component name="RecentsManager">
-    <key name="CreateClassDialog.RecentsKey">
-      <recent name="org.example" />
-    </key>
-    <key name="CopyFile.RECENT_KEYS">
-      <recent name="C:\Users\VladDumitru\Downloads\ChessOppenings (1)\ChessOppenings-ai-brach-improved (1)\ChessOppenings-ai-brach-improved\validators\src\main\java\org\example" />
-      <recent name="C:\Users\VladDumitru\Desktop\ChessOppenings-ai-brach-improved\core\src\main\java\org\example" />
-      <recent name="C:\Users\VladDumitru\Desktop\ChessOppenings-ai-brach-improved\server\src\main\java\org\example" />
-    </key>
-  </component>
   <component name="RunAnythingCache">
     <option name="myCommands">
       <command value="mvn clean install" />
-      <command value="mvn clean" />
     </option>
   </component>
-  <component name="RunManager" selected="Spring Boot.MainApplication">
-    <configuration name="Main" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="org.example.Main" />
-      <module name="networking" />
+  <component name="RunManager" selected="Application.MainApplication">
+    <configuration name="MainApplication" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="org.example.MainApplication" />
+      <module name="Core" />
       <extension name="coverage">
         <pattern>
           <option name="PATTERN" value="org.example.*" />
@@ -167,126 +96,51 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="RepoTest.canMoveKnight" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+    <configuration name="MovePieceTest.isCheckMateIn2Test" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="Core" />
       <extension name="coverage">
         <pattern>
-          <option name="PATTERN" value="org.example.controllers.*" />
+          <option name="PATTERN" value="org.example.*" />
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
       <option name="PACKAGE_NAME" value="org.example" />
-      <option name="MAIN_CLASS_NAME" value="org.example.RepoTest" />
-      <option name="METHOD_NAME" value="canMoveKnight" />
+      <option name="MAIN_CLASS_NAME" value="org.example.MovePieceTest" />
+      <option name="METHOD_NAME" value="isCheckMateIn2Test" />
       <option name="TEST_OBJECT" value="method" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="RepoTest.canMoveQueen" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
-      <module name="Core" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="org.example.controllers.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <option name="PACKAGE_NAME" value="org.example" />
-      <option name="MAIN_CLASS_NAME" value="org.example.RepoTest" />
-      <option name="METHOD_NAME" value="canMoveQueen" />
-      <option name="TEST_OBJECT" value="method" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="MainApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" temporary="true" nameIsGenerated="true">
-      <module name="Core" />
-      <option name="SPRING_BOOT_MAIN_CLASS" value="org.example.MainApplication" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="org.example.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="StartServer" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" temporary="true" nameIsGenerated="true">
-      <module name="server" />
-      <option name="SPRING_BOOT_MAIN_CLASS" value="org.example.StartServer" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="org.example.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="Spring Boot.MainApplication" />
-        <item itemvalue="Spring Boot.StartServer" />
-        <item itemvalue="JUnit.RepoTest.canMoveQueen" />
-        <item itemvalue="JUnit.RepoTest.canMoveKnight" />
-        <item itemvalue="Application.Main" />
+        <item itemvalue="Application.MainApplication" />
+        <item itemvalue="JUnit.MovePieceTest.isCheckMateIn2Test" />
       </list>
     </recent_temporary>
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
-      <changelist id="1ea836f5-d1a1-4a90-9895-e19d086bce91" name="Changes" comment="" />
-      <created>1706602913626</created>
+      <changelist id="75b936ac-d5b0-4178-bee6-f97885357906" name="Changes" comment="" />
+      <created>1708928860695</created>
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
-      <updated>1706602913626</updated>
-      <workItem from="1708770258984" duration="6545000" />
-      <workItem from="1709219722087" duration="127000" />
+      <updated>1708928860695</updated>
+      <workItem from="1709819038865" duration="2353000" />
     </task>
-    <task id="LOCAL-00001" summary="added subcourse logic and also refactored the code, made ai better, added jdk 21">
-      <option name="closed" value="true" />
-      <created>1708770429747</created>
-      <option name="number" value="00001" />
-      <option name="presentableId" value="LOCAL-00001" />
-      <option name="project" value="LOCAL" />
-      <updated>1708770429747</updated>
-    </task>
-    <task id="LOCAL-00002" summary="added subcourse logic and also refactored the code, made ai better, added jdk 21">
-      <option name="closed" value="true" />
-      <created>1708774041969</created>
-      <option name="number" value="00002" />
-      <option name="presentableId" value="LOCAL-00002" />
-      <option name="project" value="LOCAL" />
-      <updated>1708774041969</updated>
-    </task>
-    <task id="LOCAL-00003" summary="added subcourse logic and also refactored the code, made ai better, added jdk 21">
-      <option name="closed" value="true" />
-      <created>1708777382951</created>
-      <option name="number" value="00003" />
-      <option name="presentableId" value="LOCAL-00003" />
-      <option name="project" value="LOCAL" />
-      <updated>1708777382951</updated>
-    </task>
-    <option name="localTasksCounter" value="4" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
   </component>
-  <component name="VcsManagerConfiguration">
-    <MESSAGE value="added subcourse logic and also refactored the code, made ai better, added jdk 21" />
-    <option name="LAST_COMMIT_MESSAGE" value="added subcourse logic and also refactored the code, made ai better, added jdk 21" />
-  </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
       <breakpoints>
         <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/Persistence/src/main/java/org/example/repositoryes/repos/PawnRepository.java</url>
-          <line>18</line>
-          <option name="timeStamp" value="64" />
+          <url>file://$PROJECT_DIR$/core/src/main/java/org/example/controllers/RegisterController.java</url>
+          <line>31</line>
+          <option name="timeStamp" value="2" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>
