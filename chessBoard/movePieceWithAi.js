@@ -103,6 +103,13 @@ async function setBoard() {
                 }
                 spanElement.textContent = m;
 
+                newItem.addEventListener("click", function () {
+                    // Obține numărul de ordine al elementului în lista ordonată
+                    let orderNumber = Array.from(this.parentElement.children).indexOf(this) + 1;
+
+                    getMovesHistory(orderNumber)
+                });
+
                 newItem.appendChild(spanElement);
                 ulElement.appendChild(newItem);
             }
@@ -112,6 +119,7 @@ async function setBoard() {
     }
 
 }
+
 // setBoard();
 
 let square1 = null;
@@ -201,6 +209,31 @@ async function castle(piesaSquare1, imageUrlSquare1, springBootURL, requestData,
             square1 = null;
             square2 = null;
             ok = 1;
+            let res = await response.text();
+            // let element = document.getElementById("courseContent");
+            // element.innerText = element.innerText + '\n' + m + '.' + ' ' + res;
+
+            let ulElement = document.getElementById("courseContent");
+            let newItem = document.createElement("li");
+
+            newItem.className = "historypage-li list-item"; F
+
+            let spanElement = document.createElement("span");
+
+            spanElement.textContent = res;
+
+            newItem.addEventListener("click", function () {
+                // Obține numărul de ordine al elementului în lista ordonată
+                let orderNumber = Array.from(this.parentElement.children).indexOf(this) + 1;
+
+                getMovesHistory(orderNumber)
+            });
+
+            newItem.appendChild(spanElement);
+            ulElement.appendChild(newItem);
+
+            m++;
+            await moveAi();
         } else {
             square1 = null;
             square2 = null;
@@ -227,7 +260,32 @@ async function castle(piesaSquare1, imageUrlSquare1, springBootURL, requestData,
 
             square1 = null;
             square2 = null;
-            ok = 1;
+            ok = 1; let res = await response.text();
+            // let element = document.getElementById("courseContent");
+            // element.innerText = element.innerText + '\n' + m + '.' + ' ' + res;
+
+            let ulElement = document.getElementById("courseContent");
+            let newItem = document.createElement("li");
+
+            newItem.className = "historypage-li list-item";
+
+            let spanElement = document.createElement("span");
+
+            spanElement.textContent = res;
+
+            newItem.addEventListener("click", function () {
+                // Obține numărul de ordine al elementului în lista ordonată
+                let orderNumber = Array.from(this.parentElement.children).indexOf(this) + 1;
+
+                getMovesHistory(orderNumber)
+            });
+
+            newItem.appendChild(spanElement);
+            ulElement.appendChild(newItem);
+
+            m++;
+
+            await moveAi();
         } else {
             square1 = null;
             square2 = null;
@@ -254,6 +312,30 @@ async function castle(piesaSquare1, imageUrlSquare1, springBootURL, requestData,
             square1 = null;
             square2 = null;
             ok = 1;
+            let res = await response.text();
+            // let element = document.getElementById("courseContent");
+            // element.innerText = element.innerText + '\n' + m + '.' + ' ' + res;
+
+            let ulElement = document.getElementById("courseContent");
+            let newItem = document.createElement("li");
+
+            newItem.className = "historypage-li list-item";
+
+            let spanElement = document.createElement("span");
+
+            spanElement.textContent = res;
+
+            newItem.addEventListener("click", function () {
+                // Obține numărul de ordine al elementului în lista ordonată
+                let orderNumber = Array.from(this.parentElement.children).indexOf(this) + 1;
+
+                getMovesHistory(orderNumber)
+            });
+            newItem.appendChild(spanElement);
+            ulElement.appendChild(newItem);
+
+            m++;
+            await moveAi();
         } else {
             square1 = null;
             square2 = null;
@@ -279,7 +361,31 @@ async function castle(piesaSquare1, imageUrlSquare1, springBootURL, requestData,
             rookSquare.querySelector('img').src = "";
             square1 = null;
             square2 = null;
-            ok = 1;
+            ok = 1; let res = await response.text();
+            // let element = document.getElementById("courseContent");
+            // element.innerText = element.innerText + '\n' + m + '.' + ' ' + res;
+
+            let ulElement = document.getElementById("courseContent");
+            let newItem = document.createElement("li");
+
+            newItem.className = "historypage-li list-item";
+
+            let spanElement = document.createElement("span");
+
+            spanElement.textContent = res;
+
+            newItem.addEventListener("click", function () {
+                // Obține numărul de ordine al elementului în lista ordonată
+                let orderNumber = Array.from(this.parentElement.children).indexOf(this) + 1;
+
+                getMovesHistory(orderNumber)
+            });
+            newItem.appendChild(spanElement);
+            ulElement.appendChild(newItem);
+
+            m++;
+
+            await moveAi();
         } else {
             square1 = null;
             square2 = null;
@@ -355,7 +461,7 @@ async function makeMoves(springBootURL, imageUrlSquare1, requestData, piesaSquar
                             "Content-Type": "application/json"
                         },
                         body: JSON.stringify({
-                            boardId: localStorage.getItem('boardId'),
+                            gameId: localStorage.getItem('boardId'),
                             newPiece: newPiece,
                             coordinates: square2.getAttribute("id")
                         })
@@ -371,6 +477,28 @@ async function makeMoves(springBootURL, imageUrlSquare1, requestData, piesaSquar
                         square2 = null;
 
                         ok = 1;
+                        let res = await response4.text()
+
+                        let ulElement = document.getElementById("courseContent");
+                        let newItem = document.createElement("li");
+
+                        newItem.className = "historypage-li list-item";
+
+                        let spanElement = document.createElement("span");
+
+                        spanElement.textContent = res;
+
+                        newItem.addEventListener("click", function () {
+                            // Obține numărul de ordine al elementului în lista ordonată
+                            let orderNumber = Array.from(this.parentElement.children).indexOf(this) + 1;
+
+                            getMovesHistory(orderNumber)
+                        });
+                        newItem.appendChild(spanElement);
+                        ulElement.appendChild(newItem);
+
+                        m++;
+                        await moveAi();
                     }
                 }
 
@@ -399,6 +527,13 @@ async function makeMoves(springBootURL, imageUrlSquare1, requestData, piesaSquar
 
                 spanElement.textContent = res;
 
+
+                newItem.addEventListener("click", function () {
+                    // Obține numărul de ordine al elementului în lista ordonată
+                    let orderNumber = Array.from(this.parentElement.children).indexOf(this) + 1;
+
+                    getMovesHistory(orderNumber)
+                });
                 newItem.appendChild(spanElement);
                 ulElement.appendChild(newItem);
 
@@ -414,6 +549,7 @@ async function makeMoves(springBootURL, imageUrlSquare1, requestData, piesaSquar
 
                 if (response2.ok) {
                     let res = await response2.text();
+                    console.log(res)
                     if (res !== "continue") {
                         window.alert(res);
                     }
@@ -433,11 +569,61 @@ async function makeMoves(springBootURL, imageUrlSquare1, requestData, piesaSquar
     } catch (error) {
         console.error("Error:", error);
     }
+}
+async function moveAi() {
+    let ai = "http://localhost:8080/chess/move/ai/makeMove";
+    let checkMateCheck = "http://localhost:8080/chess/move/checkmate"
+    console.log(ai);
+    response3 = await fetch(ai, {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+            boardId: localStorage.getItem('boardId')
+        })
+    });
+    if (response3.ok) {
+        let bestMove = await response3.text();
 
-    async function moveAi() {
-        let ai = "http://localhost:8080/chess/move/ai/makeMove";
-        console.log(ai);
-        response3 = await fetch(ai, {
+        let coordonates = bestMove.split(" ");
+        let coordonatesSquare1 = coordonates[0];
+        let coordonatesSquare2 = coordonates[1];
+
+        console.log(coordonatesSquare1 + " " + coordonatesSquare2);
+
+        square1 = document.getElementById(coordonatesSquare1);
+        square2 = document.getElementById(coordonatesSquare2);
+
+        imageUrlSquare1 = square1.querySelector('img').src;
+        piesaSquare1 = square1.querySelector("data-piesa")
+        square2.setAttribute('data-piesa', piesaSquare1);
+        square2.querySelector('img').src = imageUrlSquare1;
+
+        square1.setAttribute('data-piesa', 'none');
+        square1.querySelector('img').src = "";
+
+        square1 = null;
+        square2 = null;
+        // let element = document.getElementById("courseContent");
+        // element.innerText = element.innerText + "    " + coordonates[2];
+        // let ulElement = document.getElementById("courseContent");
+
+        let lastLi = document.querySelector('#courseContent li:last-child');
+
+        // Verifică dacă există deja un <span> în ultimul <li>
+        let spanElement = lastLi.querySelector('span');
+
+        // Dacă nu există, creează unul
+        if (!spanElement) {
+            spanElement = document.createElement("span");
+            lastLi.appendChild(spanElement);
+        }
+
+        // Adaugă coordonates[2] la textul deja existent
+        spanElement.textContent += " " + coordonates[2];
+
+        const response2 = await fetch(checkMateCheck, {
             method: "POST",
             headers: {
                 "Content-Type": "application/json"
@@ -446,68 +632,81 @@ async function makeMoves(springBootURL, imageUrlSquare1, requestData, piesaSquar
                 boardId: localStorage.getItem('boardId')
             })
         });
-        if (response3.ok) {
-            let bestMove = await response3.text();
 
-            let coordonates = bestMove.split(" ");
-            let coordonatesSquare1 = coordonates[0];
-            let coordonatesSquare2 = coordonates[1];
-
-            console.log(coordonatesSquare1 + " " + coordonatesSquare2);
-
-            square1 = document.getElementById(coordonatesSquare1);
-            square2 = document.getElementById(coordonatesSquare2);
-
-            imageUrlSquare1 = square1.querySelector('img').src;
-            square2.setAttribute('data-piesa', piesaSquare1);
-            square2.querySelector('img').src = imageUrlSquare1;
-
-            square1.setAttribute('data-piesa', 'none');
-            square1.querySelector('img').src = "";
-
-            square1 = null;
-            square2 = null;
-            // let element = document.getElementById("courseContent");
-            // element.innerText = element.innerText + "    " + coordonates[2];
-            // let ulElement = document.getElementById("courseContent");
-
-            let lastLi = document.querySelector('#courseContent li:last-child');
-
-            // Verifică dacă există deja un <span> în ultimul <li>
-            let spanElement = lastLi.querySelector('span');
-
-            // Dacă nu există, creează unul
-            if (!spanElement) {
-                spanElement = document.createElement("span");
-                lastLi.appendChild(spanElement);
+        if (response2.ok) {
+            let res = await response2.text();
+            if (res !== "continue") {
+                window.alert(res);
             }
-
-            // Adaugă coordonates[2] la textul deja existent
-            spanElement.textContent += " " + coordonates[2];
-
-            const response2 = await fetch(checkMateCheck, {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json"
-                },
-                body: JSON.stringify({
-                    boardId: localStorage.getItem('boardId')
-                })
-            });
-
-            if (response2.ok) {
-                let res = await response2.text();
-                if (res !== "continue") {
-                    window.alert(res);
-                }
-            } else {
-                // handle other cases if needed
-            }
-
         } else {
-            // Handle other cases if needed
+            // handle other cases if needed
+        }
+
+    } else {
+        // Handle other cases if needed
+    }
+}
+
+
+async function getMovesHistory(moveNumber) {
+    let gameId = localStorage.getItem("boardId")
+    let moveHistoryUrl = "http://localhost:8080/chess/game/movesHistory?gameId=" + gameId + "&moveNumber=" + moveNumber;
+    let response = await fetch(moveHistoryUrl, null);
+    if (response.ok) {
+        let board = await response.text();
+        setNewBoard(board)
+    }
+}
+
+async function setNewBoard(board) {
+
+    board = board.split('\n')
+    for (var row in board) {
+        let cell = board[row].split(",")
+        for (var c in cell) {
+            let ce = cell[c].split(" ")
+            let element = document.getElementById(ce[0]);
+            if (ce.length > 2) {
+                element.setAttribute("data-piesa", ce[1] + " " + ce[2])
+                let piesa;
+                switch (ce[2]) {
+                    case "king": piesa = "King"; break;
+                    case "queen": piesa = "Queen"; break;
+                    case "rook": piesa = "Rook"; break;
+                    case "bishop": piesa = "Bishop"; break;
+                    case "knight": piesa = "Knight"; break;
+                    case "pawn": piesa = "Pawn"; break;
+                }
+                element.querySelector('img').src = "../pieces/" + ce[1] + piesa + ".png";
+            } else if (ce != '') {
+                element.setAttribute("data-piesa", ce[1]);
+                element.querySelector('img').src = "";
+            }
+        }
+
+    }
+}
+
+let moveNumber;
+async function goBack() {
+    let gameId = localStorage.getItem("boardId")
+    let getMoveNumberUrl = "http://localhost:8080/chess/game/getMoveNumber?gameId=" + gameId;
+    let response = await fetch(getMoveNumberUrl, null);
+    if (response.ok) {
+        moveNumber = await response.text();
+        moveNumber -= 1;
+        let moveHistoryUrl = "http://localhost:8080/chess/game/moveBefore?gameId=" + gameId + "&moveNumber=" + moveNumber;
+        let response1 = await fetch(moveHistoryUrl, null);
+        if (response1.ok) {
+            let board = await response1.text();
+            setNewBoard(board)
         }
     }
+}
+
+function goForward() {
+    moveNumber += 1;
+    getMovesHistory(moveNumber)
 }
 
 

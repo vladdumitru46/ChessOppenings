@@ -65,7 +65,7 @@ async function getPiece(square) {
                     "Content-Type": "application/json"
                 },
                 body: JSON.stringify({
-                    boardId: localStorage.getItem('boardId'),
+                    gameId: localStorage.getItem('boardId'),
                     start: square1.getAttribute("id"),
                     end: square2.getAttribute("id"),
                     pieceColour: atributes[0]
@@ -91,7 +91,7 @@ async function getPiece(square) {
                     "Content-Type": "application/json"
                 },
                 body: JSON.stringify({
-                    boardId: localStorage.getItem('boardId'),
+                    gameId: localStorage.getItem('boardId'),
                     start: square1.getAttribute("id"),
                     end: square2.getAttribute("id"),
                     pieceColour: atributes[0]
@@ -284,7 +284,7 @@ async function makeMoves(springBootURL, imageUrlSquare1, requestData, piesaSquar
                             "Content-Type": "application/json"
                         },
                         body: JSON.stringify({
-                            boardId: localStorage.getItem('boardId'),
+                            gameId: localStorage.getItem('boardId'),
                             newPiece: newPiece,
                             coordinates: square2.getAttribute("id")
                         })

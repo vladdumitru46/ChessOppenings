@@ -1,10 +1,10 @@
 
-function logIn() {
+async function logIn() {
 
     const username = document.getElementById("username").value;
     const password = document.getElementById("password").value;
 
-    const springBootPort = 8080; 
+    const springBootPort = 8080;
     const springBootURL = `http://localhost:${springBootPort}/chess/login`;
 
     const requestData = {
@@ -16,21 +16,16 @@ function logIn() {
 
     };
 
-    fetch(springBootURL, requestData)
-        .then(response => {
-            if (response.ok) {
-                let res = response.text();
-                localStorage.setItem("token", res)
-                localStorage.setItem("player", username)
-                window.location.href = '../home_page/home-page.html'
-            } else {
-                let res = response.text();
-                alert(res);
-            }
-        })
-        .catch(error => {
-            console.error("Error:", error);
-        });
+    let response = await fetch(springBootURL, requestData)
+    if (response.ok) {
+        let res = await response.text();
+        localStorage.setItem("token", res)
+        localStorage.setItem("player", username)
+        window.location.href = '../home_page/home-page.html'
+    } else {
+        let res = await response.text();
+        alert(res);
+    }
 }
 
 
@@ -49,4 +44,3 @@ function togglePasswordVisibility() {
     }
 }
 
-  

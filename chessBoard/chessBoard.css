@@ -369,3 +369,24 @@ img {
     color: blue;
     /* Culoarea atunci când elementul este selectat */
 }
+#back{
+    position: absolute;
+    width: 5%;
+    height: 5%;
+    top: 70%;
+    background-color: white;
+    color: black;
+    left: 65%;
+    font-size: 200%;
+}
+
+#forward{
+    position: absolute;
+    width: 5%;
+    height: 5%;
+    top: 70%;
+    background-color: white;
+    color: black;
+    left: 75%;
+    font-size: 200%;
+}

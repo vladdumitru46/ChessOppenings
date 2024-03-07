@@ -27,7 +27,14 @@ async function gameHisotry() {
         }
     } else {
         let res = await response.text();
-        window.alert(res);
+        // window.alert(res)
+        let list = document.getElementById("gameList");
+        let newItem = document.createElement("li"); 
+        let spanElement = document.createElement("span");
+        newItem.className = "historypage-li list-item";
+        spanElement.textContent = res;
+        newItem.appendChild(spanElement)
+        list.appendChild(newItem);
     }
 }
 

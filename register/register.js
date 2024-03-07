@@ -20,6 +20,7 @@ async function register() {
     })
 
     if (response.ok) {
+        window.alert("Registration is complete, please check your email to confirm your account!");
         window.location.href = "../logIn/log-in.html"
     } else {
         let r = await response.text();

@@ -135,14 +135,16 @@
         <span class="home-page-text1">Hello</span>
         <br />
       </span>
-      <p id = "learningPage">Learn Openings</p>
-      <p id = "playAi">Play against ai</p>
-      <p id = "hist">Game history</p>
+      <p id="learningPage">Learn Openings</p>
+      <p id="playAi">Play against ai</p>
+      <p id="hist">Game history</p>
       <img id="learning_page" alt="image" src="../pieces/learning_page.png" class="home-page-image" />
       <img id="ai" alt="image" src="../pieces/playAgainstAi.png" class="home-page-image1" />
       <img id="history" alt="image" src="../pieces/hisotryPage.png" class="home-page-image2" />
     </div>
   </div>
+
+  <button id="logOut" onclick="logOut()">Log out</button>
 
   <script>
     var learningImage = document.getElementById('learning_page');
@@ -170,6 +172,11 @@
         window.location.replace('../logIn/log-in.html');
       }
     });
+
+    function logOut() {
+      localStorage.clear();
+      window.location.replace('../logIn/log-in.html');
+    }
   </script>
 </body>
 
