@@ -76,13 +76,18 @@ public class GameController {
         }
     }
 
-    //TODO: make the move before work for white, and also make a move forward + see how you can make it so you can go until the start of the game with move before
+    //TODO: make a move forward + see how you can make it so you can go until the start of the game with move before
     @GetMapping("/moveBefore")
-    public ResponseEntity<?> getMoveBefore(@RequestParam int gameId, @RequestParam int moveNumber) {
+    public ResponseEntity<?> getMoveBefore(@RequestParam int gameId) {
         try {
             Game game = gameService.getGameById(gameId);
             Board newBoard = new Board();
             String[] moves = game.getMoves().split(", ");
+
+            int moveNumber = game.getMoveNumber() - 1;
+            if (moves[moves.length - 1].split(";").length == 1) {
+                moveNumber++;
+            }
             for (int i = 0; i < moveNumber; i++) {
                 String[] bothMoves = moves[i].split(";");
                 if (bothMoves.length == 2) {
@@ -90,11 +95,6 @@ public class GameController {
                     takeMoveDataAndUndoIt(newBoard, move);
                     if (i != moveNumber - 1) {
                         move = bothMoves[1].split(" ");
-                        takeMoveDataAndUndoIt(newBoard, move);
-                    }
-                } else {
-                    if (i != moveNumber - 1) {
-                        String[] move = bothMoves[0].split(" ");
                         takeMoveDataAndUndoIt(newBoard, move);
                     }
                 }
