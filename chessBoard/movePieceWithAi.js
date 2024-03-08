@@ -13,7 +13,6 @@ if (newGame) {
 }
 
 
-
 async function fetchData() {
     let player = localStorage.getItem("player")
     console.log(boardUrl);
@@ -64,12 +63,24 @@ async function setBoard() {
                     element.setAttribute("data-piesa", ce[1] + " " + ce[2])
                     let piesa;
                     switch (ce[2]) {
-                        case "king": piesa = "King"; break;
-                        case "queen": piesa = "Queen"; break;
-                        case "rook": piesa = "Rook"; break;
-                        case "bishop": piesa = "Bishop"; break;
-                        case "knight": piesa = "Knight"; break;
-                        case "pawn": piesa = "Pawn"; break;
+                        case "king":
+                            piesa = "King";
+                            break;
+                        case "queen":
+                            piesa = "Queen";
+                            break;
+                        case "rook":
+                            piesa = "Rook";
+                            break;
+                        case "bishop":
+                            piesa = "Bishop";
+                            break;
+                        case "knight":
+                            piesa = "Knight";
+                            break;
+                        case "pawn":
+                            piesa = "Pawn";
+                            break;
                     }
                     element.querySelector('img').src = "../pieces/" + ce[1] + piesa + ".png";
                 } else if (ce != '') {
@@ -216,7 +227,8 @@ async function castle(piesaSquare1, imageUrlSquare1, springBootURL, requestData,
             let ulElement = document.getElementById("courseContent");
             let newItem = document.createElement("li");
 
-            newItem.className = "historypage-li list-item"; F
+            newItem.className = "historypage-li list-item";
+            F
 
             let spanElement = document.createElement("span");
 
@@ -240,8 +252,7 @@ async function castle(piesaSquare1, imageUrlSquare1, springBootURL, requestData,
             console.log("cannot move the piece there! check the backend logs for more information!")
         }
 
-    }
-    else if (square2.getAttribute("id") === "06") {
+    } else if (square2.getAttribute("id") === "06") {
         let response = await fetch(springBootURL, requestData)
         if (response.ok) {
             square2.setAttribute('data-piesa', piesaSquare1);
@@ -260,7 +271,8 @@ async function castle(piesaSquare1, imageUrlSquare1, springBootURL, requestData,
 
             square1 = null;
             square2 = null;
-            ok = 1; let res = await response.text();
+            ok = 1;
+            let res = await response.text();
             // let element = document.getElementById("courseContent");
             // element.innerText = element.innerText + '\n' + m + '.' + ' ' + res;
 
@@ -292,8 +304,7 @@ async function castle(piesaSquare1, imageUrlSquare1, springBootURL, requestData,
             console.log("cannot move the piece there! check the backend logs for more information!")
         }
 
-    }
-    else if (square2.getAttribute("id") === "72") {
+    } else if (square2.getAttribute("id") === "72") {
         let response = await fetch(springBootURL, requestData)
         if (response.ok) {
             square2.setAttribute('data-piesa', piesaSquare1);
@@ -342,8 +353,7 @@ async function castle(piesaSquare1, imageUrlSquare1, springBootURL, requestData,
             console.log("cannot move the piece there! check the backend logs for more information!")
         }
 
-    }
-    else if (square2.getAttribute("id") === "76") {
+    } else if (square2.getAttribute("id") === "76") {
         let response = await fetch(springBootURL, requestData)
         if (response.ok) {
             square2.setAttribute('data-piesa', piesaSquare1);
@@ -361,7 +371,8 @@ async function castle(piesaSquare1, imageUrlSquare1, springBootURL, requestData,
             rookSquare.querySelector('img').src = "";
             square1 = null;
             square2 = null;
-            ok = 1; let res = await response.text();
+            ok = 1;
+            let res = await response.text();
             // let element = document.getElementById("courseContent");
             // element.innerText = element.innerText + '\n' + m + '.' + ' ' + res;
 
@@ -397,6 +408,7 @@ async function castle(piesaSquare1, imageUrlSquare1, springBootURL, requestData,
 }
 
 let m = 1;
+
 async function makeMoves(springBootURL, imageUrlSquare1, requestData, piesaSquare1, checkMateCheck, colour) {
     try {
         let ok = 0;
@@ -570,6 +582,7 @@ async function makeMoves(springBootURL, imageUrlSquare1, requestData, piesaSquar
         console.error("Error:", error);
     }
 }
+
 async function moveAi() {
     let ai = "http://localhost:8080/chess/move/ai/makeMove";
     let checkMateCheck = "http://localhost:8080/chess/move/checkmate"
@@ -670,12 +683,24 @@ async function setNewBoard(board) {
                 element.setAttribute("data-piesa", ce[1] + " " + ce[2])
                 let piesa;
                 switch (ce[2]) {
-                    case "king": piesa = "King"; break;
-                    case "queen": piesa = "Queen"; break;
-                    case "rook": piesa = "Rook"; break;
-                    case "bishop": piesa = "Bishop"; break;
-                    case "knight": piesa = "Knight"; break;
-                    case "pawn": piesa = "Pawn"; break;
+                    case "king":
+                        piesa = "King";
+                        break;
+                    case "queen":
+                        piesa = "Queen";
+                        break;
+                    case "rook":
+                        piesa = "Rook";
+                        break;
+                    case "bishop":
+                        piesa = "Bishop";
+                        break;
+                    case "knight":
+                        piesa = "Knight";
+                        break;
+                    case "pawn":
+                        piesa = "Pawn";
+                        break;
                 }
                 element.querySelector('img').src = "../pieces/" + ce[1] + piesa + ".png";
             } else if (ce != '') {
@@ -688,20 +713,16 @@ async function setNewBoard(board) {
 }
 
 let moveNumber;
+
 async function goBack() {
     let gameId = localStorage.getItem("boardId")
-    let getMoveNumberUrl = "http://localhost:8080/chess/game/getMoveNumber?gameId=" + gameId;
-    let response = await fetch(getMoveNumberUrl, null);
-    if (response.ok) {
-        moveNumber = await response.text();
-        moveNumber -= 1;
-        let moveHistoryUrl = "http://localhost:8080/chess/game/moveBefore?gameId=" + gameId + "&moveNumber=" + moveNumber;
-        let response1 = await fetch(moveHistoryUrl, null);
-        if (response1.ok) {
-            let board = await response1.text();
-            setNewBoard(board)
-        }
+    let moveHistoryUrl = "http://localhost:8080/chess/game/moveBefore?gameId=" + gameId;
+    let response1 = await fetch(moveHistoryUrl, null);
+    if (response1.ok) {
+        let board = await response1.text();
+        setNewBoard(board)
     }
+
 }
 
 function goForward() {
