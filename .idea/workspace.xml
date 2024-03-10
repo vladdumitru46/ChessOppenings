@@ -4,10 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="75b936ac-d5b0-4178-bee6-f97885357906" name="Changes" comment="tried to add a cloud instance for db, on a computer it works, on other one does not, added history for moves, improved ai">
+    <list default="true" id="75b936ac-d5b0-4178-bee6-f97885357906" name="Changes" comment="made moveBefore for white, also now in yaml is the old db stored localy until i fix the issue with the cloud one">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/core/src/main/java/org/example/controllers/GameController.java" beforeDir="false" afterPath="$PROJECT_DIR$/core/src/main/java/org/example/controllers/GameController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/core/src/main/resources/application.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/core/src/main/resources/application.yaml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -108,7 +107,8 @@
       <option name="presentableId" value="Default" />
       <updated>1708928860695</updated>
       <workItem from="1709819038865" duration="2489000" />
-      <workItem from="1709902940991" duration="2705000" />
+      <workItem from="1709902940991" duration="2826000" />
+      <workItem from="1710080638289" duration="1449000" />
     </task>
     <task id="LOCAL-00001" summary="tried to add a cloud instance for db, on a computer it works, on other one does not, added history for moves, improved ai">
       <option name="closed" value="true" />
@@ -126,7 +126,15 @@
       <option name="project" value="LOCAL" />
       <updated>1709821518169</updated>
     </task>
-    <option name="localTasksCounter" value="3" />
+    <task id="LOCAL-00003" summary="made moveBefore for white, also now in yaml is the old db stored localy until i fix the issue with the cloud one">
+      <option name="closed" value="true" />
+      <created>1709905714381</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1709905714382</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -134,7 +142,8 @@
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="tried to add a cloud instance for db, on a computer it works, on other one does not, added history for moves, improved ai" />
-    <option name="LAST_COMMIT_MESSAGE" value="tried to add a cloud instance for db, on a computer it works, on other one does not, added history for moves, improved ai" />
+    <MESSAGE value="made moveBefore for white, also now in yaml is the old db stored localy until i fix the issue with the cloud one" />
+    <option name="LAST_COMMIT_MESSAGE" value="made moveBefore for white, also now in yaml is the old db stored localy until i fix the issue with the cloud one" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -143,6 +152,11 @@
           <url>file://$PROJECT_DIR$/core/src/main/java/org/example/controllers/RegisterController.java</url>
           <line>31</line>
           <option name="timeStamp" value="2" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/core/src/main/java/org/example/controllers/GameController.java</url>
+          <line>82</line>
+          <option name="timeStamp" value="3" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>

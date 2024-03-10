@@ -105,6 +105,19 @@ public class GameController {
         }
     }
 
+    @GetMapping("/moveForward")
+    public ResponseEntity<?> getMoveForward(@RequestParam int gameId) {
+        try {
+            Game game = gameService.getGameById(gameId);
+            Board newBoard = new Board();
+            String[] moves = game.getMoves().split(", ");
+
+            return new ResponseEntity<>(newBoard.toString(), HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
+        }
+    }
+
     @GetMapping("/movesHistory")
     public ResponseEntity<?> gameHistory(@RequestParam int gameId, @RequestParam int moveNumber) {
         try {
