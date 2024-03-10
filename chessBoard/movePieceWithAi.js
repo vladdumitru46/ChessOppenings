@@ -726,7 +726,6 @@ async function goBack() {
 }
 
 function goForward() {
-    moveNumber += 1;
     getMovesHistory(moveNumber)
 }
 
