@@ -12,6 +12,7 @@ if (newGame) {
     setBoard();
 }
 
+let moveNumber = 0;
 
 async function fetchData() {
     let player = localStorage.getItem("player")
@@ -34,6 +35,12 @@ async function fetchData() {
                 let id = await r.text();
                 console.log('ID:', id);
                 localStorage.setItem('boardId', id);
+
+                let gameId = localStorage.getItem("boardId");
+                let r = await fetch("http://localhost:8080/chess/game/getMoveNumber?gameId=" + gameId, null);
+                if (r.ok) {
+                    moveNumber = await r.text();
+                }
             } catch (error) {
                 console.error('Eroare la extragerea textului:', error);
             }
@@ -46,7 +53,6 @@ async function fetchData() {
 }
 
 // fetchData();
-//vezi de ce nu merge
 async function setBoard() {
     let gameId = localStorage.getItem("boardId");
     let respone = await fetch("http://localhost:8080/chess/board/getBoardConfiguration?gameId=" + gameId, null);
@@ -83,6 +89,7 @@ async function setBoard() {
                             break;
                     }
                     element.querySelector('img').src = "../pieces/" + ce[1] + piesa + ".png";
+
                 } else if (ce != '') {
                     element.setAttribute("data-piesa", ce[1]);
                     element.querySelector('img').src = "";
@@ -94,16 +101,10 @@ async function setBoard() {
         if (response1.ok) {
             let r = await response1.text();
             let moves = r.split(",")
-            // for (var i = 1; i < moves.length; i++) {
-            //     let element = document.getElementById("courseContent");
-            //     element.innerText += '\n' + moves[i];
-            // }
-            // Assuming 'moves' is an array containing your moves
-            for (var i = 1; i < moves.length; i++) {
+
+            for (let i = 1; i < moves.length; i++) {
                 let ulElement = document.getElementById("courseContent");
                 let newItem = document.createElement("li");
-
-                // newItem.className = "historypage-li list-item";
 
                 let spanElement = document.createElement("span");
                 let m = '';
@@ -115,9 +116,7 @@ async function setBoard() {
                 spanElement.textContent = m;
 
                 newItem.addEventListener("click", function () {
-                    // Obține numărul de ordine al elementului în lista ordonată
                     let orderNumber = Array.from(this.parentElement.children).indexOf(this) + 1;
-
                     getMovesHistory(orderNumber)
                 });
 
@@ -125,13 +124,16 @@ async function setBoard() {
                 ulElement.appendChild(newItem);
             }
 
+            let gameId = localStorage.getItem("boardId");
+            let re = await fetch("http://localhost:8080/chess/game/getMoveNumber?gameId=" + gameId, null);
+            if (re.ok) {
+                moveNumber = await re.text();
+            }
         }
 
     }
 
 }
-
-// setBoard();
 
 let square1 = null;
 let square2 = null;
@@ -143,16 +145,16 @@ async function getPiece(square) {
     } else {
         square2 = square;
     }
-    var ok = 0;
+    let ok = 0;
     if (square1 != null && square2 != null && square1.getAttribute('data-piesa') !== "none") {
 
         if (square1.getAttribute('data-piesa').includes("king")) {
             const piesaSquare1 = square1.getAttribute('data-piesa');
             const imageUrlSquare1 = square1.querySelector('img').src;
-            const springBootPort = 8080; // Replace with the actual port number
+            const springBootPort = 8080;
             const atributes = piesaSquare1.split(' ');
             const springBootURL = `http://localhost:${springBootPort}/chess/move/castle`;
-            // Construct the request object
+
             const requestData = {
                 method: "POST",
                 headers: {
@@ -169,7 +171,7 @@ async function getPiece(square) {
             ok = await castle(piesaSquare1, imageUrlSquare1, springBootURL, requestData, ok)
         }
 
-        if (ok == 0) {
+        if (ok === 0) {
             const piesaSquare1 = square1.getAttribute('data-piesa');
             const imageUrlSquare1 = square1.querySelector('img').src;
             const springBootPort = 8080; // Replace with the actual port number
@@ -209,8 +211,8 @@ async function castle(piesaSquare1, imageUrlSquare1, springBootURL, requestData,
             square1.setAttribute('data-piesa', 'none');
             square1.querySelector('img').src = "";
 
-            var rookSquare = document.getElementById("00");
-            var rookNewSquare = document.getElementById("03");
+            let rookSquare = document.getElementById("00");
+            let rookNewSquare = document.getElementById("03");
             rookNewSquare.setAttribute('data-piesa', rookSquare.getAttribute('data-piesa'));
             rookNewSquare.querySelector('img').src = rookSquare.querySelector('img').src;
 
@@ -228,22 +230,24 @@ async function castle(piesaSquare1, imageUrlSquare1, springBootURL, requestData,
             let newItem = document.createElement("li");
 
             newItem.className = "historypage-li list-item";
-            F
 
             let spanElement = document.createElement("span");
 
             spanElement.textContent = res;
 
             newItem.addEventListener("click", function () {
-                // Obține numărul de ordine al elementului în lista ordonată
                 let orderNumber = Array.from(this.parentElement.children).indexOf(this) + 1;
-
                 getMovesHistory(orderNumber)
             });
 
             newItem.appendChild(spanElement);
             ulElement.appendChild(newItem);
 
+            let gameId = localStorage.getItem("boardId");
+            let r = await fetch("http://localhost:8080/chess/game/getMoveNumber?gameId=" + gameId, null);
+            if (r.ok) {
+                moveNumber = await r.text();
+            }
             m++;
             await moveAi();
         } else {
@@ -297,6 +301,11 @@ async function castle(piesaSquare1, imageUrlSquare1, springBootURL, requestData,
 
             m++;
 
+            let gameId = localStorage.getItem("boardId");
+            let r = await fetch("http://localhost:8080/chess/game/getMoveNumber?gameId=" + gameId, null);
+            if (r.ok) {
+                moveNumber = await r.text();
+            }
             await moveAi();
         } else {
             square1 = null;
@@ -345,6 +354,11 @@ async function castle(piesaSquare1, imageUrlSquare1, springBootURL, requestData,
             newItem.appendChild(spanElement);
             ulElement.appendChild(newItem);
 
+            let gameId = localStorage.getItem("boardId");
+            let r = await fetch("http://localhost:8080/chess/game/getMoveNumber?gameId=" + gameId, null);
+            if (r.ok) {
+                moveNumber = await r.text();
+            }
             m++;
             await moveAi();
         } else {
@@ -396,6 +410,11 @@ async function castle(piesaSquare1, imageUrlSquare1, springBootURL, requestData,
 
             m++;
 
+            let gameId = localStorage.getItem("boardId");
+            let r = await fetch("http://localhost:8080/chess/game/getMoveNumber?gameId=" + gameId, null);
+            if (r.ok) {
+                moveNumber = await r.text();
+            }
             await moveAi();
         } else {
             square1 = null;
@@ -467,7 +486,7 @@ async function makeMoves(springBootURL, imageUrlSquare1, requestData, piesaSquar
 
                     let promotePawnUrl = "http://localhost:8080/chess/move/promote";
                     console.log(promotePawnUrl);
-                    response4 = await fetch(promotePawnUrl, {
+                    let response4 = await fetch(promotePawnUrl, {
                         method: "POST",
                         headers: {
                             "Content-Type": "application/json"
@@ -479,7 +498,6 @@ async function makeMoves(springBootURL, imageUrlSquare1, requestData, piesaSquar
                         })
                     })
                     if (response4.ok) {
-                        console.log("sunt unde trebuie")
                         square2.setAttribute('data-piesa', piesaSquare1);
                         square2.querySelector('img').src = selectedImageSrc;
 
@@ -509,6 +527,11 @@ async function makeMoves(springBootURL, imageUrlSquare1, requestData, piesaSquar
                         newItem.appendChild(spanElement);
                         ulElement.appendChild(newItem);
 
+                        let gameId = localStorage.getItem("boardId");
+                        let r = await fetch("http://localhost:8080/chess/game/getMoveNumber?gameId=" + gameId, null);
+                        if (r.ok) {
+                            moveNumber = await r.text();
+                        }
                         m++;
                         await moveAi();
                     }
@@ -516,7 +539,7 @@ async function makeMoves(springBootURL, imageUrlSquare1, requestData, piesaSquar
 
             }
         }
-        if (ok == 0) {
+        if (ok === 0) {
             const response1 = await fetch(springBootURL, requestData);
 
             if (response1.ok) {
@@ -552,6 +575,12 @@ async function makeMoves(springBootURL, imageUrlSquare1, requestData, piesaSquar
                 m++;
                 square1 = null;
                 square2 = null;
+
+                let gameId = localStorage.getItem("boardId");
+                let r = await fetch("http://localhost:8080/chess/game/getMoveNumber?gameId=" + gameId, null);
+                if (r.ok) {
+                    moveNumber = await r.text();
+                }
                 const response2 = await fetch(checkMateCheck, {
                     method: "POST",
                     body: JSON.stringify({
@@ -587,7 +616,7 @@ async function moveAi() {
     let ai = "http://localhost:8080/chess/move/ai/makeMove";
     let checkMateCheck = "http://localhost:8080/chess/move/checkmate"
     console.log(ai);
-    response3 = await fetch(ai, {
+    let response3 = await fetch(ai, {
         method: "POST",
         headers: {
             "Content-Type": "application/json"
@@ -651,6 +680,12 @@ async function moveAi() {
             if (res !== "continue") {
                 window.alert(res);
             }
+            let gameId = localStorage.getItem("boardId");
+            let r = await fetch("http://localhost:8080/chess/game/getMoveNumber?gameId=" + gameId, null);
+            if (r.ok) {
+                moveNumber = await r.text();
+            }
+
         } else {
             // handle other cases if needed
         }
@@ -667,7 +702,7 @@ async function getMovesHistory(moveNumber) {
     let response = await fetch(moveHistoryUrl, null);
     if (response.ok) {
         let board = await response.text();
-        setNewBoard(board)
+        await setNewBoard(board)
     }
 }
 
@@ -712,21 +747,22 @@ async function setNewBoard(board) {
     }
 }
 
-let moveNumber;
 
 async function goBack() {
+    moveNumber -= 1;
     let gameId = localStorage.getItem("boardId")
-    let moveHistoryUrl = "http://localhost:8080/chess/game/moveBefore?gameId=" + gameId;
+    let moveHistoryUrl = "http://localhost:8080/chess/game/moveBefore?gameId=" + gameId + "&moveNumber=" + moveNumber;
     let response1 = await fetch(moveHistoryUrl, null);
     if (response1.ok) {
         let board = await response1.text();
-        setNewBoard(board)
+        await setNewBoard(board)
     }
 
 }
 
 function goForward() {
-    getMovesHistory(moveNumber)
+    let gameId = localStorage.getItem("boardId")
+
 }
 
 
