@@ -78,14 +78,14 @@ public class GameController {
 
     //TODO: make a move forward + see how you can make it so you can go until the start of the game with move before
     @GetMapping("/moveBefore")
-    public ResponseEntity<?> getMoveBefore(@RequestParam int gameId) {
+    public ResponseEntity<?> getMoveBefore(@RequestParam int gameId, @RequestParam int moveNumber) {
         try {
             Game game = gameService.getGameById(gameId);
             Board newBoard = new Board();
             String[] moves = game.getMoves().split(", ");
-
-            int moveNumber = game.getMoveNumber() - 1;
-            if (moves[moves.length - 1].split(";").length == 1) {
+//
+//            int moveNumber = game.getMoveNumber() - 1;
+            if (moves[moveNumber].split(";").length == 1) {
                 moveNumber++;
             }
             for (int i = 0; i < moveNumber; i++) {
