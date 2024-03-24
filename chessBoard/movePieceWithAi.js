@@ -7,7 +7,7 @@ pageTitle.innerText = player + " vs AI";
 let boardUrl = "http://localhost:8080/chess/game";
 console.log(boardUrl);
 if (newGame) {
-    fetchData()
+    fetchData();
 } else {
     setBoard();
 }
@@ -19,7 +19,7 @@ async function fetchData() {
     console.log(boardUrl);
 
     try {
-        let r = await fetch(boardUrl, {
+        const res = await fetch(boardUrl, {
             method: "POST",
             headers: {
                 "Content-Type": "application/json"
@@ -30,9 +30,10 @@ async function fetchData() {
             })
         });
 
-        if (r.ok) {
+        console.log(res)
+        if (res.ok) {
             try {
-                let id = await r.text();
+                let id = await res.text();
                 console.log('ID:', id);
                 localStorage.setItem('boardId', id);
 
@@ -738,7 +739,7 @@ async function setNewBoard(board) {
                         break;
                 }
                 element.querySelector('img').src = "../pieces/" + ce[1] + piesa + ".png";
-            } else if (ce != '') {
+            } else if (ce !== '') {
                 element.setAttribute("data-piesa", ce[1]);
                 element.querySelector('img').src = "";
             }
@@ -750,6 +751,7 @@ async function setNewBoard(board) {
 
 async function goBack() {
     moveNumber -= 1;
+    console.log("move number: " + moveNumber)
     let gameId = localStorage.getItem("boardId")
     let moveHistoryUrl = "http://localhost:8080/chess/game/moveBefore?gameId=" + gameId + "&moveNumber=" + moveNumber;
     let response1 = await fetch(moveHistoryUrl, null);
@@ -757,11 +759,19 @@ async function goBack() {
         let board = await response1.text();
         await setNewBoard(board)
     }
-
 }
 
-function goForward() {
+//test to be sure it works
+async function goForward() {
+    moveNumber += 1;
+    console.log("move number: " + moveNumber)
     let gameId = localStorage.getItem("boardId")
+    let moveHistoryUrl = "http://localhost:8080/chess/game/moveForward?gameId=" + gameId + "&moveNumber=" + moveNumber;
+    let response1 = await fetch(moveHistoryUrl, null);
+    if (response1.ok) {
+        let board = await response1.text();
+        await setNewBoard(board)
+    }
 
 }
 
