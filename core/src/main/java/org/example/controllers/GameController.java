@@ -85,7 +85,7 @@ public class GameController {
             String[] moves = game.getMoves().split(", ");
 //
 //            int moveNumber = game.getMoveNumber() - 1;
-            if (moves[moveNumber].split(";").length == 1) {
+            if (moves[moveNumber - 1].split(";").length == 1) {
                 moveNumber++;
             }
             for (int i = 0; i < moveNumber; i++) {
@@ -105,18 +105,35 @@ public class GameController {
         }
     }
 
+
     @GetMapping("/moveForward")
-    public ResponseEntity<?> getMoveForward(@RequestParam int gameId) {
+    public ResponseEntity<?> getMoveForward(@RequestParam int gameId, @RequestParam int moveNumber) {
         try {
             Game game = gameService.getGameById(gameId);
             Board newBoard = new Board();
             String[] moves = game.getMoves().split(", ");
-
+//
+//            int moveNumber = game.getMoveNumber() - 1;
+            if (moveNumber == game.getMoveNumber()) {
+                moveNumber -= 1;
+            }
+            for (int i = 0; i < moveNumber; i++) {
+                String[] bothMoves = moves[i].split(";");
+                if (bothMoves.length == 2) {
+                    String[] move = bothMoves[0].split(" ");
+                    takeMoveDataAndUndoIt(newBoard, move);
+                    if (i != moveNumber - 1) {
+                        move = bothMoves[1].split(" ");
+                        takeMoveDataAndUndoIt(newBoard, move);
+                    }
+                }
+            }
             return new ResponseEntity<>(newBoard.toString(), HttpStatus.OK);
         } catch (Exception e) {
             return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
         }
     }
+
 
     @GetMapping("/movesHistory")
     public ResponseEntity<?> gameHistory(@RequestParam int gameId, @RequestParam int moveNumber) {

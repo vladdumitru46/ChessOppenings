@@ -109,7 +109,12 @@
       <workItem from="1709819038865" duration="2489000" />
       <workItem from="1709902940991" duration="2826000" />
       <workItem from="1710080638289" duration="1482000" />
-      <workItem from="1710672995523" duration="2755000" />
+      <workItem from="1710672995523" duration="2781000" />
+      <workItem from="1710835751140" duration="631000" />
+      <workItem from="1710837759400" duration="979000" />
+      <workItem from="1711206739181" duration="13000" />
+      <workItem from="1711206979813" duration="127000" />
+      <workItem from="1711282757846" duration="5415000" />
     </task>
     <task id="LOCAL-00001" summary="tried to add a cloud instance for db, on a computer it works, on other one does not, added history for moves, improved ai">
       <option name="closed" value="true" />
@@ -143,7 +148,15 @@
       <option name="project" value="LOCAL" />
       <updated>1710100759569</updated>
     </task>
-    <option name="localTasksCounter" value="5" />
+    <task id="LOCAL-00005" summary="made moveBefore for white, also now in yaml is the old db stored localy until i fix the issue with the cloud one">
+      <option name="closed" value="true" />
+      <created>1710688186307</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1710688186307</updated>
+    </task>
+    <option name="localTasksCounter" value="6" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -166,6 +179,11 @@
           <url>file://$PROJECT_DIR$/core/src/main/java/org/example/controllers/GameController.java</url>
           <line>82</line>
           <option name="timeStamp" value="3" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/core/src/main/java/org/example/controllers/GameController.java</url>
+          <line>111</line>
+          <option name="timeStamp" value="4" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>
