@@ -13,6 +13,7 @@ if (newGame) {
 }
 
 let moveNumber = 0;
+let maxMoveNumber = 0;
 
 async function fetchData() {
     let player = localStorage.getItem("player")
@@ -59,7 +60,10 @@ async function setBoard() {
     let respone = await fetch("http://localhost:8080/chess/board/getBoardConfiguration?gameId=" + gameId, null);
     if (respone.ok) {
         let board = await respone.text();
-        board = board.split('\n')
+        let bb = board.split(" + ");
+        let whitesTurn = bb[1];
+        console.log("whites turn : " + whitesTurn);
+        board = bb[0].split('\n')
         for (var row in board) {
             let cell = board[row].split(",")
             for (var c in cell) {
@@ -126,12 +130,17 @@ async function setBoard() {
             }
 
             let gameId = localStorage.getItem("boardId");
+            console.log("http://localhost:8080/chess/game/getMoveNumber?gameId=" + gameId)
             let re = await fetch("http://localhost:8080/chess/game/getMoveNumber?gameId=" + gameId, null);
             if (re.ok) {
                 moveNumber = await re.text();
             }
         }
-
+        console.log("aiciiii")
+        if (whitesTurn == "false") {
+            console.log("aici")
+            await moveAi();
+        }
     }
 
 }
@@ -195,8 +204,7 @@ async function getPiece(square) {
 
             };
 
-            let checkMateCheck = "http://localhost:8080/chess/move/checkmate"
-            makeMoves(springBootURL, imageUrlSquare1, requestData, piesaSquare1, checkMateCheck, atributes[0])
+            await makeMoves(springBootURL, imageUrlSquare1, requestData, piesaSquare1, atributes[0])
         }
     }
 }
@@ -224,8 +232,6 @@ async function castle(piesaSquare1, imageUrlSquare1, springBootURL, requestData,
             square2 = null;
             ok = 1;
             let res = await response.text();
-            // let element = document.getElementById("courseContent");
-            // element.innerText = element.innerText + '\n' + m + '.' + ' ' + res;
 
             let ulElement = document.getElementById("courseContent");
             let newItem = document.createElement("li");
@@ -244,12 +250,7 @@ async function castle(piesaSquare1, imageUrlSquare1, springBootURL, requestData,
             newItem.appendChild(spanElement);
             ulElement.appendChild(newItem);
 
-            let gameId = localStorage.getItem("boardId");
-            let r = await fetch("http://localhost:8080/chess/game/getMoveNumber?gameId=" + gameId, null);
-            if (r.ok) {
-                moveNumber = await r.text();
-            }
-            m++;
+            await checkMateCheck();
             await moveAi();
         } else {
             square1 = null;
@@ -278,8 +279,6 @@ async function castle(piesaSquare1, imageUrlSquare1, springBootURL, requestData,
             square2 = null;
             ok = 1;
             let res = await response.text();
-            // let element = document.getElementById("courseContent");
-            // element.innerText = element.innerText + '\n' + m + '.' + ' ' + res;
 
             let ulElement = document.getElementById("courseContent");
             let newItem = document.createElement("li");
@@ -291,7 +290,6 @@ async function castle(piesaSquare1, imageUrlSquare1, springBootURL, requestData,
             spanElement.textContent = res;
 
             newItem.addEventListener("click", function () {
-                // Obține numărul de ordine al elementului în lista ordonată
                 let orderNumber = Array.from(this.parentElement.children).indexOf(this) + 1;
 
                 getMovesHistory(orderNumber)
@@ -301,135 +299,20 @@ async function castle(piesaSquare1, imageUrlSquare1, springBootURL, requestData,
             ulElement.appendChild(newItem);
 
             m++;
-
-            let gameId = localStorage.getItem("boardId");
-            let r = await fetch("http://localhost:8080/chess/game/getMoveNumber?gameId=" + gameId, null);
-            if (r.ok) {
-                moveNumber = await r.text();
-            }
+            await checkMateCheck();
             await moveAi();
         } else {
             square1 = null;
             square2 = null;
             console.log("cannot move the piece there! check the backend logs for more information!")
         }
-
-    } else if (square2.getAttribute("id") === "72") {
-        let response = await fetch(springBootURL, requestData)
-        if (response.ok) {
-            square2.setAttribute('data-piesa', piesaSquare1);
-            square2.querySelector('img').src = imageUrlSquare1;
-            var rookSquare = document.getElementById("70");
-            var rookNewSquare = document.getElementById("73");
-            rookNewSquare.setAttribute('data-piesa', rookSquare.getAttribute('data-piesa'));
-            rookNewSquare.querySelector('img').src = rookSquare.querySelector('img').src;
-
-            rookSquare.setAttribute('data-piesa', 'none');
-            rookSquare.querySelector('img').src = "";
-
-            square1.setAttribute('data-piesa', 'none');
-            square1.querySelector('img').src = "";
-
-            square1 = null;
-            square2 = null;
-            ok = 1;
-            let res = await response.text();
-            // let element = document.getElementById("courseContent");
-            // element.innerText = element.innerText + '\n' + m + '.' + ' ' + res;
-
-            let ulElement = document.getElementById("courseContent");
-            let newItem = document.createElement("li");
-
-            newItem.className = "historypage-li list-item";
-
-            let spanElement = document.createElement("span");
-
-            spanElement.textContent = res;
-
-            newItem.addEventListener("click", function () {
-                // Obține numărul de ordine al elementului în lista ordonată
-                let orderNumber = Array.from(this.parentElement.children).indexOf(this) + 1;
-
-                getMovesHistory(orderNumber)
-            });
-            newItem.appendChild(spanElement);
-            ulElement.appendChild(newItem);
-
-            let gameId = localStorage.getItem("boardId");
-            let r = await fetch("http://localhost:8080/chess/game/getMoveNumber?gameId=" + gameId, null);
-            if (r.ok) {
-                moveNumber = await r.text();
-            }
-            m++;
-            await moveAi();
-        } else {
-            square1 = null;
-            square2 = null;
-            console.log("cannot move the piece there! check the backend logs for more information!")
-        }
-
-    } else if (square2.getAttribute("id") === "76") {
-        let response = await fetch(springBootURL, requestData)
-        if (response.ok) {
-            square2.setAttribute('data-piesa', piesaSquare1);
-            square2.querySelector('img').src = imageUrlSquare1;
-
-            square1.setAttribute('data-piesa', 'none');
-            square1.querySelector('img').src = "";
-
-            var rookSquare = document.getElementById("77");
-            var rookNewSquare = document.getElementById("75");
-            rookNewSquare.setAttribute('data-piesa', rookSquare.getAttribute('data-piesa'));
-            rookNewSquare.querySelector('img').src = rookSquare.querySelector('img').src;
-
-            rookSquare.setAttribute('data-piesa', 'none');
-            rookSquare.querySelector('img').src = "";
-            square1 = null;
-            square2 = null;
-            ok = 1;
-            let res = await response.text();
-            // let element = document.getElementById("courseContent");
-            // element.innerText = element.innerText + '\n' + m + '.' + ' ' + res;
-
-            let ulElement = document.getElementById("courseContent");
-            let newItem = document.createElement("li");
-
-            newItem.className = "historypage-li list-item";
-
-            let spanElement = document.createElement("span");
-
-            spanElement.textContent = res;
-
-            newItem.addEventListener("click", function () {
-                // Obține numărul de ordine al elementului în lista ordonată
-                let orderNumber = Array.from(this.parentElement.children).indexOf(this) + 1;
-
-                getMovesHistory(orderNumber)
-            });
-            newItem.appendChild(spanElement);
-            ulElement.appendChild(newItem);
-
-            m++;
-
-            let gameId = localStorage.getItem("boardId");
-            let r = await fetch("http://localhost:8080/chess/game/getMoveNumber?gameId=" + gameId, null);
-            if (r.ok) {
-                moveNumber = await r.text();
-            }
-            await moveAi();
-        } else {
-            square1 = null;
-            square2 = null;
-            console.log("cannot move the piece there! check the backend logs for more information!")
-        }
-
     }
     return ok;
 }
 
 let m = 1;
 
-async function makeMoves(springBootURL, imageUrlSquare1, requestData, piesaSquare1, checkMateCheck, colour) {
+async function makeMoves(springBootURL, imageUrlSquare1, requestData, piesaSquare1, colour) {
     try {
         let ok = 0;
         if (square1.getAttribute('data-piesa').includes("pawn")) {
@@ -464,7 +347,6 @@ async function makeMoves(springBootURL, imageUrlSquare1, requestData, piesaSquar
                         imageContainer.addEventListener('click', imageClickHandler);
                     });
 
-                    // Așteaptă ca utilizatorul să aleagă o imagine înainte de a continua
                     await imageSelectionPromise;
                     imageContainer.remove();
 
@@ -520,20 +402,14 @@ async function makeMoves(springBootURL, imageUrlSquare1, requestData, piesaSquar
                         spanElement.textContent = res;
 
                         newItem.addEventListener("click", function () {
-                            // Obține numărul de ordine al elementului în lista ordonată
                             let orderNumber = Array.from(this.parentElement.children).indexOf(this) + 1;
-
                             getMovesHistory(orderNumber)
                         });
                         newItem.appendChild(spanElement);
                         ulElement.appendChild(newItem);
 
-                        let gameId = localStorage.getItem("boardId");
-                        let r = await fetch("http://localhost:8080/chess/game/getMoveNumber?gameId=" + gameId, null);
-                        if (r.ok) {
-                            moveNumber = await r.text();
-                        }
-                        m++;
+                        await checkMateCheck();
+                        // moveNumber++;
                         await moveAi();
                     }
                 }
@@ -574,30 +450,11 @@ async function makeMoves(springBootURL, imageUrlSquare1, requestData, piesaSquar
                 ulElement.appendChild(newItem);
 
                 m++;
+                moveNumber++;
                 square1 = null;
                 square2 = null;
 
-                let gameId = localStorage.getItem("boardId");
-                let r = await fetch("http://localhost:8080/chess/game/getMoveNumber?gameId=" + gameId, null);
-                if (r.ok) {
-                    moveNumber = await r.text();
-                }
-                const response2 = await fetch(checkMateCheck, {
-                    method: "POST",
-                    body: JSON.stringify({
-                        boardId: localStorage.getItem('boardId')
-                    })
-                });
-
-                if (response2.ok) {
-                    let res = await response2.text();
-                    console.log(res)
-                    if (res !== "continue") {
-                        window.alert(res);
-                    }
-                } else {
-                    // handle other cases if needed
-                }
+                await checkMateCheck();
 
                 await moveAi();
             } else {
@@ -615,7 +472,6 @@ async function makeMoves(springBootURL, imageUrlSquare1, requestData, piesaSquar
 
 async function moveAi() {
     let ai = "http://localhost:8080/chess/move/ai/makeMove";
-    let checkMateCheck = "http://localhost:8080/chess/move/checkmate"
     console.log(ai);
     let response3 = await fetch(ai, {
         method: "POST",
@@ -665,37 +521,43 @@ async function moveAi() {
 
         // Adaugă coordonates[2] la textul deja existent
         spanElement.textContent += " " + coordonates[2];
-
-        const response2 = await fetch(checkMateCheck, {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json"
-            },
-            body: JSON.stringify({
-                boardId: localStorage.getItem('boardId')
-            })
-        });
-
-        if (response2.ok) {
-            let res = await response2.text();
-            if (res !== "continue") {
-                window.alert(res);
-            }
-            let gameId = localStorage.getItem("boardId");
-            let r = await fetch("http://localhost:8080/chess/game/getMoveNumber?gameId=" + gameId, null);
-            if (r.ok) {
-                moveNumber = await r.text();
-            }
-
-        } else {
-            // handle other cases if needed
-        }
+        await checkMateCheck();
 
     } else {
         // Handle other cases if needed
     }
 }
 
+async function checkMateCheck() {
+    let gameId = localStorage.getItem("boardId");
+    let r = await fetch("http://localhost:8080/chess/game/getMoveNumber?gameId=" + gameId, null);
+    if (r.ok) {
+        moveNumber = await r.text();
+        maxMoveNumber = moveNumber;
+    }
+    let newNr = moveNumber / 2;
+    await getMovesHistory(newNr);
+    let checkMateCheckUrl = "http://localhost:8080/chess/move/checkmate";
+    const response2 = await fetch(checkMateCheckUrl, {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+            boardId: localStorage.getItem('boardId')
+        })
+    });
+
+    if (response2.ok) {
+        let res = await response2.text();
+        if (res !== "continue") {
+            window.alert(res);
+        }
+
+    } else {
+        // handle other cases if needed
+    }
+}
 
 async function getMovesHistory(moveNumber) {
     let gameId = localStorage.getItem("boardId")
@@ -739,7 +601,7 @@ async function setNewBoard(board) {
                         break;
                 }
                 element.querySelector('img').src = "../pieces/" + ce[1] + piesa + ".png";
-            } else if (ce !== '') {
+            } else if (ce != '') {
                 element.setAttribute("data-piesa", ce[1]);
                 element.querySelector('img').src = "";
             }
@@ -750,29 +612,32 @@ async function setNewBoard(board) {
 
 
 async function goBack() {
-    moveNumber -= 1;
     console.log("move number: " + moveNumber)
-    let gameId = localStorage.getItem("boardId")
-    let moveHistoryUrl = "http://localhost:8080/chess/game/moveBefore?gameId=" + gameId + "&moveNumber=" + moveNumber;
-    let response1 = await fetch(moveHistoryUrl, null);
-    if (response1.ok) {
-        let board = await response1.text();
-        await setNewBoard(board)
+    if (moveNumber > 0) {
+        moveNumber -= 1;
+        let gameId = localStorage.getItem("boardId")
+        let moveHistoryUrl = "http://localhost:8080/chess/game/moveBefore?gameId=" + gameId + "&moveNumber=" + moveNumber;
+        let response1 = await fetch(moveHistoryUrl, null);
+        if (response1.ok) {
+            let board = await response1.text();
+            await setNewBoard(board)
+        }
     }
 }
 
 //test to be sure it works
 async function goForward() {
-    moveNumber += 1;
-    console.log("move number: " + moveNumber)
-    let gameId = localStorage.getItem("boardId")
-    let moveHistoryUrl = "http://localhost:8080/chess/game/moveForward?gameId=" + gameId + "&moveNumber=" + moveNumber;
-    let response1 = await fetch(moveHistoryUrl, null);
-    if (response1.ok) {
-        let board = await response1.text();
-        await setNewBoard(board)
+    if (moveNumber < maxMoveNumber) {
+        moveNumber += 1;
+        console.log("move number: " + moveNumber)
+        let gameId = localStorage.getItem("boardId")
+        let moveHistoryUrl = "http://localhost:8080/chess/game/moveForward?gameId=" + gameId + "&moveNumber=" + moveNumber;
+        let response1 = await fetch(moveHistoryUrl, null);
+        if (response1.ok) {
+            let board = await response1.text();
+            await setNewBoard(board)
+        }
     }
-
 }
 
 
