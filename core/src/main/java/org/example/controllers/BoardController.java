@@ -36,7 +36,7 @@ public class BoardController {
         try {
             Game game = gameService.getGameById(gameId);
             Board board = boardService.findById(game.getBoardId());
-            return ResponseEntity.ok(board.toString());
+            return ResponseEntity.ok(board.toString() + " + " + game.isWhitesTurn());
         } catch (Exception e) {
             return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
         }

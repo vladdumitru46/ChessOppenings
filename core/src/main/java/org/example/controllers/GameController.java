@@ -83,20 +83,18 @@ public class GameController {
             Game game = gameService.getGameById(gameId);
             Board newBoard = new Board();
             String[] moves = game.getMoves().split(", ");
-//
-//            int moveNumber = game.getMoveNumber() - 1;
-            if (moves[moveNumber - 1].split(";").length == 1) {
-                moveNumber++;
-            }
-            for (int i = 0; i < moveNumber; i++) {
+
+            int moveNr = moveNumber / 2 + moveNumber % 2;
+            for (int i = 0; i < moveNr; i++) {
                 String[] bothMoves = moves[i].split(";");
                 if (bothMoves.length == 2) {
                     String[] move = bothMoves[0].split(" ");
                     takeMoveDataAndUndoIt(newBoard, move);
-                    if (i != moveNumber - 1) {
-                        move = bothMoves[1].split(" ");
-                        takeMoveDataAndUndoIt(newBoard, move);
+                    if (moveNumber % 2 == 1 && i == moveNr - 1) {
+                        break;
                     }
+                    move = bothMoves[1].split(" ");
+                    takeMoveDataAndUndoIt(newBoard, move);
                 }
             }
             return new ResponseEntity<>(newBoard.toString(), HttpStatus.OK);
@@ -112,20 +110,18 @@ public class GameController {
             Game game = gameService.getGameById(gameId);
             Board newBoard = new Board();
             String[] moves = game.getMoves().split(", ");
-//
-//            int moveNumber = game.getMoveNumber() - 1;
-            if (moveNumber == game.getMoveNumber()) {
-                moveNumber -= 1;
-            }
-            for (int i = 0; i < moveNumber; i++) {
+
+            int moveNr = moveNumber / 2 + moveNumber % 2;
+            for (int i = 0; i < moveNr; i++) {
                 String[] bothMoves = moves[i].split(";");
                 if (bothMoves.length == 2) {
                     String[] move = bothMoves[0].split(" ");
                     takeMoveDataAndUndoIt(newBoard, move);
-                    if (i != moveNumber - 1) {
-                        move = bothMoves[1].split(" ");
-                        takeMoveDataAndUndoIt(newBoard, move);
+                    if (moveNumber % 2 == 1 && i == moveNr - 1) {
+                        break;
                     }
+                    move = bothMoves[1].split(" ");
+                    takeMoveDataAndUndoIt(newBoard, move);
                 }
             }
             return new ResponseEntity<>(newBoard.toString(), HttpStatus.OK);
@@ -191,7 +187,10 @@ public class GameController {
     public ResponseEntity<?> getMoveNumber(@RequestParam Integer gameId) {
         try {
             Game game = gameService.getGameById(gameId);
-            return new ResponseEntity<>(game.getMoveNumber(), HttpStatus.OK);
+            String[] moves = game.getMoves().split(", ");
+            String[] lastMove = moves[moves.length - 1].split(";");
+            int moveNumber = lastMove.length == 2 ? (game.getMoveNumber() - 1) * 2: game.getMoveNumber() * 2 - 1;
+            return new ResponseEntity<>(moveNumber, HttpStatus.OK);
         } catch (Exception e) {
             return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
         }
