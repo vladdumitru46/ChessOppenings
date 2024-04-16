@@ -4,7 +4,7 @@ import com.example.models.board.Board;
 import org.example.board.PieceService;
 
 public class Evaluation {
-
+//TODO: vezi pdf-ul de pe desktop CreatingArtificialIntelligencetoplaychess si vezi acolo la capitolul minimax ca e deja functia de evaluare facuta
     public float evaluationScore(Board board, PieceService pieceService, boolean isWhite) {
         return score(board, pieceService, isWhite);
 

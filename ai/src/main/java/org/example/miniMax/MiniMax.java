@@ -42,7 +42,7 @@ public class MiniMax {
 
             try (ExecutorService executorService = Executors.newVirtualThreadPerTaskExecutor()) {
                 for (var move : moves) {
-                   executorService.submit(() -> bestMove(alpha, beta, move));
+                    executorService.submit(() -> bestMove(alpha, beta, move));
                 }
             }
             List<Map.Entry<Float, Move>> list = new LinkedList<>(mapOfMoves.entrySet());
@@ -55,18 +55,11 @@ public class MiniMax {
             }
 
             Move m;
-            if (isWhite) {
-                m = result.entrySet().iterator().next().getValue();
-                for (var entry : result.entrySet()) {
-                    m = entry.getValue();
-                }
-            } else {
-                try {
-                    m = result.entrySet().iterator().next().getValue();
-                } catch (NoSuchElementException e) {
-                    return null;
-                }
+            m = result.entrySet().iterator().next().getValue();
+            for (var entry : result.entrySet()) {
+                m = entry.getValue();
             }
+
             return m;
         } else {
             return moves.get(0);
@@ -102,7 +95,7 @@ public class MiniMax {
 
                 pieceService.makeMove(board, move);
 
-                 float eval = miniMax(depth - 1, alpha, beta, false);
+                float eval = miniMax(depth - 1, alpha, beta, false);
 
 
                 pieceService.undoMove(board, move, pieceOnStart, pieceOnEnd);
