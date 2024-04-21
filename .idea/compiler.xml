@@ -9,16 +9,16 @@
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
         <module name="Persistence" />
-        <module name="server" />
-        <module name="service" />
-        <module name="validators" />
         <module name="Ai" />
+        <module name="server" />
         <module name="Models" />
+        <module name="validators" />
         <module name="Core" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
       <module name="networking" target="17" />
+      <module name="service" target="21" />
     </bytecodeTargetLevel>
   </component>
   <component name="JavacSettings">

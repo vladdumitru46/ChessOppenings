@@ -4,11 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="75b936ac-d5b0-4178-bee6-f97885357906" name="Changes" comment="added move forward and backwards, fixed problem when moving a new piece not showing the latest version of the table">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ai/src/main/java/org/example/miniMax/Evaluation.java" beforeDir="false" afterPath="$PROJECT_DIR$/ai/src/main/java/org/example/miniMax/Evaluation.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ai/src/main/java/org/example/miniMax/MiniMax.java" beforeDir="false" afterPath="$PROJECT_DIR$/ai/src/main/java/org/example/miniMax/MiniMax.java" afterDir="false" />
-    </list>
+    <list default="true" id="75b936ac-d5b0-4178-bee6-f97885357906" name="Changes" comment="added move forward and backwards, fixed problem when moving a new piece not showing the latest version of the table" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -19,6 +15,7 @@
       <list>
         <option value="Class" />
         <option value="Record" />
+        <option value="JUnit5 Test Class" />
       </list>
     </option>
   </component>
@@ -42,7 +39,7 @@
     "com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrary": "JUnit5",
     "com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrarySuperClass.JUnit5": "",
     "git-widget-placeholder": "master",
-    "last_opened_file_path": "C:/workspace/ChessOppenings-master",
+    "last_opened_file_path": "C:/Users/VladDumitru/Desktop/ChessOppenings-master/server/src/test/java/org/example",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
@@ -59,12 +56,24 @@
     ]
   }
 }]]></component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\VladDumitru\Desktop\ChessOppenings-master\server\src\test\java\org\example" />
+    </key>
+    <key name="CreateTestDialog.Recents.Supers">
+      <recent name="" />
+    </key>
+    <key name="CreateTestDialog.RecentsKey">
+      <recent name="org.example" />
+      <recent name="org.example.repositoryes.pieces" />
+    </key>
+  </component>
   <component name="RunAnythingCache">
     <option name="myCommands">
       <command value="mvn clean install" />
     </option>
   </component>
-  <component name="RunManager" selected="Application.MainApplication">
+  <component name="RunManager" selected="JUnit.PlayerValidatorTest">
     <configuration name="MainApplication" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="org.example.MainApplication" />
       <module name="Core" />
@@ -78,8 +87,39 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="MovePieceTest.isCheckMateIn2Test" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
-      <module name="Core" />
+    <configuration name="KingRepositoryTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="Persistence" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="org.example.repositoryes.pieces.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="org.example.repositoryes.pieces" />
+      <option name="MAIN_CLASS_NAME" value="org.example.repositoryes.pieces.KingRepositoryTest" />
+      <option name="TEST_OBJECT" value="class" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="KingRepositoryTest.canCastle_true" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="Persistence" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="org.example.repositoryes.pieces.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="org.example.repositoryes.pieces" />
+      <option name="MAIN_CLASS_NAME" value="org.example.repositoryes.pieces.KingRepositoryTest" />
+      <option name="METHOD_NAME" value="canCastle_true" />
+      <option name="TEST_OBJECT" value="method" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="PlayerValidatorTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="validators" />
       <extension name="coverage">
         <pattern>
           <option name="PATTERN" value="org.example.*" />
@@ -87,17 +127,34 @@
         </pattern>
       </extension>
       <option name="PACKAGE_NAME" value="org.example" />
-      <option name="MAIN_CLASS_NAME" value="org.example.MovePieceTest" />
-      <option name="METHOD_NAME" value="isCheckMateIn2Test" />
-      <option name="TEST_OBJECT" value="method" />
+      <option name="MAIN_CLASS_NAME" value="org.example.PlayerValidatorTest" />
+      <option name="TEST_OBJECT" value="class" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="RookRepositoryTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="Persistence" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="org.example.repositoryes.pieces.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="org.example.repositoryes.pieces" />
+      <option name="MAIN_CLASS_NAME" value="org.example.repositoryes.pieces.RookRepositoryTest" />
+      <option name="TEST_OBJECT" value="class" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
     </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="JUnit.PlayerValidatorTest" />
         <item itemvalue="Application.MainApplication" />
-        <item itemvalue="JUnit.MovePieceTest.isCheckMateIn2Test" />
+        <item itemvalue="JUnit.KingRepositoryTest" />
+        <item itemvalue="JUnit.KingRepositoryTest.canCastle_true" />
+        <item itemvalue="JUnit.RookRepositoryTest" />
       </list>
     </recent_temporary>
   </component>

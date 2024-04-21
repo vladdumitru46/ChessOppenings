@@ -18,7 +18,6 @@
         <module>Models</module>
         <module>Persistence</module>
         <module>core</module>
-        <module>service</module>
         <module>server</module>
         <module>ai</module>
         <module>validators</module>
