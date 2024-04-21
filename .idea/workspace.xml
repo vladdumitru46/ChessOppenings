@@ -4,7 +4,14 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="75b936ac-d5b0-4178-bee6-f97885357906" name="Changes" comment="added move forward and backwards, fixed problem when moving a new piece not showing the latest version of the table" />
+    <list default="true" id="75b936ac-d5b0-4178-bee6-f97885357906" name="Changes" comment="added unitests">
+      <change afterPath="$PROJECT_DIR$/.idea/dataSources.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/jarRepositories.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/jarRepositories.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/src/main/java/org/example/controllers/LogInController.java" beforeDir="false" afterPath="$PROJECT_DIR$/core/src/main/java/org/example/controllers/LogInController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/src/main/java/org/example/player/PlayerService.java" beforeDir="false" afterPath="$PROJECT_DIR$/server/src/main/java/org/example/player/PlayerService.java" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -34,6 +41,7 @@
   "keyToString": {
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
+    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
     "ToolWindowRun.ShowToolbar": "false",
     "WebServerToolWindowFactoryState": "false",
     "com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrary": "JUnit5",
@@ -73,7 +81,7 @@
       <command value="mvn clean install" />
     </option>
   </component>
-  <component name="RunManager" selected="JUnit.PlayerValidatorTest">
+  <component name="RunManager" selected="Spring Boot.MainApplication">
     <configuration name="MainApplication" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="org.example.MainApplication" />
       <module name="Core" />
@@ -133,28 +141,26 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="RookRepositoryTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
-      <module name="Persistence" />
+    <configuration name="MainApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" temporary="true" nameIsGenerated="true">
+      <module name="Core" />
+      <option name="SPRING_BOOT_MAIN_CLASS" value="org.example.MainApplication" />
       <extension name="coverage">
         <pattern>
-          <option name="PATTERN" value="org.example.repositoryes.pieces.*" />
+          <option name="PATTERN" value="org.example.*" />
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
-      <option name="PACKAGE_NAME" value="org.example.repositoryes.pieces" />
-      <option name="MAIN_CLASS_NAME" value="org.example.repositoryes.pieces.RookRepositoryTest" />
-      <option name="TEST_OBJECT" value="class" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
     </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="Spring Boot.MainApplication" />
         <item itemvalue="JUnit.PlayerValidatorTest" />
         <item itemvalue="Application.MainApplication" />
         <item itemvalue="JUnit.KingRepositoryTest" />
         <item itemvalue="JUnit.KingRepositoryTest.canCastle_true" />
-        <item itemvalue="JUnit.RookRepositoryTest" />
       </list>
     </recent_temporary>
   </component>
@@ -231,7 +237,15 @@
       <option name="project" value="LOCAL" />
       <updated>1711463528027</updated>
     </task>
-    <option name="localTasksCounter" value="7" />
+    <task id="LOCAL-00007" summary="added unitests">
+      <option name="closed" value="true" />
+      <created>1713699829747</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1713699829747</updated>
+    </task>
+    <option name="localTasksCounter" value="8" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -241,7 +255,8 @@
     <MESSAGE value="tried to add a cloud instance for db, on a computer it works, on other one does not, added history for moves, improved ai" />
     <MESSAGE value="made moveBefore for white, also now in yaml is the old db stored localy until i fix the issue with the cloud one" />
     <MESSAGE value="added move forward and backwards, fixed problem when moving a new piece not showing the latest version of the table" />
-    <option name="LAST_COMMIT_MESSAGE" value="added move forward and backwards, fixed problem when moving a new piece not showing the latest version of the table" />
+    <MESSAGE value="added unitests" />
+    <option name="LAST_COMMIT_MESSAGE" value="added unitests" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

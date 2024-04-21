@@ -5,7 +5,6 @@ import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.security.Keys;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.example.IServiceObserver;
 import org.example.player.PlayerService;
 import org.example.requests.LogInRequest;
 import org.springframework.http.HttpStatus;
@@ -17,7 +16,7 @@ import org.springframework.web.bind.annotation.*;
 @CrossOrigin(origins = "*")
 @AllArgsConstructor
 @Slf4j
-public class LogInController implements IServiceObserver {
+public class LogInController {
     private final PlayerService playerService;
 
 

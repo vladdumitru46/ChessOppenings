@@ -5,7 +5,6 @@ import com.example.models.player.registration.ConfirmationToken;
 import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.example.IServiceObserver;
 import org.example.PlayerValidator;
 import org.example.exceptions.PlayerValidationException;
 import org.example.player.email.EmailService;
@@ -117,10 +116,6 @@ public class PlayerService implements UserDetailsService {
         if (playerOptional.get().isLocked()) {
             throw new PlayerValidationException("Account is not yet verified!");
         }
-
-    }
-
-    public void logOut(Player player, IServiceObserver client) throws Exception {
 
     }
 
