@@ -3,6 +3,8 @@ let urlParams = new URLSearchParams(queryString);
 let informationCourseValue = urlParams.get('courseTitle');
 let informationCourseElement = document.getElementById("courseContent");
 let pageTitle = document.getElementById("pageTitle");
+const baseUrl = "http://localhost:8080/chess";
+
 let subCourseName = "";
 async function loadData() {
     if (informationCourseElement && informationCourseValue) {
@@ -20,6 +22,19 @@ async function loadData() {
         let firstListItem = document.querySelector("#courseList li:first-child");
         subCourseName = firstListItem.innerText;
         console.log(informationCourseElement.innerText);
+        await fetch(baseUrl + "/startCourse/reset", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+                playerId: localStorage.getItem("player"),
+                courseName: pageTitle.innerText,
+                boardId: localStorage.getItem('boardId')
+            })
+        });
+        console.log(subCourseName);
+        setBoard();
 
         document.getElementById("courseList").addEventListener("click", async function (event) {
             if (event.target.tagName === "LI") {
@@ -31,7 +46,7 @@ async function loadData() {
 
                 subCourseName = event.target.innerText;
 
-                await fetch("http://localhost:8080/chess/startCourse/reset", {
+                await fetch(baseUrl + "/startCourse/reset", {
                     method: "POST",
                     headers: {
                         "Content-Type": "application/json"
@@ -51,7 +66,7 @@ async function loadData() {
 loadData();
 async function getSubcourses(courseName) {
 
-    let resp = await fetch("http://localhost:8080/chess/subCourses?courseName=" + courseName, null);
+    let resp = await fetch(baseUrl + "/subCourses?courseName=" + courseName, null);
     if (resp.ok) {
         const list = await resp.text();
         console.log(list)
@@ -64,7 +79,7 @@ async function getSubcourses(courseName) {
 async function setBoard() {
 
     let gameId = localStorage.getItem("boardId");
-    let respone = await fetch("http://localhost:8080/chess/board/boardConfiguration?boardId=" + gameId, null);
+    let respone = await fetch(baseUrl + "/board/boardConfiguration?boardId=" + gameId, null);
     if (respone.ok) {
         let board = await respone.text();
         console.log(board)
@@ -97,21 +112,41 @@ async function setBoard() {
 
 }
 
-let courseUrl = "http://localhost:8080/chess/startCourse/"
+let courseUrl = baseUrl + "/startCourse/"
 
-let boardUrl = "http://localhost:8080/chess/board/save";
+let boardUrl = baseUrl + "/board/save";
 console.log(boardUrl);
 
 
 let square1 = null;
 let square2 = null;
+let highlightedSquares = [];
 
 async function getPiece(square) {
 
     if (square1 == null) {
         square1 = square;
+
+        let id = square1.getAttribute("id");
+
+        let getAllPosibleMovesResponse = await fetch(`${baseUrl}/move/piecePossibleMoves?boardId=${localStorage.getItem('boardId')}&position=${id}`, {
+            method: "GET"
+        });
+        if (getAllPosibleMovesResponse.ok) {
+            let listOfMoves = await getAllPosibleMovesResponse.json();
+            resetHighlightedSquares();
+            for (var i in listOfMoves) {
+                let sq = document.getElementById(listOfMoves[i]);
+                const originalImageSrc = sq.querySelector('img').src; // Store original source
+                highlightedSquares.push({ element: sq, originalSrc: originalImageSrc });
+                sq.querySelector('img').src = "../pieces/posibleMove.svg";
+            }
+        }
+
     } else {
         square2 = square;
+
+        resetHighlightedSquares();
     }
     var ok = 0;
     if (square1 != null && square2 != null && square1.getAttribute('data-piesa') !== "none") {
@@ -119,9 +154,8 @@ async function getPiece(square) {
         if (square1.getAttribute('data-piesa').includes("king")) {
             const piesaSquare1 = square1.getAttribute('data-piesa');
             const imageUrlSquare1 = square1.querySelector('img').src;
-            const springBootPort = 8080; // Replace with the actual port number
             const atributes = piesaSquare1.split(' ');
-            const springBootURL = `http://localhost:${springBootPort}/chess/move/castle`;
+            const springBootURL = `${baseUrl}/move/castle`;
             // Construct the request object
             const requestData = {
                 method: "POST",
@@ -158,9 +192,8 @@ async function getPiece(square) {
         if (ok == 0) {
             const piesaSquare1 = square1.getAttribute('data-piesa');
             const imageUrlSquare1 = square1.querySelector('img').src;
-            const springBootPort = 8080; // Replace with the actual port number
             const atributes = piesaSquare1.split(' ');
-            const springBootURL = `http://localhost:8080/chess/startCourse/isTheMoveLegal`;
+            const springBootURL = `${baseUrl}/startCourse/isTheMoveLegal`;
             console.log(springBootURL);
 
             // Construct the request object
@@ -178,10 +211,18 @@ async function getPiece(square) {
 
             };
 
-            let checkMateCheck = "http://localhost:8080/chess/move/checkmate"
+            let checkMateCheck = baseUrl + "/move/checkmate"
             makeMoves(springBootURL, imageUrlSquare1, requestData, piesaSquare1, checkMateCheck, atributes[0])
         }
     }
+}
+function resetHighlightedSquares() {
+    for (const square of highlightedSquares) {
+        const sq = square.element;
+        const originalImageSrc = square.originalSrc;
+        sq.querySelector('img').src = originalImageSrc;
+    }
+    highlightedSquares = [];
 }
 
 async function castle(piesaSquare1, imageUrlSquare1, springBootURL, requestData, ok) {
@@ -349,7 +390,7 @@ async function makeMoves(springBootURL, imageUrlSquare1, requestData, piesaSquar
                         newPiece = "Horse";
                         piesaSquare1 = `${colour} knight`;
                     }
-                    let promotePawnUrl = "http://localhost:8080/chess/move/promote";
+                    let promotePawnUrl = baseUrl + "/move/promote";
                     console.log(promotePawnUrl);
                     response4 = await fetch(promotePawnUrl, {
                         method: "POST",
@@ -531,4 +572,25 @@ document.getElementById('playAgainstAiLink').addEventListener('click', function 
 function logOut() {
     localStorage.clear();
     window.location.replace('../logIn/log-in.html');
+}
+
+async function getHint() {
+    const requestData = {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+            playerUsernameOrEmail: localStorage.getItem("player"),
+            subCourseName: subCourseName,
+            courseName: pageTitle.innerText,
+            boardId: localStorage.getItem('boardId')
+        })
+    };
+    let url = baseUrl + "/startCourse/hint";
+    let resp = await fetch(url, requestData);
+    if(resp.ok){
+        let hint = await resp.text();
+        window.alert(hint);
+    }
 }

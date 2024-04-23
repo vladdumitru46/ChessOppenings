@@ -1,3 +1,4 @@
+const baseUrl = "http://localhost:8080/chess";
 
 async function logIn() {
 
@@ -5,7 +6,7 @@ async function logIn() {
     const password = document.getElementById("password").value;
 
     const springBootPort = 8080;
-    const springBootURL = `http://localhost:${springBootPort}/chess/login`;
+    const springBootURL = `${baseUrl}/chess/login`;
 
     const requestData = {
         method: "POST",

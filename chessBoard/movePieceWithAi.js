@@ -1,10 +1,13 @@
+
+
 let queryString = window.location.search;
 let urlParams = new URLSearchParams(queryString);
 let newGame = urlParams.get('newGame');
 let pageTitle = document.getElementById("pageTitle");
 let player = localStorage.getItem("player")
+const baseUrl = "http://localhost:8080/chess";
 pageTitle.innerText = player + " vs AI";
-let boardUrl = "http://localhost:8080/chess/game";
+let boardUrl = baseUrl + "/game";
 console.log(boardUrl);
 if (newGame) {
     fetchData();
@@ -39,7 +42,7 @@ async function fetchData() {
                 localStorage.setItem('boardId', id);
 
                 let gameId = localStorage.getItem("boardId");
-                let r = await fetch("http://localhost:8080/chess/game/getMoveNumber?gameId=" + gameId, null);
+                let r = await fetch(baseUrl + "/game/getMoveNumber?gameId=" + gameId, null);
                 if (r.ok) {
                     moveNumber = await r.text();
                 }
@@ -54,10 +57,9 @@ async function fetchData() {
     }
 }
 
-// fetchData();
 async function setBoard() {
     let gameId = localStorage.getItem("boardId");
-    let respone = await fetch("http://localhost:8080/chess/board/getBoardConfiguration?gameId=" + gameId, null);
+    let respone = await fetch(baseUrl + "/board/getBoardConfiguration?gameId=" + gameId, null);
     if (respone.ok) {
         let board = await respone.text();
         let bb = board.split(" + ");
@@ -102,7 +104,7 @@ async function setBoard() {
             }
         }
 
-        let response1 = await fetch("http://localhost:8080/chess/game/moves?gameId=" + gameId, null);
+        let response1 = await fetch(baseUrl + "/game/moves?gameId=" + gameId, null);
         if (response1.ok) {
             let r = await response1.text();
             let moves = r.split(",")
@@ -130,8 +132,8 @@ async function setBoard() {
             }
 
             let gameId = localStorage.getItem("boardId");
-            console.log("http://localhost:8080/chess/game/getMoveNumber?gameId=" + gameId)
-            let re = await fetch("http://localhost:8080/chess/game/getMoveNumber?gameId=" + gameId, null);
+            console.log(baseUrl + "/game/getMoveNumber?gameId=" + gameId)
+            let re = await fetch(baseUrl + "/game/getMoveNumber?gameId=" + gameId, null);
             if (re.ok) {
                 moveNumber = await re.text();
             }
@@ -147,13 +149,33 @@ async function setBoard() {
 
 let square1 = null;
 let square2 = null;
+let highlightedSquares = new Map();
 
 async function getPiece(square) {
 
     if (square1 == null) {
         square1 = square;
+
+        let id = square1.getAttribute("id");
+
+        let getAllPosibleMovesResponse = await fetch(`${baseUrl}/move/piecePossibleMoves?boardId=${localStorage.getItem('boardId')}&position=${id}`, {
+            method: "GET"
+        });
+        if (getAllPosibleMovesResponse.ok) {
+            let listOfMoves = await getAllPosibleMovesResponse.json();
+            resetHighlightedSquares();
+            for (var i in listOfMoves) {
+                let sq = document.getElementById(listOfMoves[i]);
+                const originalImageSrc = sq.querySelector('img').src; // Store original source
+                highlightedSquares.push({ element: sq, originalSrc: originalImageSrc });
+                sq.querySelector('img').src = "../pieces/posibleMove.svg";
+            }
+        }
+
     } else {
         square2 = square;
+
+        resetHighlightedSquares();
     }
     let ok = 0;
     if (square1 != null && square2 != null && square1.getAttribute('data-piesa') !== "none") {
@@ -161,9 +183,8 @@ async function getPiece(square) {
         if (square1.getAttribute('data-piesa').includes("king")) {
             const piesaSquare1 = square1.getAttribute('data-piesa');
             const imageUrlSquare1 = square1.querySelector('img').src;
-            const springBootPort = 8080;
             const atributes = piesaSquare1.split(' ');
-            const springBootURL = `http://localhost:${springBootPort}/chess/move/castle`;
+            const springBootURL = `${baseUrl}/move/castle`;
 
             const requestData = {
                 method: "POST",
@@ -184,12 +205,10 @@ async function getPiece(square) {
         if (ok === 0) {
             const piesaSquare1 = square1.getAttribute('data-piesa');
             const imageUrlSquare1 = square1.querySelector('img').src;
-            const springBootPort = 8080; // Replace with the actual port number
             const atributes = piesaSquare1.split(' ');
-            const springBootURL = `http://localhost:${springBootPort}/chess/move/${atributes[1]}`;
+            const springBootURL = `${baseUrl}/move/${atributes[1]}`;
             console.log(springBootURL);
 
-            // Construct the request object
             const requestData = {
                 method: "POST",
                 headers: {
@@ -208,360 +227,18 @@ async function getPiece(square) {
         }
     }
 }
-
-async function castle(piesaSquare1, imageUrlSquare1, springBootURL, requestData, ok) {
-    console.log(springBootURL)
-    if (square2.getAttribute("id") === "02") {
-        let response = await fetch(springBootURL, requestData)
-        if (response.ok) {
-            square2.setAttribute('data-piesa', piesaSquare1);
-            square2.querySelector('img').src = imageUrlSquare1;
-
-            square1.setAttribute('data-piesa', 'none');
-            square1.querySelector('img').src = "";
-
-            let rookSquare = document.getElementById("00");
-            let rookNewSquare = document.getElementById("03");
-            rookNewSquare.setAttribute('data-piesa', rookSquare.getAttribute('data-piesa'));
-            rookNewSquare.querySelector('img').src = rookSquare.querySelector('img').src;
-
-            rookSquare.setAttribute('data-piesa', 'none');
-            rookSquare.querySelector('img').src = "";
-
-            square1 = null;
-            square2 = null;
-            ok = 1;
-            let res = await response.text();
-
-            let ulElement = document.getElementById("courseContent");
-            let newItem = document.createElement("li");
-
-            newItem.className = "historypage-li list-item";
-
-            let spanElement = document.createElement("span");
-
-            spanElement.textContent = res;
-
-            newItem.addEventListener("click", function () {
-                let orderNumber = Array.from(this.parentElement.children).indexOf(this) + 1;
-                getMovesHistory(orderNumber)
-            });
-
-            newItem.appendChild(spanElement);
-            ulElement.appendChild(newItem);
-
-            await checkMateCheck();
-            await moveAi();
-        } else {
-            square1 = null;
-            square2 = null;
-            console.log("cannot move the piece there! check the backend logs for more information!")
-        }
-
-    } else if (square2.getAttribute("id") === "06") {
-        let response = await fetch(springBootURL, requestData)
-        if (response.ok) {
-            square2.setAttribute('data-piesa', piesaSquare1);
-            square2.querySelector('img').src = imageUrlSquare1;
-
-            square1.setAttribute('data-piesa', 'none');
-            square1.querySelector('img').src = "";
-
-            var rookSquare = document.getElementById("07");
-            var rookNewSquare = document.getElementById("05");
-            rookNewSquare.setAttribute('data-piesa', rookSquare.getAttribute('data-piesa'));
-            rookNewSquare.querySelector('img').src = rookSquare.querySelector('img').src;
-
-            rookSquare.setAttribute('data-piesa', 'none');
-            rookSquare.querySelector('img').src = "";
-
-            square1 = null;
-            square2 = null;
-            ok = 1;
-            let res = await response.text();
-
-            let ulElement = document.getElementById("courseContent");
-            let newItem = document.createElement("li");
-
-            newItem.className = "historypage-li list-item";
-
-            let spanElement = document.createElement("span");
-
-            spanElement.textContent = res;
-
-            newItem.addEventListener("click", function () {
-                let orderNumber = Array.from(this.parentElement.children).indexOf(this) + 1;
-
-                getMovesHistory(orderNumber)
-            });
-
-            newItem.appendChild(spanElement);
-            ulElement.appendChild(newItem);
-
-            m++;
-            await checkMateCheck();
-            await moveAi();
-        } else {
-            square1 = null;
-            square2 = null;
-            console.log("cannot move the piece there! check the backend logs for more information!")
-        }
+function resetHighlightedSquares() {
+    for (const square of highlightedSquares) {
+        const sq = square.element;
+        const originalImageSrc = square.originalSrc;
+        sq.querySelector('img').src = originalImageSrc; 
     }
-    return ok;
-}
-
-let m = 1;
-
-async function makeMoves(springBootURL, imageUrlSquare1, requestData, piesaSquare1, colour) {
-    try {
-        let ok = 0;
-        if (square1.getAttribute('data-piesa').includes("pawn")) {
-            let coordinates = square2.getAttribute("id");
-            if (coordinates[0] === "0" || coordinates[0] === "7") {
-
-                const response1 = await fetch(springBootURL, requestData);
-
-                if (response1.ok) {
-                    let selectedImageSrc = null;
-                    let imageContainer = document.createElement('div');
-                    imageContainer.id = "promotePawn";
-
-                    ["Queen", "Rook", "Bishop", "Knight"].forEach(piece => {
-                        let imgElement = document.createElement('img');
-                        imgElement.src = `../pieces/${colour}${piece}.png`;
-                        imgElement.addEventListener('click', function () {
-                            selectedImageSrc = imgElement.src;
-                        });
-                        imageContainer.appendChild(imgElement);
-                    });
-
-
-                    square2.parentNode.insertBefore(imageContainer, square2.nextSibling);
-                    const imageSelectionPromise = new Promise((resolve) => {
-                        const imageClickHandler = function (event) {
-                            selectedImageSrc = event.target.src;
-                            imageContainer.removeEventListener('click', imageClickHandler);
-                            resolve();
-                        };
-
-                        imageContainer.addEventListener('click', imageClickHandler);
-                    });
-
-                    await imageSelectionPromise;
-                    imageContainer.remove();
-
-
-                    let newPiece = "";
-                    piesaSquare1 = "";
-                    if (selectedImageSrc.includes("Queen")) {
-                        newPiece = "Queen";
-                        piesaSquare1 = `${colour} queen`;
-                    } else if (selectedImageSrc.includes("Rook")) {
-                        newPiece = "Rook";
-                        piesaSquare1 = `${colour} rook`;
-                    } else if (selectedImageSrc.includes("Bishop")) {
-                        newPiece = "Bishop";
-                        piesaSquare1 = `${colour} bishop`;
-                    } else if (selectedImageSrc.includes("Knight")) {
-                        newPiece = "Horse";
-                        piesaSquare1 = `${colour} knight`;
-                    }
-
-                    let promotePawnUrl = "http://localhost:8080/chess/move/promote";
-                    console.log(promotePawnUrl);
-                    let response4 = await fetch(promotePawnUrl, {
-                        method: "POST",
-                        headers: {
-                            "Content-Type": "application/json"
-                        },
-                        body: JSON.stringify({
-                            gameId: localStorage.getItem('boardId'),
-                            newPiece: newPiece,
-                            coordinates: square2.getAttribute("id")
-                        })
-                    })
-                    if (response4.ok) {
-                        square2.setAttribute('data-piesa', piesaSquare1);
-                        square2.querySelector('img').src = selectedImageSrc;
-
-                        square1.setAttribute('data-piesa', 'none');
-                        square1.querySelector('img').src = "";
-                        square1 = null;
-                        square2 = null;
-
-                        ok = 1;
-                        let res = await response4.text()
-
-                        let ulElement = document.getElementById("courseContent");
-                        let newItem = document.createElement("li");
-
-                        newItem.className = "historypage-li list-item";
-
-                        let spanElement = document.createElement("span");
-
-                        spanElement.textContent = res;
-
-                        newItem.addEventListener("click", function () {
-                            let orderNumber = Array.from(this.parentElement.children).indexOf(this) + 1;
-                            getMovesHistory(orderNumber)
-                        });
-                        newItem.appendChild(spanElement);
-                        ulElement.appendChild(newItem);
-
-                        await checkMateCheck();
-                        // moveNumber++;
-                        await moveAi();
-                    }
-                }
-
-            }
-        }
-        if (ok === 0) {
-            const response1 = await fetch(springBootURL, requestData);
-
-            if (response1.ok) {
-                square2.setAttribute('data-piesa', piesaSquare1);
-                square2.querySelector('img').src = imageUrlSquare1;
-
-                square1.setAttribute('data-piesa', 'none');
-                square1.querySelector('img').src = "";
-
-                let res = await response1.text();
-                // let element = document.getElementById("courseContent");
-                // element.innerText = element.innerText + '\n' + m + '.' + ' ' + res;
-
-                let ulElement = document.getElementById("courseContent");
-                let newItem = document.createElement("li");
-
-                newItem.className = "historypage-li list-item";
-
-                let spanElement = document.createElement("span");
-
-                spanElement.textContent = res;
-
-
-                newItem.addEventListener("click", function () {
-                    // Obține numărul de ordine al elementului în lista ordonată
-                    let orderNumber = Array.from(this.parentElement.children).indexOf(this) + 1;
-
-                    getMovesHistory(orderNumber)
-                });
-                newItem.appendChild(spanElement);
-                ulElement.appendChild(newItem);
-
-                m++;
-                moveNumber++;
-                square1 = null;
-                square2 = null;
-
-                await checkMateCheck();
-
-                await moveAi();
-            } else {
-                square1 = null;
-                square2 = null;
-                console.log("cannot move the piece there! check the backend logs for more information!");
-            }
-        }
-
-
-    } catch (error) {
-        console.error("Error:", error);
-    }
-}
-
-async function moveAi() {
-    let ai = "http://localhost:8080/chess/move/ai/makeMove";
-    console.log(ai);
-    let response3 = await fetch(ai, {
-        method: "POST",
-        headers: {
-            "Content-Type": "application/json"
-        },
-        body: JSON.stringify({
-            boardId: localStorage.getItem('boardId')
-        })
-    });
-    if (response3.ok) {
-        let bestMove = await response3.text();
-
-        let coordonates = bestMove.split(" ");
-        let coordonatesSquare1 = coordonates[0];
-        let coordonatesSquare2 = coordonates[1];
-
-        console.log(coordonatesSquare1 + " " + coordonatesSquare2);
-
-        square1 = document.getElementById(coordonatesSquare1);
-        square2 = document.getElementById(coordonatesSquare2);
-
-        imageUrlSquare1 = square1.querySelector('img').src;
-        piesaSquare1 = square1.querySelector("data-piesa")
-        square2.setAttribute('data-piesa', piesaSquare1);
-        square2.querySelector('img').src = imageUrlSquare1;
-
-        square1.setAttribute('data-piesa', 'none');
-        square1.querySelector('img').src = "";
-
-        square1 = null;
-        square2 = null;
-        // let element = document.getElementById("courseContent");
-        // element.innerText = element.innerText + "    " + coordonates[2];
-        // let ulElement = document.getElementById("courseContent");
-
-        let lastLi = document.querySelector('#courseContent li:last-child');
-
-        // Verifică dacă există deja un <span> în ultimul <li>
-        let spanElement = lastLi.querySelector('span');
-
-        // Dacă nu există, creează unul
-        if (!spanElement) {
-            spanElement = document.createElement("span");
-            lastLi.appendChild(spanElement);
-        }
-
-        // Adaugă coordonates[2] la textul deja existent
-        spanElement.textContent += " " + coordonates[2];
-        await checkMateCheck();
-
-    } else {
-        // Handle other cases if needed
-    }
-}
-
-async function checkMateCheck() {
-    let gameId = localStorage.getItem("boardId");
-    let r = await fetch("http://localhost:8080/chess/game/getMoveNumber?gameId=" + gameId, null);
-    if (r.ok) {
-        moveNumber = await r.text();
-        maxMoveNumber = moveNumber;
-    }
-    let newNr = moveNumber / 2;
-    await getMovesHistory(newNr);
-    let checkMateCheckUrl = "http://localhost:8080/chess/move/checkmate";
-    const response2 = await fetch(checkMateCheckUrl, {
-        method: "POST",
-        headers: {
-            "Content-Type": "application/json"
-        },
-        body: JSON.stringify({
-            boardId: localStorage.getItem('boardId')
-        })
-    });
-
-    if (response2.ok) {
-        let res = await response2.text();
-        if (res !== "continue") {
-            window.alert(res);
-        }
-
-    } else {
-        // handle other cases if needed
-    }
+    highlightedSquares = [];
 }
 
 async function getMovesHistory(moveNumber) {
     let gameId = localStorage.getItem("boardId")
-    let moveHistoryUrl = "http://localhost:8080/chess/game/movesHistory?gameId=" + gameId + "&moveNumber=" + moveNumber;
+    let moveHistoryUrl = baseUrl + "/game/movesHistory?gameId=" + gameId + "&moveNumber=" + moveNumber;
     let response = await fetch(moveHistoryUrl, null);
     if (response.ok) {
         let board = await response.text();
@@ -616,7 +293,7 @@ async function goBack() {
     if (moveNumber > 0) {
         moveNumber -= 1;
         let gameId = localStorage.getItem("boardId")
-        let moveHistoryUrl = "http://localhost:8080/chess/game/moveBefore?gameId=" + gameId + "&moveNumber=" + moveNumber;
+        let moveHistoryUrl = baseUrl + "/game/moveBefore?gameId=" + gameId + "&moveNumber=" + moveNumber;
         let response1 = await fetch(moveHistoryUrl, null);
         if (response1.ok) {
             let board = await response1.text();
@@ -625,13 +302,13 @@ async function goBack() {
     }
 }
 
-//test to be sure it works
+
 async function goForward() {
     if (moveNumber < maxMoveNumber) {
         moveNumber += 1;
         console.log("move number: " + moveNumber)
         let gameId = localStorage.getItem("boardId")
-        let moveHistoryUrl = "http://localhost:8080/chess/game/moveForward?gameId=" + gameId + "&moveNumber=" + moveNumber;
+        let moveHistoryUrl = baseUrl + "/game/moveForward?gameId=" + gameId + "&moveNumber=" + moveNumber;
         let response1 = await fetch(moveHistoryUrl, null);
         if (response1.ok) {
             let board = await response1.text();

@@ -390,3 +390,14 @@ img {
     left: 75%;
     font-size: 200%;
 }
+
+#getHint{
+    position: absolute;
+    width: 7%;
+    height: 5%;
+    top: 75%;
+    background-color: white;
+    color: black;
+    left: 10%;
+    font-size: 100%;
+}

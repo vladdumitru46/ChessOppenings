@@ -3,6 +3,7 @@ let urlParams = new URLSearchParams(queryString);
 let informationCourseValue = urlParams.get('informationCourse');
 let informationCourseElement = document.getElementById("informationCourse");
 let pageTitle = document.getElementById("pageTitle");
+const baseUrl = "http://localhost:8080/chess"
 
 if (informationCourseElement && informationCourseValue) {
     let courseData = JSON.parse(informationCourseValue);
@@ -22,7 +23,7 @@ if (informationCourseElement && informationCourseValue) {
 
 async function startCourse() {
     console.log("BAHDUD")
-    let url = "http://localhost:8080/chess/startCourse/start"
+    let url = baseUrl + "/startCourse/start"
     let playerUsername = localStorage.getItem("player");
     let response = await fetch(url, {
         method: "POST",

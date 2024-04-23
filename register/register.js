@@ -3,8 +3,8 @@ async function register() {
     let username = document.getElementById("username").value
     let email = document.getElementById("email").value
     let password = document.getElementById("password").value
-
-    let url = "http://localhost:8080/chess/register"
+    const baseUrl = "http://localhost:8080/chess;"
+    let url = baseUrl + "/register"
 
     let response = await fetch(url, {
         method: "POST",
