@@ -165,6 +165,32 @@ public class PieceService {
         };
     }
 
+    public List<Move> getAllPossibleMovesForASpecificPiece(Board board, CellOnTheBoard startCell) {
+        List<Move> moveList = new ArrayList<>();
+        for (int i = 0; i < 8; i++) {
+            for (int j = 0; j < 8; j++) {
+                CellOnTheBoard endCell = board.getCellOnTheBoardMap()[i][j];
+                if (startCell != endCell) {
+                    int ok = 0;
+                    if (startCell.getPieces() instanceof Pawn) {
+                        if (pawnRepository.canPromote(board, startCell, endCell)) {
+                            moveList.addAll(promotePawns(startCell, endCell));
+                            ok = 1;
+                        }
+                    }
+                    if (ok == 0) {
+                        if (possibleMovesForAPiece(board, startCell, endCell)) {
+                            moveList.add(new Move(startCell, endCell));
+                        }
+                    }
+
+                }
+            }
+        }
+        return moveList;
+    }
+
+
     private List<Move> promotePawns(CellOnTheBoard startCell, CellOnTheBoard endCell) {
 
         List<Move> promotePawnsList = new ArrayList<>();

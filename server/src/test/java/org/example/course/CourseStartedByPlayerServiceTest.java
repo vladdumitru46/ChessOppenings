@@ -47,10 +47,10 @@ class CourseStartedByPlayerServiceTest {
         String courseName = "Course 1";
         Integer boardId = 1;
         CourseStartedByPlayer expectedCourseStartedByPlayer = new CourseStartedByPlayer();
-        when(courseStartedByPlayerRepository.findByPlayerIdAndCourseName(playerId, courseName, boardId))
+        when(courseStartedByPlayerRepository.findByPlayerIdAndCourseNameAndBoardId(playerId, courseName, boardId))
                 .thenReturn(Optional.of(expectedCourseStartedByPlayer));
 
-        CourseStartedByPlayer actualCourseStartedByPlayer = courseStartedByPlayerService.getCourseStartedByPlayerAfterPlayerIdAndCourseName(playerId, courseName, boardId);
+        CourseStartedByPlayer actualCourseStartedByPlayer = courseStartedByPlayerService.getCourseStartedByPlayerAfterPlayerIdAndCourseNameAndBoardId(playerId, courseName, boardId);
 
         assertEquals(expectedCourseStartedByPlayer, actualCourseStartedByPlayer);
     }
@@ -60,11 +60,11 @@ class CourseStartedByPlayerServiceTest {
         Integer playerId = 1;
         String courseName = "Course 1";
         Integer boardId = 1;
-        when(courseStartedByPlayerRepository.findByPlayerIdAndCourseName(playerId, courseName, boardId))
+        when(courseStartedByPlayerRepository.findByPlayerIdAndCourseNameAndBoardId(playerId, courseName, boardId))
                 .thenReturn(Optional.empty());
 
         assertThrows(Exception.class, () -> {
-            courseStartedByPlayerService.getCourseStartedByPlayerAfterPlayerIdAndCourseName(playerId, courseName, boardId);
+            courseStartedByPlayerService.getCourseStartedByPlayerAfterPlayerIdAndCourseNameAndBoardId(playerId, courseName, boardId);
         });
     }
 

@@ -3,6 +3,7 @@ package org.example.controllers;
 import com.example.models.board.Board;
 import com.example.models.board.Move;
 import com.example.models.game.Game;
+import com.example.models.game.GameStatus;
 import lombok.AllArgsConstructor;
 import org.example.board.BoardService;
 import org.example.board.PieceService;
@@ -77,27 +78,29 @@ public class AiController {
         }
         Move move;
         MiniMax miniMax;
-        if (game.isWhitesTurn()) {
-            miniMax = new MiniMax(board, data.getDepthForAi(), true, pieceService);
-        } else {
-            miniMax = new MiniMax(board, data.getDepthForAi(), false, pieceService);
-        }
-        move = miniMax.getBestMove();
-        if (move != null) {
-            String moveNotation = pieceService.transformMoveToCorrectNotation(move.getStart(), move.getEnd(), board);
-            System.out.println(moveNotation);
+        if (game.getGameStatus().equals(GameStatus.STARTED)) {
             if (game.isWhitesTurn()) {
-                game.setWhiteMove(game.getWhiteMove() + ", " + moveNotation);
+                miniMax = new MiniMax(board, data.getDepthForAi(), true, pieceService);
             } else {
-                game.setBlackMove(game.getBlackMove() + ", " + moveNotation);
-                game.setMoveNumber(game.getMoveNumber() + 1);
+                miniMax = new MiniMax(board, data.getDepthForAi(), false, pieceService);
             }
-            pieceService.makeMove(board, move);
-            String moveToBePlayed = move.getStart() + " " + move.getEnd() + " " + moveNotation;
-            setMoveAsString(game, move, "");
-            game.setWhitesTurn(!game.isWhitesTurn());
-            boardService.updateBoard(board);
-            return new ResponseEntity<>(moveToBePlayed, HttpStatus.OK);
+            move = miniMax.getBestMove();
+            if (move != null) {
+                String moveNotation = pieceService.transformMoveToCorrectNotation(move.getStart(), move.getEnd(), board);
+                System.out.println(moveNotation);
+                if (game.isWhitesTurn()) {
+                    game.setWhiteMove(game.getWhiteMove() + ", " + moveNotation);
+                } else {
+                    game.setBlackMove(game.getBlackMove() + ", " + moveNotation);
+                    game.setMoveNumber(game.getMoveNumber() + 1);
+                }
+                pieceService.makeMove(board, move);
+                String moveToBePlayed = move.getStart() + " " + move.getEnd() + " " + moveNotation;
+                setMoveAsString(game, move, "");
+                game.setWhitesTurn(!game.isWhitesTurn());
+                boardService.updateBoard(board);
+                return new ResponseEntity<>(moveToBePlayed, HttpStatus.OK);
+            }
         }
         return null;
     }

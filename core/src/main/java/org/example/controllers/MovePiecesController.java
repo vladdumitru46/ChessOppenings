@@ -4,6 +4,7 @@ import com.example.models.board.Board;
 import com.example.models.board.CellOnTheBoard;
 import com.example.models.board.Move;
 import com.example.models.game.Game;
+import com.example.models.game.GameStatus;
 import com.example.models.pieces.*;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -16,6 +17,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.Objects;
 
 @RestController
@@ -399,8 +401,10 @@ public class MovePiecesController {
         int endIndex = list2[0].lastIndexOf("\"");
         String extractedContent = list2[0].substring(1, endIndex);
         Board board;
+        Game game;
         try {
-            board = boardService.findById(Integer.parseInt(extractedContent));
+            game = gameService.getGameById(Integer.parseInt(extractedContent));
+            board = boardService.findById(game.getBoardId());
         } catch (Exception e) {
             return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
         }
@@ -414,10 +418,16 @@ public class MovePiecesController {
         int nrMovesForBlack = pieceService.getAllPossibleMoves(board, false).size();
 
         if (nrMovesForWhite == 0 && whiteKing.isInCheck()) {
+            game.setGameStatus(GameStatus.BLACK_WON);
+            gameService.updateGame(game);
             return ResponseEntity.ok("CheckMate - Black won");
         } else if (nrMovesForBlack == 0 && blackKing.isInCheck()) {
+            game.setGameStatus(GameStatus.WHITE_WON);
+            gameService.updateGame(game);
             return ResponseEntity.ok("CheckMate - White won");
         } else if (nrMovesForBlack == 0 || nrMovesForWhite == 0) {
+            game.setGameStatus(GameStatus.STALEMATE);
+            gameService.updateGame(game);
             return ResponseEntity.ok("SlateMate");
         } else {
             return new ResponseEntity<>("continue", HttpStatus.OK);
@@ -432,5 +442,31 @@ public class MovePiecesController {
         game.setMoves(game.getMoves() + moveAsString);
     }
 
+
+    @GetMapping("/piecePossibleMoves")
+    public ResponseEntity<?> getAllPossibleMovesForASpecificPiece(@RequestParam Integer boardId, @RequestParam String position) {
+        try {
+            Game game = null;
+            Board board = null;
+            try {
+                game = gameService.getGameById(boardId);
+                board = boardService.findById(game.getBoardId());
+            } catch (Exception e) {
+                board = boardService.findById(boardId);
+            }
+            int startLine = position.charAt(0) - '0';
+            int startColumn = position.charAt(1) - '0';
+
+            CellOnTheBoard piece = board.getCellOnTheBoardMap()[startLine][startColumn];
+            List<String> possibleMoves = pieceService.getAllPossibleMovesForASpecificPiece(board, piece).stream()
+                    .map(Move::getEnd)
+                    .map(CellOnTheBoard::toString)
+                    .toList();
+
+            return new ResponseEntity<>(possibleMoves, HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
+        }
+    }
 
 }

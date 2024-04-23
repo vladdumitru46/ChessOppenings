@@ -6,6 +6,8 @@ import org.example.course.CourseService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @AllArgsConstructor
 @RequestMapping("/chess/course")
@@ -22,5 +24,13 @@ public class CourseController {
             return ResponseEntity.badRequest().body(e.getMessage());
         }
     }
+
+    @GetMapping("/getAll")
+    private ResponseEntity<?> getAllCourses() {
+
+        List<Course> course = courseService.getAllCourses();
+        return ResponseEntity.ok(course);
+    }
+
 
 }

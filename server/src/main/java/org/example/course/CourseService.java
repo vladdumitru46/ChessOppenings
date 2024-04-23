@@ -6,6 +6,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.example.repositoryes.course.CourseRepository;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service("courseService")
@@ -28,6 +29,9 @@ public class CourseService {
         return course.get();
     }
 
+    public List<Course> getAllCourses() {
+        return courseRepository.findAll();
+    }
 
 
 }

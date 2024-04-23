@@ -1,0 +1,5 @@
+FROM openjdk:21
+
+WORKDIR /server
+COPY . .
+EXPOSE 8080:8080

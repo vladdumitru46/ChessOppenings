@@ -1,6 +1,7 @@
 package org.example;
 
 import com.example.models.board.Board;
+import com.example.models.board.CellOnTheBoard;
 import com.example.models.pieces.*;
 import org.example.board.BoardService;
 import org.example.board.PieceService;
@@ -25,8 +26,8 @@ public class MovePieceTest {
     @Test
     public void isCheckMateIn2Test() {
         try {
-            board = boardService.findById(27);
-            System.out.println(board);
+            CellOnTheBoard startCell = board.getCellOnTheBoardMap()[1][1];
+            pieceService.getAllPossibleMovesForASpecificPiece(board, startCell).forEach(System.out::println);
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
