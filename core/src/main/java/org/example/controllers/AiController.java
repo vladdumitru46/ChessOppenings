@@ -1,9 +1,12 @@
 package org.example.controllers;
 
 import com.example.models.board.Board;
+import com.example.models.board.CellOnTheBoard;
 import com.example.models.board.Move;
 import com.example.models.game.Game;
 import com.example.models.game.GameStatus;
+import com.example.models.pieces.King;
+import com.example.models.pieces.Rook;
 import lombok.AllArgsConstructor;
 import org.example.board.BoardService;
 import org.example.board.PieceService;
@@ -15,6 +18,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Objects;
+
+import static java.lang.Math.abs;
 
 @RestController()
 @AllArgsConstructor
@@ -28,7 +33,7 @@ public class AiController {
     private final Data data;
 
     @PostMapping("/bestMove")
-    public ResponseEntity<?> bestMove(@RequestBody String isWhite, @RequestBody String boardId) {
+    public ResponseEntity<?> bestMove(@RequestBody String boardId) {
 
         String[] list = boardId.split(":");
 
@@ -36,7 +41,7 @@ public class AiController {
 
         int endIndex = list2[0].lastIndexOf("\"");
         String extractedContent = list2[0].substring(1, endIndex);
-        Board board = null;
+        Board board;
         Game game;
         try {
             game = gameService.getGameById(Integer.valueOf(extractedContent));
@@ -68,7 +73,7 @@ public class AiController {
 
         int endIndex = list2[0].lastIndexOf("\"");
         String extractedContent = list2[0].substring(1, endIndex);
-        Board board = null;
+        Board board;
         Game game;
         try {
             game = gameService.getGameById(Integer.valueOf(extractedContent));
@@ -94,6 +99,9 @@ public class AiController {
                     game.setBlackMove(game.getBlackMove() + ", " + moveNotation);
                     game.setMoveNumber(game.getMoveNumber() + 1);
                 }
+                if (move.getStart().getPieces() instanceof King && abs(move.getStart().getColumnCoordinate() - move.getEnd().getColumnCoordinate()) == 2) {
+                    didAiCastle(board, move.getStart(), move.getEnd());
+                }
                 pieceService.makeMove(board, move);
                 String moveToBePlayed = move.getStart() + " " + move.getEnd() + " " + moveNotation;
                 setMoveAsString(game, move, "");
@@ -110,5 +118,35 @@ public class AiController {
         moveAsString += !Objects.equals(action, "") ? " " + action : "";
         moveAsString += game.isWhitesTurn() ? ";" : ", ";
         game.setMoves(game.getMoves() + moveAsString);
+    }
+
+    private void didAiCastle(Board board, CellOnTheBoard start, CellOnTheBoard end) {
+        King king = (King) start.getPieces();
+        if (king.isWhite()) {
+            if (end.getColumnCoordinate() == 2) {
+                Rook rook = (Rook) board.getCellOnTheBoardMap()[0][0].getPieces();
+                rook.setHasBeenMoved(true);
+                board.getCellOnTheBoardMap()[0][3].setPieces(rook);
+                board.getCellOnTheBoardMap()[0][0] = new CellOnTheBoard(null, 0, 0);
+            }
+            if (end.getColumnCoordinate() == 6) {
+                Rook rook = (Rook) board.getCellOnTheBoardMap()[0][7].getPieces();
+                rook.setHasBeenMoved(true);
+                board.getCellOnTheBoardMap()[0][5].setPieces(rook);
+                board.getCellOnTheBoardMap()[0][7] = new CellOnTheBoard(null, 0, 0);
+            }
+        } else {
+            if (end.getColumnCoordinate() == 2) {
+                Rook rook = (Rook) board.getCellOnTheBoardMap()[7][0].getPieces();
+                rook.setHasBeenMoved(true);
+                board.getCellOnTheBoardMap()[7][3].setPieces(rook);
+                board.getCellOnTheBoardMap()[7][0] = new CellOnTheBoard(null, 7, 0);
+            } else if (end.getColumnCoordinate() == 6) {
+                Rook rook = (Rook) board.getCellOnTheBoardMap()[7][7].getPieces();
+                rook.setHasBeenMoved(true);
+                board.getCellOnTheBoardMap()[7][5].setPieces(rook);
+                board.getCellOnTheBoardMap()[7][7] = new CellOnTheBoard(null, 7, 0);
+            }
+        }
     }
 }

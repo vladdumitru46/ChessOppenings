@@ -2,14 +2,12 @@ package org.example.controllers;
 
 import com.example.models.board.Board;
 import com.example.models.game.Game;
-import com.example.models.pieces.Queen;
 import lombok.AllArgsConstructor;
 import org.example.board.BoardService;
 import org.example.game.GameService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.client.HttpClientErrorException;
 
 @RestController()
 @AllArgsConstructor

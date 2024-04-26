@@ -217,4 +217,46 @@ public class PlayerService implements UserDetailsService {
                 "\n" +
                 "</div></div>";
     }
+
+
+    public void checkPlayer(Player player, boolean changedEmail) throws PlayerValidationException {
+        if(changedEmail) {
+            Optional<Player> playerByEmail = playerRepository.findByEmail(player.getEmail());
+            if (playerByEmail.isPresent()) {
+                log.warn("The email exists already! Choose other email! " + player.getEmail());
+                throw new PlayerValidationException("The email exists already! Choose other email!\n");
+            }
+        }
+        try {
+            playerValidator.validatePlayer(player);
+        } catch (PlayerValidationException e) {
+            throw new PlayerValidationException(e.getMessage());
+        }
+
+        BCryptPasswordEncoder cryptPasswordEncoder = new BCryptPasswordEncoder();
+        String cryptPassword = cryptPasswordEncoder.encode(player.getPassword());
+        player.setPassword(cryptPassword);
+    }
+
+    public void sendEmail(Player player, String from) throws MessagingException {
+        player.setLocked(true);
+
+        String token = UUID.randomUUID().toString();
+
+        ConfirmationToken confirmationToken = new ConfirmationToken(token, LocalDateTime.now(),
+                LocalDateTime.now().plusMinutes(15), player);
+
+        confirmationTokenService.saveToken(confirmationToken);
+        log.info("player saved");
+        String link = "http://localhost:8080/chess/register/confirmToken?token=" + token;
+        emailSender.send(player.getEmail(), buildEmail(player.getName(), link), from);
+    }
+
+    @Transactional
+    public void updatePlayer(Player player) {
+        player.setName(player.getName());
+        player.setEmail(player.getEmail());
+        player.setPassword(player.getPassword());
+        player.setLocked(player.isLocked());
+    }
 }

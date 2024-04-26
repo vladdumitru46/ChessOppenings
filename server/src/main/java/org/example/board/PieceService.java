@@ -156,7 +156,13 @@ public class PieceService {
     public boolean possibleMovesForAPiece(Board board, CellOnTheBoard startCell, CellOnTheBoard endCell) {
 
         return switch (startCell.getPieces()) {
-            case King ignored -> kingRepository.canMove(board, startCell, endCell, (King) startCell.getPieces());
+            case King ignored -> {
+                if(!kingRepository.canMove(board, startCell, endCell, (King) startCell.getPieces())){
+                    yield kingRepository.canCastle(board, startCell, endCell,(King) startCell.getPieces());
+                }else{
+                    yield true;
+                }
+            }
             case Queen ignored -> queenRepository.canMove(board, startCell, endCell, (Queen) startCell.getPieces());
             case Rook ignored -> rookRepository.canMove(board, startCell, endCell, (Rook) startCell.getPieces());
             case Bishop ignored -> bishopRepository.canMove(board, startCell, endCell, (Bishop) startCell.getPieces());
