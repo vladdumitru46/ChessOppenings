@@ -2,7 +2,7 @@
 <html lang="en">
 
 <head>
-  <title>HomePage - Grumpy Little Opossum</title>
+  <title>Chess Openings</title>
   <meta property="og:title" content="HomePage - Grumpy Little Opossum" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta charset="utf-8" />
@@ -132,7 +132,7 @@
 
     <div class="home-page-container">
       <span class="home-page-text">
-        <span class="home-page-text1">Hello</span>
+        <span class="home-page-text1">Chess Openings</span>
         <br />
       </span>
       <p id="learningPage">Learn Openings</p>
@@ -144,7 +144,11 @@
     </div>
   </div>
 
-  <button id="logOut" onclick="logOut()">Log out</button>
+  <button type="button" class="collapsible"><img id = "profilePic" src="../pieces/profile.png"></button>
+  <div class="content">
+    <button id="viewProfile" onclick="viewProfile()">View</button>
+    <button id="logOut" onclick="logOut()">Log out</button>
+  </div>
 
   <script>
     var learningImage = document.getElementById('learning_page');
@@ -176,6 +180,25 @@
     function logOut() {
       localStorage.clear();
       window.location.replace('../logIn/log-in.html');
+    }
+    
+    function viewProfile() {
+      window.location.replace('../viewProfile/profile-page.html');
+    }
+
+    var coll = document.getElementsByClassName("collapsible");
+    var i;
+
+    for (i = 0; i < coll.length; i++) {
+      coll[i].addEventListener("click", function () {
+        this.classList.toggle("active");
+        var content = this.nextElementSibling;
+        if (content.style.display === "block") {
+          content.style.display = "none";
+        } else {
+          content.style.display = "block";
+        }
+      });
     }
   </script>
 </body>

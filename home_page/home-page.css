@@ -16,14 +16,14 @@
 
 .home-page-text {
   top: 10%;
-  left: 45%;
+  left: 40%;
   color: #ffffff;
-  right: 40%;
-  width: 20%;
-  bottom: 80%;
+  width: 30%;
   height: 15%;
   position: absolute;
-  font-size: 500%;
+  font-size: 300%;
+  text-overflow: ellipsis;
+  overflow: hidden; 
 }
 
 .home-page-image {
@@ -66,18 +66,18 @@
 
   .home-page-text {
     top: 10%;
-    left: 45%;
+    left: 40%;
     color: #ffffff;
-    right: 40%;
-    width: 20%;
-    bottom: 80%;
+    width: 30%;
     height: 15%;
     position: absolute;
-    font-size: 40%;
+     
+    font-size: 300%;
+    text-overflow: ellipsis;
+    overflow: hidden; 
   }
 
   .home-page-text1 {
-    font-size: 800%;
     position: absolute;
   }
 
@@ -113,7 +113,9 @@
   font-size: 100%;
   position: absolute;
   top: 25%;
-  left: 10%;
+  left: 12%; 
+  text-overflow: ellipsis;
+  overflow: hidden; 
 }
 
 #playAi {
@@ -121,7 +123,9 @@
   font-size: 100%;
   position: absolute;
   top: 25%;
-  left: 45%;
+  left: 47%;
+  text-overflow: ellipsis;
+  overflow: hidden; 
 }
 
 #hist {
@@ -130,14 +134,53 @@
   position: absolute;
   top: 25%;
   left: 80%;
+  text-overflow: ellipsis;
+  overflow: hidden; 
 }
 
-#logOut {
+/* #logOut {
   position: absolute;
   right: 2%;
-  top: 2%;
+  top: 6%;
   background-color: white;
   height: 3%;
   width: 5%;
   font-size: 70%;
+}
+#viewProfile {
+  position: absolute;
+  right: 2%;
+  top: 6%;
+  background-color: white;
+  height: 3%;
+  width: 5%;
+  font-size: 70%;
+} */
+
+.collapsible {
+  position: absolute;
+  right: 2%;
+  top: 2%;
+  background-color: black;
+  height: 3%;
+  width: 2%;
+  font-size: 70%;
+}
+
+
+.content {
+  /* padding: ; */
+  position: absolute;
+  top: 6%;
+  right: 2%;
+  display: none;
+  overflow: hidden;
+  background-color: #f1f1f1;
+}
+
+#profilePic{
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  top: 0%;
 }

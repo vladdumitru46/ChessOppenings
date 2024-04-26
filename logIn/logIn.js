@@ -6,7 +6,7 @@ async function logIn() {
     const password = document.getElementById("password").value;
 
     const springBootPort = 8080;
-    const springBootURL = `${baseUrl}/chess/login`;
+    const springBootURL = `${baseUrl}/login`;
 
     const requestData = {
         method: "POST",

@@ -162,12 +162,11 @@
                                 </span>
                         </nav>
                         <div class="open-course-page-buttons">
-                                <button class="open-course-page-log-out button" onclick="logOut()">
-                                        <span>
-                                                <span>LogOut</span>
-                                                <br />
-                                        </span>
-                                </button>
+                                <button type="button" class="collapsible"><img id="profilePic" src="../pieces/profile.png"></button>
+                                <div class="content">
+                                  <button id="viewProfile" onclick="viewProfile()">View</button>
+                                  <button id="logOut" onclick="logOut()">Log out</button>
+                                </div>
                         </div>
                 </div>
 

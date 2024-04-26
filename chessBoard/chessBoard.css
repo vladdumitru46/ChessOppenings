@@ -103,7 +103,8 @@ img {
 #courseContent {
     max-height: 60%;
     overflow-y: auto;
-    padding-top: 0; /* Elimină padding-ul implicit al listei */
+    padding-top: 0;
+    /* Elimină padding-ul implicit al listei */
     /* flex-direction: column-reverse; */
 }
 
@@ -369,7 +370,8 @@ img {
     color: blue;
     /* Culoarea atunci când elementul este selectat */
 }
-#back{
+
+#back {
     position: absolute;
     width: 5%;
     height: 5%;
@@ -380,7 +382,7 @@ img {
     font-size: 200%;
 }
 
-#forward{
+#forward {
     position: absolute;
     width: 5%;
     height: 5%;
@@ -391,7 +393,7 @@ img {
     font-size: 200%;
 }
 
-#getHint{
+#getHint {
     position: absolute;
     width: 7%;
     height: 5%;
@@ -400,4 +402,33 @@ img {
     color: black;
     left: 10%;
     font-size: 100%;
+}
+
+.collapsible {
+    position: absolute;
+    right: 2%;
+    top: 2%;
+    background-color: black;
+    height: 45%;
+    width: 2%;
+    font-size: 70%;
+    border: 0px solid black;
+}
+
+
+.content {
+    /* padding: ; */
+    position: absolute;
+    top: 60%;
+    right: 2%;
+    display: none;
+    overflow: hidden;
+    background-color: #f1f1f1;
+}
+
+#profilePic {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0%;
 }

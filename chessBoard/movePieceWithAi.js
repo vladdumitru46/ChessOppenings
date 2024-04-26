@@ -1,5 +1,3 @@
-
-
 let queryString = window.location.search;
 let urlParams = new URLSearchParams(queryString);
 let newGame = urlParams.get('newGame');
@@ -33,8 +31,6 @@ async function fetchData() {
 
             })
         });
-
-        console.log(res)
         if (res.ok) {
             try {
                 let id = await res.text();
@@ -138,9 +134,7 @@ async function setBoard() {
                 moveNumber = await re.text();
             }
         }
-        console.log("aiciiii")
         if (whitesTurn == "false") {
-            console.log("aici")
             await moveAi();
         }
     }
@@ -149,7 +143,7 @@ async function setBoard() {
 
 let square1 = null;
 let square2 = null;
-let highlightedSquares = new Map();
+let highlightedSquares = [];
 
 async function getPiece(square) {
 
@@ -168,7 +162,9 @@ async function getPiece(square) {
                 let sq = document.getElementById(listOfMoves[i]);
                 const originalImageSrc = sq.querySelector('img').src; // Store original source
                 highlightedSquares.push({ element: sq, originalSrc: originalImageSrc });
-                sq.querySelector('img').src = "../pieces/posibleMove.svg";
+                if (sq.querySelector("img").src === "") {
+                    sq.querySelector('img').src = "../pieces/posibleMove.svg";
+                }
             }
         }
 
@@ -231,7 +227,7 @@ function resetHighlightedSquares() {
     for (const square of highlightedSquares) {
         const sq = square.element;
         const originalImageSrc = square.originalSrc;
-        sq.querySelector('img').src = originalImageSrc; 
+        sq.querySelector('img').src = originalImageSrc;
     }
     highlightedSquares = [];
 }
@@ -337,4 +333,23 @@ document.getElementById('playAgainstAiLink').addEventListener('click', function 
 function logOut() {
     localStorage.clear();
     window.location.replace('../logIn/log-in.html');
+}
+
+function viewProfile() {
+    window.location.replace('../viewProfile/profile-page.html');
+}
+
+var coll = document.getElementsByClassName("collapsible");
+var i;
+
+for (i = 0; i < coll.length; i++) {
+    coll[i].addEventListener("click", function () {
+        this.classList.toggle("active");
+        var content = this.nextElementSibling;
+        if (content.style.display === "block") {
+            content.style.display = "none";
+        } else {
+            content.style.display = "block";
+        }
+    });
 }
