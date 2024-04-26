@@ -46,7 +46,7 @@ async function fetchData() {
                 console.error('Eroare la extragerea textului:', error);
             }
         } else {
-            console.log('Răspuns incorect:', r.status);
+            console.log('Răspuns incorect:', res.status);
         }
     } catch (error) {
         console.error('Eroare la solicitarea de rețea:', error);
@@ -152,19 +152,22 @@ async function getPiece(square) {
 
         let id = square1.getAttribute("id");
 
-        let getAllPosibleMovesResponse = await fetch(`${baseUrl}/move/piecePossibleMoves?boardId=${localStorage.getItem('boardId')}&position=${id}`, {
+        let getAllPossibleMovesResponse = await fetch(`${baseUrl}/move/piecePossibleMoves?boardId=${localStorage.getItem('boardId')}&position=${id}`, {
             method: "GET"
         });
-        if (getAllPosibleMovesResponse.ok) {
-            let listOfMoves = await getAllPosibleMovesResponse.json();
+        if (getAllPossibleMovesResponse.ok) {
+            let listOfMoves = await getAllPossibleMovesResponse.json();
             resetHighlightedSquares();
-            for (var i in listOfMoves) {
+            for (let i in listOfMoves) {
+                console.log(listOfMoves[i])
                 let sq = document.getElementById(listOfMoves[i]);
-                const originalImageSrc = sq.querySelector('img').src; // Store original source
+                const originalImageSrc = sq.querySelector('img').src;
+                console.log(sq)
                 highlightedSquares.push({ element: sq, originalSrc: originalImageSrc });
-                if (sq.querySelector("img").src === "") {
+                // if (sq.querySelector("img").src === "") {
+                    console.log("da esti prost?")
                     sq.querySelector('img').src = "../pieces/posibleMove.svg";
-                }
+                // }
             }
         }
 
@@ -226,8 +229,7 @@ async function getPiece(square) {
 function resetHighlightedSquares() {
     for (const square of highlightedSquares) {
         const sq = square.element;
-        const originalImageSrc = square.originalSrc;
-        sq.querySelector('img').src = originalImageSrc;
+        sq.querySelector('img').src = square.originalSrc;
     }
     highlightedSquares = [];
 }

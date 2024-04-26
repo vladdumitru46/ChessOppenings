@@ -259,8 +259,8 @@ async function checkMateCheck() {
         moveNumber = await r.text();
         maxMoveNumber = moveNumber;
     }
-    let newNr = moveNumber / 2;
-    await getMovesHistory(newNr);
+    // let newNr = moveNumber / 2;
+    // await getMovesHistory(newNr);
     let checkMateCheckUrl = baseUrl + "/move/checkmate";
     const response2 = await fetch(checkMateCheckUrl, {
         method: "POST",
