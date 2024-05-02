@@ -379,7 +379,9 @@ img {
     background-color: white;
     color: black;
     left: 65%;
-    font-size: 200%;
+    font-size: 100%;
+    text-overflow: ellipsis;
+    overflow: hidden;
 }
 
 #forward {
@@ -390,7 +392,9 @@ img {
     background-color: white;
     color: black;
     left: 75%;
-    font-size: 200%;
+    font-size: 100%;
+    text-overflow: ellipsis;
+    overflow: hidden;
 }
 
 #getHint {
