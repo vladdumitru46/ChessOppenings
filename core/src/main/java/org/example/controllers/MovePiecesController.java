@@ -13,6 +13,7 @@ import org.example.board.PieceService;
 import org.example.game.GameService;
 import org.example.requests.MovePiecesRequest;
 import org.example.requests.PromotePawn;
+import org.example.score.MobilityScore;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -28,6 +29,7 @@ import java.util.Objects;
 public class MovePiecesController {
 
     private final PieceService pieceService;
+    private final MobilityScore mobilityScore;
     private final BoardService boardService;
     private final GameService gameService;
 
@@ -414,8 +416,8 @@ public class MovePiecesController {
         CellOnTheBoard whiteKingCell = board.getKing(true);
         King whiteKing = (King) whiteKingCell.getPieces();
 
-        int nrMovesForWhite = pieceService.getAllPossibleMoves(board, true).size();
-        int nrMovesForBlack = pieceService.getAllPossibleMoves(board, false).size();
+        int nrMovesForWhite = mobilityScore.getAllPossibleMoves(board, true).size();
+        int nrMovesForBlack = mobilityScore.getAllPossibleMoves(board, false).size();
 
         if (nrMovesForWhite == 0 && whiteKing.isInCheck()) {
             game.setGameStatus(GameStatus.BLACK_WON);
@@ -458,7 +460,7 @@ public class MovePiecesController {
             int startColumn = position.charAt(1) - '0';
 
             CellOnTheBoard piece = board.getCellOnTheBoardMap()[startLine][startColumn];
-            List<String> possibleMoves = pieceService.getAllPossibleMovesForASpecificPiece(board, piece).stream()
+            List<String> possibleMoves = mobilityScore.getAllPossibleMovesForASpecificPiece(board, piece).stream()
                     .map(Move::getEnd)
                     .map(CellOnTheBoard::toString)
                     .toList();

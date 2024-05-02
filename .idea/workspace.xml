@@ -13,9 +13,9 @@
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
-        <option value="Class" />
         <option value="JUnit5 Test Class" />
         <option value="Record" />
+        <option value="Class" />
       </list>
     </option>
   </component>
@@ -25,6 +25,7 @@
   <component name="HighlightingSettingsPerFile">
     <setting file="jar://$MAVEN_REPOSITORY$/org/springframework/spring-aop/6.0.12/spring-aop-6.0.12.jar!/org/springframework/aop/framework/CglibAopProxy.class" root0="SKIP_INSPECTION" />
     <setting file="jar://$MAVEN_REPOSITORY$/org/springframework/spring-aop/6.0.12/spring-aop-6.0.12.jar!/org/springframework/aop/support/AopUtils.class" root0="SKIP_INSPECTION" />
+    <setting file="file://$PROJECT_DIR$/ai/src/main/java/org/example/miniMax/score/Evaluation.java" root0="FORCE_HIGHLIGHTING" />
   </component>
   <component name="MarkdownSettingsMigration">
     <option name="stateVersion" value="1" />
@@ -268,7 +269,7 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/core/src/main/java/org/example/controllers/MovePiecesController.java</url>
-          <line>397</line>
+          <line>399</line>
           <option name="timeStamp" value="12" />
         </line-breakpoint>
       </breakpoints>

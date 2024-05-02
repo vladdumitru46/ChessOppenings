@@ -12,7 +12,9 @@ import org.example.board.BoardService;
 import org.example.board.PieceService;
 import org.example.data.Data;
 import org.example.game.GameService;
+import org.example.miniMax.score.Evaluation;
 import org.example.miniMax.MiniMax;
+import org.example.score.*;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -30,11 +32,17 @@ public class AiController {
     private final BoardService boardService;
     private final PieceService pieceService;
     private final GameService gameService;
+    private final CapturePiecesScore capturePiecesScore;
+    private final CenterControlScore centerControlScore;
+    private final DevelopmentScore developmentScore;
+    private final KingSafetyScore kingSafetyScore;
+    private final MobilityScore mobilityScore;
+    private final PawnStructureScore pawnStructureScore;
     private final Data data;
 
     @PostMapping("/bestMove")
     public ResponseEntity<?> bestMove(@RequestBody String boardId) {
-
+        Evaluation evaluation = new Evaluation(capturePiecesScore, centerControlScore, developmentScore, kingSafetyScore, mobilityScore, pawnStructureScore);
         String[] list = boardId.split(":");
 
         String[] list2 = list[1].split("}");
@@ -52,9 +60,9 @@ public class AiController {
         Move move;
         MiniMax miniMax;
         if (game.isWhitesTurn()) {
-            miniMax = new MiniMax(board, 3, true, pieceService);
+            miniMax = new MiniMax(board, 3, true, mobilityScore, pieceService, evaluation);
         } else {
-            miniMax = new MiniMax(board, 3, false, pieceService);
+            miniMax = new MiniMax(board, 3, false, mobilityScore, pieceService, evaluation);
             game.setMoveNumber(game.getMoveNumber() + 1);
         }
         move = miniMax.getBestMove();
@@ -68,6 +76,7 @@ public class AiController {
 
     @PostMapping("/makeMove")
     public ResponseEntity<?> doAiMove(@RequestBody String boardId) {
+        Evaluation evaluation = new Evaluation(capturePiecesScore, centerControlScore, developmentScore, kingSafetyScore, mobilityScore, pawnStructureScore);
         String[] list = boardId.split(":");
         String[] list2 = list[1].split("}");
 
@@ -85,9 +94,9 @@ public class AiController {
         MiniMax miniMax;
         if (game.getGameStatus().equals(GameStatus.STARTED)) {
             if (game.isWhitesTurn()) {
-                miniMax = new MiniMax(board, data.getDepthForAi(), true, pieceService);
+                miniMax = new MiniMax(board, data.getDepthForAi(), true, mobilityScore, pieceService, evaluation);
             } else {
-                miniMax = new MiniMax(board, data.getDepthForAi(), false, pieceService);
+                miniMax = new MiniMax(board, data.getDepthForAi(), false, mobilityScore, pieceService, evaluation);
             }
             move = miniMax.getBestMove();
             if (move != null) {

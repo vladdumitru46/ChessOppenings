@@ -55,16 +55,6 @@ public class Board implements Serializable {
     }
 
     public CellOnTheBoard getKing(boolean isWhite) {
-//        for (int i = 0; i < 8; i++) {
-//            for (int j = 0; j < 8; j++) {
-//                if (cellOnTheBoardMap[i][j].getPieces() instanceof King) {
-//                    if (cellOnTheBoardMap[i][j].getPieces().isWhite() == isWhite) {
-//                        return cellOnTheBoardMap[i][j];
-//                    }
-//                }
-//            }
-//        }
-//        return null;
         return Arrays.stream(this.getCellOnTheBoardMap())
                 .flatMap(Arrays::stream)
                 .filter(cell -> cell.getPieces() instanceof King && cell.getPieces().isWhite() == isWhite)
