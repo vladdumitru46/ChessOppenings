@@ -1,4 +1,3 @@
-
 async function castle(piesaSquare1, imageUrlSquare1, springBootURL, requestData, ok) {
     console.log(springBootURL);
     if (square2.getAttribute("id") === "02") {
@@ -31,31 +30,33 @@ async function castle(piesaSquare1, imageUrlSquare1, springBootURL, requestData,
     }
     return ok;
 }
+
 let m = 1;
 
 async function movePiecesForCastle(piesaSquare1, imageUrlSquare1, rookNewSquare, rookSquare, ok, response) {
-    square2.setAttribute('data-piesa', piesaSquare1);
-    square2.querySelector('img').src = imageUrlSquare1;
-
-    square1.setAttribute('data-piesa', 'none');
-    square1.querySelector('img').src = "";
-
-    rookNewSquare.setAttribute('data-piesa', rookSquare.getAttribute('data-piesa'));
-    rookNewSquare.querySelector('img').src = rookSquare.querySelector('img').src;
-
-    rookSquare.setAttribute('data-piesa', 'none');
-    rookSquare.querySelector('img').src = "";
-
-    square1 = null;
-    square2 = null;
-    ok = 1;
-
-    let res = await response.text();
-
-    updateMoveList(res);
-
+    // square2.setAttribute('data-piesa', piesaSquare1);
+    // square2.querySelector('img').src = imageUrlSquare1;
+    //
+    // square1.setAttribute('data-piesa', 'none');
+    // square1.querySelector('img').src = "";
+    //
+    // rookNewSquare.setAttribute('data-piesa', rookSquare.getAttribute('data-piesa'));
+    // rookNewSquare.querySelector('img').src = rookSquare.querySelector('img').src;
+    //
+    // rookSquare.setAttribute('data-piesa', 'none');
+    // rookSquare.querySelector('img').src = "";
+    //
+    // square1 = null;
+    // square2 = null;
+    // ok = 1;
+    //
+    // let res = await response.text();
+    //
+    // updateMoveList(res);
+    let gameId = localStorage.getItem("boardId");
+    await boardSetter(response, gameId);
     await checkMateCheck();
-    await moveAi();
+    // await moveAi();
     return ok;
 }
 
@@ -66,102 +67,80 @@ async function makeMoves(springBootURL, imageUrlSquare1, requestData, piesaSquar
             let coordinates = square2.getAttribute("id");
             if (coordinates[0] === "0" || coordinates[0] === "7") {
 
+                let selectedImageSrc = null;
+
+                let imageContainer = document.createElement('div');
+                imageContainer.id = "promotePawn";
+                ["Queen", "Rook", "Bishop", "Knight"].forEach(piece => {
+
+                    let imgElement = document.createElement('img');
+                    imgElement.src = `../pieces/${colour}${piece}.png`;
+                    imgElement.addEventListener('click', function () {
+                        selectedImageSrc = imgElement.src;
+                    });
+                    imageContainer.appendChild(imgElement);
+                });
+                square2.parentNode.insertBefore(imageContainer, square2.nextSibling);
+
+
+                const imageSelectionPromise = new Promise((resolve) => {
+                    const imageClickHandler = function (event) {
+                        selectedImageSrc = event.target.src;
+                        imageContainer.removeEventListener('click', imageClickHandler);
+                        resolve();
+                    };
+
+                    imageContainer.addEventListener('click', imageClickHandler);
+                });
+                await imageSelectionPromise;
+
+                imageContainer.remove();
+                let newPiece = "";
+                if (selectedImageSrc.includes("Queen")) {
+                    newPiece = "Queen";
+                } else if (selectedImageSrc.includes("Rook")) {
+                    newPiece = "Rook";
+                } else if (selectedImageSrc.includes("Bishop")) {
+                    newPiece = "Bishop";
+                } else if (selectedImageSrc.includes("Knight")) {
+                    newPiece = "Horse";
+                }
+                const requestData = {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json"
+                    },
+                    body: JSON.stringify({
+                        gameId: localStorage.getItem('boardId'),
+                        start: square1.getAttribute("id"),
+                        end: square2.getAttribute("id"),
+                        pieceColour: colour,
+                        newPiece: newPiece
+                    })
+
+                };
                 const response1 = await fetch(springBootURL, requestData);
 
                 if (response1.ok) {
-                    let selectedImageSrc = null;
-                    let imageContainer = document.createElement('div');
-                    imageContainer.id = "promotePawn";
-
-                    ["Queen", "Rook", "Bishop", "Knight"].forEach(piece => {
-                        let imgElement = document.createElement('img');
-                        imgElement.src = `../pieces/${colour}${piece}.png`;
-                        imgElement.addEventListener('click', function () {
-                            selectedImageSrc = imgElement.src;
-                        });
-                        imageContainer.appendChild(imgElement);
-                    });
-
-
-                    square2.parentNode.insertBefore(imageContainer, square2.nextSibling);
-                    const imageSelectionPromise = new Promise((resolve) => {
-                        const imageClickHandler = function (event) {
-                            selectedImageSrc = event.target.src;
-                            imageContainer.removeEventListener('click', imageClickHandler);
-                            resolve();
-                        };
-
-                        imageContainer.addEventListener('click', imageClickHandler);
-                    });
-
-                    await imageSelectionPromise;
-                    imageContainer.remove();
-
-
-                    let newPiece = "";
-                    piesaSquare1 = "";
-                    if (selectedImageSrc.includes("Queen")) {
-                        newPiece = "Queen";
-                        piesaSquare1 = `${colour} queen`;
-                    } else if (selectedImageSrc.includes("Rook")) {
-                        newPiece = "Rook";
-                        piesaSquare1 = `${colour} rook`;
-                    } else if (selectedImageSrc.includes("Bishop")) {
-                        newPiece = "Bishop";
-                        piesaSquare1 = `${colour} bishop`;
-                    } else if (selectedImageSrc.includes("Knight")) {
-                        newPiece = "Horse";
-                        piesaSquare1 = `${colour} knight`;
-                    }
-
-                    let promotePawnUrl = baseUrl + "/move/promote";
-                    console.log(promotePawnUrl);
-                    let response4 = await fetch(promotePawnUrl, {
-                        method: "POST",
-                        headers: {
-                            "Content-Type": "application/json"
-                        },
-                        body: JSON.stringify({
-                            gameId: localStorage.getItem('boardId'),
-                            newPiece: newPiece,
-                            coordinates: square2.getAttribute("id")
-                        })
-                    });
-                    if (response4.ok) {
-                        square2.setAttribute('data-piesa', piesaSquare1);
-                        square2.querySelector('img').src = selectedImageSrc;
-
-                        square1.setAttribute('data-piesa', 'none');
-                        square1.querySelector('img').src = "";
-                        square1 = null;
-                        square2 = null;
-
-                        ok = 1;
-                        let res = await response4.text();
-
-                        updateMoveList(res);
-
-                        await checkMateCheck();
-                        await moveAi();
-                    }
+                    ok = 1;
+                    let gameId = localStorage.getItem("boardId");
+                    await boardSetter(response1, gameId);
+                    m++;
+                    moveNumber++;
+                    square1 = null;
+                    square2 = null;
+                    await checkMateCheck();
                 }
-
             }
+
         }
+        // }
         if (ok === 0) {
             const response1 = await fetch(springBootURL, requestData);
 
             if (response1.ok) {
-                square2.setAttribute('data-piesa', piesaSquare1);
-                square2.querySelector('img').src = imageUrlSquare1;
-
-                square1.setAttribute('data-piesa', 'none');
-                square1.querySelector('img').src = "";
-
-                let res = await response1.text();
-
-                updateMoveList(res);
-
+                let gameId = localStorage.getItem("boardId");
+                await boardSetter(response1, gameId);
                 m++;
                 moveNumber++;
                 square1 = null;
@@ -169,7 +148,7 @@ async function makeMoves(springBootURL, imageUrlSquare1, requestData, piesaSquar
 
                 await checkMateCheck();
 
-                await moveAi();
+                // await moveAi();
             } else {
                 square1 = null;
                 square2 = null;
@@ -182,6 +161,7 @@ async function makeMoves(springBootURL, imageUrlSquare1, requestData, piesaSquar
         console.error("Error:", error);
     }
 }
+
 function updateMoveList(res) {
     let ulElement = document.getElementById("courseContent");
     let newItem = document.createElement("li");
@@ -215,38 +195,8 @@ async function moveAi() {
         })
     });
     if (response3.ok) {
-        let bestMove = await response3.text();
-
-        let coordonates = bestMove.split(" ");
-        let coordonatesSquare1 = coordonates[0];
-        let coordonatesSquare2 = coordonates[1];
-
-        console.log(coordonatesSquare1 + " " + coordonatesSquare2);
-
-        square1 = document.getElementById(coordonatesSquare1);
-        square2 = document.getElementById(coordonatesSquare2);
-
-        imageUrlSquare1 = square1.querySelector('img').src;
-        piesaSquare1 = square1.querySelector("data-piesa");
-        square2.setAttribute('data-piesa', piesaSquare1);
-        square2.querySelector('img').src = imageUrlSquare1;
-
-        square1.setAttribute('data-piesa', 'none');
-        square1.querySelector('img').src = "";
-
-        square1 = null;
-        square2 = null;;
-
-        let lastLi = document.querySelector('#courseContent li:last-child');
-
-        let spanElement = lastLi.querySelector('span');
-
-        if (!spanElement) {
-            spanElement = document.createElement("span");
-            lastLi.appendChild(spanElement);
-        }
-
-        spanElement.textContent += " " + coordonates[2];
+        let gameId = localStorage.getItem("boardId");
+        await boardSetter(response3, gameId);
         await checkMateCheck();
 
     }

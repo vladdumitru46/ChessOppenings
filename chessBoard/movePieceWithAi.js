@@ -53,90 +53,96 @@ async function fetchData() {
     }
 }
 
+async function boardSetter(respone, gameId) {
+    let board = await respone.text();
+    let bb = board.split(" + ");
+    let whitesTurn = bb[1];
+    console.log("whites turn : " + whitesTurn);
+    board = bb[0].split('\n')
+    for (var row in board) {
+        let cell = board[row].split(",")
+        for (var c in cell) {
+            let ce = cell[c].split(" ")
+            // console.log(ce)
+            let element = document.getElementById(ce[0]);
+            if (ce.length > 2) {
+                element.setAttribute("data-piesa", ce[1] + " " + ce[2])
+                let piesa;
+                switch (ce[2]) {
+                    case "king":
+                        piesa = "King";
+                        break;
+                    case "queen":
+                        piesa = "Queen";
+                        break;
+                    case "rook":
+                        piesa = "Rook";
+                        break;
+                    case "bishop":
+                        piesa = "Bishop";
+                        break;
+                    case "knight":
+                        piesa = "Knight";
+                        break;
+                    case "pawn":
+                        piesa = "Pawn";
+                        break;
+                }
+                element.querySelector('img').src = "../pieces/" + ce[1] + piesa + ".png";
+
+            } else if (ce != '') {
+                element.setAttribute("data-piesa", ce[1]);
+                element.querySelector('img').src = "";
+            }
+        }
+    }
+
+    let response1 = await fetch(baseUrl + "/game/moves?gameId=" + gameId, null);
+    if (response1.ok) {
+        let r = await response1.text();
+        let moves = r.split(",")
+
+        let ulElement = document.getElementById("courseContent");
+        ulElement.innerHTML = "";
+        for (let i = 1; i < moves.length; i++) {
+            let newItem = document.createElement("li");
+
+            let spanElement = document.createElement("span");
+            let m = '';
+            if (moves[i].charAt(moves[i].length - 1) === ']') {
+                m = moves[i].slice(1, moves[i].length - 2);
+            } else {
+                m = moves[i].slice(1, moves[i].length - 1);
+            }
+            spanElement.textContent = m;
+
+            newItem.addEventListener("click", function () {
+                let orderNumber = Array.from(this.parentElement.children).indexOf(this) + 1;
+                getMovesHistory(orderNumber)
+            });
+
+            newItem.appendChild(spanElement);
+            ulElement.appendChild(newItem);
+        }
+
+        let gameId = localStorage.getItem("boardId");
+        console.log(baseUrl + "/game/getMoveNumber?gameId=" + gameId)
+        let re = await fetch(baseUrl + "/game/getMoveNumber?gameId=" + gameId, null);
+        if (re.ok) {
+            moveNumber = await re.text();
+        }
+    }
+    if (whitesTurn == "false") {
+        console.log("aici")
+        await moveAi();
+    }
+}
+
 async function setBoard() {
     let gameId = localStorage.getItem("boardId");
     let respone = await fetch(baseUrl + "/board/getBoardConfiguration?gameId=" + gameId, null);
     if (respone.ok) {
-        let board = await respone.text();
-        let bb = board.split(" + ");
-        let whitesTurn = bb[1];
-        console.log("whites turn : " + whitesTurn);
-        board = bb[0].split('\n')
-        for (var row in board) {
-            let cell = board[row].split(",")
-            for (var c in cell) {
-                let ce = cell[c].split(" ")
-                // console.log(ce)
-                let element = document.getElementById(ce[0]);
-                if (ce.length > 2) {
-                    element.setAttribute("data-piesa", ce[1] + " " + ce[2])
-                    let piesa;
-                    switch (ce[2]) {
-                        case "king":
-                            piesa = "King";
-                            break;
-                        case "queen":
-                            piesa = "Queen";
-                            break;
-                        case "rook":
-                            piesa = "Rook";
-                            break;
-                        case "bishop":
-                            piesa = "Bishop";
-                            break;
-                        case "knight":
-                            piesa = "Knight";
-                            break;
-                        case "pawn":
-                            piesa = "Pawn";
-                            break;
-                    }
-                    element.querySelector('img').src = "../pieces/" + ce[1] + piesa + ".png";
-
-                } else if (ce != '') {
-                    element.setAttribute("data-piesa", ce[1]);
-                    element.querySelector('img').src = "";
-                }
-            }
-        }
-
-        let response1 = await fetch(baseUrl + "/game/moves?gameId=" + gameId, null);
-        if (response1.ok) {
-            let r = await response1.text();
-            let moves = r.split(",")
-
-            for (let i = 1; i < moves.length; i++) {
-                let ulElement = document.getElementById("courseContent");
-                let newItem = document.createElement("li");
-
-                let spanElement = document.createElement("span");
-                let m = '';
-                if (moves[i].charAt(moves[i].length - 1) === ']') {
-                    m = moves[i].slice(1, moves[i].length - 2);
-                } else {
-                    m = moves[i].slice(1, moves[i].length - 1);
-                }
-                spanElement.textContent = m;
-
-                newItem.addEventListener("click", function () {
-                    let orderNumber = Array.from(this.parentElement.children).indexOf(this) + 1;
-                    getMovesHistory(orderNumber)
-                });
-
-                newItem.appendChild(spanElement);
-                ulElement.appendChild(newItem);
-            }
-
-            let gameId = localStorage.getItem("boardId");
-            console.log(baseUrl + "/game/getMoveNumber?gameId=" + gameId)
-            let re = await fetch(baseUrl + "/game/getMoveNumber?gameId=" + gameId, null);
-            if (re.ok) {
-                moveNumber = await re.text();
-            }
-        }
-        if (whitesTurn == "false") {
-            await moveAi();
-        }
+        await boardSetter(respone, gameId);
     }
 
 }
