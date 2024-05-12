@@ -4,13 +4,11 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="75b936ac-d5b0-4178-bee6-f97885357906" name="Changes" comment="made ai better">
+    <list default="true" id="75b936ac-d5b0-4178-bee6-f97885357906" name="Changes" comment="made promotion logic and castiling for ai">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Persistence/src/main/java/org/example/repositoryes/pieces/KingRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/Persistence/src/main/java/org/example/repositoryes/pieces/KingRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Persistence/src/main/java/org/example/repositoryes/pieces/PawnRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/Persistence/src/main/java/org/example/repositoryes/pieces/PawnRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ai/src/main/java/org/example/miniMax/MiniMax.java" beforeDir="false" afterPath="$PROJECT_DIR$/ai/src/main/java/org/example/miniMax/MiniMax.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/core/src/main/java/org/example/controllers/AiController.java" beforeDir="false" afterPath="$PROJECT_DIR$/core/src/main/java/org/example/controllers/AiController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ai/src/main/java/org/example/miniMax/score/Evaluation.java" beforeDir="false" afterPath="$PROJECT_DIR$/ai/src/main/java/org/example/miniMax/score/Evaluation.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/core/src/main/java/org/example/controllers/MovePiecesController.java" beforeDir="false" afterPath="$PROJECT_DIR$/core/src/main/java/org/example/controllers/MovePiecesController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/src/main/java/org/example/requests/PromotePawn.java" beforeDir="false" afterPath="$PROJECT_DIR$/core/src/main/java/org/example/requests/PromotePawn.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/core/src/test/java/org/example/MovePieceTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/core/src/test/java/org/example/MovePieceTest.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/server/src/main/java/org/example/score/MobilityScore.java" beforeDir="false" afterPath="$PROJECT_DIR$/server/src/main/java/org/example/score/MobilityScore.java" afterDir="false" />
     </list>
@@ -200,7 +198,7 @@
       <workItem from="1712410422860" duration="11000" />
       <workItem from="1712485050201" duration="845000" />
       <workItem from="1713251958020" duration="322000" />
-      <workItem from="1715507251608" duration="3628000" />
+      <workItem from="1715507251608" duration="5513000" />
     </task>
     <task id="LOCAL-00001" summary="tried to add a cloud instance for db, on a computer it works, on other one does not, added history for moves, improved ai">
       <option name="closed" value="true" />
@@ -266,7 +264,15 @@
       <option name="project" value="LOCAL" />
       <updated>1715507331902</updated>
     </task>
-    <option name="localTasksCounter" value="9" />
+    <task id="LOCAL-00009" summary="made promotion logic and castiling for ai">
+      <option name="closed" value="true" />
+      <created>1715511007198</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1715511007198</updated>
+    </task>
+    <option name="localTasksCounter" value="10" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -278,78 +284,16 @@
     <MESSAGE value="added move forward and backwards, fixed problem when moving a new piece not showing the latest version of the table" />
     <MESSAGE value="added unitests" />
     <MESSAGE value="made ai better" />
-    <option name="LAST_COMMIT_MESSAGE" value="made ai better" />
+    <MESSAGE value="made promotion logic and castiling for ai" />
+    <option name="LAST_COMMIT_MESSAGE" value="made promotion logic and castiling for ai" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
       <breakpoints>
         <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/ai/src/main/java/org/example/miniMax/MiniMax.java</url>
-          <line>59</line>
-          <option name="timeStamp" value="50" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/ai/src/main/java/org/example/miniMax/MiniMax.java</url>
-          <line>103</line>
-          <option name="timeStamp" value="52" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/ai/src/main/java/org/example/miniMax/score/Evaluation.java</url>
-          <line>34</line>
-          <option name="timeStamp" value="53" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/ai/src/main/java/org/example/miniMax/score/Evaluation.java</url>
-          <line>39</line>
-          <option name="timeStamp" value="55" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/ai/src/main/java/org/example/miniMax/score/Evaluation.java</url>
-          <line>72</line>
-          <option name="timeStamp" value="56" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/ai/src/main/java/org/example/miniMax/score/Evaluation.java</url>
-          <line>77</line>
-          <option name="timeStamp" value="57" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/server/src/main/java/org/example/score/MobilityScore.java</url>
-          <line>91</line>
-          <option name="timeStamp" value="65" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/Persistence/src/main/java/org/example/repositoryes/pieces/PawnRepository.java</url>
           <line>96</line>
           <option name="timeStamp" value="66" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/ai/src/main/java/org/example/miniMax/MiniMax.java</url>
-          <line>53</line>
-          <properties>
-            <option name="lambda-ordinal" value="-1" />
-          </properties>
-          <option name="timeStamp" value="71" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/ai/src/main/java/org/example/miniMax/MiniMax.java</url>
-          <line>80</line>
-          <option name="timeStamp" value="72" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/core/src/main/java/org/example/controllers/GameController.java</url>
-          <line>63</line>
-          <option name="timeStamp" value="73" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/core/src/main/java/org/example/controllers/GameController.java</url>
-          <line>71</line>
-          <option name="timeStamp" value="74" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/core/src/main/java/org/example/controllers/GameController.java</url>
-          <line>68</line>
-          <option name="timeStamp" value="75" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>

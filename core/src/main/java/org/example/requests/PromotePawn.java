@@ -1,5 +1,5 @@
 package org.example.requests;
 
-public record PromotePawn(Integer gameId, String newPiece, String coordinates) {
+public record PromotePawn(String gameId, String start, String end, String pieceColour, String newPiece) {
 
 }

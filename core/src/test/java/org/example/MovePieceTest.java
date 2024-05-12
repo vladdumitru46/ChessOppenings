@@ -37,24 +37,26 @@ public class MovePieceTest {
 //        String a = "14 34;64 44, 05 14;73 46, 14 05;46 24, 15 24;75 31, 05 14;76 55, 14 05;71 52, 05 14;52 33, 14 05;67 47, 05 32;74 75, 32 05;33 12, 03 12;31 13, 12 13;75 76, 05 32;63 43, 32 43;72 54, 43 54;65 54, 13 73;70 73, 02 13;55 34, 13 22;73 63, 22 31;66 46, 31 42;";
 //        System.out.println(a.length());
         try {
-//            Board board = new Board();
-//            for (int i = 0; i < 8; i++) {
-//                for (int j = 0; j < 8; j++) {
-//                    board.getCellOnTheBoardMap()[i][j] = new CellOnTheBoard(null, i, j);
-//                }
-//            }
+            Board board = new Board();
+            for (int i = 0; i < 8; i++) {
+                for (int j = 0; j < 8; j++) {
+                    board.getCellOnTheBoardMap()[i][j] = new CellOnTheBoard(null, i, j);
+                }
+            }
 //            board.getCellOnTheBoardMap()[7][0].setPieces(new Rook(false));
-//            board.getCellOnTheBoardMap()[7][4].setPieces(new King(false));
-//            board.getCellOnTheBoardMap()[0][0].setPieces(new King(true));
-//
-//            int bid = boardService.save(board);
-//
-//            Game game = new Game(1, bid, GameStatus.STARTED);
-//            gameService.addANewGame(game);
+            board.getCellOnTheBoardMap()[7][4].setPieces(new King(false));
+            board.getCellOnTheBoardMap()[0][0].setPieces(new King(true));
 
-            board = boardService.findById(19);
-//            System.out.println(board);
-            mobilityScore.getAllPossibleMoves(board, false).forEach(System.out::println);
+            board.getCellOnTheBoardMap()[6][2].setPieces(new Pawn(true));
+
+            int bid = boardService.save(board);
+
+            Game game = new Game(1, bid, GameStatus.STARTED);
+            gameService.addANewGame(game);
+
+//            board = boardService.findById(19);
+////            System.out.println(board);
+//            mobilityScore.getAllPossibleMoves(board, false).forEach(System.out::println);
         } catch (Exception e) {
             throw new RuntimeException(e);
         }

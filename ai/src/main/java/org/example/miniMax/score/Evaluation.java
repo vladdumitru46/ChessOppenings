@@ -26,31 +26,19 @@ public class Evaluation {
     }
 
     public int evaluationScore(Board board) {
-        int sw = score(board, true);
-        int sb = score(board, false);
-        return sw - sb;
+        return score(board, true) - score(board, false);
     }
 
-    //endgameBonus
     private int score(Board board, boolean isWhite) {
-        int m = mobility(board, isWhite);
-        int k = kingThreats(board, isWhite);
-        int p = pawnStructure(board, isWhite);
-        int a = attacks(board, isWhite);
-        int ap = attacksPenalty(board, isWhite);
-        int cc = centerControl(board, isWhite);
-        int d = developmentBonus(board, isWhite);
-        int q = queenLossPenalty(board, isWhite);
-        int bb = board.getTotalPoints(isWhite) * Bonuses.PIECES_BONUS;
-        return m
-                + k
-                + p
-                + a
-                + ap
-                + cc
-                + d
-                + q
-                + bb;
+        return mobility(board, isWhite)
+                + kingThreats(board, isWhite)
+                + pawnStructure(board, isWhite)
+                + attacks(board, isWhite)
+                + attacksPenalty(board, isWhite)
+                + centerControl(board, isWhite)
+                + developmentBonus(board, isWhite)
+                + queenLossPenalty(board, isWhite)
+                + board.getTotalPoints(isWhite) * Bonuses.PIECES_BONUS;
     }
 
     private int mobility(Board board, boolean isWhite) {
@@ -59,7 +47,6 @@ public class Evaluation {
     }
 
     private int mobilityRatio(Board board, boolean isWhite) {
-//        int ms = ();
         return mobilityScore.getAllPossibleMoves(board, isWhite).size();
     }
 

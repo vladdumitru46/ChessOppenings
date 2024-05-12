@@ -297,32 +297,59 @@ public class MovePiecesController {
     }
 
     @PostMapping("/pawn")
-    public ResponseEntity<?> movePawn(@RequestBody MovePiecesRequest movePiecesRequest) {
+    public ResponseEntity<?> movePawn(@RequestBody PromotePawn promotePawn) {
         Board board;
         Game game;
         try {
-            game = gameService.getGameById(Integer.valueOf(movePiecesRequest.gameId()));
+            game = gameService.getGameById(Integer.valueOf(promotePawn.gameId()));
             board = boardService.findById(game.getBoardId());
         } catch (Exception e) {
             return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
         }
-        String start = movePiecesRequest.start();
+        String start = promotePawn.start();
         int startLine = start.charAt(0) - '0';
         int startColumn = start.charAt(1) - '0';
-        String end1 = movePiecesRequest.end();
+        String end1 = promotePawn.end();
         int endLine = end1.charAt(0) - '0';
         int endColumn = end1.charAt(1) - '0';
 
-        boolean colour = Objects.equals(movePiecesRequest.pieceColour(), "white");
+        boolean colour = Objects.equals(promotePawn.pieceColour(), "white");
         if (game.isWhitesTurn() == colour) {
             CellOnTheBoard startCell = board.getCellOnTheBoardMap()[startLine][startColumn];
             CellOnTheBoard endCell = board.getCellOnTheBoardMap()[endLine][endColumn];
+            String notation = "";
             if (pieceService.canThePawnPromote(board, startCell, endCell)) {
+                String move = pieceService.transformMoveToCorrectNotation(startCell, endCell, board);
+                switch (promotePawn.newPiece()) {
+                    case "Queen" -> {
+                        startCell.setPieces(new Queen(startCell.getPieces().isWhite()));
+                        notation += "=Q";
+                    }
+                    case "Rook" -> {
+                        startCell.setPieces(new Rook(startCell.getPieces().isWhite()));
+                        notation += "=R";
+                    }
+                    case "Bishop" -> {
+                        startCell.setPieces(new Bishop(startCell.getPieces().isWhite()));
+                        notation += "=B";
+                    }
+                    case "Knight" -> {
+                        startCell.setPieces(new Knight(startCell.getPieces().isWhite()));
+                        notation += "=N";
+                    }
+                }
+                move += notation;
                 pieceService.makeMove(board, new Move(startCell, endCell));
-                setMoveAsString(game, new Move(startCell, endCell), "");
+                if (colour) {
+                    game.setWhiteMove(game.getWhiteMove() + ", " + move);
+                } else {
+                    game.setBlackMove(game.getBlackMove() + ", " + move);
+                    game.setMoveNumber(game.getMoveNumber() + 1);
+                }
+                setMoveAsString(game, new Move(startCell, endCell), promotePawn.newPiece());
                 game.setWhitesTurn(!colour);
                 boardService.updateBoard(board);
-                return new ResponseEntity<>(HttpStatus.OK);
+                return new ResponseEntity<>(board + " + " + game.isWhitesTurn(), HttpStatus.OK);
             } else {
                 if (pieceService.canThePawnMove(board, startCell, endCell, (Pawn) startCell.getPieces())) {
                     String move = pieceService.transformMoveToCorrectNotation(startCell, endCell, board);
@@ -344,54 +371,6 @@ public class MovePiecesController {
             }
         }
         return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-    }
-
-    @PostMapping("/promote")
-    public ResponseEntity<?> promotePawn(@RequestBody PromotePawn promotePawn) {
-        Board board;
-        Game game;
-        try {
-            game = gameService.getGameById(promotePawn.gameId());
-            board = boardService.findById(game.getBoardId());
-        } catch (Exception e) {
-            return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
-        }
-        int line = Integer.parseInt(String.valueOf(promotePawn.coordinates().charAt(0)));
-        int column = Integer.parseInt(String.valueOf(promotePawn.coordinates().charAt(1)));
-
-        CellOnTheBoard pawn = board.getCellOnTheBoardMap()[line][column];
-        String notation = pieceService.transformColumnToLetters(pawn);
-        notation += (column + 1);
-        switch (promotePawn.newPiece()) {
-            case "Queen" -> {
-                pawn.setPieces(new Queen(pawn.getPieces().isWhite()));
-                notation += "=Q";
-            }
-            case "Rook" -> {
-                pawn.setPieces(new Rook(pawn.getPieces().isWhite()));
-                notation += "=R";
-            }
-            case "Bishop" -> {
-                pawn.setPieces(new Bishop(pawn.getPieces().isWhite()));
-                notation += "=B";
-            }
-            case "Knight" -> {
-                pawn.setPieces(new Knight(pawn.getPieces().isWhite()));
-                notation += "=N";
-            }
-        }
-        String move = game.getMoves();
-        char lastChar = move.charAt(move.length() - 1);
-        StringBuilder newMove = new StringBuilder();
-        for (int i = 0; i < move.length() - 1; i++) {
-            newMove.append(move.charAt(i));
-        }
-        newMove.append(" ").append(promotePawn.newPiece()).append(lastChar);
-        game.setMoves(newMove.toString());
-        board.getCellOnTheBoardMap()[line][column].setPieces(pawn.getPieces());
-        gameService.updateGame(game);
-        boardService.updateBoard(board);
-        return new ResponseEntity<>(notation, HttpStatus.OK);
     }
 
 
