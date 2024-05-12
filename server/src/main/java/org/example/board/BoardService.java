@@ -30,7 +30,6 @@ public class BoardService {
 
     @Transactional
     public void updateBoard(Board board) {
-//        boardRepository.update(board.getId(), board.getCellOnTheBoardMap(), board.isWhitesTurn());
         board.setCellOnTheBoardMap(board.getCellOnTheBoardMap());
     }
 

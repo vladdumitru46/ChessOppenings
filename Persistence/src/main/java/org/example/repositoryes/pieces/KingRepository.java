@@ -10,7 +10,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Repository;
 
 import java.util.Arrays;
-import java.util.stream.IntStream;
 
 @Repository
 public class KingRepository implements IKingRepository {
@@ -66,14 +65,6 @@ public class KingRepository implements IKingRepository {
             }
         }
         return false;
-    }
-
-    @Override
-    public int getNrOfMoves(Board board, CellOnTheBoard cell, int nr) {
-        return Math.toIntExact(IntStream.range(0, 8)
-                .flatMap(i -> IntStream.range(0, 8)
-                        .filter(j -> canMove(board, cell, board.getCellOnTheBoardMap()[i][j], (King) cell.getPieces())))
-                .count());
     }
 
     @Override

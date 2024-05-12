@@ -2,7 +2,6 @@ package org.example.controllers;
 
 import com.example.models.player.Player;
 import lombok.AllArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 import org.example.data.Data;
 import org.example.player.PlayerService;
 import org.example.requests.UpdatePlayerRequest;

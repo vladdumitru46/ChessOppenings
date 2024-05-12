@@ -8,8 +8,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Repository;
 
-import java.util.stream.IntStream;
-
 @Repository
 public non-sealed class KnightRepository implements IRepository<Knight> {
     Logger logger = LoggerFactory.getLogger(KnightRepository.class);
@@ -35,14 +33,6 @@ public non-sealed class KnightRepository implements IRepository<Knight> {
         }
         KingRepository kingRepository = new KingRepository();
         return kingRepository.checkIfTheKingIsInCheckAfterMove(board, start, end, pieces.isWhite());
-    }
-
-    @Override
-    public int getNrOfMoves(Board board, CellOnTheBoard cell, int nr) {
-        return Math.toIntExact(IntStream.range(0, 8)
-                .flatMap(i -> IntStream.range(0, 8)
-                        .filter(j -> canMove(board, cell, board.getCellOnTheBoardMap()[i][j], (Knight) cell.getPieces())))
-                .count());
     }
 
 }

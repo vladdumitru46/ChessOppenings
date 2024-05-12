@@ -5,9 +5,11 @@ import com.example.models.board.CellOnTheBoard;
 import com.example.models.board.Move;
 import com.example.models.game.Game;
 import com.example.models.game.GameStatus;
-import com.example.models.pieces.*;
+import com.example.models.pieces.Bishop;
+import com.example.models.pieces.Knight;
+import com.example.models.pieces.Queen;
+import com.example.models.pieces.Rook;
 import com.example.models.player.Player;
-import jakarta.persistence.criteria.CriteriaBuilder;
 import lombok.AllArgsConstructor;
 import org.example.board.BoardService;
 import org.example.board.PieceService;
@@ -76,8 +78,7 @@ public class GameController {
         }
     }
 
-    //TODO: make a move forward + see how you can make it so you can go until the start of the game with move before
-    @GetMapping("/moveBefore")
+     @GetMapping("/moveBefore")
     public ResponseEntity<?> getMoveBefore(@RequestParam int gameId, @RequestParam int moveNumber) {
         try {
             Game game = gameService.getGameById(gameId);

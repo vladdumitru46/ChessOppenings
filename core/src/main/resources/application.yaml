@@ -31,5 +31,5 @@ spring:
 
 custom:
   numberOfThreads: 4
-  depthForAi: 3
+  depthForAi: 1
   emailFrom: vladdumitru46@yahoo.com

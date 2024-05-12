@@ -2,7 +2,6 @@ package org.example.controllers;
 
 import com.example.models.courses.SubCourse;
 import lombok.AllArgsConstructor;
-import lombok.Getter;
 import org.example.course.SubCourseService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

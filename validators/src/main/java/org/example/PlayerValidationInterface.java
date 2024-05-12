@@ -8,8 +8,15 @@ import java.util.regex.Pattern;
 
 public interface PlayerValidationInterface extends Function<Player, ValidationResult> {
 
+    default PlayerValidationInterface and(PlayerValidationInterface other) {
+        return player -> {
+            ValidationResult result = this.apply(player);
+            return result.equals(ValidationResult.SUCCESS) ? other.apply(player) : result;
+        };
+    }
 
     String EMAIL_REGEX = "^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\\.[A-Z|a-z]{2,6}$";
+
     Pattern EMAIL_PATTERN = Pattern.compile(EMAIL_REGEX);
 
     static PlayerValidationInterface isEmailValid() {
@@ -29,8 +36,8 @@ public interface PlayerValidationInterface extends Function<Player, ValidationRe
             return ValidationResult.SUCCESS;
         };
     }
-
     String PASSWORD_REGEX = "^(?=.*[A-Z])(?=.*\\d)(?=.*[@$!%*?&])[A-Za-z\\d@$!%*?&]{8,}$";
+
     Pattern PASSWORD_PATTERN = Pattern.compile(PASSWORD_REGEX);
 
     static PlayerValidationInterface isPasswordValid() {
@@ -60,11 +67,4 @@ public interface PlayerValidationInterface extends Function<Player, ValidationRe
         };
     }
 
-
-    default PlayerValidationInterface and(PlayerValidationInterface other) {
-        return player -> {
-            ValidationResult result = this.apply(player);
-            return result.equals(ValidationResult.SUCCESS) ? other.apply(player) : result;
-        };
-    }
 }

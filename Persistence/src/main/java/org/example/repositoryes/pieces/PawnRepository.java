@@ -9,8 +9,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Repository;
 
-import java.util.stream.IntStream;
-
 @Repository
 public non-sealed class PawnRepository implements IRepository<Pawn> {
     Logger logger = LoggerFactory.getLogger(PawnRepository.class);
@@ -63,14 +61,6 @@ public non-sealed class PawnRepository implements IRepository<Pawn> {
         }
         KingRepository kingRepository = new KingRepository();
         return kingRepository.checkIfTheKingIsInCheckAfterMove(board, start, end, pawn.isWhite());
-    }
-
-    @Override
-    public int getNrOfMoves(Board board, CellOnTheBoard cell, int nr) {
-        return Math.toIntExact(IntStream.range(0, 8)
-                .flatMap(i -> IntStream.range(0, 8)
-                        .filter(j -> canMove(board, cell, board.getCellOnTheBoardMap()[i][j], (Pawn) cell.getPieces())))
-                .count());
     }
 
     private boolean canAttackOtherPiece(Board board, CellOnTheBoard start, CellOnTheBoard end, Pawn pawn) {

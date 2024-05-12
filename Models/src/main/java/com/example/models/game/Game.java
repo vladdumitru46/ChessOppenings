@@ -74,7 +74,10 @@ public class Game {
     private GameStatus gameStatus;
 
     @Column(
-            name = "moves"
+            name = "moves",
+            columnDefinition = "TEXT",
+            length = 2048
+
     )
     private String moves = "";
 

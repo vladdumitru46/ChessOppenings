@@ -110,21 +110,21 @@ public class MobilityScore {
         pawnPromotion.put("queen", false);
         int i = 0;
         while (i < 4) {
-            CellOnTheBoard piecesOnStart = new CellOnTheBoard(null, startCell.getLineCoordinate(), startCell.getColumnCoordinate());
+            CellOnTheBoard newPieceOnEnd = new CellOnTheBoard(null, startCell.getLineCoordinate(), startCell.getColumnCoordinate());
             if (!pawnPromotion.get("knight")) {
-                piecesOnStart.setPieces(new Knight(startCell.getPieces().isWhite()));
+                newPieceOnEnd.setPieces(new Knight(startCell.getPieces().isWhite()));
                 pawnPromotion.put("knight", true);
             } else if (!pawnPromotion.get("bishop")) {
-                piecesOnStart.setPieces(new Bishop(startCell.getPieces().isWhite()));
+                newPieceOnEnd.setPieces(new Bishop(startCell.getPieces().isWhite()));
                 pawnPromotion.put("bishop", true);
             } else if (!pawnPromotion.get("rook")) {
-                piecesOnStart.setPieces(new Rook(startCell.getPieces().isWhite()));
+                newPieceOnEnd.setPieces(new Rook(startCell.getPieces().isWhite()));
                 pawnPromotion.put("rook", true);
             } else if (!pawnPromotion.get("queen")) {
-                piecesOnStart.setPieces(new Queen(startCell.getPieces().isWhite()));
+                newPieceOnEnd.setPieces(new Queen(startCell.getPieces().isWhite()));
                 pawnPromotion.put("queen", true);
             }
-            promotePawnsList.add(new Move(piecesOnStart, endCell));
+            promotePawnsList.add(new Move(startCell, newPieceOnEnd));
             i++;
         }
         return promotePawnsList;

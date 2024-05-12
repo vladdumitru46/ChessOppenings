@@ -24,7 +24,6 @@ public class LogInController {
     private ResponseEntity<?> logIn(@RequestBody LogInRequest logInRequest) {
 
         try {
-//            Player player = playerService.searchPlayerByEmailAndPassword(logInRequest.getEmail(), logInRequest.getPassword());
             playerService.logIn(logInRequest.email(), logInRequest.password());
             return new ResponseEntity<>(generateToken(logInRequest.email()), HttpStatus.OK);
         } catch (Exception e) {

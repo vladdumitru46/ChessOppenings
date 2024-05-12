@@ -1,6 +1,8 @@
 package org.example.miniMax.score;
 
 import com.example.models.board.Board;
+import com.example.models.board.Move;
+import com.example.models.pieces.Pieces;
 import org.example.miniMax.score.bonusesAndPenalties.Penalties;
 import org.example.miniMax.score.bonusesAndPenalties.Bonuses;
 import org.example.score.*;
@@ -23,28 +25,42 @@ public class Evaluation {
         this.pawnStructureScore = pawnStructureScore;
     }
 
-    public double evaluationScore(Board board, int points) {
-        return score(board, true, points) - score(board, false, points);
+    public int evaluationScore(Board board) {
+        int sw = score(board, true);
+        int sb = score(board, false);
+        return sw - sb;
     }
 
     //endgameBonus
-    private double score(Board board, boolean isWhite, int points) {
-        return mobility(board, isWhite)
-                + kingThreats(board, isWhite)
-                + pawnStructure(board, isWhite)
-                + attacks(board, isWhite, points)
-                + attacksPenalty(board, isWhite)
-                + centerControl(board, isWhite)
-                + developmentBonus(board, isWhite)
-                + board.getTotalPoints(isWhite) * Bonuses.PIECES_BONUS;
+    private int score(Board board, boolean isWhite) {
+        int m = mobility(board, isWhite);
+        int k = kingThreats(board, isWhite);
+        int p = pawnStructure(board, isWhite);
+        int a = attacks(board, isWhite);
+        int ap = attacksPenalty(board, isWhite);
+        int cc = centerControl(board, isWhite);
+        int d = developmentBonus(board, isWhite);
+        int q = queenLossPenalty(board, isWhite);
+        int bb = board.getTotalPoints(isWhite) * Bonuses.PIECES_BONUS;
+        return m
+                + k
+                + p
+                + a
+                + ap
+                + cc
+                + d
+                + q
+                + bb;
     }
 
     private int mobility(Board board, boolean isWhite) {
-        return Bonuses.MOBILITY_BONUS * mobilityRatio(board, isWhite);
+        int mr = mobilityRatio(board, isWhite);
+        return Bonuses.MOBILITY_BONUS * mr;
     }
 
     private int mobilityRatio(Board board, boolean isWhite) {
-        return (int) ((mobilityScore.getAllPossibleMoves(board, isWhite).size() * 10f) / mobilityScore.getAllPossibleMoves(board, !isWhite).size());
+//        int ms = ();
+        return mobilityScore.getAllPossibleMoves(board, isWhite).size();
     }
 
     private int kingThreats(Board board, boolean isWhite) {
@@ -67,14 +83,29 @@ public class Evaluation {
         return pawnStructureScore.verifyIfThereAreDoublePawns(board, isWhite) * Penalties.DOUBLE_PAWN_PENALTY;
     }
 
-    private int attacks(Board board, boolean isWhite, int pointsBefore) {
-        int pointsNow = board.getTotalPoints(!isWhite);
-        return Bonuses.ATTACKED_PIECES_BONUS * capturePiecesScore.canAPieceBeCaptured(board, isWhite)
-                + pointsBefore > pointsNow ? Bonuses.CAPTURE_PIECES_BONUS * (pointsBefore - pointsNow) : 0;
+    private int attacks(Board board, boolean isWhite) {
+        int attackScore = 0;
+        for (var move : mobilityScore.getAllPossibleMoves(board, isWhite)) {
+            Pieces startPiece = move.getStart().getPieces();
+            Pieces endPiece = move.getEnd().getPieces();
+            if (endPiece != null) {
+                int protectedScore = protectedEnemyPiecePenalty(board, isWhite, move);
+                if (startPiece.getPoints() <= endPiece.getPoints() || protectedScore == 0) {
+                    attackScore += Bonuses.CAPTURE_PIECES_BONUS;
+                } else {
+                    attackScore += protectedScore;
+                }
+            }
+        }
+        return attackScore * Bonuses.ATTACKED_PIECES_BONUS;
     }
 
     private int attacksPenalty(Board board, boolean isWhite) {
         return Penalties.ATTACKED_PIECES_PENALTY * capturePiecesScore.canAPieceBeCaptured(board, !isWhite);
+    }
+
+    private int protectedEnemyPiecePenalty(Board board, boolean isWhite, Move move) {
+        return capturePiecesScore.isTheAttackedPieceProtected(board, isWhite, move) * Penalties.ProtectedEnemyPiecePenalty;
     }
 
     private int centerControl(Board board, boolean isWhite) {
@@ -83,6 +114,10 @@ public class Evaluation {
 
     private int developmentBonus(Board board, boolean isWhite) {
         return developmentScore.developmentBonus(board, isWhite) * Bonuses.DEVELOPMENT_BONUS;
+    }
+
+    private int queenLossPenalty(Board board, boolean isWhite) {
+        return capturePiecesScore.canTheQueenBeCaptured(board, isWhite) ? Penalties.QueenLossPenalty : 0;
     }
 }
 

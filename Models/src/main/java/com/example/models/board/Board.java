@@ -30,6 +30,7 @@ public class Board implements Serializable {
     )
     private Integer id;
 
+
     @Column(
             name = "cell_on_the_board_map",
             nullable = false,
