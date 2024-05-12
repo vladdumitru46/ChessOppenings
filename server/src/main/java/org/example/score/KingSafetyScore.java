@@ -10,28 +10,7 @@ import org.springframework.stereotype.Service;
 @Service("kingSafetyScore")
 @AllArgsConstructor
 public class KingSafetyScore {
-
-    private final KingRepository kingRepository;
     private final MobilityScore mobilityScore;
-
-    public Integer canTheKingBeCheckedInNextMove(Board board, boolean isWhite) {
-        for (int i = 0; i < 8; i++) {
-            for (int j = 0; j < 8; j++) {
-                CellOnTheBoard cell = board.getCellOnTheBoardMap()[i][j];
-                if (cell.getPieces() != null && cell.getPieces().isWhite() != isWhite) {
-                    for (int k = 0; k < 8; k++) {
-                        for (int l = 0; l < 8; l++) {
-                            if (kingRepository.checkIfTheKingIsInCheckAfterMove(board, cell,
-                                    board.getCellOnTheBoardMap()[k][l], isWhite)) {
-                                return 2;
-                            }
-                        }
-                    }
-                }
-            }
-        }
-        return 0;
-    }
 
     public boolean isTheEnemyKingInCheck(Board board, boolean isWhite) {
         King king = (King) board.getKing(isWhite).getPieces();

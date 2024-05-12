@@ -9,10 +9,8 @@ import lombok.AllArgsConstructor;
 import org.example.board.PieceService;
 import org.springframework.stereotype.Service;
 
-import java.lang.reflect.Array;
 import java.util.Arrays;
 import java.util.List;
-import java.util.stream.Stream;
 
 @Service("capturePieceScore")
 @AllArgsConstructor
@@ -28,13 +26,7 @@ public class CapturePiecesScore {
     }
 
     public int isTheAttackedPieceProtected(Board board, boolean isWhite, Move move) {
-        int numberOfProtectedPieces = 0;
-//        List<Move> listOfCaptureMoves = mobilityScore.getAllPossibleMoves(board, isWhite).stream()
-//                .filter(move -> move.getEnd().getPieces() != null)
-//                .toList();
-
-
-//        for (var attackingMove : listOfCaptureMoves) {
+        int numberOfProtectedPieces;
         Pieces piecesOnStart = move.getStart().getPieces();
         Pieces piecesOnEnd = move.getEnd().getPieces();
         pieceService.makeMove(board, move);
@@ -43,7 +35,6 @@ public class CapturePiecesScore {
                 .filter(defendigMove -> defendigMove.getEnd().equals(move.getEnd()))
                 .count();
         pieceService.undoMove(board, move, piecesOnStart, piecesOnEnd);
-//        }
         return numberOfProtectedPieces;
     }
 
