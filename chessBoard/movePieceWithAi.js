@@ -179,7 +179,7 @@ async function getPiece(square) {
     let ok = 0;
     if (square1 != null && square2 != null && square1.getAttribute('data-piesa') !== "none") {
 
-        if (square1.getAttribute('data-piesa').includes("king")) {
+        if (square1.getAttribute('data-piesa').includes("king") && square1.getAttribute("id") === "04") {
             const piesaSquare1 = square1.getAttribute('data-piesa');
             const imageUrlSquare1 = square1.querySelector('img').src;
             const atributes = piesaSquare1.split(' ');

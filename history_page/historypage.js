@@ -8,7 +8,7 @@ async function gameHisotry() {
         for (var i in gameList) {
             let game = gameList[i];
             let turn = game.whitesTurn ? "white" : "black";
-            let string = game.id + ". move: " + game.moveNumber + " turn: " + turn + " status: " + game.gameStatus;
+            let string =  "move: " + game.moveNumber + ", turn: " + turn + ", status: " + game.gameStatus;
             let newItem = document.createElement("li");
 
             newItem.id = game.id;

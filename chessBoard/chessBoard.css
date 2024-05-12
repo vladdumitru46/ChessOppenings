@@ -101,7 +101,7 @@ img {
 }
 
 #courseContent {
-    max-height: 60%;
+    max-height: 50%;
     overflow-y: auto;
     padding-top: 0;
     /* Elimină padding-ul implicit al listei */
