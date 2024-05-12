@@ -145,7 +145,8 @@ public class AiController {
                 setMoveAsString(game, move, action);
                 game.setWhitesTurn(!game.isWhitesTurn());
                 boardService.updateBoard(board);
-                return new ResponseEntity<>(moveToBePlayed, HttpStatus.OK);
+//                return new ResponseEntity<>(moveToBePlayed, HttpStatus.OK);
+                return new ResponseEntity<>(board + " + " + game.isWhitesTurn(), HttpStatus.OK);
             }
         }
         return null;

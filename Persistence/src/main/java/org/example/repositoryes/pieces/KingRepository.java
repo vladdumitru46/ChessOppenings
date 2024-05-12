@@ -107,6 +107,9 @@ public class KingRepository implements IKingRepository {
             if (king.isHasBeenMoved()) {
                 return false;
             }
+            if (end.getLineCoordinate() != start.getLineCoordinate()) {
+                return false;
+            }
             if (king.isWhite()) {
                 if (end.getColumnCoordinate() == 2) {
                     Pieces pieces = board.getCellOnTheBoardMap()[0][0].getPieces();

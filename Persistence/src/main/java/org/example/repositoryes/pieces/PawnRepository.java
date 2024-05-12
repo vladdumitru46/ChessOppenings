@@ -94,43 +94,54 @@ public non-sealed class PawnRepository implements IRepository<Pawn> {
     }
 
     public boolean canPromote(Board board, CellOnTheBoard start, CellOnTheBoard end) {
-        if (start.getPieces().isWhite()) {
-            if (start.getLineCoordinate() != 6) {
-                return false;
+//        if (start.getPieces().isWhite()) {
+//            if (start.getLineCoordinate() != 6) {
+//                return false;
+//            }
+//            if (end.getLineCoordinate() != 7) {
+//                return false;
+//            }
+//            if (start.getColumnCoordinate() != end.getColumnCoordinate()) {
+//                if(start.getColumnCoordinate()!=end.getColumnCoordinate() - 1){
+//                    if (start.getColumnCoordinate()!=end.getColumnCoordinate() + 1){
+//                        return false;
+//                    }
+//                }
+//            }
+//            if (end.getPieces() != null) {
+//                return false;
+//            }
+//            return true;
+//        }else{
+//            if (start.getLineCoordinate() != 1) {
+//                return false;
+//            }
+//            if (end.getLineCoordinate() != 0) {
+//                return false;
+//            }
+//            if (start.getColumnCoordinate() != end.getColumnCoordinate()) {
+//                if(start.getColumnCoordinate()!=end.getColumnCoordinate() - 1){
+//                    if (start.getColumnCoordinate()!=end.getColumnCoordinate() + 1){
+//                        return false;
+//                    }
+//                }
+//            }
+//            if (end.getPieces() != null) {
+//                return false;
+//            }
+//            return true;
+//        }
+        Pawn pawn = (Pawn) start.getPieces();
+        if (pawn.isWhite()) {
+            if (start.getLineCoordinate() == 6 && end.getLineCoordinate() == 7) {
+                return canMove(board, start, end, pawn);
             }
-            if (end.getLineCoordinate() != 7) {
-                return false;
+        } else {
+            if (start.getLineCoordinate() == 1 && end.getLineCoordinate() == 0) {
+                return canMove(board, start, end, pawn);
             }
-            if (start.getColumnCoordinate() != end.getColumnCoordinate()) {
-                if(start.getColumnCoordinate()!=end.getColumnCoordinate() - 1){
-                    if (start.getColumnCoordinate()!=end.getColumnCoordinate() + 1){
-                        return false;
-                    }
-                }
-            }
-            if (end.getPieces() != null) {
-                return false;
-            }
-            return true;
-        }else{
-            if (start.getLineCoordinate() != 1) {
-                return false;
-            }
-            if (end.getLineCoordinate() != 0) {
-                return false;
-            }
-            if (start.getColumnCoordinate() != end.getColumnCoordinate()) {
-                if(start.getColumnCoordinate()!=end.getColumnCoordinate() - 1){
-                    if (start.getColumnCoordinate()!=end.getColumnCoordinate() + 1){
-                        return false;
-                    }
-                }
-            }
-            if (end.getPieces() != null) {
-                return false;
-            }
-            return true;
         }
+        return false;
     }
 
 

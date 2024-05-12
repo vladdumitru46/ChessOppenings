@@ -31,42 +31,48 @@ public class MobilityScore {
 
         List<Move> moveList = new ArrayList<>();
         for (var piece : collect) {
-            for (int i = 0; i < 8; i++) {
-                for (int j = 0; j < 8; j++) {
-                    CellOnTheBoard endCell = board.getCellOnTheBoardMap()[i][j];
-                    if (piece != endCell) {
-                        int ok = 0;
-                        if (piece.getPieces() instanceof Pawn) {
-                            if (pawnRepository.canPromote(board, piece, endCell)) {
-                                moveList.addAll(promotePawns(piece, endCell));
-                                ok = 1;
-                            }
-                        }
-                        if (ok == 0) {
-                            if (possibleMovesForAPiece(board, piece, endCell)) {
-                                moveList.add(new Move(piece, endCell));
-                            }
-                        }
-
-                    }
-                }
-            }
+            getAllMoves(board, moveList, piece);
         }
         return moveList;
     }
 
+    private void getAllMoves(Board board, List<Move> moveList, CellOnTheBoard piece) {
+        for (int i = 0; i < 8; i++) {
+            for (int j = 0; j < 8; j++) {
+                CellOnTheBoard endCell = board.getCellOnTheBoardMap()[i][j];
+                if (piece != endCell) {
+                    int ok = 0;
+                    if (piece.getPieces() instanceof Pawn) {
+                        if (pawnRepository.canPromote(board, piece, endCell)) {
+                            moveList.addAll(promotePawns(piece, endCell));
+                            ok = 1;
+                        }
+                    }
+                    if (ok == 0) {
+                        if (possibleMovesForAPiece(board, piece, endCell)) {
+                            moveList.add(new Move(piece, endCell));
+                        }
+                    }
+
+                }
+            }
+        }
+    }
+
     //todo: castling for ai
     public boolean possibleMovesForAPiece(Board board, CellOnTheBoard startCell, CellOnTheBoard endCell) {
-
+        if(startCell.getPieces() instanceof King && endCell.getColumnCoordinate() == 2 && endCell.getLineCoordinate() == 7){
+            System.out.println("oshuofb");
+        }
         return switch (startCell.getPieces()) {
-//            case King ignored -> {
-//                if (!kingRepository.canMove(board, startCell, endCell, (King) startCell.getPieces())) {
-//                    yield kingRepository.canCastle(board, startCell, endCell, (King) startCell.getPieces());
-//                } else {
-//                    yield true;
-//                }
-//            }
-            case King ignored -> kingRepository.canMove(board, startCell, endCell, (King) startCell.getPieces());
+            case King ignored -> {
+                if (!kingRepository.canMove(board, startCell, endCell, (King) startCell.getPieces())) {
+                    yield kingRepository.canCastle(board, startCell, endCell, (King) startCell.getPieces());
+                } else {
+                    yield true;
+                }
+            }
+//            case King ignored -> kingRepository.canMove(board, startCell, endCell, (King) startCell.getPieces());
             case Queen ignored -> queenRepository.canMove(board, startCell, endCell, (Queen) startCell.getPieces());
             case Rook ignored -> rookRepository.canMove(board, startCell, endCell, (Rook) startCell.getPieces());
             case Bishop ignored -> bishopRepository.canMove(board, startCell, endCell, (Bishop) startCell.getPieces());
@@ -77,26 +83,7 @@ public class MobilityScore {
 
     public List<Move> getAllPossibleMovesForASpecificPiece(Board board, CellOnTheBoard startCell) {
         List<Move> moveList = new ArrayList<>();
-        for (int i = 0; i < 8; i++) {
-            for (int j = 0; j < 8; j++) {
-                CellOnTheBoard endCell = board.getCellOnTheBoardMap()[i][j];
-                if (startCell != endCell) {
-                    int ok = 0;
-                    if (startCell.getPieces() instanceof Pawn) {
-                        if (pawnRepository.canPromote(board, startCell, endCell)) {
-                            moveList.addAll(promotePawns(startCell, endCell));
-                            ok = 1;
-                        }
-                    }
-                    if (ok == 0) {
-                        if (possibleMovesForAPiece(board, startCell, endCell)) {
-                            moveList.add(new Move(startCell, endCell));
-                        }
-                    }
-
-                }
-            }
-        }
+        getAllMoves(board, moveList, startCell);
         return moveList;
     }
 
@@ -110,7 +97,7 @@ public class MobilityScore {
         pawnPromotion.put("queen", false);
         int i = 0;
         while (i < 4) {
-            CellOnTheBoard newPieceOnEnd = new CellOnTheBoard(null, startCell.getLineCoordinate(), startCell.getColumnCoordinate());
+            CellOnTheBoard newPieceOnEnd = new CellOnTheBoard(null, endCell.getLineCoordinate(), endCell.getColumnCoordinate());
             if (!pawnPromotion.get("knight")) {
                 newPieceOnEnd.setPieces(new Knight(startCell.getPieces().isWhite()));
                 pawnPromotion.put("knight", true);

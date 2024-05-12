@@ -69,7 +69,7 @@ public class MovePiecesController {
                 game.setWhitesTurn(!colour);
                 gameService.updateGame(game);
                 boardService.updateBoard(board);
-                return new ResponseEntity<>(move, HttpStatus.OK);
+                return new ResponseEntity<>(board + " + " + game.isWhitesTurn(), HttpStatus.OK);
             } else {
                 return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
             }
@@ -111,7 +111,7 @@ public class MovePiecesController {
                 game.setWhitesTurn(!colour);
                 boardService.updateBoard(board);
                 gameService.updateGame(game);
-                return new ResponseEntity<>(move, HttpStatus.OK);
+                return new ResponseEntity<>(board + " + " + game.isWhitesTurn(), HttpStatus.OK);
             } else {
                 return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
             }
@@ -154,7 +154,7 @@ public class MovePiecesController {
                 game.setWhitesTurn(!colour);
                 boardService.updateBoard(board);
                 gameService.updateGame(game);
-                return new ResponseEntity<>(move, HttpStatus.OK);
+                return new ResponseEntity<>(board + " + " + game.isWhitesTurn(), HttpStatus.OK);
             } else {
                 return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
             }
@@ -197,7 +197,7 @@ public class MovePiecesController {
                 game.setWhitesTurn(!colour);
                 boardService.updateBoard(board);
                 gameService.updateGame(game);
-                return new ResponseEntity<>(move, HttpStatus.OK);
+                return new ResponseEntity<>(board + " + " + game.isWhitesTurn(), HttpStatus.OK);
             } else {
                 return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
             }
@@ -245,7 +245,7 @@ public class MovePiecesController {
                 game.setWhitesTurn(!colour);
                 boardService.updateBoard(board);
                 gameService.updateGame(game);
-                return new ResponseEntity<>(move, HttpStatus.OK);
+                return new ResponseEntity<>(board + " + " + game.isWhitesTurn(), HttpStatus.OK);
             } else {
                 return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
             }
@@ -288,7 +288,7 @@ public class MovePiecesController {
                 game.setWhitesTurn(!colour);
                 boardService.updateBoard(board);
                 gameService.updateGame(game);
-                return new ResponseEntity<>(move, HttpStatus.OK);
+                return new ResponseEntity<>(board + " + " + game.isWhitesTurn(), HttpStatus.OK);
             } else {
                 return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
             }
@@ -337,7 +337,7 @@ public class MovePiecesController {
                     game.setWhitesTurn(!colour);
                     gameService.updateGame(game);
                     boardService.updateBoard(board);
-                    return new ResponseEntity<>(move, HttpStatus.OK);
+                    return new ResponseEntity<>(board + " + " + game.isWhitesTurn(), HttpStatus.OK);
                 } else {
                     return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
                 }

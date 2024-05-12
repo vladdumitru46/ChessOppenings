@@ -43,17 +43,17 @@ public class MovePieceTest {
 //                    board.getCellOnTheBoardMap()[i][j] = new CellOnTheBoard(null, i, j);
 //                }
 //            }
-//            board.getCellOnTheBoardMap()[1][1].setPieces(new Pawn(false));
-//            board.getCellOnTheBoardMap()[7][1].setPieces(new King(false));
-//            board.getCellOnTheBoardMap()[5][0].setPieces(new King(true));
-//            board.getCellOnTheBoardMap()[5][2].setPieces(new Queen(true));
+//            board.getCellOnTheBoardMap()[7][0].setPieces(new Rook(false));
+//            board.getCellOnTheBoardMap()[7][4].setPieces(new King(false));
+//            board.getCellOnTheBoardMap()[0][0].setPieces(new King(true));
 //
 //            int bid = boardService.save(board);
 //
-//            Game game = new Game(26, bid, GameStatus.STARTED);
+//            Game game = new Game(1, bid, GameStatus.STARTED);
 //            gameService.addANewGame(game);
 
-            board = boardService.findById(735);
+            board = boardService.findById(19);
+//            System.out.println(board);
             mobilityScore.getAllPossibleMoves(board, false).forEach(System.out::println);
         } catch (Exception e) {
             throw new RuntimeException(e);

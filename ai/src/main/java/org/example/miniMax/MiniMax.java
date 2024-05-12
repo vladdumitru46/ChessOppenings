@@ -51,9 +51,6 @@ public class MiniMax {
         if (moves.size() > 1) {
             try (ExecutorService executorService = Executors.newVirtualThreadPerTaskExecutor()) {
                 for (var move : moves) {
-                    if (move.getStart().getPieces() instanceof Queen && move.getEnd().getLineCoordinate() == 1) {
-                        System.out.println("SUGI");
-                    }
                     executorService.submit(() -> bestMove(alpha, beta, move));
                 }
             }
