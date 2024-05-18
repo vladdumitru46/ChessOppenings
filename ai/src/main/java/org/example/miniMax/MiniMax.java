@@ -58,7 +58,9 @@ public class MiniMax {
             list.sort(Map.Entry.comparingByKey());
             Map<Integer, Move> result = new LinkedHashMap<>();
             for (var entry : list) {
-                result.put(entry.getKey(), entry.getValue());
+                if (entry.getValue() != null) {
+                    result.put(entry.getKey(), entry.getValue());
+                }
             }
             Move m;
             result.forEach((e, k) -> System.out.println(e + " " + k));
