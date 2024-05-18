@@ -86,7 +86,6 @@ public class MiniMax {
         mapOfMoves.put(value, move);
     }
 
-    //TODO case for pawn promotion
     private synchronized int miniMax(int depth, int alpha, int beta, boolean isWhite) {
         King king = (King) board.getKing(!isWhite).getPieces();
         if (depth + 1 == 0) {

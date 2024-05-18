@@ -5,11 +5,141 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="75b936ac-d5b0-4178-bee6-f97885357906" name="Changes" comment="made promotion logic and castiling for ai">
-      <change afterPath="$PROJECT_DIR$/server/src/test/java/org/example/score/DevelopmentScoreTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/compiler.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/compiler.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/dataSources.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/encodings.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/encodings.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/jarRepositories.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/jarRepositories.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/modules.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/uiDesigner.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/uiDesigner.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Dockerfile" beforeDir="false" afterPath="$PROJECT_DIR$/Dockerfile" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Models.iml" beforeDir="false" afterPath="$PROJECT_DIR$/Models.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Models/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/Models/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Models/settings.xml" beforeDir="false" afterPath="$PROJECT_DIR$/Models/settings.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Models/src/main/java/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/Models/src/main/java/Main.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Models/src/main/java/com/example/models/board/Board.java" beforeDir="false" afterPath="$PROJECT_DIR$/Models/src/main/java/com/example/models/board/Board.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Models/src/main/java/com/example/models/board/CellOnTheBoard.java" beforeDir="false" afterPath="$PROJECT_DIR$/Models/src/main/java/com/example/models/board/CellOnTheBoard.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Models/src/main/java/com/example/models/board/Move.java" beforeDir="false" afterPath="$PROJECT_DIR$/Models/src/main/java/com/example/models/board/Move.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Models/src/main/java/com/example/models/courses/Course.java" beforeDir="false" afterPath="$PROJECT_DIR$/Models/src/main/java/com/example/models/courses/Course.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Models/src/main/java/com/example/models/courses/CourseStartedByPlayer.java" beforeDir="false" afterPath="$PROJECT_DIR$/Models/src/main/java/com/example/models/courses/CourseStartedByPlayer.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Models/src/main/java/com/example/models/courses/CourseStatus.java" beforeDir="false" afterPath="$PROJECT_DIR$/Models/src/main/java/com/example/models/courses/CourseStatus.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Models/src/main/java/com/example/models/courses/SubCourse.java" beforeDir="false" afterPath="$PROJECT_DIR$/Models/src/main/java/com/example/models/courses/SubCourse.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Models/src/main/java/com/example/models/game/Game.java" beforeDir="false" afterPath="$PROJECT_DIR$/Models/src/main/java/com/example/models/game/Game.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Models/src/main/java/com/example/models/game/GameStatus.java" beforeDir="false" afterPath="$PROJECT_DIR$/Models/src/main/java/com/example/models/game/GameStatus.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Models/src/main/java/com/example/models/pieces/Bishop.java" beforeDir="false" afterPath="$PROJECT_DIR$/Models/src/main/java/com/example/models/pieces/Bishop.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Models/src/main/java/com/example/models/pieces/King.java" beforeDir="false" afterPath="$PROJECT_DIR$/Models/src/main/java/com/example/models/pieces/King.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Models/src/main/java/com/example/models/pieces/Knight.java" beforeDir="false" afterPath="$PROJECT_DIR$/Models/src/main/java/com/example/models/pieces/Knight.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Models/src/main/java/com/example/models/pieces/Pawn.java" beforeDir="false" afterPath="$PROJECT_DIR$/Models/src/main/java/com/example/models/pieces/Pawn.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Models/src/main/java/com/example/models/pieces/Pieces.java" beforeDir="false" afterPath="$PROJECT_DIR$/Models/src/main/java/com/example/models/pieces/Pieces.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Models/src/main/java/com/example/models/pieces/Queen.java" beforeDir="false" afterPath="$PROJECT_DIR$/Models/src/main/java/com/example/models/pieces/Queen.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Models/src/main/java/com/example/models/pieces/Rook.java" beforeDir="false" afterPath="$PROJECT_DIR$/Models/src/main/java/com/example/models/pieces/Rook.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Models/src/main/java/com/example/models/player/Player.java" beforeDir="false" afterPath="$PROJECT_DIR$/Models/src/main/java/com/example/models/player/Player.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Models/src/main/java/com/example/models/player/registration/ConfirmationToken.java" beforeDir="false" afterPath="$PROJECT_DIR$/Models/src/main/java/com/example/models/player/registration/ConfirmationToken.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Persistence.iml" beforeDir="false" afterPath="$PROJECT_DIR$/Persistence.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Persistence/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/Persistence/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Persistence/settings.xml" beforeDir="false" afterPath="$PROJECT_DIR$/Persistence/settings.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Persistence/src/main/java/org/example/repositoryes/course/CourseRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/Persistence/src/main/java/org/example/repositoryes/course/CourseRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Persistence/src/main/java/org/example/repositoryes/course/CourseStartedByPlayerRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/Persistence/src/main/java/org/example/repositoryes/course/CourseStartedByPlayerRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Persistence/src/main/java/org/example/repositoryes/course/SubCourseRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/Persistence/src/main/java/org/example/repositoryes/course/SubCourseRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Persistence/src/main/java/org/example/repositoryes/game/BoardRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/Persistence/src/main/java/org/example/repositoryes/game/BoardRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Persistence/src/main/java/org/example/repositoryes/game/GameRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/Persistence/src/main/java/org/example/repositoryes/game/GameRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Persistence/src/main/java/org/example/repositoryes/pieces/BishopRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/Persistence/src/main/java/org/example/repositoryes/pieces/BishopRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Persistence/src/main/java/org/example/repositoryes/pieces/IKingRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/Persistence/src/main/java/org/example/repositoryes/pieces/IKingRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Persistence/src/main/java/org/example/repositoryes/pieces/IRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/Persistence/src/main/java/org/example/repositoryes/pieces/IRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Persistence/src/main/java/org/example/repositoryes/pieces/KingRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/Persistence/src/main/java/org/example/repositoryes/pieces/KingRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Persistence/src/main/java/org/example/repositoryes/pieces/KnightRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/Persistence/src/main/java/org/example/repositoryes/pieces/KnightRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Persistence/src/main/java/org/example/repositoryes/pieces/PawnRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/Persistence/src/main/java/org/example/repositoryes/pieces/PawnRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Persistence/src/main/java/org/example/repositoryes/pieces/QueenRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/Persistence/src/main/java/org/example/repositoryes/pieces/QueenRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Persistence/src/main/java/org/example/repositoryes/pieces/RookRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/Persistence/src/main/java/org/example/repositoryes/pieces/RookRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Persistence/src/main/java/org/example/repositoryes/player/ConfirmationTokenRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/Persistence/src/main/java/org/example/repositoryes/player/ConfirmationTokenRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Persistence/src/main/java/org/example/repositoryes/player/PlayerRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/Persistence/src/main/java/org/example/repositoryes/player/PlayerRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Persistence/src/test/java/org/example/repositoryes/pieces/BishopRepositoryTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/Persistence/src/test/java/org/example/repositoryes/pieces/BishopRepositoryTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Persistence/src/test/java/org/example/repositoryes/pieces/KingRepositoryTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/Persistence/src/test/java/org/example/repositoryes/pieces/KingRepositoryTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Persistence/src/test/java/org/example/repositoryes/pieces/KnightRepositoryTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/Persistence/src/test/java/org/example/repositoryes/pieces/KnightRepositoryTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Persistence/src/test/java/org/example/repositoryes/pieces/PawnRepositoryTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/Persistence/src/test/java/org/example/repositoryes/pieces/PawnRepositoryTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Persistence/src/test/java/org/example/repositoryes/pieces/QueenRepositoryTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/Persistence/src/test/java/org/example/repositoryes/pieces/QueenRepositoryTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Persistence/src/test/java/org/example/repositoryes/pieces/RookRepositoryTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/Persistence/src/test/java/org/example/repositoryes/pieces/RookRepositoryTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ai/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/ai/.gitignore" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ai/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/ai/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ai/src/main/java/org/example/miniMax/MiniMax.java" beforeDir="false" afterPath="$PROJECT_DIR$/ai/src/main/java/org/example/miniMax/MiniMax.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ai/src/main/java/org/example/miniMax/score/Evaluation.java" beforeDir="false" afterPath="$PROJECT_DIR$/ai/src/main/java/org/example/miniMax/score/Evaluation.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ai/src/main/java/org/example/miniMax/score/bonusesAndPenalties/Bonuses.java" beforeDir="false" afterPath="$PROJECT_DIR$/ai/src/main/java/org/example/miniMax/score/bonusesAndPenalties/Bonuses.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ai/src/main/java/org/example/miniMax/score/bonusesAndPenalties/Penalties.java" beforeDir="false" afterPath="$PROJECT_DIR$/ai/src/main/java/org/example/miniMax/score/bonusesAndPenalties/Penalties.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/compose.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/compose.yaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/core/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/settings.xml" beforeDir="false" afterPath="$PROJECT_DIR$/core/settings.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/src/main/java/org/example/MainApplication.java" beforeDir="false" afterPath="$PROJECT_DIR$/core/src/main/java/org/example/MainApplication.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/src/main/java/org/example/controllers/AiController.java" beforeDir="false" afterPath="$PROJECT_DIR$/core/src/main/java/org/example/controllers/AiController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/src/main/java/org/example/controllers/BoardController.java" beforeDir="false" afterPath="$PROJECT_DIR$/core/src/main/java/org/example/controllers/BoardController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/src/main/java/org/example/controllers/CourseController.java" beforeDir="false" afterPath="$PROJECT_DIR$/core/src/main/java/org/example/controllers/CourseController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/src/main/java/org/example/controllers/CourseStartedByPlayerController.java" beforeDir="false" afterPath="$PROJECT_DIR$/core/src/main/java/org/example/controllers/CourseStartedByPlayerController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/src/main/java/org/example/controllers/GameController.java" beforeDir="false" afterPath="$PROJECT_DIR$/core/src/main/java/org/example/controllers/GameController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/src/main/java/org/example/controllers/LogInController.java" beforeDir="false" afterPath="$PROJECT_DIR$/core/src/main/java/org/example/controllers/LogInController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/src/main/java/org/example/controllers/MovePiecesController.java" beforeDir="false" afterPath="$PROJECT_DIR$/core/src/main/java/org/example/controllers/MovePiecesController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/src/main/java/org/example/controllers/PlayerController.java" beforeDir="false" afterPath="$PROJECT_DIR$/core/src/main/java/org/example/controllers/PlayerController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/src/main/java/org/example/controllers/RegisterController.java" beforeDir="false" afterPath="$PROJECT_DIR$/core/src/main/java/org/example/controllers/RegisterController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/src/main/java/org/example/controllers/SubCourseController.java" beforeDir="false" afterPath="$PROJECT_DIR$/core/src/main/java/org/example/controllers/SubCourseController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/src/main/java/org/example/data/Data.java" beforeDir="false" afterPath="$PROJECT_DIR$/core/src/main/java/org/example/data/Data.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/src/main/java/org/example/requests/GameRequest.java" beforeDir="false" afterPath="$PROJECT_DIR$/core/src/main/java/org/example/requests/GameRequest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/src/main/java/org/example/requests/GetHintRequest.java" beforeDir="false" afterPath="$PROJECT_DIR$/core/src/main/java/org/example/requests/GetHintRequest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/src/main/java/org/example/requests/LogInRequest.java" beforeDir="false" afterPath="$PROJECT_DIR$/core/src/main/java/org/example/requests/LogInRequest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/src/main/java/org/example/requests/MovePiecesRequest.java" beforeDir="false" afterPath="$PROJECT_DIR$/core/src/main/java/org/example/requests/MovePiecesRequest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/src/main/java/org/example/requests/PromotePawn.java" beforeDir="false" afterPath="$PROJECT_DIR$/core/src/main/java/org/example/requests/PromotePawn.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/src/main/java/org/example/requests/RegisterRequest.java" beforeDir="false" afterPath="$PROJECT_DIR$/core/src/main/java/org/example/requests/RegisterRequest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/src/main/java/org/example/requests/ResetBoard.java" beforeDir="false" afterPath="$PROJECT_DIR$/core/src/main/java/org/example/requests/ResetBoard.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/src/main/java/org/example/requests/StartCourseRequest.java" beforeDir="false" afterPath="$PROJECT_DIR$/core/src/main/java/org/example/requests/StartCourseRequest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/src/main/java/org/example/requests/UpdatePlayerRequest.java" beforeDir="false" afterPath="$PROJECT_DIR$/core/src/main/java/org/example/requests/UpdatePlayerRequest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/src/main/java/org/example/requests/VerifyMoveRequest.java" beforeDir="false" afterPath="$PROJECT_DIR$/core/src/main/java/org/example/requests/VerifyMoveRequest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/src/main/resources/application.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/core/src/main/resources/application.yaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/src/main/resources/client.properties" beforeDir="false" afterPath="$PROJECT_DIR$/core/src/main/resources/client.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/src/main/resources/logback-test.xml" beforeDir="false" afterPath="$PROJECT_DIR$/core/src/main/resources/logback-test.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/src/main/resources/logback.xml" beforeDir="false" afterPath="$PROJECT_DIR$/core/src/main/resources/logback.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/src/test/java/org/example/MovePieceTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/core/src/test/java/org/example/MovePieceTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/src/test/java/org/example/RepoTest.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/server/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/settings.xml" beforeDir="false" afterPath="$PROJECT_DIR$/server/settings.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/src/main/java/org/example/board/BoardService.java" beforeDir="false" afterPath="$PROJECT_DIR$/server/src/main/java/org/example/board/BoardService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/src/main/java/org/example/board/PieceService.java" beforeDir="false" afterPath="$PROJECT_DIR$/server/src/main/java/org/example/board/PieceService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/src/main/java/org/example/course/CourseService.java" beforeDir="false" afterPath="$PROJECT_DIR$/server/src/main/java/org/example/course/CourseService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/src/main/java/org/example/course/CourseStartedByPlayerService.java" beforeDir="false" afterPath="$PROJECT_DIR$/server/src/main/java/org/example/course/CourseStartedByPlayerService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/src/main/java/org/example/course/SubCourseService.java" beforeDir="false" afterPath="$PROJECT_DIR$/server/src/main/java/org/example/course/SubCourseService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/src/main/java/org/example/game/GameService.java" beforeDir="false" afterPath="$PROJECT_DIR$/server/src/main/java/org/example/game/GameService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/src/main/java/org/example/player/ConfirmationTokenService.java" beforeDir="false" afterPath="$PROJECT_DIR$/server/src/main/java/org/example/player/ConfirmationTokenService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/src/main/java/org/example/player/PlayerService.java" beforeDir="false" afterPath="$PROJECT_DIR$/server/src/main/java/org/example/player/PlayerService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/src/main/java/org/example/player/email/EmailSender.java" beforeDir="false" afterPath="$PROJECT_DIR$/server/src/main/java/org/example/player/email/EmailSender.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/src/main/java/org/example/player/email/EmailService.java" beforeDir="false" afterPath="$PROJECT_DIR$/server/src/main/java/org/example/player/email/EmailService.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/server/src/main/java/org/example/score/CapturePiecesScore.java" beforeDir="false" afterPath="$PROJECT_DIR$/server/src/main/java/org/example/score/CapturePiecesScore.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/src/main/java/org/example/score/CenterControlScore.java" beforeDir="false" afterPath="$PROJECT_DIR$/server/src/main/java/org/example/score/CenterControlScore.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/src/main/java/org/example/score/DevelopmentScore.java" beforeDir="false" afterPath="$PROJECT_DIR$/server/src/main/java/org/example/score/DevelopmentScore.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/server/src/main/java/org/example/score/KingSafetyScore.java" beforeDir="false" afterPath="$PROJECT_DIR$/server/src/main/java/org/example/score/KingSafetyScore.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/src/main/java/org/example/score/MobilityScore.java" beforeDir="false" afterPath="$PROJECT_DIR$/server/src/main/java/org/example/score/MobilityScore.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/src/main/java/org/example/score/PawnStructureScore.java" beforeDir="false" afterPath="$PROJECT_DIR$/server/src/main/java/org/example/score/PawnStructureScore.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/src/main/resources/logback.xml" beforeDir="false" afterPath="$PROJECT_DIR$/server/src/main/resources/logback.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/src/test/java/org/example/board/BoardServiceTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/server/src/test/java/org/example/board/BoardServiceTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/src/test/java/org/example/board/PieceServiceTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/server/src/test/java/org/example/board/PieceServiceTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/src/test/java/org/example/course/CourseServiceTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/server/src/test/java/org/example/course/CourseServiceTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/src/test/java/org/example/course/CourseStartedByPlayerServiceTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/server/src/test/java/org/example/course/CourseStartedByPlayerServiceTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/src/test/java/org/example/course/SubCourseServiceTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/server/src/test/java/org/example/course/SubCourseServiceTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/src/test/java/org/example/game/GameServiceTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/server/src/test/java/org/example/game/GameServiceTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/src/test/java/org/example/player/ConfirmationTokenServiceTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/server/src/test/java/org/example/player/ConfirmationTokenServiceTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/src/test/java/org/example/player/PlayerServiceTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/server/src/test/java/org/example/player/PlayerServiceTest.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/server/src/test/java/org/example/score/CapturePiecesScoreTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/server/src/test/java/org/example/score/CapturePiecesScoreTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/src/test/java/org/example/score/CenterControlScoreTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/server/src/test/java/org/example/score/CenterControlScoreTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/src/test/java/org/example/score/DevelopmentScoreTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/server/src/test/java/org/example/score/DevelopmentScoreTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/src/test/java/org/example/score/KingSafetyScoreTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/server/src/test/java/org/example/score/KingSafetyScoreTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/src/test/java/org/example/score/MobilityScoreTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/server/src/test/java/org/example/score/MobilityScoreTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/src/test/java/org/example/score/PawnStructureScoreTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/server/src/test/java/org/example/score/PawnStructureScoreTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/settings.xml" beforeDir="false" afterPath="$PROJECT_DIR$/settings.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/validators/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/validators/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/validators/src/main/java/org/example/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/validators/src/main/java/org/example/Main.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/validators/src/main/java/org/example/PlayerValidationInterface.java" beforeDir="false" afterPath="$PROJECT_DIR$/validators/src/main/java/org/example/PlayerValidationInterface.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/validators/src/main/java/org/example/PlayerValidator.java" beforeDir="false" afterPath="$PROJECT_DIR$/validators/src/main/java/org/example/PlayerValidator.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/validators/src/main/java/org/example/ValidationResult.java" beforeDir="false" afterPath="$PROJECT_DIR$/validators/src/main/java/org/example/ValidationResult.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/validators/src/main/java/org/example/exceptions/PlayerValidationException.java" beforeDir="false" afterPath="$PROJECT_DIR$/validators/src/main/java/org/example/exceptions/PlayerValidationException.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/validators/src/test/java/org/example/PlayerValidatorTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/validators/src/test/java/org/example/PlayerValidatorTest.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -52,7 +182,7 @@
     &quot;com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrarySuperClass.JUnit5&quot;: &quot;&quot;,
     &quot;extract.method.default.visibility&quot;: &quot;private&quot;,
     &quot;git-widget-placeholder&quot;: &quot;master&quot;,
-    &quot;last_opened_file_path&quot;: &quot;C:/Users/VladDumitru/Desktop/ChessOppenings-master/server/src/test/java/org/example&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/workspace/ChessOppenings-master/ChessOppenings-master&quot;,
     &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
     &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
     &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
@@ -87,18 +217,16 @@
       <command value="mvn clean install" />
     </option>
   </component>
-  <component name="RunManager" selected="Spring Boot.MainApplication">
-    <configuration name="DevelopmentScoreTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
-      <module name="server" />
+  <component name="RunManager" selected="Application.MainApplication">
+    <configuration name="MainApplication" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="org.example.MainApplication" />
+      <module name="Core" />
       <extension name="coverage">
         <pattern>
-          <option name="PATTERN" value="org.example.score.*" />
+          <option name="PATTERN" value="org.example.*" />
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
-      <option name="PACKAGE_NAME" value="org.example.score" />
-      <option name="MAIN_CLASS_NAME" value="org.example.score.DevelopmentScoreTest" />
-      <option name="TEST_OBJECT" value="class" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
@@ -133,6 +261,22 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
+    <configuration name="MovePieceTest.isCheckMateIn2Test" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="Core" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="org.example.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="org.example" />
+      <option name="MAIN_CLASS_NAME" value="org.example.MovePieceTest" />
+      <option name="METHOD_NAME" value="isCheckMateIn2Test" />
+      <option name="TEST_OBJECT" value="method" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
     <configuration name="PawnStructureScoreTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="server" />
       <extension name="coverage">
@@ -148,26 +292,13 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="MainApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" temporary="true" nameIsGenerated="true">
-      <module name="Core" />
-      <option name="SPRING_BOOT_MAIN_CLASS" value="org.example.MainApplication" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="org.example.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="Spring Boot.MainApplication" />
+        <item itemvalue="Application.MainApplication" />
+        <item itemvalue="JUnit.MovePieceTest.isCheckMateIn2Test" />
         <item itemvalue="JUnit.PawnStructureScoreTest" />
         <item itemvalue="JUnit.MobilityScoreTest" />
         <item itemvalue="JUnit.KingSafetyScoreTest" />
-        <item itemvalue="JUnit.DevelopmentScoreTest" />
       </list>
     </recent_temporary>
   </component>
@@ -196,6 +327,7 @@
       <workItem from="1712485050201" duration="845000" />
       <workItem from="1713251958020" duration="322000" />
       <workItem from="1715507251608" duration="6752000" />
+      <workItem from="1716038528458" duration="474000" />
     </task>
     <task id="LOCAL-00001" summary="tried to add a cloud instance for db, on a computer it works, on other one does not, added history for moves, improved ai">
       <option name="closed" value="true" />

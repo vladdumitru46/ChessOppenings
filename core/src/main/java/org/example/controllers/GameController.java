@@ -40,7 +40,9 @@ public class GameController {
             Player player = playerService.searchPlayerByUsernameOrEmail(gameRequest.playerEmailOrUsername());
             Board board = new Board();
             boardService.save(board);
-            Long id = gameService.addANewGame(new Game(player.getId(), board.getId(), GameStatus.STARTED));
+            Game game = new Game(player.getId(), board.getId(), GameStatus.STARTED);
+            game.setPlayerColour(gameRequest.playerColour());
+            Long id = gameService.addANewGame(game);
             return new ResponseEntity<>(id, HttpStatus.OK);
         } catch (Exception e) {
             return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
@@ -78,7 +80,7 @@ public class GameController {
         }
     }
 
-     @GetMapping("/moveBefore")
+    @GetMapping("/moveBefore")
     public ResponseEntity<?> getMoveBefore(@RequestParam int gameId, @RequestParam int moveNumber) {
         try {
             Game game = gameService.getGameById(gameId);
@@ -190,7 +192,7 @@ public class GameController {
             Game game = gameService.getGameById(gameId);
             String[] moves = game.getMoves().split(", ");
             String[] lastMove = moves[moves.length - 1].split(";");
-            int moveNumber = lastMove.length == 2 ? (game.getMoveNumber() - 1) * 2: game.getMoveNumber() * 2 - 1;
+            int moveNumber = lastMove.length == 2 ? (game.getMoveNumber() - 1) * 2 : game.getMoveNumber() * 2 - 1;
             return new ResponseEntity<>(moveNumber, HttpStatus.OK);
         } catch (Exception e) {
             return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);

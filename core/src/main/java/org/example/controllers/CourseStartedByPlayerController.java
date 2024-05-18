@@ -58,8 +58,6 @@ public class CourseStartedByPlayerController {
             return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
         }
     }
-
-    //TODO: castling for course
     @PostMapping("/verifyMove")
     public ResponseEntity<?> verifyMovePlayedByPlayer(@RequestBody VerifyMoveRequest verifyMoveRequest) {
         try {

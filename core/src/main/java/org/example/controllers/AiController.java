@@ -101,51 +101,56 @@ public class AiController {
             move = miniMax.getBestMove();
             if (move != null) {
                 String moveNotation = pieceService.transformMoveToCorrectNotation(move.getStart(), move.getEnd(), board);
-                System.out.println(moveNotation);
+
+                if (move.getStart().getPieces() instanceof King && abs(move.getStart().getColumnCoordinate() - move.getEnd().getColumnCoordinate()) == 2) {
+                    action = didAiCastle(board, move.getStart(), move.getEnd());
+                    if (action.equals("castleShort")) {
+                        moveNotation = "0-0";
+                    } else if (action.equals("castleLong")) {
+                        moveNotation = "0-0-0";
+                    }
+                } else {
+                    Pieces pieces = board.getCellOnTheBoardMap()[move.getStart().getLineCoordinate()][move.getStart().getColumnCoordinate()].getPieces();
+                    if (pieces instanceof Pawn) {
+                        if ((pieces.isWhite() && move.getStart().getLineCoordinate() == 6)
+                                || (!pieces.isWhite() && move.getStart().getLineCoordinate() == 1)) {
+                            moveNotation = moveNotation.substring(1);
+                            switch (move.getStart().getPieces()) {
+                                case Queen ignored -> {
+                                    moveNotation += "=Q";
+                                    action = " Queen";
+                                }
+                                case Rook ignored -> {
+                                    moveNotation += "=R";
+                                    action = " Rook";
+                                }
+                                case Bishop ignored -> {
+                                    moveNotation += "=B";
+                                    action = " Bishop";
+                                }
+                                case Knight ignored -> {
+                                    moveNotation += "=N";
+                                    action = " Knight";
+                                }
+                                default -> {
+                                    moveNotation += "";
+                                    action = "";
+                                }
+                            }
+                        }
+                    }
+                }
+                pieceService.makeMove(board, move);
                 if (game.isWhitesTurn()) {
                     game.setWhiteMove(game.getWhiteMove() + ", " + moveNotation);
                 } else {
                     game.setBlackMove(game.getBlackMove() + ", " + moveNotation);
                     game.setMoveNumber(game.getMoveNumber() + 1);
                 }
-                if (move.getStart().getPieces() instanceof King && abs(move.getStart().getColumnCoordinate() - move.getEnd().getColumnCoordinate()) == 2) {
-                    action = didAiCastle(board, move.getStart(), move.getEnd());
-                }
-                Pieces pieces = board.getCellOnTheBoardMap()[move.getStart().getLineCoordinate()][move.getStart().getColumnCoordinate()].getPieces();
-                if (pieces instanceof Pawn) {
-                    if ((pieces.isWhite() && move.getStart().getLineCoordinate() == 6)
-                            || (!pieces.isWhite() && move.getStart().getLineCoordinate() == 1)) {
-                        moveNotation = moveNotation.substring(1);
-                        switch (move.getStart().getPieces()) {
-                            case Queen ignored -> {
-                                moveNotation += "=Q";
-                                action = " Queen";
-                            }
-                            case Rook ignored -> {
-                                moveNotation += "=R";
-                                action = " Rook";
-                            }
-                            case Bishop ignored -> {
-                                moveNotation += "=B";
-                                action = " Bishop";
-                            }
-                            case Knight ignored -> {
-                                moveNotation += "=N";
-                                action = " Knight";
-                            }
-                            default -> {
-                                moveNotation += "";
-                                action = "";
-                            }
-                        }
-                    }
-                }
-                pieceService.makeMove(board, move);
-                String moveToBePlayed = move.getStart() + " " + move.getEnd() + " " + moveNotation;
                 setMoveAsString(game, move, action);
                 game.setWhitesTurn(!game.isWhitesTurn());
                 boardService.updateBoard(board);
-//                return new ResponseEntity<>(moveToBePlayed, HttpStatus.OK);
+                System.out.println(moveNotation);
                 return new ResponseEntity<>(board + " + " + game.isWhitesTurn(), HttpStatus.OK);
             }
         }

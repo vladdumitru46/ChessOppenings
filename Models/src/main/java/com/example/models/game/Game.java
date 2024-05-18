@@ -81,6 +81,13 @@ public class Game {
     )
     private String moves = "";
 
+    @Column(
+            name = "playerColour",
+            nullable = false,
+            columnDefinition = "TEXT"
+    )
+    private String playerColour;
+
     public Game(Integer playerId, Integer boardId, GameStatus gameStatus) {
         this.playerId = playerId;
         this.boardId = boardId;
