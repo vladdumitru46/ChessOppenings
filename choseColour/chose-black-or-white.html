@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <title>ChoseBlackOrWhite</title>
+  <meta property="og:title" content="ChoseBlackOrWhite - Grumpy Little Opossum" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta charset="utf-8" />
+  <meta property="twitter:card" content="summary_large_image" />
+
+  <style data-tag="reset-style-sheet">
+    html {
+      line-height: 1.15;
+    }
+
+    body {
+      margin: 0;
+    }
+
+    * {
+      box-sizing: border-box;
+      border-width: 0;
+      border-style: solid;
+    }
+
+    p,
+    li,
+    ul,
+    pre,
+    div,
+    h1,
+    h2,
+    h3,
+    h4,
+    h5,
+    h6,
+    figure,
+    blockquote,
+    figcaption {
+      margin: 0;
+      padding: 0;
+    }
+
+    button {
+      background-color: transparent;
+    }
+
+    button,
+    input,
+    optgroup,
+    select,
+    textarea {
+      font-family: inherit;
+      font-size: 100%;
+      line-height: 1.15;
+      margin: 0;
+    }
+
+    button,
+    select {
+      text-transform: none;
+    }
+
+    button,
+    [type="button"],
+    [type="reset"],
+    [type="submit"] {
+      -webkit-appearance: button;
+    }
+
+    button::-moz-focus-inner,
+    [type="button"]::-moz-focus-inner,
+    [type="reset"]::-moz-focus-inner,
+    [type="submit"]::-moz-focus-inner {
+      border-style: none;
+      padding: 0;
+    }
+
+    button:-moz-focus,
+    [type="button"]:-moz-focus,
+    [type="reset"]:-moz-focus,
+    [type="submit"]:-moz-focus {
+      outline: 1px dotted ButtonText;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: inherit;
+    }
+
+    input {
+      padding: 2px 4px;
+    }
+
+    img {
+      display: block;
+    }
+
+    html {
+      scroll-behavior: smooth
+    }
+  </style>
+  <style data-tag="default-style-sheet">
+    html {
+      font-family: Inter;
+      font-size: 16px;
+    }
+
+    body {
+      font-weight: 400;
+      font-style: normal;
+      text-decoration: none;
+      text-transform: none;
+      letter-spacing: normal;
+      line-height: 1.15;
+      color: var(--dl-color-gray-black);
+      background-color: var(--dl-color-gray-white);
+    }
+  </style>
+  <link rel="stylesheet" href="https://unpkg.com/animate.css@4.1.1/animate.css" />
+  <link rel="stylesheet"
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&amp;display=swap"
+    data-tag="font" />
+  <link rel="stylesheet" href="https://unpkg.com/@teleporthq/teleport-custom-scripts/dist/style.css" />
+</head>
+
+<body>
+  <link rel="stylesheet" href="./style.css" />
+  <div>
+    <link href="./chose-black-or-white.css" rel="stylesheet" />
+
+    <div class="chose-black-or-white-container">
+      <img src="../pieces/blackPieces.jpg" alt="image" class="chose-black-or-white-image" id="black" />
+      <img src="../pieces/whitePiecesjpg.jpg" alt="image" class="chose-black-or-white-image1" id="white" />
+      <span class="chose-black-or-white-text">
+        <span class="chose-black-or-white-text01">Chose colour</span>
+        <br />
+      </span>
+      <header data-thq="thq-navbar" class="chose-black-or-white-navbar-interactive">
+        <img alt="logo" src="../pieces/navBar.png" class="chose-black-or-white-image2" />
+        <div data-thq="thq-navbar-nav" class="chose-black-or-white-desktop-menu">
+          <nav id="navigation-bar" class="chose-black-or-white-links">
+            <span id="homeLink">
+              <span>Home</span>
+              <br />
+            </span>
+            <span class="chose-black-or-white-play-against-ai">
+              <span id="playAgainstAiLink">Learn openings</span>
+            </span>
+          </nav>
+          <div class="chose-black-or-white-buttons">
+            <button type="button" class="collapsible">
+              <img id="profilePic" src="../pieces/profile.png">
+            </button>
+            <div class="content">
+              <button id="viewProfile" onclick="viewProfile()">View</button>
+              <button id="logOut" onclick="logOut()">Log out</button>
+            </div>
+          </div>
+        </div>
+        <div data-thq="thq-burger-menu" class="chose-black-or-white-burger-menu">
+          <svg viewBox="0 0 1024 1024" class="chose-black-or-white-icon">
+            <path
+              d="M128 554.667h768c23.552 0 42.667-19.115 42.667-42.667s-19.115-42.667-42.667-42.667h-768c-23.552 0-42.667 19.115-42.667 42.667s19.115 42.667 42.667 42.667zM128 298.667h768c23.552 0 42.667-19.115 42.667-42.667s-19.115-42.667-42.667-42.667h-768c-23.552 0-42.667 19.115-42.667 42.667s19.115 42.667 42.667 42.667zM128 810.667h768c23.552 0 42.667-19.115 42.667-42.667s-19.115-42.667-42.667-42.667h-768c-23.552 0-42.667 19.115-42.667 42.667s19.115 42.667 42.667 42.667z">
+            </path>
+          </svg>
+        </div>
+        <div data-thq="thq-mobile-menu" class="chose-black-or-white-mobile-menu">
+          <div class="chose-black-or-white-nav">
+            <div class="chose-black-or-white-top">
+              <img alt="image" src="https://presentation-website-assets.teleporthq.io/logos/logo.png"
+                class="chose-black-or-white-logo" />
+              <div data-thq="thq-close-menu" class="chose-black-or-white-close-menu">
+                <svg viewBox="0 0 1024 1024" class="chose-black-or-white-icon02">
+                  <path
+                    d="M810 274l-238 238 238 238-60 60-238-238-238 238-60-60 238-238-238-238 60-60 238 238 238-238z">
+                  </path>
+                </svg>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </header>
+    </div>
+  </div>
+  <script defer="" src="https://unpkg.com/@teleporthq/teleport-custom-scripts"></script>
+  <script src="chose_black_or_white.js"></script>
+</body>
+
+</html>

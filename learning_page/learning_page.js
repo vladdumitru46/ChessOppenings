@@ -70,7 +70,7 @@ document.getElementById('homeLink').addEventListener('click', function () {
 });
 
 document.getElementById('playAgainstAiLink').addEventListener('click', function () {
-    window.location.href = '../chessBoard/chessBoard.html?newGame=yes';
+    window.location.href = "../choseColour/chose-black-or-white.html";
 });
 function logOut() {
     localStorage.clear();

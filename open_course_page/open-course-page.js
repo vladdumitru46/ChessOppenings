@@ -56,8 +56,10 @@ document.getElementById('homeLink').addEventListener('click', function () {
     window.location.href = '../home_page/home-page.html?newGame=yes';
 });
 
+
+
 document.getElementById('playAgainstAiLink').addEventListener('click', function () {
-    window.location.href = '../chessBoard/chessBoard.html';
+    window.location.href = "../choseColour/chose-black-or-white.html";
 });
 
 

@@ -18,6 +18,7 @@ let maxMoveNumber = 0;
 
 async function fetchData() {
     let player = localStorage.getItem("player")
+    let playerColour = localStorage.getItem("playerColour")
     console.log(boardUrl);
 
     try {
@@ -27,8 +28,8 @@ async function fetchData() {
                 "Content-Type": "application/json"
             },
             body: JSON.stringify({
-                playerEmailOrUsername: player
-
+                playerEmailOrUsername: player,
+                playerColour: localStorage.getItem("playerColour")
             })
         });
         if (res.ok) {
@@ -41,6 +42,9 @@ async function fetchData() {
                 let r = await fetch(baseUrl + "/game/getMoveNumber?gameId=" + gameId, null);
                 if (r.ok) {
                     moveNumber = await r.text();
+                    if(playerColour == "black"){
+                        await moveAi();
+                    }
                 }
             } catch (error) {
                 console.error('Eroare la extragerea textului:', error);
@@ -132,7 +136,12 @@ async function boardSetter(respone, gameId) {
             moveNumber = await re.text();
         }
     }
-    if (whitesTurn == "false") {
+    let playerColour = localStorage.getItem("playerColour");
+    console.log(playerColour)
+    if (whitesTurn == "false" && playerColour == "white") {
+        console.log("aicib")
+        await moveAi();
+    } else if (whitesTurn == "true" && playerColour == "black") {
         console.log("aici")
         await moveAi();
     }
@@ -171,8 +180,8 @@ async function getPiece(square) {
                 console.log(sq)
                 highlightedSquares.push({ element: sq, originalSrc: originalImageSrc });
                 // if (sq.querySelector("img").src === "") {
-                    console.log("da esti prost?")
-                    sq.querySelector('img').src = "../pieces/posibleMove.svg";
+                console.log("da esti prost?")
+                sq.querySelector('img').src = "../pieces/posibleMove.svg";
                 // }
             }
         }
