@@ -1,5 +1,11 @@
-FROM nginx:latest
+# Use an official Nginx image to serve static assets
+FROM nginx:alpine
 
-COPY . . 
-WORKDIR /frontend
-EXPOSE 3000:3000
+# Copy static assets to Nginx server
+COPY . /usr/share/nginx/html
+
+# Expose port 80
+EXPOSE 80
+
+# Start Nginx server
+CMD ["nginx", "-g", "daemon off;"]
