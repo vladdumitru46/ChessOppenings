@@ -11,6 +11,8 @@ import org.springframework.stereotype.Service;
 import java.util.*;
 import java.util.stream.LongStream;
 
+import static java.lang.Math.abs;
+
 
 @Service("pieceService")
 @Slf4j
@@ -85,56 +87,99 @@ public class PieceService {
         if (kingRepository.canCastle(board, start, end, king)) {
             king.setHasBeenMoved(true);
             start.setPieces(king);
-
-            if (king.isWhite()) {
-                if (end.getColumnCoordinate() == 2) {
-                    Rook rook = (Rook) board.getCellOnTheBoardMap()[0][0].getPieces();
-                    rook.setHasBeenMoved(true);
-                    board.getCellOnTheBoardMap()[0][3].setPieces(rook);
-                    board.getCellOnTheBoardMap()[0][0] = new CellOnTheBoard(null, 0, 0);
-                }
-                if (end.getColumnCoordinate() == 6) {
-                    Rook rook = (Rook) board.getCellOnTheBoardMap()[0][7].getPieces();
-                    rook.setHasBeenMoved(true);
-                    board.getCellOnTheBoardMap()[0][5].setPieces(rook);
-                    board.getCellOnTheBoardMap()[0][7] = new CellOnTheBoard(null, 0, 0);
-                }
-            } else {
-                if (end.getColumnCoordinate() == 2) {
-                    Rook rook = (Rook) board.getCellOnTheBoardMap()[7][0].getPieces();
-                    rook.setHasBeenMoved(true);
-                    board.getCellOnTheBoardMap()[7][3].setPieces(rook);
-                    board.getCellOnTheBoardMap()[7][0] = new CellOnTheBoard(null, 7, 0);
-                } else if (end.getColumnCoordinate() == 6) {
-                    Rook rook = (Rook) board.getCellOnTheBoardMap()[7][7].getPieces();
-                    rook.setHasBeenMoved(true);
-                    board.getCellOnTheBoardMap()[7][5].setPieces(rook);
-                    board.getCellOnTheBoardMap()[7][7] = new CellOnTheBoard(null, 7, 0);
-                }
-            }
+            doCastle(board, end, king);
             return true;
         } else {
             return false;
         }
     }
 
+    private void doCastle(Board board, CellOnTheBoard end, King king) {
+        if (king.isWhite()) {
+            if (end.getColumnCoordinate() == 2) {
+                Rook rook = (Rook) board.getCellOnTheBoardMap()[0][0].getPieces();
+                rook.setHasBeenMoved(true);
+                board.getCellOnTheBoardMap()[0][3].setPieces(rook);
+                board.getCellOnTheBoardMap()[0][0].setPieces(null);
+            }
+            if (end.getColumnCoordinate() == 6) {
+                Rook rook = (Rook) board.getCellOnTheBoardMap()[0][7].getPieces();
+                rook.setHasBeenMoved(true);
+                board.getCellOnTheBoardMap()[0][5].setPieces(rook);
+                board.getCellOnTheBoardMap()[0][7].setPieces(null);
+            }
+        } else {
+            if (end.getColumnCoordinate() == 2) {
+                Rook rook = (Rook) board.getCellOnTheBoardMap()[7][0].getPieces();
+                rook.setHasBeenMoved(true);
+                board.getCellOnTheBoardMap()[7][3].setPieces(rook);
+                board.getCellOnTheBoardMap()[7][0].setPieces(null);
+            } else if (end.getColumnCoordinate() == 6) {
+                Rook rook = (Rook) board.getCellOnTheBoardMap()[7][7].getPieces();
+                rook.setHasBeenMoved(true);
+                board.getCellOnTheBoardMap()[7][5].setPieces(rook);
+                board.getCellOnTheBoardMap()[7][7].setPieces(null);
+            }
+        }
+        king.setHasBeenMoved(true);
+    }
+
+    private void undoCastle(Board board, CellOnTheBoard end, King king) {
+        if (king.isWhite()) {
+            if (end.getColumnCoordinate() == 2) {
+                Rook rook = (Rook) board.getCellOnTheBoardMap()[0][3].getPieces();
+                rook.setHasBeenMoved(false);
+                board.getCellOnTheBoardMap()[0][0].setPieces(rook);
+                board.getCellOnTheBoardMap()[0][3].setPieces(null);
+            }
+            if (end.getColumnCoordinate() == 6) {
+                Rook rook = (Rook) board.getCellOnTheBoardMap()[0][5].getPieces();
+                rook.setHasBeenMoved(false);
+                board.getCellOnTheBoardMap()[0][7].setPieces(rook);
+                board.getCellOnTheBoardMap()[0][5].setPieces(null);
+            }
+        } else {
+            if (end.getColumnCoordinate() == 2) {
+                Rook rook = (Rook) board.getCellOnTheBoardMap()[7][3].getPieces();
+                rook.setHasBeenMoved(false);
+                board.getCellOnTheBoardMap()[7][0].setPieces(rook);
+                board.getCellOnTheBoardMap()[7][3].setPieces(null);
+            } else if (end.getColumnCoordinate() == 6) {
+                Rook rook = (Rook) board.getCellOnTheBoardMap()[7][5].getPieces();
+                rook.setHasBeenMoved(false);
+                board.getCellOnTheBoardMap()[7][7].setPieces(rook);
+                board.getCellOnTheBoardMap()[7][5].setPieces(null);
+            }
+        }
+        king.setHasBeenMoved(false);
+    }
+
 
     public synchronized void makeMove(Board board, Move move) {
         Pieces pieceOnStart = move.getStart().getPieces();
         Pieces pieceOnEnd = move.getEnd().getPieces();
+        Pieces realPieceOnEnd = board.getCellOnTheBoardMap()[move.getEnd().getLineCoordinate()][move.getEnd().getColumnCoordinate()].getPieces();
         CellOnTheBoard kingsCell = board.getKing(!move.getStart().getPieces().isWhite());
-        King king = (King) kingsCell.getPieces();
-        if (pieceOnStart instanceof Pawn && pieceOnEnd != null && pieceOnEnd.isWhite() == pieceOnStart.isWhite()) {
+        King enemyKing = (King) kingsCell.getPieces();
+        if (pieceOnStart instanceof Pawn && pieceOnEnd != null && pieceOnEnd.isWhite() == pieceOnStart.isWhite()
+                && (realPieceOnEnd == null || realPieceOnEnd.isWhite() != pieceOnStart.isWhite())) {
             board.getCellOnTheBoardMap()[move.getEnd().getLineCoordinate()][move.getEnd().getColumnCoordinate()]
                     .setPieces(pieceOnEnd);
             board.getCellOnTheBoardMap()[move.getStart().getLineCoordinate()][move.getStart().getColumnCoordinate()]
                     .setPieces(null);
+        }
+        if (pieceOnStart instanceof King king && !((King) pieceOnStart).isHasBeenMoved() &&
+                abs(move.getStart().getColumnCoordinate() - move.getEnd().getColumnCoordinate()) == 2) {
+            board.getCellOnTheBoardMap()[move.getEnd().getLineCoordinate()][move.getEnd().getColumnCoordinate()]
+                    .setPieces(move.getStart().getPieces());
+            board.getCellOnTheBoardMap()[move.getStart().getLineCoordinate()][move.getStart().getColumnCoordinate()].setPieces(null);
+            doCastle(board, move.getEnd(), king);
         } else {
             board.getCellOnTheBoardMap()[move.getEnd().getLineCoordinate()][move.getEnd().getColumnCoordinate()]
                     .setPieces(move.getStart().getPieces());
             board.getCellOnTheBoardMap()[move.getStart().getLineCoordinate()][move.getStart().getColumnCoordinate()].setPieces(null);
         }
-        updateKingStatus(board, move, king);
+        updateKingStatus(board, move, enemyKing);
     }
 
     private synchronized void updateKingStatus(Board board, Move move, King king) {
@@ -145,19 +190,26 @@ public class PieceService {
     }
 
     public synchronized void undoMove(Board board, Move move, Pieces pieceOnStart, Pieces pieceOnEnd) {
-        King king = (King) board.getKing(!board.getCellOnTheBoardMap()[move.getEnd().getLineCoordinate()][move.getEnd().getColumnCoordinate()]
+        King enemyKing = (King) board.getKing(!board.getCellOnTheBoardMap()[move.getEnd().getLineCoordinate()][move.getEnd().getColumnCoordinate()]
                 .getPieces().isWhite()).getPieces();
         if (pieceOnStart instanceof Pawn && pieceOnEnd != null && pieceOnEnd.isWhite() == pieceOnStart.isWhite()) {
             board.getCellOnTheBoardMap()[move.getStart().getLineCoordinate()][move.getStart().getColumnCoordinate()]
                     .setPieces(pieceOnStart);
             board.getCellOnTheBoardMap()[move.getEnd().getLineCoordinate()][move.getEnd().getColumnCoordinate()]
                     .setPieces(null);
+        }
+        if (pieceOnStart instanceof King king && ((King) pieceOnStart).isHasBeenMoved() &&
+                abs(move.getStart().getColumnCoordinate() - move.getEnd().getColumnCoordinate()) == 2) {
+            board.getCellOnTheBoardMap()[move.getStart().getLineCoordinate()][move.getStart().getColumnCoordinate()]
+                    .setPieces(pieceOnStart);
+            board.getCellOnTheBoardMap()[move.getEnd().getLineCoordinate()][move.getEnd().getColumnCoordinate()].setPieces(pieceOnEnd);
+            undoCastle(board, move.getEnd(), king);
         } else {
             board.getCellOnTheBoardMap()[move.getStart().getLineCoordinate()][move.getStart().getColumnCoordinate()]
                     .setPieces(pieceOnStart);
             board.getCellOnTheBoardMap()[move.getEnd().getLineCoordinate()][move.getEnd().getColumnCoordinate()].setPieces(pieceOnEnd);
         }
-        updateKingStatus(board, move, king);
+        updateKingStatus(board, move, enemyKing);
     }
 
 

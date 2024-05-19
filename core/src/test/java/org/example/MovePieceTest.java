@@ -2,6 +2,7 @@ package org.example;
 
 import com.example.models.board.Board;
 import com.example.models.board.CellOnTheBoard;
+import com.example.models.board.Move;
 import com.example.models.game.Game;
 import com.example.models.game.GameStatus;
 import com.example.models.pieces.*;
@@ -46,9 +47,15 @@ public class MovePieceTest {
 
     @Test
     public void isCheckMateIn2Test() {
-        Evaluation evaluation = new Evaluation(capturePiecesScore, centerControlScore, developmentScore, kingSafetyScore, mobilityScore, pawnStructureScore);
-        MiniMax miniMax = new MiniMax(board, 2, true, mobilityScore, pieceService, kingSafetyScore, evaluation);
-        System.out.println(miniMax.getBestMove());
+        board.getCellOnTheBoardMap()[0][5].setPieces(null);
+        board.getCellOnTheBoardMap()[0][6].setPieces(null);
+        Pieces piecesOnStart = board.getCellOnTheBoardMap()[0][4].getPieces();
+        Pieces piecesOnEnd = board.getCellOnTheBoardMap()[0][6].getPieces();
+        Move move = new Move(board.getCellOnTheBoardMap()[0][4], board.getCellOnTheBoardMap()[0][6]);
+        pieceService.makeMove(board, move);
+        System.out.println(board);
+        pieceService.undoMove(board, move, piecesOnStart, piecesOnEnd);
+        System.out.println(board);
     }
 
 

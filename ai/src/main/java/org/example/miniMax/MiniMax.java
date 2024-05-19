@@ -107,7 +107,6 @@ public class MiniMax {
             for (var move : moves) {
                 Pieces pieceOnStart = move.getStart().getPieces();
                 Pieces pieceOnEnd = move.getEnd().getPieces();
-
                 pieceService.makeMove(board, move);
                 int eval = miniMax(depth - 1, alpha, beta, false);
                 pieceService.undoMove(board, move, pieceOnStart, pieceOnEnd);
