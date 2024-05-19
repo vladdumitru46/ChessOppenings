@@ -4,9 +4,12 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="b01857e8-b4be-4d7d-abfd-bc31442b7c2f" name="Changes" comment="added colour choice">
+    <list default="true" id="b01857e8-b4be-4d7d-abfd-bc31442b7c2f" name="Changes" comment="dockeriezed application">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Dockerfile" beforeDir="false" afterPath="$PROJECT_DIR$/Dockerfile" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/chessBoard/chessBoardBlack.html" beforeDir="false" afterPath="$PROJECT_DIR$/chessBoard/chessBoardBlack.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/chessBoard/handleMoves.js" beforeDir="false" afterPath="$PROJECT_DIR$/chessBoard/handleMoves.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/compose.yaml" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -47,7 +50,8 @@
       <option name="presentableId" value="Default" />
       <updated>1716038521138</updated>
       <workItem from="1716038523476" duration="702000" />
-      <workItem from="1716062266816" duration="1802000" />
+      <workItem from="1716062266816" duration="3024000" />
+      <workItem from="1716125252339" duration="1642000" />
     </task>
     <task id="LOCAL-00001" summary="added colour choice">
       <option name="closed" value="true" />
@@ -57,7 +61,15 @@
       <option name="project" value="LOCAL" />
       <updated>1716041510697</updated>
     </task>
-    <option name="localTasksCounter" value="2" />
+    <task id="LOCAL-00002" summary="dockeriezed application">
+      <option name="closed" value="true" />
+      <created>1716122484688</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1716122484688</updated>
+    </task>
+    <option name="localTasksCounter" value="3" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -65,6 +77,7 @@
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="added colour choice" />
-    <option name="LAST_COMMIT_MESSAGE" value="added colour choice" />
+    <MESSAGE value="dockeriezed application" />
+    <option name="LAST_COMMIT_MESSAGE" value="dockeriezed application" />
   </component>
 </project>

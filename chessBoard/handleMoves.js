@@ -152,7 +152,9 @@ async function makeMoves(springBootURL, imageUrlSquare1, requestData, piesaSquar
             } else {
                 square1 = null;
                 square2 = null;
-                console.log("cannot move the piece there! check the backend logs for more information!");
+                let k = await response1.text();
+                // console.log("cannot move the piece there! check the backend logs for more information!");
+                console.log(k);
             }
         }
 
