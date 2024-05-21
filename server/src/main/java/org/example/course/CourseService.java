@@ -34,4 +34,11 @@ public class CourseService {
     }
 
 
+    public void addCourse(Course course) {
+        courseRepository.save(course);
+    }
+
+    public void addAll(List<Course> courses) {
+        courseRepository.saveAll(courses);
+    }
 }

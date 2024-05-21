@@ -3,6 +3,9 @@ package org.example.controllers;
 import com.example.models.courses.Course;
 import lombok.AllArgsConstructor;
 import org.example.course.CourseService;
+import org.example.requests.AddAllCoursesRequest;
+import org.example.requests.AddAllSubCoursesRequest;
+import org.example.requests.AddCourseRequest;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -32,5 +35,13 @@ public class CourseController {
         return ResponseEntity.ok(course);
     }
 
-
+    @PostMapping("/add")
+    public void addCourse(@RequestBody AddCourseRequest addCourseRequest) {
+        Course course = new Course(addCourseRequest.name(), addCourseRequest.description(), addCourseRequest.video(), addCourseRequest.forWhite());
+        courseService.addCourse(course);
+    }
+    @PostMapping("/addAll")
+    public void addAllSubCourse(@RequestBody AddAllCoursesRequest addAllCoursesRequest) {
+        courseService.addAll(addAllCoursesRequest.courseList());
+    }
 }

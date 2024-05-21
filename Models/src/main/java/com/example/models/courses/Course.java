@@ -6,6 +6,7 @@ import lombok.Setter;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.*;
+
 import java.io.Serializable;
 
 @Entity(name = "Course")
@@ -47,10 +48,22 @@ public class Course implements Serializable {
             nullable = false
     )
     private String video;
+    @Column(
+            name = "forWhite",
+            nullable = false
+    )
+    private boolean forWhite;
 
 
     public Course(String name, String description) {
         this.name = name;
         this.description = description;
+    }
+
+    public Course(String name, String description, String video, boolean forWhite) {
+        this.name = name;
+        this.description = description;
+        this.video = video;
+        this.forWhite = forWhite;
     }
 }

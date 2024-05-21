@@ -4,14 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="75b936ac-d5b0-4178-bee6-f97885357906" name="Changes" comment="dockerize application">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ai/src/main/java/org/example/miniMax/MiniMax.java" beforeDir="false" afterPath="$PROJECT_DIR$/ai/src/main/java/org/example/miniMax/MiniMax.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/core/src/main/java/org/example/controllers/AiController.java" beforeDir="false" afterPath="$PROJECT_DIR$/core/src/main/java/org/example/controllers/AiController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/core/src/main/resources/application.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/core/src/main/resources/application.yaml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/core/src/test/java/org/example/MovePieceTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/core/src/test/java/org/example/MovePieceTest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/src/main/java/org/example/board/PieceService.java" beforeDir="false" afterPath="$PROJECT_DIR$/server/src/main/java/org/example/board/PieceService.java" afterDir="false" />
-    </list>
+    <list default="true" id="75b936ac-d5b0-4178-bee6-f97885357906" name="Changes" comment="dockerize application" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -20,9 +13,9 @@
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
-        <option value="Record" />
-        <option value="Class" />
         <option value="JUnit5 Test Class" />
+        <option value="Class" />
+        <option value="Record" />
       </list>
     </option>
   </component>
@@ -53,7 +46,7 @@
     &quot;com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrarySuperClass.JUnit5&quot;: &quot;&quot;,
     &quot;extract.method.default.visibility&quot;: &quot;private&quot;,
     &quot;git-widget-placeholder&quot;: &quot;master&quot;,
-    &quot;last_opened_file_path&quot;: &quot;C:/workspace/ChessOppenings-master/ChessOppenings-master&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/workspace/Chess Oppenings/ChessOppenings&quot;,
     &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
     &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
     &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
@@ -72,6 +65,9 @@
   }
 }</component>
   <component name="RecentsManager">
+    <key name="CreateClassDialog.RecentsKey">
+      <recent name="org.example.requests" />
+    </key>
     <key name="CopyFile.RECENT_KEYS">
       <recent name="C:\Users\VladDumitru\Desktop\ChessOppenings-master\server\src\test\java\org\example" />
     </key>
@@ -89,7 +85,7 @@
       <command value="mvn clean install" />
     </option>
   </component>
-  <component name="RunManager" selected="JUnit.MovePieceTest.isCheckMateIn2Test">
+  <component name="RunManager" selected="Application.MainApplication">
     <configuration name="MainApplication" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="org.example.MainApplication" />
       <module name="Core" />
@@ -173,8 +169,8 @@
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="JUnit.MovePieceTest.isCheckMateIn2Test" />
         <item itemvalue="Application.MainApplication" />
+        <item itemvalue="JUnit.MovePieceTest.isCheckMateIn2Test" />
         <item itemvalue="JUnit.PawnStructureScoreTest" />
         <item itemvalue="JUnit.MobilityScoreTest" />
         <item itemvalue="JUnit.KingSafetyScoreTest" />
@@ -339,9 +335,24 @@
           <option name="timeStamp" value="66" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/server/src/main/java/org/example/board/PieceService.java</url>
-          <line>192</line>
-          <option name="timeStamp" value="69" />
+          <url>file://$PROJECT_DIR$/core/src/main/java/org/example/controllers/CourseController.java</url>
+          <line>23</line>
+          <option name="timeStamp" value="75" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/server/src/main/java/org/example/course/CourseService.java</url>
+          <line>23</line>
+          <option name="timeStamp" value="76" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/core/src/main/java/org/example/controllers/CourseStartedByPlayerController.java</url>
+          <line>65</line>
+          <option name="timeStamp" value="77" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/core/src/main/java/org/example/controllers/SubCourseController.java</url>
+          <line>64</line>
+          <option name="timeStamp" value="78" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>

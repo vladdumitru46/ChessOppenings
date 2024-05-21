@@ -37,6 +37,7 @@ public class CourseStartedByPlayerController {
     private final BoardService boardService;
     private final PlayerService playerService;
 
+    //TODO: casteling + fix js
     @PostMapping("/start")
     private ResponseEntity<?> startCourse(@RequestBody StartCourseRequest startCourseRequest) {
         try {
@@ -58,6 +59,7 @@ public class CourseStartedByPlayerController {
             return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
         }
     }
+
     @PostMapping("/verifyMove")
     public ResponseEntity<?> verifyMovePlayedByPlayer(@RequestBody VerifyMoveRequest verifyMoveRequest) {
         try {

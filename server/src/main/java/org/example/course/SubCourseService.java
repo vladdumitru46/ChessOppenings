@@ -22,6 +22,10 @@ public class SubCourseService {
         return subCourses.get();
     }
 
+    public List<SubCourse> getAllSubCourses() {
+        return subCourseRepository.findAll();
+    }
+
 
     public SubCourse getByName(String name, String courseName) throws Exception {
         Optional<SubCourse> subCourse = subCourseRepository.finByNameAndCourseName(name, courseName);
@@ -32,4 +36,11 @@ public class SubCourseService {
     }
 
 
+    public void addSubCourse(SubCourse subCourse) {
+        subCourseRepository.save(subCourse);
+    }
+
+    public void addAll(List<SubCourse> subCourseList) {
+        subCourseRepository.saveAll(subCourseList);
+    }
 }
