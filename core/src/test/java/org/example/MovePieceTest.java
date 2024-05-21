@@ -1,22 +1,15 @@
 package org.example;
 
 import com.example.models.board.Board;
-import com.example.models.board.CellOnTheBoard;
 import com.example.models.board.Move;
-import com.example.models.game.Game;
-import com.example.models.game.GameStatus;
 import com.example.models.pieces.*;
 import org.example.board.BoardService;
 import org.example.board.PieceService;
 import org.example.game.GameService;
-import org.example.miniMax.MiniMax;
-import org.example.miniMax.score.Evaluation;
 import org.example.score.*;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-
-import javax.lang.model.element.ElementVisitor;
 
 @SpringBootTest(classes = {MainApplication.class})
 public class MovePieceTest {

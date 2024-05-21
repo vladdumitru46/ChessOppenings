@@ -40,8 +40,17 @@ public class CourseController {
         Course course = new Course(addCourseRequest.name(), addCourseRequest.description(), addCourseRequest.video(), addCourseRequest.forWhite());
         courseService.addCourse(course);
     }
+
     @PostMapping("/addAll")
     public void addAllSubCourse(@RequestBody AddAllCoursesRequest addAllCoursesRequest) {
         courseService.addAll(addAllCoursesRequest.courseList());
     }
+
+    @PutMapping("/update")
+    public void updateCourse(@RequestParam Integer id) {
+        Course course = courseService.findCourseById(id).get();
+        course.setForWhite(true);
+        courseService.updateCourse(course);
+    }
 }
+

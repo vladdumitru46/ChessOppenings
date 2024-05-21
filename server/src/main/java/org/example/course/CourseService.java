@@ -1,6 +1,7 @@
 package org.example.course;
 
 import com.example.models.courses.Course;
+import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.example.repositoryes.course.CourseRepository;
@@ -40,5 +41,10 @@ public class CourseService {
 
     public void addAll(List<Course> courses) {
         courseRepository.saveAll(courses);
+    }
+
+    @Transactional
+    public void updateCourse(Course course) {
+        course.setForWhite(course.isForWhite());
     }
 }

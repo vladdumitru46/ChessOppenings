@@ -4,7 +4,16 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="75b936ac-d5b0-4178-bee6-f97885357906" name="Changes" comment="dockerize application" />
+    <list default="true" id="75b936ac-d5b0-4178-bee6-f97885357906" name="Changes" comment="added courses for black, and resolved bugs">
+      <change beforePath="$PROJECT_DIR$/.idea/jarRepositories.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/jarRepositories.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Dockerfile" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/core/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/src/main/java/org/example/MainApplication.java" beforeDir="false" afterPath="$PROJECT_DIR$/core/src/main/java/org/example/MainApplication.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/src/main/java/org/example/controllers/CourseController.java" beforeDir="false" afterPath="$PROJECT_DIR$/core/src/main/java/org/example/controllers/CourseController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/src/test/java/org/example/MovePieceTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/core/src/test/java/org/example/MovePieceTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/src/main/java/org/example/course/CourseService.java" beforeDir="false" afterPath="$PROJECT_DIR$/server/src/main/java/org/example/course/CourseService.java" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -82,6 +91,7 @@
   </component>
   <component name="RunAnythingCache">
     <option name="myCommands">
+      <command value="mvn build package" />
       <command value="mvn clean install" />
     </option>
   </component>
@@ -169,7 +179,6 @@
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="Application.MainApplication" />
         <item itemvalue="JUnit.MovePieceTest.isCheckMateIn2Test" />
         <item itemvalue="JUnit.PawnStructureScoreTest" />
         <item itemvalue="JUnit.MobilityScoreTest" />
@@ -205,6 +214,7 @@
       <workItem from="1716038528458" duration="1274000" />
       <workItem from="1716060935681" duration="10380000" />
       <workItem from="1716125256310" duration="5200000" />
+      <workItem from="1716291603287" duration="4491000" />
     </task>
     <task id="LOCAL-00001" summary="tried to add a cloud instance for db, on a computer it works, on other one does not, added history for moves, improved ai">
       <option name="closed" value="true" />
@@ -310,7 +320,15 @@
       <option name="project" value="LOCAL" />
       <updated>1716122466997</updated>
     </task>
-    <option name="localTasksCounter" value="14" />
+    <task id="LOCAL-00014" summary="added courses for black, and resolved bugs">
+      <option name="closed" value="true" />
+      <created>1716291797915</created>
+      <option name="number" value="00014" />
+      <option name="presentableId" value="LOCAL-00014" />
+      <option name="project" value="LOCAL" />
+      <updated>1716291797915</updated>
+    </task>
+    <option name="localTasksCounter" value="15" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -324,7 +342,8 @@
     <MESSAGE value="made ai better" />
     <MESSAGE value="made promotion logic and castiling for ai" />
     <MESSAGE value="dockerize application" />
-    <option name="LAST_COMMIT_MESSAGE" value="dockerize application" />
+    <MESSAGE value="added courses for black, and resolved bugs" />
+    <option name="LAST_COMMIT_MESSAGE" value="added courses for black, and resolved bugs" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -336,23 +355,18 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/core/src/main/java/org/example/controllers/CourseController.java</url>
-          <line>23</line>
+          <line>26</line>
           <option name="timeStamp" value="75" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/server/src/main/java/org/example/course/CourseService.java</url>
-          <line>23</line>
+          <line>24</line>
           <option name="timeStamp" value="76" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/core/src/main/java/org/example/controllers/CourseStartedByPlayerController.java</url>
-          <line>65</line>
+          <line>67</line>
           <option name="timeStamp" value="77" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/core/src/main/java/org/example/controllers/SubCourseController.java</url>
-          <line>64</line>
-          <option name="timeStamp" value="78" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>
