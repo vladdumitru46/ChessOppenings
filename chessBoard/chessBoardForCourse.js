@@ -108,6 +108,10 @@ async function setBoard() {
                 }
             }
         }
+        let forWhite = localStorage.getItem("forWhite");
+        if(forWhite == "false"){
+            await computerMove();
+        }
     }
 
 }

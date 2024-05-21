@@ -282,3 +282,10 @@
   height: 100%;
   top: 0%;
 }
+
+#informationCourse{
+  max-height: 60%;
+  
+  text-overflow: ellipsis;
+  overflow: auto; 
+}
