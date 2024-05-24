@@ -34,29 +34,9 @@ async function castle(piesaSquare1, imageUrlSquare1, springBootURL, requestData,
 let m = 1;
 
 async function movePiecesForCastle(piesaSquare1, imageUrlSquare1, rookNewSquare, rookSquare, ok, response) {
-    // square2.setAttribute('data-piesa', piesaSquare1);
-    // square2.querySelector('img').src = imageUrlSquare1;
-    //
-    // square1.setAttribute('data-piesa', 'none');
-    // square1.querySelector('img').src = "";
-    //
-    // rookNewSquare.setAttribute('data-piesa', rookSquare.getAttribute('data-piesa'));
-    // rookNewSquare.querySelector('img').src = rookSquare.querySelector('img').src;
-    //
-    // rookSquare.setAttribute('data-piesa', 'none');
-    // rookSquare.querySelector('img').src = "";
-    //
-    // square1 = null;
-    // square2 = null;
-    // ok = 1;
-    //
-    // let res = await response.text();
-    //
-    // updateMoveList(res);
     let gameId = localStorage.getItem("boardId");
     await boardSetter(response, gameId);
     await checkMateCheck();
-    // await moveAi();
     return ok;
 }
 
@@ -64,8 +44,10 @@ async function makeMoves(springBootURL, imageUrlSquare1, requestData, piesaSquar
     try {
         let ok = 0;
         if (square1.getAttribute('data-piesa').includes("pawn")) {
+
             let coordinates = square2.getAttribute("id");
-            if (coordinates[0] === "0" || coordinates[0] === "7") {
+
+            if (coordinates[0] === "0" && colour === "black" || coordinates[0] === "7" && colour === "white") {
 
                 let selectedImageSrc = null;
 

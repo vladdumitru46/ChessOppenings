@@ -134,15 +134,14 @@ async function boardSetter(respone, gameId) {
         let re = await fetch(baseUrl + "/game/getMoveNumber?gameId=" + gameId, null);
         if (re.ok) {
             moveNumber = await re.text();
+            maxMoveNumber = moveNumber;
         }
     }
     let playerColour = localStorage.getItem("playerColour");
     console.log(playerColour)
     if (whitesTurn == "false" && playerColour == "white") {
-        console.log("aicib")
         await moveAi();
     } else if (whitesTurn == "true" && playerColour == "black") {
-        console.log("aici")
         await moveAi();
     }
 }
@@ -249,13 +248,14 @@ function resetHighlightedSquares() {
     highlightedSquares = [];
 }
 
-async function getMovesHistory(moveNumber) {
+async function getMovesHistory(mN) {
     let gameId = localStorage.getItem("boardId")
-    let moveHistoryUrl = baseUrl + "/game/movesHistory?gameId=" + gameId + "&moveNumber=" + moveNumber;
+    let moveHistoryUrl = baseUrl + "/game/movesHistory?gameId=" + gameId + "&moveNumber=" + mN;
     let response = await fetch(moveHistoryUrl, null);
     if (response.ok) {
         let board = await response.text();
         await setNewBoard(board)
+        moveNumber = mN * 2;
     }
 }
 
@@ -317,11 +317,14 @@ async function goBack() {
 
 
 async function goForward() {
+    console.log("intru aici?")
+    console.log(maxMoveNumber)
     if (moveNumber < maxMoveNumber) {
         moveNumber += 1;
         console.log("move number: " + moveNumber)
         let gameId = localStorage.getItem("boardId")
         let moveHistoryUrl = baseUrl + "/game/moveForward?gameId=" + gameId + "&moveNumber=" + moveNumber;
+        console.log(moveHistoryUrl)
         let response1 = await fetch(moveHistoryUrl, null);
         if (response1.ok) {
             let board = await response1.text();
