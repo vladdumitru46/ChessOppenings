@@ -271,5 +271,34 @@ public class PieceService {
             default -> "";
         };
     }
+    public void takeMoveDataAndUndoIt(Board board, String[] move) {
+        int startLine = move[0].charAt(0) - '0';
+        int startColumn = move[0].charAt(1) - '0';
+        int endLine = move[1].charAt(0) - '0';
+        int endColumn = move[1].charAt(1) - '0';
 
+        CellOnTheBoard startCell = board.getCellOnTheBoardMap()[startLine][startColumn];
+        CellOnTheBoard endCell = board.getCellOnTheBoardMap()[endLine][endColumn];
+
+        if (move.length == 3) {
+            switch (move[2]) {
+                case "castleShort" -> {
+                    board.getCellOnTheBoardMap()[startLine][5].setPieces(board.getCellOnTheBoardMap()[startLine][7].getPieces());
+                    board.getCellOnTheBoardMap()[startLine][7].setPieces(null);
+                }
+                case "castleLong" -> {
+                    board.getCellOnTheBoardMap()[startLine][3].setPieces(board.getCellOnTheBoardMap()[startLine][0].getPieces());
+                    board.getCellOnTheBoardMap()[startLine][0].setPieces(null);
+                }
+                case "Queen" -> endCell.setPieces(new Queen(startCell.getPieces().isWhite()));
+                case "Rook" -> endCell.setPieces(new Rook(startCell.getPieces().isWhite()));
+                case "Bishop" -> endCell.setPieces(new Bishop(startCell.getPieces().isWhite()));
+                case "Knight" -> endCell.setPieces(new Knight(startCell.getPieces().isWhite()));
+
+            }
+        }
+
+        Move moveMade = new Move(startCell, endCell);
+        makeMove(board, moveMade);
+    }
 }

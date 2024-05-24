@@ -39,40 +39,6 @@ public class AiController {
     private final PawnStructureScore pawnStructureScore;
     private final Data data;
 
-    @PostMapping("/bestMove")
-    public ResponseEntity<?> bestMove(@RequestBody String boardId) {
-        Evaluation evaluation = new Evaluation(capturePiecesScore, centerControlScore, developmentScore, kingSafetyScore, mobilityScore, pawnStructureScore);
-        String[] list = boardId.split(":");
-
-        String[] list2 = list[1].split("}");
-
-        int endIndex = list2[0].lastIndexOf("\"");
-        String extractedContent = list2[0].substring(1, endIndex);
-        Board board;
-        Game game;
-        try {
-            game = gameService.getGameById(Integer.valueOf(extractedContent));
-            board = boardService.findById(game.getBoardId());
-        } catch (Exception e) {
-            return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
-        }
-        Move move;
-        MiniMax miniMax;
-        if (game.isWhitesTurn()) {
-            miniMax = new MiniMax(board, 3, true, mobilityScore, pieceService, kingSafetyScore, evaluation);
-        } else {
-            miniMax = new MiniMax(board, 3, false, mobilityScore, pieceService, kingSafetyScore, evaluation);
-            game.setMoveNumber(game.getMoveNumber() + 1);
-        }
-        move = miniMax.getBestMove();
-        System.out.println(move);
-        String moveTransformed = pieceService.transformMoveToCorrectNotation(move.getStart(), move.getEnd(), board);
-        boardService.updateBoard(board);
-        gameService.updateGame(game);
-        return new ResponseEntity<>(moveTransformed, HttpStatus.OK);
-    }
-
-
     @PostMapping("/makeMove")
     public ResponseEntity<?> doAiMove(@RequestBody String boardId) {
         String action = "";
@@ -90,13 +56,15 @@ public class AiController {
         } catch (Exception e) {
             return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
         }
+        Board testBoard = new Board();
+        createCopyBoard(testBoard, game);
         Move move;
         MiniMax miniMax;
         if (game.getGameStatus().equals(GameStatus.STARTED)) {
             if (game.isWhitesTurn()) {
-                miniMax = new MiniMax(board, data.getDepthForAi(), true, mobilityScore, pieceService, kingSafetyScore, evaluation);
+                miniMax = new MiniMax(testBoard, data.getDepthForAi(), true, mobilityScore, pieceService, kingSafetyScore, evaluation);
             } else {
-                miniMax = new MiniMax(board, data.getDepthForAi(), false, mobilityScore, pieceService, kingSafetyScore, evaluation);
+                miniMax = new MiniMax(testBoard, data.getDepthForAi(), false, mobilityScore, pieceService, kingSafetyScore, evaluation);
             }
             move = miniMax.getBestMove();
             if (move != null) {
@@ -162,6 +130,20 @@ public class AiController {
             }
         }
         return null;
+    }
+
+    private void createCopyBoard(Board board, Game game) {
+        String[] moves = game.getMoves().split(", ");
+        int moveNumber = game.getMoveNumber();
+        for (int i = 0; i < moveNumber; i++) {
+            String[] bothMoves = moves[i].split(";");
+            String[] move = bothMoves[0].split(" ");
+            pieceService.takeMoveDataAndUndoIt(board, move);
+            if (bothMoves.length == 2) {
+                move = bothMoves[1].split(" ");
+                pieceService.takeMoveDataAndUndoIt(board, move);
+            }
+        }
     }
 
     private void setMoveAsString(Game game, Move move, String action) {

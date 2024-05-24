@@ -3,15 +3,16 @@ package org.example.miniMax;
 import com.example.models.board.Board;
 import com.example.models.board.Move;
 import com.example.models.pieces.King;
-import com.example.models.pieces.Pawn;
 import com.example.models.pieces.Pieces;
-import com.example.models.pieces.Queen;
 import org.example.board.PieceService;
 import org.example.miniMax.score.Evaluation;
 import org.example.score.KingSafetyScore;
 import org.example.score.MobilityScore;
 
-import java.util.*;
+import java.util.LinkedHashMap;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Map;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
@@ -93,8 +94,6 @@ public class MiniMax {
         if (depth + 1 == 0) {
             return evaluation.evaluationScore(board);
         } else if (isGameOver(board, !isWhite)) {
-//            return !isWhite ? evaluation.evaluationScore(board) * 1000 :
-//                    evaluation.evaluationScore(board) * -1000;
             return evaluation.evaluationScore(board);
         } else if (isCheckMateIn1(king, !isWhite)) {
             return evaluation.evaluationScore(board);

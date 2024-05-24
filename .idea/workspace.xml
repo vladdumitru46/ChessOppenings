@@ -5,14 +5,11 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="75b936ac-d5b0-4178-bee6-f97885357906" name="Changes" comment="added courses for black, and resolved bugs">
-      <change beforePath="$PROJECT_DIR$/.idea/jarRepositories.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/jarRepositories.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Dockerfile" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/core/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/core/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/core/src/main/java/org/example/MainApplication.java" beforeDir="false" afterPath="$PROJECT_DIR$/core/src/main/java/org/example/MainApplication.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/core/src/main/java/org/example/controllers/CourseController.java" beforeDir="false" afterPath="$PROJECT_DIR$/core/src/main/java/org/example/controllers/CourseController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/core/src/test/java/org/example/MovePieceTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/core/src/test/java/org/example/MovePieceTest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/src/main/java/org/example/course/CourseService.java" beforeDir="false" afterPath="$PROJECT_DIR$/server/src/main/java/org/example/course/CourseService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ai/src/main/java/org/example/miniMax/MiniMax.java" beforeDir="false" afterPath="$PROJECT_DIR$/ai/src/main/java/org/example/miniMax/MiniMax.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/src/main/java/org/example/controllers/AiController.java" beforeDir="false" afterPath="$PROJECT_DIR$/core/src/main/java/org/example/controllers/AiController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/src/main/java/org/example/controllers/GameController.java" beforeDir="false" afterPath="$PROJECT_DIR$/core/src/main/java/org/example/controllers/GameController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/src/main/java/org/example/board/PieceService.java" beforeDir="false" afterPath="$PROJECT_DIR$/server/src/main/java/org/example/board/PieceService.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -179,6 +176,7 @@
     </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="Application.MainApplication" />
         <item itemvalue="JUnit.MovePieceTest.isCheckMateIn2Test" />
         <item itemvalue="JUnit.PawnStructureScoreTest" />
         <item itemvalue="JUnit.MobilityScoreTest" />
@@ -215,6 +213,9 @@
       <workItem from="1716060935681" duration="10380000" />
       <workItem from="1716125256310" duration="5200000" />
       <workItem from="1716291603287" duration="4491000" />
+      <workItem from="1716464852905" duration="6000" />
+      <workItem from="1716555872555" duration="84000" />
+      <workItem from="1716568910542" duration="4557000" />
     </task>
     <task id="LOCAL-00001" summary="tried to add a cloud instance for db, on a computer it works, on other one does not, added history for moves, improved ai">
       <option name="closed" value="true" />
@@ -328,7 +329,15 @@
       <option name="project" value="LOCAL" />
       <updated>1716291797915</updated>
     </task>
-    <option name="localTasksCounter" value="15" />
+    <task id="LOCAL-00015" summary="added courses for black, and resolved bugs">
+      <option name="closed" value="true" />
+      <created>1716300070040</created>
+      <option name="number" value="00015" />
+      <option name="presentableId" value="LOCAL-00015" />
+      <option name="project" value="LOCAL" />
+      <updated>1716300070040</updated>
+    </task>
+    <option name="localTasksCounter" value="16" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">

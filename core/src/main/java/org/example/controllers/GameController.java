@@ -92,12 +92,12 @@ public class GameController {
                 String[] bothMoves = moves[i].split(";");
                 if (bothMoves.length == 2) {
                     String[] move = bothMoves[0].split(" ");
-                    takeMoveDataAndUndoIt(newBoard, move);
+                    pieceService.takeMoveDataAndUndoIt(newBoard, move);
                     if (moveNumber % 2 == 1 && i == moveNr - 1) {
                         break;
                     }
                     move = bothMoves[1].split(" ");
-                    takeMoveDataAndUndoIt(newBoard, move);
+                    pieceService.takeMoveDataAndUndoIt(newBoard, move);
                 }
             }
             return new ResponseEntity<>(newBoard.toString(), HttpStatus.OK);
@@ -119,12 +119,12 @@ public class GameController {
                 String[] bothMoves = moves[i].split(";");
                 if (bothMoves.length == 2) {
                     String[] move = bothMoves[0].split(" ");
-                    takeMoveDataAndUndoIt(newBoard, move);
+                    pieceService.takeMoveDataAndUndoIt(newBoard, move);
                     if (moveNumber % 2 == 1 && i == moveNr - 1) {
                         break;
                     }
                     move = bothMoves[1].split(" ");
-                    takeMoveDataAndUndoIt(newBoard, move);
+                    pieceService.takeMoveDataAndUndoIt(newBoard, move);
                 }
             }
             return new ResponseEntity<>(newBoard.toString(), HttpStatus.OK);
@@ -143,10 +143,10 @@ public class GameController {
             for (int i = 0; i < moveNumber; i++) {
                 String[] bothMoves = moves[i].split(";");
                 String[] move = bothMoves[0].split(" ");
-                takeMoveDataAndUndoIt(newBoard, move);
+                pieceService.takeMoveDataAndUndoIt(newBoard, move);
                 if (bothMoves.length == 2) {
                     move = bothMoves[1].split(" ");
-                    takeMoveDataAndUndoIt(newBoard, move);
+                    pieceService.takeMoveDataAndUndoIt(newBoard, move);
                 }
             }
             return new ResponseEntity<>(newBoard.toString(), HttpStatus.OK);
@@ -155,36 +155,7 @@ public class GameController {
         }
     }
 
-    private void takeMoveDataAndUndoIt(Board board, String[] move) {
-        int startLine = move[0].charAt(0) - '0';
-        int startColumn = move[0].charAt(1) - '0';
-        int endLine = move[1].charAt(0) - '0';
-        int endColumn = move[1].charAt(1) - '0';
 
-        CellOnTheBoard startCell = board.getCellOnTheBoardMap()[startLine][startColumn];
-        CellOnTheBoard endCell = board.getCellOnTheBoardMap()[endLine][endColumn];
-
-        if (move.length == 3) {
-            switch (move[2]) {
-                case "castleShort" -> {
-                    board.getCellOnTheBoardMap()[startLine][5].setPieces(board.getCellOnTheBoardMap()[startLine][7].getPieces());
-                    board.getCellOnTheBoardMap()[startLine][7].setPieces(null);
-                }
-                case "castleLong" -> {
-                    board.getCellOnTheBoardMap()[startLine][3].setPieces(board.getCellOnTheBoardMap()[startLine][0].getPieces());
-                    board.getCellOnTheBoardMap()[startLine][0].setPieces(null);
-                }
-                case "Queen" -> endCell.setPieces(new Queen(startCell.getPieces().isWhite()));
-                case "Rook" -> endCell.setPieces(new Rook(startCell.getPieces().isWhite()));
-                case "Bishop" -> endCell.setPieces(new Bishop(startCell.getPieces().isWhite()));
-                case "Knight" -> endCell.setPieces(new Knight(startCell.getPieces().isWhite()));
-
-            }
-        }
-
-        Move moveMade = new Move(startCell, endCell);
-        pieceService.makeMove(board, moveMade);
-    }
 
     @GetMapping("/getMoveNumber")
     public ResponseEntity<?> getMoveNumber(@RequestParam Integer gameId) {
