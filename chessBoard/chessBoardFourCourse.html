@@ -3,11 +3,26 @@
 
 <head>
     <title id="pageTitle"></title>
-    <link href="chessBoard.css" rel="stylesheet"/>
+    <<link href="chessBoardForCourse.css" rel="stylesheet"/>
 </head>
 
 <body>
 <div class="container">
+    <header data-thq="thq-navbar" class="open-course-page-navbar-interactive">
+        <img alt="logo" src="../pieces/navBar.png" class="open-course-page-image"/>
+        <div data-thq="thq-navbar-nav" class="open-course-page-desktop-menu">
+            <nav id="navigation-bar" class="open-course-page-links">
+                <span id="homeLink" class="nav-link">Home</span>
+                <span id="playAgainstAiLink" class="nav-link">Play against ai</span>
+                <span id="gameHistoryLink" class="nav-link">Game history</span>
+            </nav>
+            <button type="button" class="collapsible"><img id="profilePic" src="../pieces/profile.png"></button>
+            <div class="content">
+                <button id="viewProfile" onclick="viewProfile()">View</button>
+                <button id="logOut" onclick="logOut()">Log out</button>
+            </div>
+        </div>
+    </header>
     <div class="chessboard">
         <!-- Row 1 -->
 
@@ -147,33 +162,13 @@
         <h2 id="courseTitle2">Titlu Lista Dreapta</h2>
         <ul>
         </ul>
-    </div>
 
-    <button id="getHint" onclick="getHint()">Hint</button>
-</div>
-<header data-thq="thq-navbar" class="open-course-page-navbar-interactive">
-    <img alt="logo" src="../pieces/navBar.png" class="open-course-page-image"/>
-    <div data-thq="thq-navbar-nav" class="open-course-page-desktop-menu">
-        <nav id="navigation-bar" class="open-course-page-links">
-        <span id="homeLink">
-          <span>Home</span>
-          <br/>
-        </span>
-            <span class="open-course-page-play-against-ai">
-          <span id="playAgainstAiLink">Play against ai</span>
-          <br/>
-        </span>
-        </nav>
-        <div class="open-course-page-buttons">
-            <button type="button" class="collapsible"><img id="profilePic" src="../pieces/profile.png"></button>
-            <div class="content">
-                <button id="viewProfile" onclick="viewProfile()">View</button>
-                <button id="logOut" onclick="logOut()">Log out</button>
-            </div>
-        </div>
     </div>
+    <button id="getHint" onclick="getHint()">Hint</button>
+
+
     <script src="chessBoardForCourse.js"></script>
-</header>
+</div>
 </body>
 
 </html>

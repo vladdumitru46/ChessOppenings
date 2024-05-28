@@ -36,9 +36,7 @@ function register() {
 
 function togglePasswordVisibility() {
     var passwordInput = document.getElementById("password");
-    var showPasswordCheckbox = document.getElementById("showPassword");
-
-    if (showPasswordCheckbox.checked) {
+    if (passwordInput.type === "password") {
         passwordInput.type = "text";
     } else {
         passwordInput.type = "password";

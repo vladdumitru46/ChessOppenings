@@ -1,17 +1,14 @@
-// Definește funcția pentru a obține cursurile completate de la API
 const baseUrl = "http://localhost:8080/chess";
 
-async function getCompletedCourses(playerId) {
+async function getCompletedCourses() {
     const response = await fetch(`${baseUrl}/startCourse/getFinishedCourses?player=${player}`);
-    const data = await response.json();
-    return data;
+    return await response.json();
 }
 
-// Funcția care aplică stilul verde pentru cursurile completate
 async function colorCompletedCourses(playerId) {
     const completedCourses = await getCompletedCourses(playerId);
     const lis = document.querySelectorAll('.learningpage-ul li');
-    
+
     lis.forEach(li => {
         const courseName = li.getAttribute('data-course').trim();
         if (completedCourses.includes(courseName)) {
@@ -20,27 +17,23 @@ async function colorCompletedCourses(playerId) {
     });
 }
 
-// Apelarea funcției pentru a colora cursurile completate
 const player = localStorage.getItem("player");
 colorCompletedCourses(player);
 
 
 function openCourse(element) {
     let courseValue = element.getAttribute("data-course");
-    const springBootPort = 8080; // Replace with the actual port number
     const springBootURL = `${baseUrl}/course/getCourse?name=${courseValue}`;
-    let course = {}; // Create an empty object to store the course data
+    let course = {};
 
-    // Construct the request object
     const requestData = {
         method: "GET",
     };
 
-    // Send the GET request to the correct URL
     fetch(springBootURL, requestData)
         .then(response => {
             if (response.ok) {
-                return response.json(); // Parse the response as JSON
+                return response.json();
             } else {
                 return response.text().then(errorData => {
                     throw new Error(errorData);
@@ -72,26 +65,30 @@ document.getElementById('homeLink').addEventListener('click', function () {
 document.getElementById('playAgainstAiLink').addEventListener('click', function () {
     window.location.href = "../choseColour/chose-black-or-white.html";
 });
+document.getElementById('gameHistoryLink').addEventListener('click', function () {
+    window.location.href = "../history_page/historypage.html";
+});
+
 function logOut() {
     localStorage.clear();
     window.location.replace('../logIn/log-in.html');
-  }
-  
-  function viewProfile() {
+}
+
+function viewProfile() {
     window.location.replace('../viewProfile/profile-page.html');
-  }
+}
 
-  var coll = document.getElementsByClassName("collapsible");
-  var i;
+let coll = document.getElementsByClassName("collapsible");
+let i;
 
-  for (i = 0; i < coll.length; i++) {
+for (i = 0; i < coll.length; i++) {
     coll[i].addEventListener("click", function () {
-      this.classList.toggle("active");
-      var content = this.nextElementSibling;
-      if (content.style.display === "block") {
-        content.style.display = "none";
-      } else {
-        content.style.display = "block";
-      }
+        this.classList.toggle("active");
+        let content = this.nextElementSibling;
+        if (content.style.display === "block") {
+            content.style.display = "none";
+        } else {
+            content.style.display = "block";
+        }
     });
-  }
+}

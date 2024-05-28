@@ -115,92 +115,91 @@
       line-height: 1.15;
       color: var(--dl-color-gray-black);
       background-color: var(--dl-color-gray-white);
-
     }
   </style>
   <link rel="stylesheet" href="https://unpkg.com/animate.css@4.1.1/animate.css" />
   <link rel="stylesheet"
-    href="https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&amp;display=swap"
-    data-tag="font" />
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&amp;display=swap"
+        data-tag="font" />
   <link rel="stylesheet" href="https://unpkg.com/@teleporthq/teleport-custom-scripts/dist/style.css" />
 </head>
 
 <body>
-  <link rel="stylesheet" href="./style.css" />
-  <div>
-    <link href="./home-page.css" rel="stylesheet" />
+<link rel="stylesheet" href="./style.css" />
+<div>
+  <link href="./home-page.css" rel="stylesheet" />
 
-    <div class="home-page-container">
+  <div class="home-page-container">
       <span class="home-page-text">
         <span class="home-page-text1">Chess Openings</span>
         <br />
       </span>
-      <p id="learningPage">Learn Openings</p>
-      <p id="playAi">Play against ai</p>
-      <p id="hist">Game history</p>
-      <img id="learning_page" alt="image" src="../pieces/learning_page.png" class="home-page-image" />
-      <img id="ai" alt="image" src="../pieces/playAgainstAi.png" class="home-page-image1" />
-      <img id="history" alt="image" src="../pieces/hisotryPage.png" class="home-page-image2" />
-    </div>
+    <p id="learningPage">Learn Openings</p>
+    <p id="playAi">Play against ai</p>
+    <p id="hist">Game history</p>
+    <img id="learning_page" alt="image" src="../pieces/learning_page.png" class="home-page-image" />
+    <img id="ai" alt="image" src="../pieces/playAgainstAi.png" class="home-page-image1" />
+    <img id="history" alt="image" src="../pieces/hisotryPage.png" class="home-page-image2" />
   </div>
+</div>
 
-  <button type="button" class="collapsible"><img id = "profilePic" src="../pieces/profile.png"></button>
-  <div class="content">
-    <button id="viewProfile" onclick="viewProfile()">View</button>
-    <button id="logOut" onclick="logOut()">Log out</button>
-  </div>
+<button type="button" class="collapsible"><img id="profilePic" src="../pieces/profile.png" alt = profile></button>
+<div class="content">
+  <button id="viewProfile" onclick="viewProfile()">View</button>
+  <button id="logOut" onclick="logOut()">Log out</button>
+</div>
 
-  <script>
-    var learningImage = document.getElementById('learning_page');
-    var aiImage = document.getElementById('ai');
-    var historyImage = document.getElementById('history');
+<script>
+  var learningImage = document.getElementById('learning_page');
+  var aiImage = document.getElementById('ai');
+  var historyImage = document.getElementById('history');
 
-    learningImage.addEventListener('click', function () {
-      window.location.href = "../learning_page/learning_page.html";
-    });
+  learningImage.addEventListener('click', function () {
+    window.location.href = "../learning_page/learning_page.html";
+  });
 
-    aiImage.addEventListener('click', function () {
-      window.location.href = "../choseColour/chose-black-or-white.html";
-    });
+  aiImage.addEventListener('click', function () {
+    window.location.href = "../choseColour/chose-black-or-white.html";
+  });
 
-    historyImage.addEventListener('click', function () {
-      window.location.href = "../history_page/historypage.html";
-    });
+  historyImage.addEventListener('click', function () {
+    window.location.href = "../history_page/historypage.html";
+  });
 
-    function openNewWindow(imageSrc) {
-      window.open(imageSrc, '_blank');
-    }
-    document.addEventListener('DOMContentLoaded', function () {
-      let token = localStorage.getItem("token");
-      if (token === null) {
-        window.location.replace('../logIn/log-in.html');
-      }
-    });
-
-    function logOut() {
-      localStorage.clear();
+  function openNewWindow(imageSrc) {
+    window.open(imageSrc, '_blank');
+  }
+  document.addEventListener('DOMContentLoaded', function () {
+    let token = localStorage.getItem("token");
+    if (token === null) {
       window.location.replace('../logIn/log-in.html');
     }
-    
-    function viewProfile() {
-      window.location.replace('../viewProfile/profile-page.html');
-    }
+  });
 
-    var coll = document.getElementsByClassName("collapsible");
-    var i;
+  function logOut() {
+    localStorage.clear();
+    window.location.replace('../logIn/log-in.html');
+  }
 
-    for (i = 0; i < coll.length; i++) {
-      coll[i].addEventListener("click", function () {
-        this.classList.toggle("active");
-        var content = this.nextElementSibling;
-        if (content.style.display === "block") {
-          content.style.display = "none";
-        } else {
-          content.style.display = "block";
-        }
-      });
-    }
-  </script>
+  function viewProfile() {
+    window.location.replace('../viewProfile/profile-page.html');
+  }
+
+  var coll = document.getElementsByClassName("collapsible");
+  var i;
+
+  for (i = 0; i < coll.length; i++) {
+    coll[i].addEventListener("click", function () {
+      this.classList.toggle("active");
+      var content = this.nextElementSibling;
+      if (content.style.display === "block") {
+        content.style.display = "none";
+      } else {
+        content.style.display = "block";
+      }
+    });
+  }
+</script>
 </body>
 
 </html>

@@ -41,8 +41,11 @@ document.getElementById('playAgainstAiLink').addEventListener('click', function 
     window.location.href = "../choseColour/chose-black-or-white.html";
 });
 
-document.getElementById('learningPage').addEventListener('click', function () {
+document.getElementById('learningPageLink').addEventListener('click', function () {
     window.location.href = '../learning_page/learning_page.html';
+});
+document.getElementById('gameHistoryLink').addEventListener('click', function () {
+    window.location.href = '../history_page/historypage.html';
 });
 function logOut() {
     localStorage.clear();

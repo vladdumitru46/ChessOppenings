@@ -570,7 +570,10 @@ document.getElementById('homeLink').addEventListener('click', function () {
 });
 
 document.getElementById('playAgainstAiLink').addEventListener('click', function () {
-    window.location.href = '../chessBoard/chessBoard.html';
+    window.location.href = '../choseColour/chose-black-or-white.html';
+});
+document.getElementById('gameHistoryLink').addEventListener('click', function () {
+    window.location.href = "../history_page/historypage.html";
 });
 
 function logOut() {

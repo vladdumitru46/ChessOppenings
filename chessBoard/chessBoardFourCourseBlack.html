@@ -3,11 +3,26 @@
 
 <head>
     <title id="pageTitle"></title>
-    <link href="chessBoard.css" rel="stylesheet"/>
+    <link href="chessBoardForCourse.css" rel="stylesheet"/>
 </head>
 
 <body>
 <div class="container">
+    <header data-thq="thq-navbar" class="open-course-page-navbar-interactive">
+        <img alt="logo" src="../pieces/navBar.png" class="open-course-page-image"/>
+        <div data-thq="thq-navbar-nav" class="open-course-page-desktop-menu">
+            <nav id="navigation-bar" class="open-course-page-links">
+                <span id="homeLink" class="nav-link">Home</span>
+                <span id="playAgainstAiLink" class="nav-link">Play against ai</span>
+                <span id="gameHistoryLink" class="nav-link">Game history</span>
+            </nav>
+            <button type="button" class="collapsible"><img id="profilePic" src="../pieces/profile.png"></button>
+            <div class="content">
+                <button id="viewProfile" onclick="viewProfile()">View</button>
+                <button id="logOut" onclick="logOut()">Log out</button>
+            </div>
+        </div>
+    </header>
     <div class="chessboard">
         <!-- Row 1 -->
 
@@ -29,7 +44,7 @@
         <div class="black" id="00" data-piesa="white rook" onclick="getPiece(this)"><img src="../pieces/whiteRook.png"
                                                                                          alt=""></div>
         <div class="numbers">2</div>
-    
+
         <div class="black" id="17" data-piesa="white pawn" onclick="getPiece(this)"><img src="../pieces/whitePawn.png"
                                                                                          alt=""></div>
         <div class="white" id="16" data-piesa="white pawn" onclick="getPiece(this)"><img src="../pieces/whitePawn.png"
@@ -47,8 +62,8 @@
         <div class="white" id="10" data-piesa="white pawn" onclick="getPiece(this)"><img src="../pieces/whitePawn.png"
                                                                                          alt=""></div>
         <!-- Row 2 -->
-    
-    
+
+
         <div class="numbers">3</div>
         <div class="white" id="27" data-piesa="none" onclick="getPiece(this)"><img src="" alt=""></div>
         <div class="black" id="26" data-piesa="none" onclick="getPiece(this)"><img src="" alt=""></div>
@@ -58,7 +73,7 @@
         <div class="black" id="22" data-piesa="none" onclick="getPiece(this)"><img src="" alt=""></div>
         <div class="white" id="21" data-piesa="none" onclick="getPiece(this)"><img src="" alt=""></div>
         <div class="black" id="20" data-piesa="none" onclick="getPiece(this)"><img src="" alt=""></div>
-    
+
         <div class="numbers">4</div>
         <div class="black" id="37" data-piesa="none" onclick="getPiece(this)"><img src="" alt=""></div>
         <div class="white" id="36" data-piesa="none" onclick="getPiece(this)"><img src="" alt=""></div>
@@ -68,7 +83,7 @@
         <div class="white" id="32" data-piesa="none" onclick="getPiece(this)"><img src="" alt=""></div>
         <div class="black" id="31" data-piesa="none" onclick="getPiece(this)"><img src="" alt=""></div>
         <div class="white" id="30" data-piesa="none" onclick="getPiece(this)"><img src="" alt=""></div>
-    
+
         <div class="numbers">5</div>
         <div class="white" id="47" data-piesa="none" onclick="getPiece(this)"><img src="" alt=""></div>
         <div class="black" id="46" data-piesa="none" onclick="getPiece(this)"><img src="" alt=""></div>
@@ -78,8 +93,8 @@
         <div class="black" id="42" data-piesa="none" onclick="getPiece(this)"><img src="" alt=""></div>
         <div class="white" id="41" data-piesa="none" onclick="getPiece(this)"><img src="" alt=""></div>
         <div class="black" id="40" data-piesa="none" onclick="getPiece(this)"><img src="" alt=""></div>
-    
-    
+
+
         <div class="numbers">6</div>
         <div class="black" id="57" data-piesa="none" onclick="getPiece(this)"><img src="" alt=""></div>
         <div class="white" id="56" data-piesa="none" onclick="getPiece(this)"><img src="" alt=""></div>
@@ -89,8 +104,8 @@
         <div class="white" id="52" data-piesa="none" onclick="getPiece(this)"><img src="" alt=""></div>
         <div class="black" id="51" data-piesa="none" onclick="getPiece(this)"><img src="" alt=""></div>
         <div class="white" id="50" data-piesa="none" onclick="getPiece(this)"><img src="" alt=""></div>
-    
-    
+
+
         <div class="numbers">7</div>
         <div class="white" id="67" data-piesa="black pawn" onclick="getPiece(this)"><img src="../pieces/blackPawn.png"
                                                                                          alt=""></div>
@@ -134,40 +149,20 @@
         <div class="letters">c</div>
         <div class="letters">b</div>
         <div class="letters">a</div>
-    
-    
+
     </div>
     <div class="right-column" id="courseContent">
         <h2 id="courseTitle2">Titlu Lista Dreapta</h2>
         <ul>
         </ul>
-    </div>
 
-    <button id="getHint" onclick="getHint()">Hint</button>
-</div>
-<header data-thq="thq-navbar" class="open-course-page-navbar-interactive">
-    <img alt="logo" src="../pieces/navBar.png" class="open-course-page-image"/>
-    <div data-thq="thq-navbar-nav" class="open-course-page-desktop-menu">
-        <nav id="navigation-bar" class="open-course-page-links">
-        <span id="homeLink">
-          <span>Home</span>
-          <br/>
-        </span>
-            <span class="open-course-page-play-against-ai">
-          <span id="playAgainstAiLink">Play against ai</span>
-          <br/>
-        </span>
-        </nav>
-        <div class="open-course-page-buttons">
-            <button type="button" class="collapsible"><img id="profilePic" src="../pieces/profile.png"></button>
-            <div class="content">
-                <button id="viewProfile" onclick="viewProfile()">View</button>
-                <button id="logOut" onclick="logOut()">Log out</button>
-            </div>
-        </div>
     </div>
+    <button id="getHint" onclick="getHint()">Hint</button>
+
+
+
     <script src="chessBoardForCourse.js"></script>
-</header>
+</div>
 </body>
 
 </html>

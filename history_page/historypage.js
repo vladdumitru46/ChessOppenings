@@ -59,8 +59,11 @@ document.getElementById('homeLink').addEventListener('click', function () {
   window.location.href = '../home_page/home-page.html';
 });
 
-document.getElementById('playAgainstAiLink').addEventListener('click', function () {
+document.getElementById('learningPageLink').addEventListener('click', function () {
   window.location.href = '../learning_page/learning_page.html';
+});
+document.getElementById('playAgainstAiLink').addEventListener('click', function () {
+  window.location.href = '../choseColour/chose-black-or-white.html';
 });
 
 function logOut() {

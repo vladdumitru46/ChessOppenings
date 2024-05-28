@@ -1,81 +1,104 @@
+/* Main container styling */
 .log-in-container {
   width: 100%;
   display: flex;
-  overflow: auto;
   min-height: 100vh;
   align-items: center;
   flex-direction: column;
   justify-content: center;
   background-color: #0c0c0c;
   background-image: url('../pieces/background.jpg');
-  /* Replace 'path/to/your/image.jpg' with the actual path to your image file */
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
+  padding: 20px;
+  box-sizing: border-box;
 }
 
-.log-in-textinput {
-  top: 35%;
-  left: 32%;
-  color: #000000;
-  right: 30%;
-  width: 30%;
-  position: absolute;
-  background-color: #ffffff;
-}
-
+/* Input styling */
+.log-in-textinput,
 .log-in-textinput1 {
-  top: 45%;
-  left: 32%;
-  color: #000000;
-  right: 35%;
-  width: 30%;
-  position: absolute;
+  width: 80%;
+  max-width: 400px;
+  padding: 15px;
+  margin: 10px 0;
+  border: none;
+  border-radius: 5px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  font-size: 1rem;
   background-color: #ffffff;
+  position: relative;
+  box-sizing: border-box;
 }
 
-.log-in-button {
-  top: 75%;
-  left: 32%;
+.password-container {
+  width: 80%;
+  max-width: 400px;
+  margin: 10px 0;
+  position: relative;
+}
+
+.password-container input {
+  width: 100%;
+  padding-right: 50px;
+}
+
+.password-container .show-password {
   position: absolute;
+  right: 15px;
+  top: 50%;
+  transform: translateY(-50%);
+  cursor: pointer;
 }
 
+/* Button styling */
+.log-in-button,
 .log-in-button1 {
-  top: 55%;
-  left: 42%;
-  width: 10%;
-  position: absolute;
-}
-
-.log-in-log-in {
-  top: 20%;
-  left: 38%;
-  color: rgb(241, 241, 241);
-  width: 20%;
-  height: 10%;
-  position: absolute;
-  font-size: 4em;
-  font-style: normal;
+  width: 80%;
+  max-width: 400px;
+  padding: 15px;
+  margin: 10px 0;
+  border: none;
+  border-radius: 5px;
+  background-color: #4CAF50;
+  color: white;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.3s ease;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
   text-align: center;
-  font-family: "Times New Roman";
+}
+
+.log-in-button:hover,
+.log-in-button1:hover {
+  background-color: #45a049;
+  transform: scale(1.05);
+}
+
+/* Heading styling */
+.log-in-log-in {
+  font-size: 3rem;
+  color: white;
+  text-align: center;
+  margin-bottom: 20px;
+  font-family: 'Times New Roman', Times, serif;
   font-weight: 900;
-  text-transform: capitalize;
 }
 
+/* Subtext styling */
 .log-in-text09 {
-  top: 70%;
-  left: 30%;
-  color: rgb(255, 255, 255);
-  bottom: 30%;
-  position: absolute;
-  font-size: 20px;
+  font-size: 1rem;
+  color: white;
+  text-align: center;
+  margin-top: 20px;
 }
 
+.log-in-text09 span {
+  cursor: pointer;
+  color: white;
+  transition: color 0.3s ease;
+}
 
-.show {
-  position: absolute;
-  top: 46%;
-  width: 2%;
-  height: 2%;
-  left: 60%;
+.log-in-text09 span:hover {
+  color: #45a049;
 }

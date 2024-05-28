@@ -27,6 +27,9 @@ document.getElementById('playAgainstAiLink').addEventListener('click', function 
     window.location.href = '../learning_page/learning_page.html';
 });
 
+document.getElementById('gameHistoryLink').addEventListener('click', function () {
+    window.location.href = "../history_page/historypage.html";
+});
 function logOut() {
     localStorage.clear();
     window.location.replace('../logIn/log-in.html');

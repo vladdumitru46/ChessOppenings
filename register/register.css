@@ -1,108 +1,99 @@
+/* Main container styling */
 .register-container {
   width: 100%;
   display: flex;
-  overflow: auto;
   min-height: 100vh;
   align-items: center;
   flex-direction: column;
   justify-content: center;
-  background-color: #000000;
+  background-color: #0c0c0c;
   background-image: url('../pieces/background.jpg');
-  /* Replace 'path/to/your/image.jpg' with the actual path to your image file */
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
+  padding: 20px;
+  box-sizing: border-box;
 }
-.register-text {
-  top: 10%;
-  left: 40%;
-  color: rgb(255, 255, 255);
-  right: 30%;
-  bottom: 80%;
-  position: absolute;
-  font-size: 80px;
-}
-.register-textinput {
-  top: 30%;
-  left: 40%;
-  right: 30%;
-  width: 20%;
-  bottom: 65%;
-  height: 5%;
-  position: absolute;
-}
-.register-textinput1 {
-  top: 40%;
-  left: 40%;
-  right: 30%;
-  width: 20%;
-  bottom: 45%;
-  height: 5%;
-  position: absolute;
-}
-.register-textinput2 {
-  top: 50%;
-  left: 40%;
-  right: 30%;
-  width: 20%;
-  bottom: 35%;
-  height: 5%;
-  position: absolute;
-}
+
+/* Input styling */
+.register-textinput,
+.register-textinput1,
+.register-textinput2,
 .register-textinput3 {
-  top: 60%;
-  left: 40%;
-  right: 30%;
-  width: 20%;
-  bottom: 30%;
-  height: 5%;
-  position: absolute;
+  width: 80%;
+  max-width: 400px;
+  padding: 15px;
+  margin: 10px 0;
+  border: none;
+  border-radius: 5px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  font-size: 1rem;
+  background-color: #ffffff;
+  position: relative;
+  box-sizing: border-box;
 }
+
+.password-container {
+  width: 80%;
+  max-width: 400px;
+  margin: 10px 0;
+  position: relative;
+}
+
+.password-container input {
+  width: 100%;
+  padding-right: 50px;
+}
+
+.password-container .show-password {
+  position: absolute;
+  right: 15px;
+  top: 50%;
+  transform: translateY(-50%);
+  cursor: pointer;
+}
+
+/* Button styling */
 .register-button {
-  top: 70%;
-  left: 45%;
-  right: 55%;
-  width: 10%;
-  bottom: 25%;
-  position: absolute;
+  width: 80%;
+  max-width: 400px;
+  padding: 15px;
+  margin-top: 20px;
+  border: none;
+  border-radius: 5px;
+  background-color: #4CAF50;
+  color: white;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.3s ease;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  text-align: center;
 }
-@media(max-width: 1600px) {
+
+.register-button:hover {
+  background-color: #45a049;
+  transform: scale(1.05);
+}
+
+/* Heading styling */
+.register-text {
+  font-size: 3rem;
+  color: white;
+  text-align: center;
+  margin-bottom: 20px;
+  font-family: 'Times New Roman', Times, serif;
+  font-weight: 900;
+}
+
+/* Media queries for responsiveness */
+@media(max-width: 767px) {
   .register-container {
-    background-color: #000000;
-  }
-  .register-text {
-    top: 10%;
-    left: 40%;
-    color: rgb(255, 255, 255);
-    right: 50%;
-    position: absolute;
-  }
-  .register-text1 {
-    font-size: 80px;
-  }
-  .register-text2 {
-    font-size: 80px;
-  }
-}
-@media(max-width: 1200px) {
-  .register-text {
-    right: 30%;
-  }
-}
-@media(max-width: 991px) {
-  .register-text1 {
-    font-size: 80px;
-  }
-  .register-text2 {
-    font-size: 80px;
+    padding: 10px;
   }
 }
 
-
-.show {
-  position: absolute;
-  top: 62%;
-  width: 2%;
-  height: 2%;
-  left: 58%;
+@media(max-width: 479px) {
+  .register-container {
+    padding: 5px;
+  }
 }

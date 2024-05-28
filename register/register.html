@@ -2,7 +2,7 @@
 <html lang="en">
 
 <head>
-  <title>Register - Grumpy Little Opossum</title>
+  <title>Register</title>
   <meta property="og:title" content="Register - Grumpy Little Opossum" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta charset="utf-8" />
@@ -120,37 +120,43 @@
   </style>
   <link rel="stylesheet" href="https://unpkg.com/animate.css@4.1.1/animate.css" />
   <link rel="stylesheet"
-    href="https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&amp;display=swap"
-    data-tag="font" />
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&amp;display=swap"
+        data-tag="font" />
   <link rel="stylesheet" href="https://unpkg.com/@teleporthq/teleport-custom-scripts/dist/style.css" />
 </head>
 
 <body>
-  <link rel="stylesheet" href="./style.css" />
-  <div>
-    <link href="./register.css" rel="stylesheet" />
+<link rel="stylesheet" href="./style.css" />
+<div>
+  <link href="./register.css" rel="stylesheet" />
 
-    <div class="register-container">
-      <span class="register-text">
-        <span class="register-text1">Register</span>
-        <br class="register-text2" />
-        <br />
-      </span>
-      <input id="name" type="text" placeholder="name" class="register-textinput input" />
-      <input id="username" type="text" placeholder="username" class="register-textinput1 input" />
-      <input id="email" type="text" placeholder="email" class="register-textinput2 input" />
+  <div class="register-container">
+    <h1 class="register-text">Register</h1>
+    <input id="name" type="text" placeholder="name" class="register-textinput input" />
+    <input id="username" type="text" placeholder="username" class="register-textinput1 input" />
+    <input id="email" type="text" placeholder="email" class="register-textinput2 input" />
+    <div class="password-container">
       <input id="password" type="password" placeholder="password" class="register-textinput3 input" />
-      <input type="checkbox" id="showPassword" onchange="togglePasswordVisibility()" class = "show" />
-      <button type="button" class="register-button button" onclick="register()">
-        <span>
-          <span>Register</span>
-          <br />
+      <span class="show-password" onclick="togglePasswordVisibility()">
+          👁️
         </span>
-      </button>
     </div>
+    <button type="button" class="register-button button" onclick="register()">
+      <span>Register</span>
+    </button>
   </div>
+</div>
 
-  <script src="register.js"></script>
+<script>
+  function togglePasswordVisibility() {
+    var passwordInput = document.getElementById("password");
+    if (passwordInput.type === "password") {
+      passwordInput.type = "text";
+    } else {
+      passwordInput.type = "password";
+    }
+  }
+</script>
 </body>
 
 </html>
