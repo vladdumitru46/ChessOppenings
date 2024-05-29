@@ -80,6 +80,11 @@ img {
     width: 60%;
 }
 
+img:hover {
+    transform: scale(1.1);
+}
+
+
 .container {
     display: flex;
 }
@@ -111,6 +116,7 @@ img {
 .right-column li {
     color: white;
 }
+
 #courseContent {
     max-height: 50%;
     overflow-y: auto;
@@ -118,6 +124,7 @@ img {
     /* Elimină padding-ul implicit al listei */
     /* flex-direction: column-reverse; */
 }
+
 #courseTitle {
     top: 10%;
     color: white;
@@ -173,8 +180,8 @@ img {
 }
 
 .open-course-page-image {
-    height: 100%;
-    width: 5%;
+    height: 0%;
+    width: 0%;
 }
 
 .open-course-page-desktop-menu {
@@ -203,6 +210,7 @@ img {
     border: none;
     cursor: pointer;
 }
+
 /*.collapsible {*/
 /*  background-color: transparent;*/
 /*  border: none;*/
@@ -279,9 +287,11 @@ img {
     margin: 5px 0;
     cursor: pointer;
 }
+
 #back:hover {
     background-color: #45a049;
 }
+
 #forward:hover {
     background-color: #45a049;
 }

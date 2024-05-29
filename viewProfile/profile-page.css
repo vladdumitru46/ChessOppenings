@@ -16,7 +16,7 @@
 
 /* Text styling */
 .profile-page-text {
-  font-size: 3rem;
+  font-size: 300%;
   top: 20%;
   color: white;
   text-align: center;
@@ -30,7 +30,9 @@
 .profile-page-textinput3 {
   width: 80%;
   max-width: 400px;
-  padding: 15px;
+  height: 10%;
+  max-height: 10%;
+  padding: 0.5%;
   margin: 10px 0;
   border: none;
   border-radius: 5px;

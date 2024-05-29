@@ -81,6 +81,10 @@ img {
     width: 60%;
 }
 
+img:hover {
+    transform: scale(1.1);
+}
+
 .container {
     display: flex;
     max-height: 100%;
@@ -157,8 +161,8 @@ img {
 }
 
 .open-course-page-image {
-    height: 100%;
-    width: 5%;
+    height: 0%;
+    width: 0%;
 }
 
 .open-course-page-desktop-menu {
