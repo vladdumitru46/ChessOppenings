@@ -33,4 +33,7 @@ public class BoardService {
         board.setCellOnTheBoardMap(board.getCellOnTheBoardMap());
     }
 
+    public void deleteAll() {
+        boardRepository.deleteAll();
+    }
 }

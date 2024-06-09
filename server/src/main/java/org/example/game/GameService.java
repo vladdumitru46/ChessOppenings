@@ -54,4 +54,7 @@ public class GameService {
         game.setMoves(game.getMoves());
     }
 
+    public void deleteAll() {
+        gameRepository.deleteAll();
+    }
 }

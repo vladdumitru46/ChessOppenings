@@ -94,7 +94,7 @@ public class PieceService {
         }
     }
 
-    private void doCastle(Board board, CellOnTheBoard end, King king) {
+    public void doCastle(Board board, CellOnTheBoard end, King king) {
         if (king.isWhite()) {
             if (end.getColumnCoordinate() == 2) {
                 Rook rook = (Rook) board.getCellOnTheBoardMap()[0][0].getPieces();
@@ -222,6 +222,17 @@ public class PieceService {
             System.out.println(start);
             System.out.println(board);
         }
+        if (pieceOnStart instanceof King) {
+            if (abs(start.getColumnCoordinate() - end.getColumnCoordinate()) == 2) {
+//                if (pieceOnStart.isWhite()) {
+                if (end.getColumnCoordinate() == 6) {
+                    return "0-0";
+                } else {
+                    return "0-0-0";
+                }
+
+            }
+        }
         switch (start.getPieces()) {
             case King ignored -> notation += "K";
             case Queen ignored -> notation += "Q";
@@ -271,6 +282,7 @@ public class PieceService {
             default -> "";
         };
     }
+
     public void takeMoveDataAndUndoIt(Board board, String[] move) {
         int startLine = move[0].charAt(0) - '0';
         int startColumn = move[0].charAt(1) - '0';

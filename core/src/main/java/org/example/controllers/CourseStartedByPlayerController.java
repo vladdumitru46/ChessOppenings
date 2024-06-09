@@ -21,6 +21,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.management.DescriptorKey;
 import java.util.List;
 import java.util.Optional;
 
@@ -86,6 +87,9 @@ public class CourseStartedByPlayerController {
             String moveThatShouldBePlayed = listOfMoves[moveNumber - 1];
 
             if (move.equals(moveThatShouldBePlayed)) {
+                if(moveThatShouldBePlayed.contains("0")){
+                    pieceService.doCastle(board, end, (King) start.getPieces());
+                }
                 pieceService.makeMove(board, new Move(start, end));
                 courseStartedByPlayer.setWhitesTurn(!courseStartedByPlayer.isWhitesTurn());
                 boardService.updateBoard(board);
@@ -168,6 +172,8 @@ public class CourseStartedByPlayerController {
         if (start.getPieces() instanceof King) {
             if (pieceService.canTheKingMove(board, start, end, (King) start.getPieces())) {
                 return new ResponseEntity<>(HttpStatus.OK);
+            }else if(pieceService.canCastle(board, start, end, (King) start.getPieces())){
+                return new ResponseEntity<>(HttpStatus.OK);
             }
         } else if (start.getPieces() instanceof Queen) {
             if (pieceService.canTheQueenMove(board, start, end, (Queen) start.getPieces())) {
@@ -242,6 +248,11 @@ public class CourseStartedByPlayerController {
         } catch (Exception e) {
             return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
         }
+    }
+
+    @DeleteMapping("/delete")
+    public void deleteAllCoursesStartedByPlayer(){
+        courseStartedByPlayerService.deleteAll();
     }
 
 }

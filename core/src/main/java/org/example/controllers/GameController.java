@@ -169,4 +169,9 @@ public class GameController {
             return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
         }
     }
+
+    @DeleteMapping("/delete")
+    public void deleteAllGames(){
+        gameService.deleteAll();
+    }
 }

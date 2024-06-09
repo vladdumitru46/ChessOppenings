@@ -61,4 +61,7 @@ public class CourseStartedByPlayerService {
         courseStartedByPlayer.setWhitesTurn(courseStartedByPlayer.isWhitesTurn());
     }
 
+    public void deleteAll() {
+        courseStartedByPlayerRepository.deleteAll();
+    }
 }

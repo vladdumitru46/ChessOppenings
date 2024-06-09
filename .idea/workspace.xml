@@ -6,10 +6,21 @@
   <component name="ChangeListManager">
     <list default="true" id="75b936ac-d5b0-4178-bee6-f97885357906" name="Changes" comment="added courses for black, and resolved bugs">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ai/src/main/java/org/example/miniMax/MiniMax.java" beforeDir="false" afterPath="$PROJECT_DIR$/ai/src/main/java/org/example/miniMax/MiniMax.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Models/src/main/java/com/example/models/courses/CourseStatus.java" beforeDir="false" afterPath="$PROJECT_DIR$/Models/src/main/java/com/example/models/courses/CourseStatus.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Persistence.iml" beforeDir="false" afterPath="$PROJECT_DIR$/Persistence.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ai/src/main/java/org/example/miniMax/score/Evaluation.java" beforeDir="false" afterPath="$PROJECT_DIR$/ai/src/main/java/org/example/miniMax/score/Evaluation.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/core/src/main/java/org/example/controllers/AiController.java" beforeDir="false" afterPath="$PROJECT_DIR$/core/src/main/java/org/example/controllers/AiController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/src/main/java/org/example/controllers/BoardController.java" beforeDir="false" afterPath="$PROJECT_DIR$/core/src/main/java/org/example/controllers/BoardController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/src/main/java/org/example/controllers/CourseStartedByPlayerController.java" beforeDir="false" afterPath="$PROJECT_DIR$/core/src/main/java/org/example/controllers/CourseStartedByPlayerController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/core/src/main/java/org/example/controllers/GameController.java" beforeDir="false" afterPath="$PROJECT_DIR$/core/src/main/java/org/example/controllers/GameController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/src/main/java/org/example/requests/AddAllCoursesRequest.java" beforeDir="false" afterPath="$PROJECT_DIR$/core/src/main/java/org/example/requests/AddAllCoursesRequest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/src/main/java/org/example/requests/AddAllSubCoursesRequest.java" beforeDir="false" afterPath="$PROJECT_DIR$/core/src/main/java/org/example/requests/AddAllSubCoursesRequest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/src/main/java/org/example/requests/AddCourseRequest.java" beforeDir="false" afterPath="$PROJECT_DIR$/core/src/main/java/org/example/requests/AddCourseRequest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/src/main/java/org/example/requests/AddSubCourseRequest.java" beforeDir="false" afterPath="$PROJECT_DIR$/core/src/main/java/org/example/requests/AddSubCourseRequest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/src/main/java/org/example/board/BoardService.java" beforeDir="false" afterPath="$PROJECT_DIR$/server/src/main/java/org/example/board/BoardService.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/server/src/main/java/org/example/board/PieceService.java" beforeDir="false" afterPath="$PROJECT_DIR$/server/src/main/java/org/example/board/PieceService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/src/main/java/org/example/course/CourseStartedByPlayerService.java" beforeDir="false" afterPath="$PROJECT_DIR$/server/src/main/java/org/example/course/CourseStartedByPlayerService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/src/main/java/org/example/game/GameService.java" beforeDir="false" afterPath="$PROJECT_DIR$/server/src/main/java/org/example/game/GameService.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -216,6 +227,7 @@
       <workItem from="1716464852905" duration="6000" />
       <workItem from="1716555872555" duration="84000" />
       <workItem from="1716568910542" duration="4557000" />
+      <workItem from="1717926592826" duration="7509000" />
     </task>
     <task id="LOCAL-00001" summary="tried to add a cloud instance for db, on a computer it works, on other one does not, added history for moves, improved ai">
       <option name="closed" value="true" />
@@ -368,14 +380,19 @@
           <option name="timeStamp" value="75" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/server/src/main/java/org/example/course/CourseService.java</url>
-          <line>24</line>
-          <option name="timeStamp" value="76" />
+          <url>file://$PROJECT_DIR$/core/src/main/java/org/example/controllers/MovePiecesController.java</url>
+          <line>217</line>
+          <option name="timeStamp" value="81" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/core/src/main/java/org/example/controllers/CourseStartedByPlayerController.java</url>
-          <line>67</line>
-          <option name="timeStamp" value="77" />
+          <url>file://$PROJECT_DIR$/core/src/main/java/org/example/controllers/MovePiecesController.java</url>
+          <line>212</line>
+          <option name="timeStamp" value="83" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/core/src/main/java/org/example/controllers/AiController.java</url>
+          <line>135</line>
+          <option name="timeStamp" value="84" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>

@@ -42,8 +42,7 @@ public class Evaluation {
     }
 
     private int mobility(Board board, boolean isWhite) {
-        int mr = mobilityRatio(board, isWhite);
-        return Bonuses.MOBILITY_BONUS * mr;
+        return Bonuses.MOBILITY_BONUS * mobilityRatio(board, isWhite);
     }
 
     private int mobilityRatio(Board board, boolean isWhite) {
