@@ -15,7 +15,7 @@
 
 .home-page-text {
   color: #ffffff;
-  font-size: 3rem;
+  font-size: 300%;
   position: absolute;
   top: 5%;
   margin-bottom: 2rem;
@@ -24,7 +24,7 @@
 
 .home-page-text1 {
   display: block;
-  font-size: 3rem;
+  font-size: 100%;
 }
 
 .home-page-image,
@@ -34,9 +34,9 @@
   height: auto;
   margin: 1rem;
   transition: transform 0.3s ease;
-  background-color: grey; /* Add semi-transparent background */
-  padding: 0.15%; /* Add padding to create some space around the image */
-  border-radius: 3%; /* Add rounded corners */
+  background-color: grey; 
+  padding: 0.15%; 
+  border-radius: 3%; 
 }
 
 .home-page-image:hover,
@@ -44,17 +44,20 @@
 .home-page-image2:hover {
   transform: scale(1.05);
 }
-.home-page-image{
+
+.home-page-image {
   position: absolute;
   top: 40%;
   left: 10%;
 }
-.home-page-image1{
+
+.home-page-image1 {
   position: absolute;
   top: 40%;
   left: 40%;
 }
-.home-page-image2{
+
+.home-page-image2 {
   position: absolute;
   top: 40%;
   left: 70%;
@@ -64,13 +67,14 @@
 #playAi,
 #hist {
   color: white;
-  font-size: 1.5rem;
+  font-size: 100%;
   text-align: center;
   margin: 1rem;
   cursor: pointer;
   background-color: rgba(0, 0, 0, 0.5);
   padding: 10px;
   border-radius: 10px;
+  overflow: auto;
 }
 
 #learningPage {
@@ -116,20 +120,18 @@
   position: absolute;
   top: 60px;
   right: 20px;
-  background-color: #f1f1f1;
   padding: 10px;
   box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
 }
 
 .content button {
-  display: block;
   background-color: #4CAF50;
   color: white;
   border: none;
   padding: 10px;
   text-align: center;
   text-decoration: none;
-  display: inline-block;
+  display: block;
   font-size: 16px;
   margin: 5px 0;
   cursor: pointer;
@@ -137,4 +139,162 @@
 
 .content button:hover {
   background-color: #45a049;
+}
+
+/* Media Queries for Responsive Design */
+
+@media (max-width: 1200px) {
+  .home-page-image,
+  .home-page-image1,
+  .home-page-image2 {
+    width: 25%;
+  }
+
+  #learningPage,
+  #playAi,
+  #hist {
+    font-size: 90%;
+  }
+}
+
+@media (max-width: 992px) {
+  .home-page-image,
+  .home-page-image1,
+  .home-page-image2 {
+    width: 30%;
+    margin: 0.5rem;
+  }
+
+  .home-page-image {
+    left: 0%;
+  }
+
+  .home-page-image1 {
+    left: 35%;
+  }
+
+  .home-page-image2 {
+    left: 70%;
+  }
+
+  #learningPage,
+  #playAi,
+  #hist {
+    font-size: 80%;
+    top: 30%;
+  }
+  #learningPage {
+    position: absolute;
+    left: 10%;
+  }
+  
+  #playAi {
+    position: absolute;
+    left: 40%;
+  }
+  
+  #hist {
+    position: absolute;
+    left: 75%;
+  }
+}
+
+@media (max-width: 768px) {
+  .home-page-text {
+    font-size: 200%;
+    top: 3%;
+  }
+
+  .home-page-image,
+  .home-page-image1,
+  .home-page-image2 {
+    width: 40%;
+    margin: 0.5rem;
+    height: 20%;
+    left: 30%;
+  }
+
+  .home-page-image {
+    top: 20%;
+  }
+
+  .home-page-image1 {
+    top: 40%;
+  }
+
+  .home-page-image2 {
+    top: 60%;
+  }
+
+  #learningPage,
+  #playAi,
+  #hist {
+    font-size: 60%;
+    left: 10%;
+    margin: 0.5rem;
+  }
+  #learningPage {
+    position: absolute;
+    top: 25%;
+  }
+  
+  #playAi {
+    position: absolute;
+    top: 45%;
+  }
+  
+  #hist {
+    position: absolute;
+    top: 65%;
+  }
+}
+
+@media (max-width: 576px) {
+  .home-page-text {
+    font-size: 150%;
+    top: 2%;
+  }
+
+  .home-page-image,
+  .home-page-image1,
+  .home-page-image2 {
+    width: 40%;
+    margin: 0.5rem;
+    height: 20%;
+    left: 30%;
+  }
+
+  .home-page-image {
+    top: 20%;
+  }
+
+  .home-page-image1 {
+    top: 40%;
+  }
+
+  .home-page-image2 {
+    top: 60%;
+  }
+
+  #learningPage,
+  #playAi,
+  #hist {
+    font-size: 60%;
+    left: 10%;
+    margin: 0.5rem;
+  }
+  #learningPage {
+    position: absolute;
+    top: 25%;
+  }
+  
+  #playAi {
+    position: absolute;
+    top: 45%;
+  }
+  
+  #hist {
+    position: absolute;
+    top: 65%;
+  }
 }

@@ -232,29 +232,29 @@ img:hover {
     transform: scale(1.1);
 }
 
+
 .content {
     display: none;
     position: absolute;
     top: 60px;
     right: 20px;
-    background-color: #f1f1f1;
     padding: 10px;
     box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
-}
-
-.content button {
-    /*display: block;*/
+  }
+  
+  .content button {
     background-color: #4CAF50;
     color: white;
     border: none;
     padding: 10px;
     text-align: center;
     text-decoration: none;
-    /*display: inline-block;*/
+    display: block;
     font-size: 16px;
     margin: 5px 0;
     cursor: pointer;
-}
+  }
+  
 
 .content button:hover {
     background-color: #45a049;
