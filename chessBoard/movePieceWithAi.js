@@ -42,7 +42,7 @@ async function fetchData() {
                 let r = await fetch(baseUrl + "/game/getMoveNumber?gameId=" + gameId, null);
                 if (r.ok) {
                     moveNumber = await r.text();
-                    if(playerColour == "black"){
+                    if (playerColour == "black") {
                         await moveAi();
                     }
                 }
@@ -67,7 +67,6 @@ async function boardSetter(respone, gameId) {
         let cell = board[row].split(",")
         for (var c in cell) {
             let ce = cell[c].split(" ")
-            // console.log(ce)
             let element = document.getElementById(ce[0]);
             if (ce.length > 2) {
                 element.setAttribute("data-piesa", ce[1] + " " + ce[2])
@@ -127,6 +126,7 @@ async function boardSetter(respone, gameId) {
 
             newItem.appendChild(spanElement);
             ulElement.appendChild(newItem);
+            ulElement.scrollTop = ulElement.scrollHeight;
         }
 
         let gameId = localStorage.getItem("boardId");
@@ -173,15 +173,13 @@ async function getPiece(square) {
             let listOfMoves = await getAllPossibleMovesResponse.json();
             resetHighlightedSquares();
             for (let i in listOfMoves) {
-                console.log(listOfMoves[i])
                 let sq = document.getElementById(listOfMoves[i]);
                 const originalImageSrc = sq.querySelector('img').src;
-                console.log(sq)
+                console.log(sq.querySelector("img").src)
                 highlightedSquares.push({ element: sq, originalSrc: originalImageSrc });
-                // if (sq.querySelector("img").src === "") {
-                console.log("da esti prost?")
-                sq.querySelector('img').src = "../pieces/posibleMove.svg";
-                // }
+                if (originalImageSrc) {
+                    sq.querySelector('img').src = "../pieces/posibleMove.svg";
+                }
             }
         }
 

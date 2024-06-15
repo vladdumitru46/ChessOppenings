@@ -53,6 +53,9 @@ async function makeMoves(springBootURL, imageUrlSquare1, requestData, piesaSquar
 
                 let imageContainer = document.createElement('div');
                 imageContainer.id = "promotePawn";
+                imageContainer.style.position = 'absolute'; // Asigură poziționarea absolută
+                imageContainer.style.zIndex = '1000'; // Asigură că containerul va fi deasupra altor elemente
+
                 ["Queen", "Rook", "Bishop", "Knight"].forEach(piece => {
 
                     let imgElement = document.createElement('img');
@@ -63,6 +66,11 @@ async function makeMoves(springBootURL, imageUrlSquare1, requestData, piesaSquar
                     imageContainer.appendChild(imgElement);
                 });
                 square2.parentNode.insertBefore(imageContainer, square2.nextSibling);
+
+                // Calculează poziția pătratului apăsat și poziționează containerul
+                let rect = square2.getBoundingClientRect();
+                imageContainer.style.left = `${rect.right}px`; // Poziționează la dreapta pătratului
+                imageContainer.style.top = `${rect.top}px`; // Aliniază vertical cu pătratul
 
 
                 const imageSelectionPromise = new Promise((resolve) => {
@@ -85,7 +93,7 @@ async function makeMoves(springBootURL, imageUrlSquare1, requestData, piesaSquar
                 } else if (selectedImageSrc.includes("Bishop")) {
                     newPiece = "Bishop";
                 } else if (selectedImageSrc.includes("Knight")) {
-                    newPiece = "Horse";
+                    newPiece = "Knight";
                 }
                 const requestData = {
                     method: "POST",
