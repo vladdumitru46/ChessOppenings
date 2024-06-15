@@ -11,7 +11,7 @@ import lombok.extern.slf4j.Slf4j;
 @Setter
 public final class Rook extends Pieces {
     private boolean hasBeenMoved = false;
-    private final Integer points = 3;
+    private final Integer points = 5;
 
     public Rook(boolean white) {
         super(white);

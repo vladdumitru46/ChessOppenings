@@ -72,7 +72,13 @@ public class MobilityScore {
             case Rook ignored -> rookRepository.canMove(board, startCell, endCell, (Rook) startCell.getPieces());
             case Bishop ignored -> bishopRepository.canMove(board, startCell, endCell, (Bishop) startCell.getPieces());
             case Knight ignored -> knightRepository.canMove(board, startCell, endCell, (Knight) startCell.getPieces());
-            case Pawn ignored -> pawnRepository.canMove(board, startCell, endCell, (Pawn) startCell.getPieces());
+            case Pawn ignored -> {
+                if (!pawnRepository.canMove(board, startCell, endCell, (Pawn) startCell.getPieces())) {
+                    yield pawnRepository.canEnPassant(board, startCell, endCell, (Pawn) startCell.getPieces());
+                } else {
+                    yield true;
+                }
+            }
         };
     }
 

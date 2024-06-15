@@ -4,24 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="75b936ac-d5b0-4178-bee6-f97885357906" name="Changes" comment="added courses for black, and resolved bugs">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Models/src/main/java/com/example/models/courses/CourseStatus.java" beforeDir="false" afterPath="$PROJECT_DIR$/Models/src/main/java/com/example/models/courses/CourseStatus.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Persistence.iml" beforeDir="false" afterPath="$PROJECT_DIR$/Persistence.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ai/src/main/java/org/example/miniMax/score/Evaluation.java" beforeDir="false" afterPath="$PROJECT_DIR$/ai/src/main/java/org/example/miniMax/score/Evaluation.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/core/src/main/java/org/example/controllers/AiController.java" beforeDir="false" afterPath="$PROJECT_DIR$/core/src/main/java/org/example/controllers/AiController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/core/src/main/java/org/example/controllers/BoardController.java" beforeDir="false" afterPath="$PROJECT_DIR$/core/src/main/java/org/example/controllers/BoardController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/core/src/main/java/org/example/controllers/CourseStartedByPlayerController.java" beforeDir="false" afterPath="$PROJECT_DIR$/core/src/main/java/org/example/controllers/CourseStartedByPlayerController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/core/src/main/java/org/example/controllers/GameController.java" beforeDir="false" afterPath="$PROJECT_DIR$/core/src/main/java/org/example/controllers/GameController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/core/src/main/java/org/example/requests/AddAllCoursesRequest.java" beforeDir="false" afterPath="$PROJECT_DIR$/core/src/main/java/org/example/requests/AddAllCoursesRequest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/core/src/main/java/org/example/requests/AddAllSubCoursesRequest.java" beforeDir="false" afterPath="$PROJECT_DIR$/core/src/main/java/org/example/requests/AddAllSubCoursesRequest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/core/src/main/java/org/example/requests/AddCourseRequest.java" beforeDir="false" afterPath="$PROJECT_DIR$/core/src/main/java/org/example/requests/AddCourseRequest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/core/src/main/java/org/example/requests/AddSubCourseRequest.java" beforeDir="false" afterPath="$PROJECT_DIR$/core/src/main/java/org/example/requests/AddSubCourseRequest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/src/main/java/org/example/board/BoardService.java" beforeDir="false" afterPath="$PROJECT_DIR$/server/src/main/java/org/example/board/BoardService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/src/main/java/org/example/board/PieceService.java" beforeDir="false" afterPath="$PROJECT_DIR$/server/src/main/java/org/example/board/PieceService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/src/main/java/org/example/course/CourseStartedByPlayerService.java" beforeDir="false" afterPath="$PROJECT_DIR$/server/src/main/java/org/example/course/CourseStartedByPlayerService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/src/main/java/org/example/game/GameService.java" beforeDir="false" afterPath="$PROJECT_DIR$/server/src/main/java/org/example/game/GameService.java" afterDir="false" />
-    </list>
+    <list default="true" id="75b936ac-d5b0-4178-bee6-f97885357906" name="Changes" comment="added courses for black, and resolved bugs" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -103,7 +86,7 @@
       <command value="mvn clean install" />
     </option>
   </component>
-  <component name="RunManager" selected="Application.MainApplication">
+  <component name="RunManager" selected="JUnit.MovePieceTest.isCheckMateIn2Test">
     <configuration name="MainApplication" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="org.example.MainApplication" />
       <module name="Core" />
@@ -187,8 +170,8 @@
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="Application.MainApplication" />
         <item itemvalue="JUnit.MovePieceTest.isCheckMateIn2Test" />
+        <item itemvalue="Application.MainApplication" />
         <item itemvalue="JUnit.PawnStructureScoreTest" />
         <item itemvalue="JUnit.MobilityScoreTest" />
         <item itemvalue="JUnit.KingSafetyScoreTest" />
@@ -369,31 +352,40 @@
   <component name="XDebuggerManager">
     <breakpoint-manager>
       <breakpoints>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/Persistence/src/main/java/org/example/repositoryes/pieces/PawnRepository.java</url>
-          <line>96</line>
-          <option name="timeStamp" value="66" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
+        <line-breakpoint type="java-line">
           <url>file://$PROJECT_DIR$/core/src/main/java/org/example/controllers/CourseController.java</url>
           <line>26</line>
           <option name="timeStamp" value="75" />
         </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/core/src/main/java/org/example/controllers/MovePiecesController.java</url>
-          <line>217</line>
-          <option name="timeStamp" value="81" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/core/src/main/java/org/example/controllers/MovePiecesController.java</url>
-          <line>212</line>
-          <option name="timeStamp" value="83" />
+        <line-breakpoint type="java-line">
+          <url>file://$PROJECT_DIR$/server/src/main/java/org/example/board/PieceService.java</url>
+          <line>266</line>
+          <option name="timeStamp" value="94" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/core/src/main/java/org/example/controllers/AiController.java</url>
           <line>135</line>
-          <option name="timeStamp" value="84" />
+          <option name="timeStamp" value="99" />
         </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/ai/src/main/java/org/example/miniMax/MiniMax.java</url>
+          <line>83</line>
+          <option name="timeStamp" value="125" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/ai/src/main/java/org/example/miniMax/MiniMax.java</url>
+          <line>97</line>
+          <option name="timeStamp" value="129" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/server/src/main/java/org/example/board/PieceService.java</url>
+          <line>162</line>
+          <option name="timeStamp" value="131" />
+        </line-breakpoint>
+        <breakpoint type="java-exception">
+          <properties class="java.lang.NullPointerException" package="java.lang" />
+          <option name="timeStamp" value="92" />
+        </breakpoint>
       </breakpoints>
     </breakpoint-manager>
     <watches-manager>

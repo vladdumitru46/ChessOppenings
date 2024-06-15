@@ -18,6 +18,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
 
@@ -318,7 +319,11 @@ public class MovePiecesController {
             CellOnTheBoard startCell = board.getCellOnTheBoardMap()[startLine][startColumn];
             CellOnTheBoard endCell = board.getCellOnTheBoardMap()[endLine][endColumn];
             String notation = "";
-            if (pieceService.canThePawnPromote(board, startCell, endCell)) {
+            if (verifyLastMoveToBePawnStartMove(game)) {
+                if(pieceService.canEnPassant(board, startCell, endCell)){
+                    
+                }
+            } else if (pieceService.canThePawnPromote(board, startCell, endCell)) {
                 String move = pieceService.transformMoveToCorrectNotation(startCell, endCell, board);
                 switch (promotePawn.newPiece()) {
                     case "Queen" -> {
@@ -371,6 +376,22 @@ public class MovePiecesController {
             }
         }
         return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+    }
+
+    private boolean verifyLastMoveToBePawnStartMove(Game game) {
+        String[] moves = game.getMoves().split(", ");
+        String[] lastMoves = moves[moves.length - 1].split(";");
+        String ll;
+        if (game.isWhitesTurn()) {
+            ll = lastMoves[1];
+        } else {
+            ll = lastMoves[0];
+        }
+        String lastMove = ll.split(" ")[0];
+        int startLine = lastMove.charAt(0) - '0';
+        lastMove = ll.split(" ")[1];
+        int endLine = lastMove.charAt(0) - '0';
+        return (game.isWhitesTurn() && startLine == 6 && endLine == 4) || (!game.isWhitesTurn() && startLine == 1 && endLine == 3);
     }
 
 

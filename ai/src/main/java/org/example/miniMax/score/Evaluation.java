@@ -3,12 +3,14 @@ package org.example.miniMax.score;
 import com.example.models.board.Board;
 import com.example.models.board.Move;
 import com.example.models.pieces.Pieces;
+import com.example.models.pieces.Queen;
 import org.example.miniMax.score.bonusesAndPenalties.Penalties;
 import org.example.miniMax.score.bonusesAndPenalties.Bonuses;
 import org.example.score.*;
 
-public class Evaluation {
+import java.util.List;
 
+public class Evaluation {
     private final CapturePiecesScore capturePiecesScore;
     private final CenterControlScore centerControlScore;
     private final DevelopmentScore developmentScore;
@@ -26,19 +28,30 @@ public class Evaluation {
     }
 
     public int evaluationScore(Board board) {
-        return score(board, true) - score(board, false);
+        int a = score(board, true);
+        int b = score(board, false);
+        return a - b;
     }
 
     private int score(Board board, boolean isWhite) {
-        return mobility(board, isWhite)
-                + kingThreats(board, isWhite)
-                + pawnStructure(board, isWhite)
-                + attacks(board, isWhite)
-                + attacksPenalty(board, isWhite)
-                + centerControl(board, isWhite)
-                + developmentBonus(board, isWhite)
-                + queenLossPenalty(board, isWhite)
-                + board.getTotalPoints(isWhite) * Bonuses.PIECES_BONUS;
+        int a  = mobility(board, isWhite);
+        int b = kingThreats(board, isWhite);
+        int c = pawnStructure(board, isWhite);
+        int d = attacks(board, isWhite);
+        int e = attacksPenalty(board, isWhite);
+        int f = centerControl(board, isWhite);
+        int g = developmentBonus(board, isWhite);
+        int h = queenLossPenalty(board, isWhite);
+        int j = board.getTotalPoints(isWhite) * Bonuses.PIECES_BONUS;
+        return a
+                + b
+                + c
+                + d
+                + e
+                + f
+                + g
+                + h
+                + j;
     }
 
     private int mobility(Board board, boolean isWhite) {
@@ -71,16 +84,15 @@ public class Evaluation {
 
     private int attacks(Board board, boolean isWhite) {
         int attackScore = 0;
-        for (var move : mobilityScore.getAllPossibleMoves(board, isWhite)) {
+        List<Move> captureMoves = capturePiecesScore.captureMoves(board, isWhite);
+        for (var move : captureMoves) {
             Pieces startPiece = move.getStart().getPieces();
             Pieces endPiece = move.getEnd().getPieces();
-            if (endPiece != null) {
-                int protectedScore = protectedEnemyPiecePenalty(board, isWhite, move);
-                if (startPiece.getPoints() <= endPiece.getPoints() || protectedScore == 0) {
-                    attackScore += Bonuses.CAPTURE_PIECES_BONUS;
-                } else {
-                    attackScore += protectedScore;
-                }
+            int protectedScore = protectedEnemyPiecePenalty(board, isWhite, move);
+            if (startPiece.getPoints() <= endPiece.getPoints() || protectedScore == 0) {
+                attackScore += Bonuses.CAPTURE_PIECES_BONUS;
+            } else {
+                attackScore += protectedScore;
             }
         }
         return attackScore * Bonuses.ATTACKED_PIECES_BONUS;
@@ -103,7 +115,7 @@ public class Evaluation {
     }
 
     private int queenLossPenalty(Board board, boolean isWhite) {
-        return capturePiecesScore.canTheQueenBeCaptured(board, isWhite) ? Penalties.QueenLossPenalty : 0;
+        return capturePiecesScore.hesMyQueenBeenCaptured(board, isWhite) ? Penalties.QueenLossPenalty : 0;
     }
 }
 

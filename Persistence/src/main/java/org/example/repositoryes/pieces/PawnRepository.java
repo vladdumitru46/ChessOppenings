@@ -30,7 +30,7 @@ public non-sealed class PawnRepository implements IRepository<Pawn> {
                 if (start.getLineCoordinate() == 1) {
                     if (start.getLineCoordinate() + 1 != end.getLineCoordinate() && end.getLineCoordinate() != 3) {
                         return false;
-                    } else if (board.getCellOnTheBoardMap()[3][start.getColumnCoordinate()].getPieces() != null || board.getCellOnTheBoardMap()[2][start.getColumnCoordinate()].getPieces() != null) {
+                    } else if (end.getPieces() != null) {
                         return false;
                     }
                 } else {
@@ -45,7 +45,7 @@ public non-sealed class PawnRepository implements IRepository<Pawn> {
                 if (start.getLineCoordinate() == 6) {
                     if (start.getLineCoordinate() - 1 != end.getLineCoordinate() && end.getLineCoordinate() != 4) {
                         return false;
-                    } else if (board.getCellOnTheBoardMap()[5][start.getColumnCoordinate()].getPieces() != null || board.getCellOnTheBoardMap()[4][start.getColumnCoordinate()].getPieces() != null) {
+                    } else if (end.getPieces() != null) {
                         return false;
                     }
                 } else {
@@ -61,6 +61,37 @@ public non-sealed class PawnRepository implements IRepository<Pawn> {
         }
         KingRepository kingRepository = new KingRepository();
         return kingRepository.checkIfTheKingIsInCheckAfterMove(board, start, end, pawn.isWhite());
+    }
+
+    public boolean canEnPassant(Board board, CellOnTheBoard start, CellOnTheBoard end, Pawn pawn) {
+        if (pawn == null) {
+            return false;
+        }
+
+        if (end.getPieces() instanceof King) {
+            return false;
+        }
+        if (pawn.isWhite() && end.getLineCoordinate() != 5 || !pawn.isWhite() && end.getLineCoordinate() != 2) {
+            return false;
+        }
+        CellOnTheBoard pieceOnEnd;
+        if (pawn.isWhite()) {
+            pieceOnEnd = board.getCellOnTheBoardMap()[end.getLineCoordinate() - 1][end.getColumnCoordinate()];
+        } else {
+            pieceOnEnd = board.getCellOnTheBoardMap()[end.getLineCoordinate() + 1][end.getColumnCoordinate()];
+        }
+        if (pieceOnEnd == null) {
+            return false;
+        }
+        if (!(pieceOnEnd.getPieces() instanceof Pawn)) {
+            return false;
+        }
+        if (pawn.isWhite() && start.getLineCoordinate() != end.getLineCoordinate() - 1
+                || !pawn.isWhite() && start.getLineCoordinate() != end.getLineCoordinate() + 1) {
+            return false;
+        }
+
+        return true;
     }
 
     private boolean canAttackOtherPiece(Board board, CellOnTheBoard start, CellOnTheBoard end, Pawn pawn) {
@@ -94,43 +125,6 @@ public non-sealed class PawnRepository implements IRepository<Pawn> {
     }
 
     public boolean canPromote(Board board, CellOnTheBoard start, CellOnTheBoard end) {
-//        if (start.getPieces().isWhite()) {
-//            if (start.getLineCoordinate() != 6) {
-//                return false;
-//            }
-//            if (end.getLineCoordinate() != 7) {
-//                return false;
-//            }
-//            if (start.getColumnCoordinate() != end.getColumnCoordinate()) {
-//                if(start.getColumnCoordinate()!=end.getColumnCoordinate() - 1){
-//                    if (start.getColumnCoordinate()!=end.getColumnCoordinate() + 1){
-//                        return false;
-//                    }
-//                }
-//            }
-//            if (end.getPieces() != null) {
-//                return false;
-//            }
-//            return true;
-//        }else{
-//            if (start.getLineCoordinate() != 1) {
-//                return false;
-//            }
-//            if (end.getLineCoordinate() != 0) {
-//                return false;
-//            }
-//            if (start.getColumnCoordinate() != end.getColumnCoordinate()) {
-//                if(start.getColumnCoordinate()!=end.getColumnCoordinate() - 1){
-//                    if (start.getColumnCoordinate()!=end.getColumnCoordinate() + 1){
-//                        return false;
-//                    }
-//                }
-//            }
-//            if (end.getPieces() != null) {
-//                return false;
-//            }
-//            return true;
-//        }
         Pawn pawn = (Pawn) start.getPieces();
         if (pawn.isWhite()) {
             if (start.getLineCoordinate() == 6 && end.getLineCoordinate() == 7) {

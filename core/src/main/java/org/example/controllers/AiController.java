@@ -134,7 +134,7 @@ public class AiController {
 
     private void createCopyBoard(Board board, Game game) {
         String[] moves = game.getMoves().split(", ");
-        int moveNumber = game.getMoveNumber() - 1;
+        int moveNumber = game.getPlayerColour().equals("white") ? game.getMoveNumber() : game.getMoveNumber() - 1;
         for (int i = 0; i < moveNumber; i++) {
             String[] bothMoves = moves[i].split(";");
             String[] move = bothMoves[0].split(" ");

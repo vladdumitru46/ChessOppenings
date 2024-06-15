@@ -82,6 +82,10 @@ public class PieceService {
         return pawnRepository.canPromote(board, cell, end);
     }
 
+    public boolean canEnPassant(Board board, CellOnTheBoard start, CellOnTheBoard end) {
+        return pawnRepository.canEnPassant(board, start, end, (Pawn) start.getPieces());
+    }
+
 
     public boolean canCastle(Board board, CellOnTheBoard start, CellOnTheBoard end, King king) {
         if (kingRepository.canCastle(board, start, end, king)) {
@@ -159,7 +163,7 @@ public class PieceService {
         Pieces pieceOnStart = move.getStart().getPieces();
         Pieces pieceOnEnd = move.getEnd().getPieces();
         Pieces realPieceOnEnd = board.getCellOnTheBoardMap()[move.getEnd().getLineCoordinate()][move.getEnd().getColumnCoordinate()].getPieces();
-        CellOnTheBoard kingsCell = board.getKing(!move.getStart().getPieces().isWhite());
+        CellOnTheBoard kingsCell = board.getKing(!pieceOnStart.isWhite());
         King enemyKing = (King) kingsCell.getPieces();
         if (pieceOnStart instanceof Pawn && pieceOnEnd != null && pieceOnEnd.isWhite() == pieceOnStart.isWhite()
                 && (realPieceOnEnd == null || realPieceOnEnd.isWhite() != pieceOnStart.isWhite())) {
@@ -294,14 +298,14 @@ public class PieceService {
 
         if (move.length == 3) {
             switch (move[2]) {
-                case "castleShort" -> {
-                    board.getCellOnTheBoardMap()[startLine][5].setPieces(board.getCellOnTheBoardMap()[startLine][7].getPieces());
-                    board.getCellOnTheBoardMap()[startLine][7].setPieces(null);
-                }
-                case "castleLong" -> {
-                    board.getCellOnTheBoardMap()[startLine][3].setPieces(board.getCellOnTheBoardMap()[startLine][0].getPieces());
-                    board.getCellOnTheBoardMap()[startLine][0].setPieces(null);
-                }
+//                case "castleShort" -> {
+//                    board.getCellOnTheBoardMap()[startLine][5].setPieces(board.getCellOnTheBoardMap()[startLine][7].getPieces());
+//                    board.getCellOnTheBoardMap()[startLine][7].setPieces(null);
+//                }
+//                case "castleLong" -> {
+//                    board.getCellOnTheBoardMap()[startLine][3].setPieces(board.getCellOnTheBoardMap()[startLine][0].getPieces());
+//                    board.getCellOnTheBoardMap()[startLine][0].setPieces(null);
+//                }
                 case "Queen" -> endCell.setPieces(new Queen(startCell.getPieces().isWhite()));
                 case "Rook" -> endCell.setPieces(new Rook(startCell.getPieces().isWhite()));
                 case "Bishop" -> endCell.setPieces(new Bishop(startCell.getPieces().isWhite()));

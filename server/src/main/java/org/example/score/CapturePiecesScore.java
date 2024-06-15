@@ -19,10 +19,21 @@ public class CapturePiecesScore {
     private final MobilityScore mobilityScore;
     private final PieceService pieceService;
 
-    public int canAPieceBeCaptured(Board board, boolean colourOfThePieceThatCanCaptureAnEnemyPiece) {
-        return (int) mobilityScore.getAllPossibleMoves(board, colourOfThePieceThatCanCaptureAnEnemyPiece).stream()
+    /**
+     * @param board
+     * @param currentColour colour of the piece that can capture the enemy pieces (if you play with white, it verifies if white can capture black pieces)
+     * @return
+     */
+    public int canAPieceBeCaptured(Board board, boolean currentColour) {
+        return (int) mobilityScore.getAllPossibleMoves(board, currentColour).stream()
                 .filter(move -> move.getEnd().getPieces() != null)
                 .count();
+    }
+
+    public List<Move> captureMoves(Board board, boolean currentColour) {
+        return mobilityScore.getAllPossibleMoves(board, currentColour).stream()
+                .filter(move -> move.getEnd().getPieces() != null)
+                .toList();
     }
 
     public int isTheAttackedPieceProtected(Board board, boolean isWhite, Move move) {
@@ -30,8 +41,7 @@ public class CapturePiecesScore {
         Pieces piecesOnStart = move.getStart().getPieces();
         Pieces piecesOnEnd = move.getEnd().getPieces();
         pieceService.makeMove(board, move);
-        List<Move> listOfPossibleEnemyMoves = mobilityScore.getAllPossibleMoves(board, !isWhite);
-        numberOfProtectedPieces = (int) listOfPossibleEnemyMoves.stream()
+        numberOfProtectedPieces = (int) mobilityScore.getAllPossibleMoves(board, !isWhite).stream()
                 .filter(defendigMove -> defendigMove.getEnd().equals(move.getEnd()))
                 .count();
         pieceService.undoMove(board, move, piecesOnStart, piecesOnEnd);
@@ -55,5 +65,17 @@ public class CapturePiecesScore {
                 .filter(move -> move.getEnd().equals(queenCell))
                 .count();
         return count != 0;
+    }
+
+    public boolean hesMyQueenBeenCaptured(Board board, boolean isWhite) {
+        CellOnTheBoard queenCell = Arrays.stream(board.getCellOnTheBoardMap())
+                .flatMap(Arrays::stream)
+                .filter(cell -> cell.getPieces() != null)
+                .filter(cell -> cell.getPieces() instanceof Queen && cell.getPieces().isWhite() == isWhite)
+                .findFirst()
+                .orElse(null);
+
+        return queenCell == null;
+
     }
 }

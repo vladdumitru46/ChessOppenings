@@ -4,6 +4,7 @@ import com.example.models.board.Board;
 import com.example.models.board.Move;
 import com.example.models.pieces.King;
 import com.example.models.pieces.Pieces;
+import com.example.models.pieces.Queen;
 import org.example.board.PieceService;
 import org.example.miniMax.score.Evaluation;
 import org.example.score.KingSafetyScore;
@@ -80,13 +81,17 @@ public class MiniMax {
     }
 
     private synchronized void bestMove(Integer alpha, Integer beta, Move move) {
-
         Pieces pieceOnStart = move.getStart().getPieces();
         Pieces pieceOnEnd = move.getEnd().getPieces();
-        pieceService.makeMove(board, move);
-        int value = miniMax(depth - 1, alpha, beta, !isWhite);
-        pieceService.undoMove(board, move, pieceOnStart, pieceOnEnd);
-        mapOfMoves.put(value, move);
+        if (pieceOnEnd != null && pieceOnStart.getPoints() < pieceOnEnd.getPoints()) {
+            int value = pieceOnStart.isWhite() ? 300 : -300;
+            mapOfMoves.put(value, move);
+        } else {
+            pieceService.makeMove(board, move);
+            int value = miniMax(depth - 1, alpha, beta, !isWhite);
+            pieceService.undoMove(board, move, pieceOnStart, pieceOnEnd);
+            mapOfMoves.put(value, move);
+        }
     }
 
     private synchronized int miniMax(int depth, int alpha, int beta, boolean isWhite) {

@@ -9,7 +9,7 @@ import lombok.extern.slf4j.Slf4j;
 @Getter
 public final class Queen extends Pieces {
 
-    private final Integer points = 3;
+    private final Integer points = 9;
 
     public Queen(boolean white) {
         super(white);

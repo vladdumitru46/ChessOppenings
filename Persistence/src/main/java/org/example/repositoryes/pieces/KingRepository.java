@@ -99,64 +99,64 @@ public class KingRepository implements IKingRepository {
 
 
     public boolean canCastle(Board board, CellOnTheBoard start, CellOnTheBoard end, King king) {
-        if (!king.isCastlingDone()) {
-            if (start.getLineCoordinate() != end.getLineCoordinate() &&
-                    start.getLineCoordinate() != 0 && start.getLineCoordinate() != 7) {
-                return false;
-            }
-            if (king.isHasBeenMoved()) {
-                return false;
-            }
-            if (end.getLineCoordinate() != start.getLineCoordinate()) {
-                return false;
-            }
-            if (king.isWhite()) {
-                if (end.getColumnCoordinate() == 2) {
-                    Pieces pieces = board.getCellOnTheBoardMap()[0][0].getPieces();
-                    if (!(pieces instanceof Rook rook)) {
-                        return false;
-                    }
-                    if (rook.isHasBeenMoved()) {
-                        return false;
-                    }
-                    return board.getCellOnTheBoardMap()[0][1].getPieces() == null && board.getCellOnTheBoardMap()[0][2].getPieces() == null && board.getCellOnTheBoardMap()[0][3].getPieces() == null;
-                } else if (end.getColumnCoordinate() == 6) {
-                    Pieces pieces = board.getCellOnTheBoardMap()[0][7].getPieces();
-                    if (!(pieces instanceof Rook rook)) {
-                        return false;
-                    }
-                    if (rook.isHasBeenMoved()) {
-                        return false;
-                    }
-                    return board.getCellOnTheBoardMap()[0][5].getPieces() == null && board.getCellOnTheBoardMap()[0][6].getPieces() == null;
-                } else {
+        if (king.isHasBeenMoved()) {
+            return false;
+        }
+        if (start.getColumnCoordinate() != 4) {
+            return false;
+        }
+        if (end.getLineCoordinate() != start.getLineCoordinate()) {
+            return false;
+        }
+        if (start.getLineCoordinate() != 0 && start.getLineCoordinate() != 7) {
+            return false;
+        }
+        if (king.isWhite()) {
+            if (end.getColumnCoordinate() == 2) {
+                Pieces pieces = board.getCellOnTheBoardMap()[0][0].getPieces();
+                if (!(pieces instanceof Rook rook)) {
                     return false;
                 }
+                if (rook.isHasBeenMoved()) {
+                    return false;
+                }
+                return board.getCellOnTheBoardMap()[0][1].getPieces() == null && board.getCellOnTheBoardMap()[0][2].getPieces() == null && board.getCellOnTheBoardMap()[0][3].getPieces() == null;
+            } else if (end.getColumnCoordinate() == 6) {
+                Pieces pieces = board.getCellOnTheBoardMap()[0][7].getPieces();
+                if (!(pieces instanceof Rook rook)) {
+                    return false;
+                }
+                if (rook.isHasBeenMoved()) {
+                    return false;
+                }
+                return board.getCellOnTheBoardMap()[0][5].getPieces() == null && board.getCellOnTheBoardMap()[0][6].getPieces() == null;
             } else {
-                if (end.getColumnCoordinate() == 2) {
-                    Pieces pieces = board.getCellOnTheBoardMap()[7][0].getPieces();
-                    if (!(pieces instanceof Rook rook)) {
-                        return false;
-                    }
-                    if (rook.isHasBeenMoved()) {
-                        return false;
-                    }
-                    return board.getCellOnTheBoardMap()[7][1].getPieces() == null && board.getCellOnTheBoardMap()[7][2].getPieces() == null && board.getCellOnTheBoardMap()[7][3].getPieces() == null;
-                } else if (end.getColumnCoordinate() == 6) {
-                    Pieces pieces = board.getCellOnTheBoardMap()[7][7].getPieces();
-                    if (!(pieces instanceof Rook rook)) {
-                        return false;
-                    }
-                    if (rook.isHasBeenMoved()) {
-                        return false;
-                    }
-                    return board.getCellOnTheBoardMap()[7][5].getPieces() == null && board.getCellOnTheBoardMap()[7][6].getPieces() == null;
-                } else {
+                return false;
+            }
+        } else {
+            if (end.getColumnCoordinate() == 2) {
+                Pieces pieces = board.getCellOnTheBoardMap()[7][0].getPieces();
+                if (!(pieces instanceof Rook rook)) {
                     return false;
                 }
+                if (rook.isHasBeenMoved()) {
+                    return false;
+                }
+                return board.getCellOnTheBoardMap()[7][1].getPieces() == null && board.getCellOnTheBoardMap()[7][2].getPieces() == null && board.getCellOnTheBoardMap()[7][3].getPieces() == null;
+            } else if (end.getColumnCoordinate() == 6) {
+                Pieces pieces = board.getCellOnTheBoardMap()[7][7].getPieces();
+                if (!(pieces instanceof Rook rook)) {
+                    return false;
+                }
+                if (rook.isHasBeenMoved()) {
+                    return false;
+                }
+                return board.getCellOnTheBoardMap()[7][5].getPieces() == null && board.getCellOnTheBoardMap()[7][6].getPieces() == null;
+            } else {
+                return false;
             }
         }
-        return true;
+
     }
 
 }
