@@ -4,7 +4,10 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="75b936ac-d5b0-4178-bee6-f97885357906" name="Changes" comment="added courses for black, and resolved bugs" />
+    <list default="true" id="75b936ac-d5b0-4178-bee6-f97885357906" name="Changes" comment="added enPassant, fixed bugs, made ai better">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/src/main/java/org/example/controllers/MovePiecesController.java" beforeDir="false" afterPath="$PROJECT_DIR$/core/src/main/java/org/example/controllers/MovePiecesController.java" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -211,6 +214,7 @@
       <workItem from="1716555872555" duration="84000" />
       <workItem from="1716568910542" duration="4557000" />
       <workItem from="1717926592826" duration="7509000" />
+      <workItem from="1718475897593" duration="1674000" />
     </task>
     <task id="LOCAL-00001" summary="tried to add a cloud instance for db, on a computer it works, on other one does not, added history for moves, improved ai">
       <option name="closed" value="true" />
@@ -332,7 +336,15 @@
       <option name="project" value="LOCAL" />
       <updated>1716300070040</updated>
     </task>
-    <option name="localTasksCounter" value="16" />
+    <task id="LOCAL-00016" summary="added enPassant, fixed bugs, made ai better">
+      <option name="closed" value="true" />
+      <created>1718475995829</created>
+      <option name="number" value="00016" />
+      <option name="presentableId" value="LOCAL-00016" />
+      <option name="project" value="LOCAL" />
+      <updated>1718475995829</updated>
+    </task>
+    <option name="localTasksCounter" value="17" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -347,7 +359,8 @@
     <MESSAGE value="made promotion logic and castiling for ai" />
     <MESSAGE value="dockerize application" />
     <MESSAGE value="added courses for black, and resolved bugs" />
-    <option name="LAST_COMMIT_MESSAGE" value="added courses for black, and resolved bugs" />
+    <MESSAGE value="added enPassant, fixed bugs, made ai better" />
+    <option name="LAST_COMMIT_MESSAGE" value="added enPassant, fixed bugs, made ai better" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -359,13 +372,8 @@
         </line-breakpoint>
         <line-breakpoint type="java-line">
           <url>file://$PROJECT_DIR$/server/src/main/java/org/example/board/PieceService.java</url>
-          <line>266</line>
+          <line>270</line>
           <option name="timeStamp" value="94" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/core/src/main/java/org/example/controllers/AiController.java</url>
-          <line>135</line>
-          <option name="timeStamp" value="99" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/ai/src/main/java/org/example/miniMax/MiniMax.java</url>
@@ -374,12 +382,12 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/ai/src/main/java/org/example/miniMax/MiniMax.java</url>
-          <line>97</line>
+          <line>102</line>
           <option name="timeStamp" value="129" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/server/src/main/java/org/example/board/PieceService.java</url>
-          <line>162</line>
+          <line>166</line>
           <option name="timeStamp" value="131" />
         </line-breakpoint>
         <breakpoint type="java-exception">

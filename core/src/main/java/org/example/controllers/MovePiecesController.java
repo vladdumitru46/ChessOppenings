@@ -320,8 +320,25 @@ public class MovePiecesController {
             CellOnTheBoard endCell = board.getCellOnTheBoardMap()[endLine][endColumn];
             String notation = "";
             if (verifyLastMoveToBePawnStartMove(game)) {
-                if(pieceService.canEnPassant(board, startCell, endCell)){
-                    
+                if (pieceService.canEnPassant(board, startCell, endCell)) {
+                    if (game.isWhitesTurn()) {
+                        board.getCellOnTheBoardMap()[endLine][endColumn - 1].setPieces(null);
+                    } else {
+                        board.getCellOnTheBoardMap()[endLine][endColumn + 1].setPieces(null);
+                    }
+                    String move = pieceService.transformMoveToCorrectNotation(startCell, endCell, board);
+                    pieceService.makeMove(board, new Move(startCell, endCell));
+                    if (colour) {
+                        game.setWhiteMove(game.getWhiteMove() + ", " + move);
+                    } else {
+                        game.setBlackMove(game.getBlackMove() + ", " + move);
+                        game.setMoveNumber(game.getMoveNumber() + 1);
+                    }
+                    setMoveAsString(game, new Move(startCell, endCell), "");
+                    game.setWhitesTurn(!colour);
+                    gameService.updateGame(game);
+                    boardService.updateBoard(board);
+                    return new ResponseEntity<>(board + " + " + game.isWhitesTurn(), HttpStatus.OK);
                 }
             } else if (pieceService.canThePawnPromote(board, startCell, endCell)) {
                 String move = pieceService.transformMoveToCorrectNotation(startCell, endCell, board);
