@@ -10,5 +10,4 @@ public class Bonuses {
     public static final int CENTER_CONTROL_BONUS = 1;
     public static final int PIECES_BONUS = 1;
     public static final int DEVELOPMENT_BONUS = 1;
-    public static final int CAPTURE_QUEEN_BONUS = 300;
 }

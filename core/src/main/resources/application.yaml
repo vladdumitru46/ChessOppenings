@@ -1,7 +1,6 @@
 spring:
   profiles:
     active: dev
-#    database connection details
   datasource:
     url: jdbc:postgresql://localhost:5432/Licenta
     username: postgres

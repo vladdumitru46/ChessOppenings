@@ -30,7 +30,11 @@ public non-sealed class PawnRepository implements IRepository<Pawn> {
                 if (start.getLineCoordinate() == 1) {
                     if (start.getLineCoordinate() + 1 != end.getLineCoordinate() && end.getLineCoordinate() != 3) {
                         return false;
-                    } else if (end.getPieces() != null) {
+                    }
+                    if (end.getPieces() != null) {
+                        return false;
+                    }
+                    if (end.getLineCoordinate() == 3 && board.getCellOnTheBoardMap()[2][end.getColumnCoordinate()].getPieces() != null) {
                         return false;
                     }
                 } else {
@@ -45,7 +49,11 @@ public non-sealed class PawnRepository implements IRepository<Pawn> {
                 if (start.getLineCoordinate() == 6) {
                     if (start.getLineCoordinate() - 1 != end.getLineCoordinate() && end.getLineCoordinate() != 4) {
                         return false;
-                    } else if (end.getPieces() != null) {
+                    }
+                    if (end.getPieces() != null) {
+                        return false;
+                    }
+                    if (end.getLineCoordinate() == 4 && board.getCellOnTheBoardMap()[5][end.getColumnCoordinate()].getPieces() != null) {
                         return false;
                     }
                 } else {

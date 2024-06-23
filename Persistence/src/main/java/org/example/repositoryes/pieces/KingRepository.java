@@ -97,9 +97,20 @@ public class KingRepository implements IKingRepository {
         return true;
     }
 
+    /**
+     *
+     * @param board
+     * @param start
+     * @param end
+     * @param king
+     * @return
+     */
 
     public boolean canCastle(Board board, CellOnTheBoard start, CellOnTheBoard end, King king) {
         if (king.isHasBeenMoved()) {
+            return false;
+        }
+        if (king.isInCheck()) {
             return false;
         }
         if (start.getColumnCoordinate() != 4) {

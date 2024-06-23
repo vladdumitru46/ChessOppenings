@@ -319,27 +319,26 @@ public class MovePiecesController {
             CellOnTheBoard startCell = board.getCellOnTheBoardMap()[startLine][startColumn];
             CellOnTheBoard endCell = board.getCellOnTheBoardMap()[endLine][endColumn];
             String notation = "";
-            if (verifyLastMoveToBePawnStartMove(game)) {
-                if (pieceService.canEnPassant(board, startCell, endCell)) {
-                    if (game.isWhitesTurn()) {
-                        board.getCellOnTheBoardMap()[endLine][endColumn - 1].setPieces(null);
-                    } else {
-                        board.getCellOnTheBoardMap()[endLine][endColumn + 1].setPieces(null);
-                    }
-                    String move = pieceService.transformMoveToCorrectNotation(startCell, endCell, board);
-                    pieceService.makeMove(board, new Move(startCell, endCell));
-                    if (colour) {
-                        game.setWhiteMove(game.getWhiteMove() + ", " + move);
-                    } else {
-                        game.setBlackMove(game.getBlackMove() + ", " + move);
-                        game.setMoveNumber(game.getMoveNumber() + 1);
-                    }
-                    setMoveAsString(game, new Move(startCell, endCell), "");
-                    game.setWhitesTurn(!colour);
-                    gameService.updateGame(game);
-                    boardService.updateBoard(board);
-                    return new ResponseEntity<>(board + " + " + game.isWhitesTurn(), HttpStatus.OK);
+            if (game.getMoves().split(", ").length > 1 && verifyLastMoveToBePawnStartMove(game)
+                    && pieceService.canEnPassant(board, startCell, endCell)) {
+                if (game.isWhitesTurn()) {
+                    board.getCellOnTheBoardMap()[endLine - 1][endColumn].setPieces(null);
+                } else {
+                    board.getCellOnTheBoardMap()[endLine + 1][endColumn].setPieces(null);
                 }
+                String move = pieceService.transformMoveToCorrectNotation(startCell, endCell, board);
+                pieceService.makeMove(board, new Move(startCell, endCell));
+                if (colour) {
+                    game.setWhiteMove(game.getWhiteMove() + ", " + move);
+                } else {
+                    game.setBlackMove(game.getBlackMove() + ", " + move);
+                    game.setMoveNumber(game.getMoveNumber() + 1);
+                }
+                setMoveAsString(game, new Move(startCell, endCell), "enPassant");
+                game.setWhitesTurn(!colour);
+                gameService.updateGame(game);
+                boardService.updateBoard(board);
+                return new ResponseEntity<>(board + " + " + game.isWhitesTurn(), HttpStatus.OK);
             } else if (pieceService.canThePawnPromote(board, startCell, endCell)) {
                 String move = pieceService.transformMoveToCorrectNotation(startCell, endCell, board);
                 switch (promotePawn.newPiece()) {
@@ -438,10 +437,14 @@ public class MovePiecesController {
 
         if (nrMovesForWhite == 0 && whiteKing.isInCheck()) {
             game.setGameStatus(GameStatus.BLACK_WON);
+            String moves = game.getBlackMove().split(",")[game.getBlackMove().split(",").length - 1] + "#";
+            game.setBlackMove(moves);
             gameService.updateGame(game);
             return ResponseEntity.ok("CheckMate - Black won");
         } else if (nrMovesForBlack == 0 && blackKing.isInCheck()) {
             game.setGameStatus(GameStatus.WHITE_WON);
+            String moves = game.getWhiteMove().split(",")[game.getWhiteMove().split(",").length - 1] + "#";
+            game.setWhiteMove(moves);
             gameService.updateGame(game);
             return ResponseEntity.ok("CheckMate - White won");
         } else if (nrMovesForBlack == 0 || nrMovesForWhite == 0) {
@@ -465,8 +468,8 @@ public class MovePiecesController {
     @GetMapping("/piecePossibleMoves")
     public ResponseEntity<?> getAllPossibleMovesForASpecificPiece(@RequestParam Integer boardId, @RequestParam String position) {
         try {
-            Game game = null;
-            Board board = null;
+            Game game;
+            Board board;
             try {
                 game = gameService.getGameById(boardId);
                 board = boardService.findById(game.getBoardId());

@@ -3,9 +3,8 @@ package org.example.miniMax.score;
 import com.example.models.board.Board;
 import com.example.models.board.Move;
 import com.example.models.pieces.Pieces;
-import com.example.models.pieces.Queen;
-import org.example.miniMax.score.bonusesAndPenalties.Penalties;
 import org.example.miniMax.score.bonusesAndPenalties.Bonuses;
+import org.example.miniMax.score.bonusesAndPenalties.Penalties;
 import org.example.score.*;
 
 import java.util.List;
@@ -28,30 +27,20 @@ public class Evaluation {
     }
 
     public int evaluationScore(Board board) {
-        int a = score(board, true);
-        int b = score(board, false);
-        return a - b;
+        return score(board, true) - score(board, false);
     }
 
     private int score(Board board, boolean isWhite) {
-        int a  = mobility(board, isWhite);
-        int b = kingThreats(board, isWhite);
-        int c = pawnStructure(board, isWhite);
-        int d = attacks(board, isWhite);
-        int e = attacksPenalty(board, isWhite);
-        int f = centerControl(board, isWhite);
-        int g = developmentBonus(board, isWhite);
-        int h = queenLossPenalty(board, isWhite);
-        int j = board.getTotalPoints(isWhite) * Bonuses.PIECES_BONUS;
-        return a
-                + b
-                + c
-                + d
-                + e
-                + f
-                + g
-                + h
-                + j;
+        return mobility(board, isWhite)
+                + kingThreats(board, isWhite)
+                + pawnStructure(board, isWhite)
+                + attacks(board, isWhite)
+                + attacksPenalty(board, isWhite)
+                + centerControl(board, isWhite)
+                + developmentBonus(board, isWhite)
+                + queenLossPenalty(board, isWhite)
+                + possibleQueenLossPenalty(board, isWhite)
+                + board.getTotalPoints(isWhite) * Bonuses.PIECES_BONUS;
     }
 
     private int mobility(Board board, boolean isWhite) {
@@ -115,7 +104,11 @@ public class Evaluation {
     }
 
     private int queenLossPenalty(Board board, boolean isWhite) {
-        return capturePiecesScore.hesMyQueenBeenCaptured(board, isWhite) ? Penalties.QueenLossPenalty : 0;
+        return capturePiecesScore.hasMyQueenBeenCaptured(board, isWhite) ? Penalties.QUEEN_LOSS_PENALTY : 0;
+    }
+
+    private int possibleQueenLossPenalty(Board board, boolean isWhite) {
+        return capturePiecesScore.canTheQueenBeCaptured(board, isWhite) ? Penalties.POSSIBLE_QUEEN_LOSS_PENALTY : 0;
     }
 }
 

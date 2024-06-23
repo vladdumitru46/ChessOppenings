@@ -67,7 +67,7 @@ public class CapturePiecesScore {
         return count != 0;
     }
 
-    public boolean hesMyQueenBeenCaptured(Board board, boolean isWhite) {
+    public boolean hasMyQueenBeenCaptured(Board board, boolean isWhite) {
         CellOnTheBoard queenCell = Arrays.stream(board.getCellOnTheBoardMap())
                 .flatMap(Arrays::stream)
                 .filter(cell -> cell.getPieces() != null)

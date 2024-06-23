@@ -110,10 +110,12 @@ public class AiController {
                 }
                 if (move.getStart().getPieces() instanceof King king) {
                     king.setHasBeenMoved(true);
-                    move.getStart().setPieces(king);
+                    board.getCellOnTheBoardMap()[move.getStart().getLineCoordinate()][move.getStart().getColumnCoordinate()].setPieces(king);
+                    boardService.updateBoard(board);
                 } else if (move.getStart().getPieces() instanceof Rook rook) {
                     rook.setHasBeenMoved(true);
-                    move.getStart().setPieces(rook);
+                    board.getCellOnTheBoardMap()[move.getStart().getLineCoordinate()][move.getStart().getColumnCoordinate()].setPieces(rook);
+                    boardService.updateBoard(board);
                 }
                 pieceService.makeMove(board, move);
                 if (game.isWhitesTurn()) {

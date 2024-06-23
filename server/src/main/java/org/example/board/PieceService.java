@@ -4,17 +4,16 @@ import com.example.models.board.Board;
 import com.example.models.board.CellOnTheBoard;
 import com.example.models.board.Move;
 import com.example.models.pieces.*;
+import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.example.repositoryes.pieces.*;
 import org.springframework.stereotype.Service;
-
-import java.util.*;
-import java.util.stream.LongStream;
 
 import static java.lang.Math.abs;
 
 
 @Service("pieceService")
+@AllArgsConstructor
 @Slf4j
 public class PieceService {
     private final PawnRepository pawnRepository;
@@ -23,16 +22,6 @@ public class PieceService {
     private final BishopRepository bishopRepository;
     private final QueenRepository queenRepository;
     private final KingRepository kingRepository;
-
-
-    public PieceService(PawnRepository pawnRepository, RookRepository rookRepository, KnightRepository knightRepository, BishopRepository bishopRepository, QueenRepository queenRepository, KingRepository kingRepository) {
-        this.pawnRepository = pawnRepository;
-        this.rookRepository = rookRepository;
-        this.knightRepository = knightRepository;
-        this.bishopRepository = bishopRepository;
-        this.queenRepository = queenRepository;
-        this.kingRepository = kingRepository;
-    }
 
 
     public boolean canThePawnMove(Board board, CellOnTheBoard start, CellOnTheBoard end, Pawn pawn) {
@@ -171,8 +160,7 @@ public class PieceService {
                     .setPieces(pieceOnEnd);
             board.getCellOnTheBoardMap()[move.getStart().getLineCoordinate()][move.getStart().getColumnCoordinate()]
                     .setPieces(null);
-        }
-        if (pieceOnStart instanceof King king && !((King) pieceOnStart).isHasBeenMoved() &&
+        } else if (pieceOnStart instanceof King king && !((King) pieceOnStart).isHasBeenMoved() &&
                 abs(move.getStart().getColumnCoordinate() - move.getEnd().getColumnCoordinate()) == 2) {
             board.getCellOnTheBoardMap()[move.getEnd().getLineCoordinate()][move.getEnd().getColumnCoordinate()]
                     .setPieces(move.getStart().getPieces());
@@ -201,8 +189,16 @@ public class PieceService {
                     .setPieces(pieceOnStart);
             board.getCellOnTheBoardMap()[move.getEnd().getLineCoordinate()][move.getEnd().getColumnCoordinate()]
                     .setPieces(null);
-        }
-        if (pieceOnStart instanceof King king && ((King) pieceOnStart).isHasBeenMoved() &&
+//        } else if (move.getStart().getColumnCoordinate() != move.getEnd().getColumnCoordinate() && pieceOnStart instanceof Pawn) {
+//            if (pieceOnStart.isWhite()) {
+//                board.getCellOnTheBoardMap()[move.getEnd().getLineCoordinate() - 1][move.getEnd().getColumnCoordinate()].setPieces(new Pawn(false));
+//            } else {
+//                board.getCellOnTheBoardMap()[move.getEnd().getLineCoordinate() + 1][move.getEnd().getColumnCoordinate()].setPieces(new Pawn(true));
+//            }
+//            board.getCellOnTheBoardMap()[move.getStart().getLineCoordinate()][move.getStart().getColumnCoordinate()]
+//                    .setPieces(pieceOnStart);
+//            board.getCellOnTheBoardMap()[move.getEnd().getLineCoordinate()][move.getEnd().getColumnCoordinate()].setPieces(pieceOnEnd);
+        } else if (pieceOnStart instanceof King king && ((King) pieceOnStart).isHasBeenMoved() &&
                 abs(move.getStart().getColumnCoordinate() - move.getEnd().getColumnCoordinate()) == 2) {
             board.getCellOnTheBoardMap()[move.getStart().getLineCoordinate()][move.getStart().getColumnCoordinate()]
                     .setPieces(pieceOnStart);
@@ -222,10 +218,6 @@ public class PieceService {
         Pieces pieceOnEnd = end.getPieces();
         String notation = "";
 
-        if (start.getPieces() == null) {
-            System.out.println(start);
-            System.out.println(board);
-        }
         if (pieceOnStart instanceof King) {
             if (abs(start.getColumnCoordinate() - end.getColumnCoordinate()) == 2) {
 //                if (pieceOnStart.isWhite()) {
@@ -255,6 +247,10 @@ public class PieceService {
                     break;
                 }
             }
+        }
+        if (start.getPieces() instanceof Pawn && start.getColumnCoordinate() != end.getColumnCoordinate() && end.getPieces() == null) {
+            notation += transformColumnToLetters(start);
+            notation += "x";
         }
         if (end.getPieces() != null) {
             if (start.getPieces() instanceof Pawn) {
@@ -298,19 +294,17 @@ public class PieceService {
 
         if (move.length == 3) {
             switch (move[2]) {
-//                case "castleShort" -> {
-//                    board.getCellOnTheBoardMap()[startLine][5].setPieces(board.getCellOnTheBoardMap()[startLine][7].getPieces());
-//                    board.getCellOnTheBoardMap()[startLine][7].setPieces(null);
-//                }
-//                case "castleLong" -> {
-//                    board.getCellOnTheBoardMap()[startLine][3].setPieces(board.getCellOnTheBoardMap()[startLine][0].getPieces());
-//                    board.getCellOnTheBoardMap()[startLine][0].setPieces(null);
-//                }
                 case "Queen" -> endCell.setPieces(new Queen(startCell.getPieces().isWhite()));
                 case "Rook" -> endCell.setPieces(new Rook(startCell.getPieces().isWhite()));
                 case "Bishop" -> endCell.setPieces(new Bishop(startCell.getPieces().isWhite()));
                 case "Knight" -> endCell.setPieces(new Knight(startCell.getPieces().isWhite()));
-
+                case "enPassant" -> {
+                    if (startCell.getPieces().isWhite()) {
+                        board.getCellOnTheBoardMap()[endLine - 1][endColumn].setPieces(new Pawn(false));
+                    } else {
+                        board.getCellOnTheBoardMap()[endLine + 1][endColumn].setPieces(new Pawn(true));
+                    }
+                }
             }
         }
 

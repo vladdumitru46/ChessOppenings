@@ -50,26 +50,34 @@ public class MovePieceTest {
     @Autowired
     GameService gameService;
 
-
     @Test
     public void isCheckMateIn2Test() {
-        Arrays.stream(board.getCellOnTheBoardMap())
-                .flatMap(Arrays::stream)
-                .forEach(c -> c.setPieces(null));
-        King king = new King(true);
-        board.getCellOnTheBoardMap()[0][4].setPieces(king);
-        board.getCellOnTheBoardMap()[5][4].setPieces(new King(false));
-        board.getCellOnTheBoardMap()[4][0].setPieces(new Pawn(true));
-        board.getCellOnTheBoardMap()[4][1].setPieces(new Pawn(false));
-        CellOnTheBoard start = board.getCellOnTheBoardMap()[4][0];
-        CellOnTheBoard end = board.getCellOnTheBoardMap()[5][1];
-
-        System.out.println(pawnRepository.canMove(board, start, end, (Pawn) start.getPieces()));
+//        Arrays.stream(board.getCellOnTheBoardMap())
+//                .flatMap(Arrays::stream)
+//                .forEach(c -> c.setPieces(null));
+//        King king = new King(true);
+//        board.getCellOnTheBoardMap()[0][4].setPieces(king);
+//        board.getCellOnTheBoardMap()[5][4].setPieces(new King(false));
+//        board.getCellOnTheBoardMap()[4][0].setPieces(new Pawn(false));
+//        board.getCellOnTheBoardMap()[4][1].setPieces(new Pawn(true));
 //        int id = boardService.save(board);
 //        Game game = new Game(25, id, GameStatus.STARTED);
 //        game.setWhitesTurn(true);
 //        game.setPlayerColour("white");
+//        game.setMoves("31 41;60 40, ");
+//        game.setWhiteMove(", b5");
+//        game.setBlackMove(", a5");
+//        game.setMoveNumber(2);
 //        gameService.addANewGame(game);
+        try{
+            Game game = gameService.getGameById(421);
+            Board board1 = boardService.findById(game.getBoardId());
+//            System.out.println(capturePiecesScore.canTheQueenBeCaptured(board1, false));
+            King king = (King) board1.getKing(true).getPieces();
+            System.out.println(king.isHasBeenMoved());
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
 
     }
 
