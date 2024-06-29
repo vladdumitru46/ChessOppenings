@@ -3,6 +3,7 @@ package org.example.board;
 import com.example.models.board.Board;
 import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
+import org.example.exceptions.BoardNotFoundException;
 import org.example.repositoryes.game.BoardRepository;
 import org.springframework.stereotype.Service;
 
@@ -19,13 +20,13 @@ public class BoardService {
         return b.getId();
     }
 
-    public Board findById(Integer id) throws Exception {
+    public Board findById(Integer id) throws BoardNotFoundException {
 
         Optional<Board> board = boardRepository.findById(id);
         if (board.isPresent()) {
             return board.get();
         }
-        throw new Exception("Board with that id does not exist!");
+        throw new BoardNotFoundException("Board with that id does not exist!");
     }
 
     @Transactional

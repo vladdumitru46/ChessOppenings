@@ -2,6 +2,7 @@ package org.example.course;
 
 import com.example.models.courses.SubCourse;
 import lombok.AllArgsConstructor;
+import org.example.exceptions.SubCourseNotFoundException;
 import org.example.repositoryes.course.SubCourseRepository;
 import org.springframework.stereotype.Service;
 
@@ -14,10 +15,10 @@ public class SubCourseService {
 
     private final SubCourseRepository subCourseRepository;
 
-    public List<SubCourse> getAllSubCourses(String courseName) throws Exception {
+    public List<SubCourse> getAllSubCourses(String courseName) throws SubCourseNotFoundException {
         Optional<List<SubCourse>> subCourses = subCourseRepository.findByCourseName(courseName);
         if (subCourses.isEmpty()) {
-            throw new Exception("there are no subCourses for this course");
+            throw new SubCourseNotFoundException("there are no subCourses for this course");
         }
         return subCourses.get();
     }
@@ -27,10 +28,10 @@ public class SubCourseService {
     }
 
 
-    public SubCourse getByName(String name, String courseName) throws Exception {
+    public SubCourse getByName(String name, String courseName) throws SubCourseNotFoundException {
         Optional<SubCourse> subCourse = subCourseRepository.finByNameAndCourseName(name, courseName);
         if (subCourse.isEmpty()) {
-            throw new Exception("there are no subCourses with that name");
+            throw new SubCourseNotFoundException("there are no subCourses with that name");
         }
         return subCourse.get();
     }

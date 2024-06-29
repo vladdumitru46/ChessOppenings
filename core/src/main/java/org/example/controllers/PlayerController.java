@@ -3,6 +3,7 @@ package org.example.controllers;
 import com.example.models.player.Player;
 import lombok.AllArgsConstructor;
 import org.example.data.Data;
+import org.example.exceptions.PlayerNotFoundException;
 import org.example.player.PlayerService;
 import org.example.requests.UpdatePlayerRequest;
 import org.springframework.http.HttpStatus;
@@ -23,7 +24,7 @@ public class PlayerController {
         try {
             Player player = playerService.searchPlayerByUsernameOrEmail(userNameOrEmail);
             return new ResponseEntity<>(player, HttpStatus.OK);
-        } catch (Exception e) {
+        } catch (PlayerNotFoundException e) {
             return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
         }
     }

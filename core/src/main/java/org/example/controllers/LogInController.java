@@ -5,6 +5,8 @@ import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.security.Keys;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.example.exceptions.PlayerNotFoundException;
+import org.example.exceptions.PlayerValidationException;
 import org.example.player.PlayerService;
 import org.example.requests.LogInRequest;
 import org.springframework.http.HttpStatus;
@@ -26,8 +28,10 @@ public class LogInController {
         try {
             playerService.logIn(logInRequest.email(), logInRequest.password());
             return new ResponseEntity<>(generateToken(logInRequest.email()), HttpStatus.OK);
-        } catch (Exception e) {
+        } catch (PlayerValidationException | PlayerNotFoundException e) {
             return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
+        } catch (Exception e) {
+            return new ResponseEntity<>("Unexpected error!\n" + e.getMessage(), HttpStatus.BAD_REQUEST);
         }
     }
 

@@ -3,6 +3,7 @@ package org.example.controllers;
 import com.example.models.courses.Course;
 import lombok.AllArgsConstructor;
 import org.example.course.CourseService;
+import org.example.exceptions.CourseNotFoundException;
 import org.example.requests.AddAllCoursesRequest;
 import org.example.requests.AddAllSubCoursesRequest;
 import org.example.requests.AddCourseRequest;
@@ -23,8 +24,10 @@ public class CourseController {
         try {
             Course course = courseService.findCourseByName(name);
             return ResponseEntity.ok(course);
-        } catch (Exception e) {
+        } catch (CourseNotFoundException e) {
             return ResponseEntity.badRequest().body(e.getMessage());
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body("Unexpected error!" + e.getMessage());
         }
     }
 

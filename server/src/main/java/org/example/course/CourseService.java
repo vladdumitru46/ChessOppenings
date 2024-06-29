@@ -4,6 +4,7 @@ import com.example.models.courses.Course;
 import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.example.exceptions.CourseNotFoundException;
 import org.example.repositoryes.course.CourseRepository;
 import org.springframework.stereotype.Service;
 
@@ -21,11 +22,11 @@ public class CourseService {
         return courseRepository.findById(id);
     }
 
-    public Course findCourseByName(String name) throws Exception {
+    public Course findCourseByName(String name) throws CourseNotFoundException {
         log.info("getting course by name!");
         Optional<Course> course =  courseRepository.findCourseByName(name);
         if(course.isEmpty()){
-            throw new Exception("Course does not exist");
+            throw new CourseNotFoundException("Course does not exist");
         }
         return course.get();
     }

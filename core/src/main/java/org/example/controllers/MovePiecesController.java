@@ -10,6 +10,8 @@ import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.example.board.BoardService;
 import org.example.board.PieceService;
+import org.example.exceptions.BoardNotFoundException;
+import org.example.exceptions.GameNotFoundException;
 import org.example.game.GameService;
 import org.example.requests.MovePiecesRequest;
 import org.example.requests.PromotePawn;
@@ -42,8 +44,10 @@ public class MovePiecesController {
         try {
             game = gameService.getGameById(Integer.valueOf(movePiecesRequest.gameId()));
             board = boardService.findById(game.getBoardId());
-        } catch (Exception e) {
+        } catch (GameNotFoundException | BoardNotFoundException e) {
             return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
+        } catch (Exception e) {
+            return new ResponseEntity<>("Unexpected error!\n" + e.getMessage(), HttpStatus.BAD_REQUEST);
         }
         String start = movePiecesRequest.start();
         int startLine = start.charAt(0) - '0';
@@ -85,8 +89,10 @@ public class MovePiecesController {
         try {
             game = gameService.getGameById(Integer.valueOf(movePiecesRequest.gameId()));
             board = boardService.findById(game.getBoardId());
-        } catch (Exception e) {
+        } catch (GameNotFoundException | BoardNotFoundException e) {
             return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
+        } catch (Exception e) {
+            return new ResponseEntity<>("Unexpected error!\n" + e.getMessage(), HttpStatus.BAD_REQUEST);
         }
         String start = movePiecesRequest.start();
         int startLine = start.charAt(0) - '0';
@@ -127,8 +133,10 @@ public class MovePiecesController {
         try {
             game = gameService.getGameById(Integer.valueOf(movePiecesRequest.gameId()));
             board = boardService.findById(game.getBoardId());
-        } catch (Exception e) {
+        } catch (GameNotFoundException | BoardNotFoundException e) {
             return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
+        } catch (Exception e) {
+            return new ResponseEntity<>("Unexpected error!\n" + e.getMessage(), HttpStatus.BAD_REQUEST);
         }
         String start = movePiecesRequest.start();
         int startLine = start.charAt(0) - '0';
@@ -170,8 +178,10 @@ public class MovePiecesController {
         try {
             game = gameService.getGameById(Integer.valueOf(movePiecesRequest.gameId()));
             board = boardService.findById(game.getBoardId());
-        } catch (Exception e) {
+        } catch (GameNotFoundException | BoardNotFoundException e) {
             return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
+        } catch (Exception e) {
+            return new ResponseEntity<>("Unexpected error!\n" + e.getMessage(), HttpStatus.BAD_REQUEST);
         }
         String start = movePiecesRequest.start();
         int startLine = start.charAt(0) - '0';
@@ -213,8 +223,10 @@ public class MovePiecesController {
         try {
             game = gameService.getGameById(Integer.valueOf(movePiecesRequest.gameId()));
             board = boardService.findById(game.getBoardId());
-        } catch (Exception e) {
+        } catch (GameNotFoundException | BoardNotFoundException e) {
             return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
+        } catch (Exception e) {
+            return new ResponseEntity<>("Unexpected error!\n" + e.getMessage(), HttpStatus.BAD_REQUEST);
         }
         String start = movePiecesRequest.start();
         int startLine = start.charAt(0) - '0';
@@ -261,8 +273,10 @@ public class MovePiecesController {
         try {
             game = gameService.getGameById(Integer.valueOf(movePiecesRequest.gameId()));
             board = boardService.findById(game.getBoardId());
-        } catch (Exception e) {
+        } catch (GameNotFoundException | BoardNotFoundException e) {
             return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
+        } catch (Exception e) {
+            return new ResponseEntity<>("Unexpected error!\n" + e.getMessage(), HttpStatus.BAD_REQUEST);
         }
         String start = movePiecesRequest.start();
         int startLine = start.charAt(0) - '0';
@@ -304,8 +318,10 @@ public class MovePiecesController {
         try {
             game = gameService.getGameById(Integer.valueOf(promotePawn.gameId()));
             board = boardService.findById(game.getBoardId());
-        } catch (Exception e) {
+        } catch (GameNotFoundException | BoardNotFoundException e) {
             return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
+        } catch (Exception e) {
+            return new ResponseEntity<>("Unexpected error!\n" + e.getMessage(), HttpStatus.BAD_REQUEST);
         }
         String start = promotePawn.start();
         int startLine = start.charAt(0) - '0';
@@ -423,8 +439,10 @@ public class MovePiecesController {
         try {
             game = gameService.getGameById(Integer.parseInt(extractedContent));
             board = boardService.findById(game.getBoardId());
-        } catch (Exception e) {
+        } catch (GameNotFoundException | BoardNotFoundException e) {
             return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
+        } catch (Exception e) {
+            return new ResponseEntity<>("Unexpected error!\n" + e.getMessage(), HttpStatus.BAD_REQUEST);
         }
         CellOnTheBoard blackKingCell = board.getKing(false);
         King blackKing = (King) blackKingCell.getPieces();
@@ -473,7 +491,7 @@ public class MovePiecesController {
             try {
                 game = gameService.getGameById(boardId);
                 board = boardService.findById(game.getBoardId());
-            } catch (Exception e) {
+            } catch (GameNotFoundException | BoardNotFoundException e) {
                 board = boardService.findById(boardId);
             }
             int startLine = position.charAt(0) - '0';
@@ -486,8 +504,10 @@ public class MovePiecesController {
                     .toList();
 
             return new ResponseEntity<>(possibleMoves, HttpStatus.OK);
-        } catch (Exception e) {
+        } catch (BoardNotFoundException e) {
             return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
+        } catch (Exception e) {
+            return new ResponseEntity<>("Unexpected error!\n" + e.getMessage(), HttpStatus.BAD_REQUEST);
         }
     }
 

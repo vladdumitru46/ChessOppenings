@@ -13,6 +13,8 @@ import com.example.models.player.Player;
 import lombok.AllArgsConstructor;
 import org.example.board.BoardService;
 import org.example.board.PieceService;
+import org.example.exceptions.GameNotFoundException;
+import org.example.exceptions.PlayerNotFoundException;
 import org.example.game.GameService;
 import org.example.player.PlayerService;
 import org.example.requests.GameRequest;
@@ -55,8 +57,10 @@ public class GameController {
             Player player = playerService.searchPlayerByUsernameOrEmail(playerUsernameOrEmail);
             List<Game> games = gameService.getAfterPlayerId(player.getId());
             return new ResponseEntity<>(games, HttpStatus.OK);
-        } catch (Exception e) {
+        } catch (GameNotFoundException | PlayerNotFoundException e) {
             return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
+        }catch (Exception e) {
+            return new ResponseEntity<>("Unexpected error!\n" + e.getMessage(), HttpStatus.BAD_REQUEST);
         }
     }
 
@@ -75,8 +79,10 @@ public class GameController {
                 moves.add(movesByWhite[movesByWhite.length - 1]);
             }
             return new ResponseEntity<>(moves, HttpStatus.OK);
-        } catch (Exception e) {
+        } catch (GameNotFoundException e) {
             return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
+        } catch (Exception e) {
+            return new ResponseEntity<>("Unexpected error!\n" + e.getMessage(), HttpStatus.BAD_REQUEST);
         }
     }
 
@@ -101,8 +107,10 @@ public class GameController {
                 }
             }
             return new ResponseEntity<>(newBoard.toString(), HttpStatus.OK);
-        } catch (Exception e) {
+        } catch (GameNotFoundException e) {
             return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
+        } catch (Exception e) {
+            return new ResponseEntity<>("Unexpected error!\n" + e.getMessage(), HttpStatus.BAD_REQUEST);
         }
     }
 
@@ -128,8 +136,10 @@ public class GameController {
                 }
             }
             return new ResponseEntity<>(newBoard.toString(), HttpStatus.OK);
-        } catch (Exception e) {
+        } catch (GameNotFoundException e) {
             return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
+        } catch (Exception e) {
+            return new ResponseEntity<>("Unexpected error!\n" + e.getMessage(), HttpStatus.BAD_REQUEST);
         }
     }
 
@@ -150,11 +160,12 @@ public class GameController {
                 }
             }
             return new ResponseEntity<>(newBoard.toString(), HttpStatus.OK);
-        } catch (Exception e) {
+        } catch (GameNotFoundException e) {
             return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
+        } catch (Exception e) {
+            return new ResponseEntity<>("Unexpected error!\n" + e.getMessage(), HttpStatus.BAD_REQUEST);
         }
     }
-
 
 
     @GetMapping("/getMoveNumber")
@@ -165,13 +176,15 @@ public class GameController {
             String[] lastMove = moves[moves.length - 1].split(";");
             int moveNumber = lastMove.length == 2 ? (game.getMoveNumber() - 1) * 2 : game.getMoveNumber() * 2 - 1;
             return new ResponseEntity<>(moveNumber, HttpStatus.OK);
-        } catch (Exception e) {
+        } catch (GameNotFoundException e) {
             return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
+        } catch (Exception e) {
+            return new ResponseEntity<>("Unexpected error!\n" + e.getMessage(), HttpStatus.BAD_REQUEST);
         }
     }
 
     @DeleteMapping("/delete")
-    public void deleteAllGames(){
+    public void deleteAllGames() {
         gameService.deleteAll();
     }
 }

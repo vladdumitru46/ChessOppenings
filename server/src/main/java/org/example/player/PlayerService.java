@@ -6,6 +6,8 @@ import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.example.PlayerValidator;
+import org.example.exceptions.ConfirmationTokenException;
+import org.example.exceptions.PlayerNotFoundException;
 import org.example.exceptions.PlayerValidationException;
 import org.example.player.email.EmailService;
 import org.example.repositoryes.player.PlayerRepository;
@@ -69,12 +71,12 @@ public class PlayerService implements UserDetailsService {
         return token;
     }
 
-    public Player searchPlayerByEmailAndPassword(String email, String password) throws Exception {
+    public Player searchPlayerByEmailAndPassword(String email, String password) throws PlayerNotFoundException {
         log.info("search player by email and password");
         Optional<Player> player = playerRepository.findByEmailAndPassword(email, password);
         if (player.isEmpty()) {
             log.warn("player with email {} and password {} does not exist", email, password);
-            throw new Exception("Email or password is invalid!\n");
+            throw new PlayerNotFoundException("Email or password is invalid!\n");
         }
         log.info("player with username {} returned", player.get().getUserName());
         return player.get();
@@ -89,29 +91,29 @@ public class PlayerService implements UserDetailsService {
         return player.get();
     }
 
-    public Player searchPlayerByUsernameOrEmail(String emailOrUserName) throws Exception {
+    public Player searchPlayerByUsernameOrEmail(String emailOrUserName) throws PlayerNotFoundException {
         log.info("search player by username {}", emailOrUserName);
         Optional<Player> player = playerRepository.findByUserName(emailOrUserName);
         if (player.isEmpty()) {
             player = playerRepository.findByEmail(emailOrUserName);
             if (player.isEmpty()) {
-                throw new Exception("There is no player with that userName!");
+                throw new PlayerNotFoundException("There is no player with that userName!");
             }
         }
         return player.get();
     }
 
-    public void logIn(String emailOrUsername, String password) throws Exception {
+    public void logIn(String emailOrUsername, String password) throws PlayerNotFoundException, PlayerValidationException {
         Optional<Player> playerOptional = playerRepository.findByEmail(emailOrUsername);
         BCryptPasswordEncoder cryptPasswordEncoder = new BCryptPasswordEncoder();
         if (playerOptional.isEmpty()) {
             playerOptional = playerRepository.findByUserName(emailOrUsername);
             if (playerOptional.isEmpty()) {
-                throw new PlayerValidationException("email does not exist");
+                throw new PlayerNotFoundException("email does not exist");
             }
         }
         if (!cryptPasswordEncoder.matches(password, playerOptional.get().getPassword())) {
-            throw new IllegalAccessException("password is invalid!");
+            throw new PlayerNotFoundException("password is invalid!");
         }
         if (playerOptional.get().isLocked()) {
             throw new PlayerValidationException("Account is not yet verified!");
@@ -129,7 +131,7 @@ public class PlayerService implements UserDetailsService {
         ConfirmationToken confirmationToken;
         try {
             confirmationToken = confirmationTokenService.confirmToken(token);
-        } catch (Exception e) {
+        } catch (ConfirmationTokenException e) {
             throw new RuntimeException(e);
         }
 
@@ -220,7 +222,7 @@ public class PlayerService implements UserDetailsService {
 
 
     public void checkPlayer(Player player, boolean changedEmail) throws PlayerValidationException {
-        if(changedEmail) {
+        if (changedEmail) {
             Optional<Player> playerByEmail = playerRepository.findByEmail(player.getEmail());
             if (playerByEmail.isPresent()) {
                 log.warn("The email exists already! Choose other email! " + player.getEmail());

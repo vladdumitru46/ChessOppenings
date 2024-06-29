@@ -10,6 +10,8 @@ import lombok.AllArgsConstructor;
 import org.example.board.BoardService;
 import org.example.board.PieceService;
 import org.example.data.Data;
+import org.example.exceptions.BoardNotFoundException;
+import org.example.exceptions.GameNotFoundException;
 import org.example.game.GameService;
 import org.example.miniMax.score.Evaluation;
 import org.example.miniMax.MiniMax;
@@ -53,8 +55,10 @@ public class AiController {
         try {
             game = gameService.getGameById(Integer.valueOf(extractedContent));
             board = boardService.findById(game.getBoardId());
-        } catch (Exception e) {
+        } catch (GameNotFoundException | BoardNotFoundException e) {
             return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
+        } catch (Exception e) {
+            return new ResponseEntity<>("Unexpected error!\n" + e.getMessage(), HttpStatus.BAD_REQUEST);
         }
         Board testBoard = new Board();
         createCopyBoard(testBoard, game);

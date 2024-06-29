@@ -69,15 +69,15 @@ public class MovePieceTest {
 //        game.setBlackMove(", a5");
 //        game.setMoveNumber(2);
 //        gameService.addANewGame(game);
-        try{
-            Game game = gameService.getGameById(421);
-            Board board1 = boardService.findById(game.getBoardId());
-//            System.out.println(capturePiecesScore.canTheQueenBeCaptured(board1, false));
-            King king = (King) board1.getKing(true).getPieces();
-            System.out.println(king.isHasBeenMoved());
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
+//        try{
+//            Game game = gameService.getGameById(421);
+//            Board board1 = boardService.findById(game.getBoardId());
+////            System.out.println(capturePiecesScore.canTheQueenBeCaptured(board1, false));
+//            King king = (King) board1.getKing(true).getPieces();
+//            System.out.println(king.isHasBeenMoved());
+//        } catch (Exception e) {
+//            throw new RuntimeException(e);
+//        }
 
     }
 

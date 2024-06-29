@@ -4,7 +4,24 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="75b936ac-d5b0-4178-bee6-f97885357906" name="Changes" comment="added enPassant, fixed bugs, made ai better" />
+    <list default="true" id="75b936ac-d5b0-4178-bee6-f97885357906" name="Changes" comment="added enPassant, fixed bugs, made ai better">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/src/main/java/org/example/controllers/AiController.java" beforeDir="false" afterPath="$PROJECT_DIR$/core/src/main/java/org/example/controllers/AiController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/src/main/java/org/example/controllers/BoardController.java" beforeDir="false" afterPath="$PROJECT_DIR$/core/src/main/java/org/example/controllers/BoardController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/src/main/java/org/example/controllers/CourseController.java" beforeDir="false" afterPath="$PROJECT_DIR$/core/src/main/java/org/example/controllers/CourseController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/src/main/java/org/example/controllers/CourseStartedByPlayerController.java" beforeDir="false" afterPath="$PROJECT_DIR$/core/src/main/java/org/example/controllers/CourseStartedByPlayerController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/src/main/java/org/example/controllers/GameController.java" beforeDir="false" afterPath="$PROJECT_DIR$/core/src/main/java/org/example/controllers/GameController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/src/main/java/org/example/controllers/LogInController.java" beforeDir="false" afterPath="$PROJECT_DIR$/core/src/main/java/org/example/controllers/LogInController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/src/main/java/org/example/controllers/MovePiecesController.java" beforeDir="false" afterPath="$PROJECT_DIR$/core/src/main/java/org/example/controllers/MovePiecesController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/src/main/java/org/example/controllers/PlayerController.java" beforeDir="false" afterPath="$PROJECT_DIR$/core/src/main/java/org/example/controllers/PlayerController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/src/main/java/org/example/board/BoardService.java" beforeDir="false" afterPath="$PROJECT_DIR$/server/src/main/java/org/example/board/BoardService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/src/main/java/org/example/course/CourseService.java" beforeDir="false" afterPath="$PROJECT_DIR$/server/src/main/java/org/example/course/CourseService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/src/main/java/org/example/course/CourseStartedByPlayerService.java" beforeDir="false" afterPath="$PROJECT_DIR$/server/src/main/java/org/example/course/CourseStartedByPlayerService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/src/main/java/org/example/course/SubCourseService.java" beforeDir="false" afterPath="$PROJECT_DIR$/server/src/main/java/org/example/course/SubCourseService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/src/main/java/org/example/game/GameService.java" beforeDir="false" afterPath="$PROJECT_DIR$/server/src/main/java/org/example/game/GameService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/src/main/java/org/example/player/ConfirmationTokenService.java" beforeDir="false" afterPath="$PROJECT_DIR$/server/src/main/java/org/example/player/ConfirmationTokenService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/src/main/java/org/example/player/PlayerService.java" beforeDir="false" afterPath="$PROJECT_DIR$/server/src/main/java/org/example/player/PlayerService.java" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -14,8 +31,8 @@
     <option name="RECENT_TEMPLATES">
       <list>
         <option value="JUnit5 Test Class" />
-        <option value="Class" />
         <option value="Record" />
+        <option value="Class" />
       </list>
     </option>
   </component>
@@ -29,6 +46,7 @@
     <setting file="jar://$MAVEN_REPOSITORY$/org/springframework/spring-web/6.0.12/spring-web-6.0.12.jar!/org/springframework/web/filter/FormContentFilter.class" root0="SKIP_INSPECTION" />
     <setting file="jar://$MAVEN_REPOSITORY$/org/springframework/spring-web/6.0.12/spring-web-6.0.12.jar!/org/springframework/web/filter/OncePerRequestFilter.class" root0="SKIP_INSPECTION" />
     <setting file="file://$PROJECT_DIR$/ai/src/main/java/org/example/miniMax/score/Evaluation.java" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/server/src/main/java/org/example/game/GameService.java" root0="FORCE_HIGHLIGHTING" />
   </component>
   <component name="MarkdownSettingsMigration">
     <option name="stateVersion" value="1" />
@@ -90,7 +108,7 @@
       <command value="mvn clean install" />
     </option>
   </component>
-  <component name="RunManager" selected="JUnit.MovePieceTest.isCheckMateIn2Test">
+  <component name="RunManager" selected="Application.MainApplication">
     <configuration name="MainApplication" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="org.example.MainApplication" />
       <module name="Core" />
@@ -174,8 +192,8 @@
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="JUnit.MovePieceTest.isCheckMateIn2Test" />
         <item itemvalue="Application.MainApplication" />
+        <item itemvalue="JUnit.MovePieceTest.isCheckMateIn2Test" />
         <item itemvalue="JUnit.PawnStructureScoreTest" />
         <item itemvalue="JUnit.MobilityScoreTest" />
         <item itemvalue="JUnit.KingSafetyScoreTest" />
@@ -216,6 +234,7 @@
       <workItem from="1716568910542" duration="4557000" />
       <workItem from="1717926592826" duration="7509000" />
       <workItem from="1718475897593" duration="1674000" />
+      <workItem from="1719673397480" duration="43000" />
     </task>
     <task id="LOCAL-00001" summary="tried to add a cloud instance for db, on a computer it works, on other one does not, added history for moves, improved ai">
       <option name="closed" value="true" />
@@ -368,12 +387,12 @@
       <breakpoints>
         <line-breakpoint type="java-line">
           <url>file://$PROJECT_DIR$/core/src/main/java/org/example/controllers/CourseController.java</url>
-          <line>26</line>
+          <line>30</line>
           <option name="timeStamp" value="75" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/core/src/main/java/org/example/controllers/GameController.java</url>
-          <line>85</line>
+          <line>97</line>
           <option name="timeStamp" value="138" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
@@ -406,12 +425,12 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/core/src/main/java/org/example/controllers/MovePiecesController.java</url>
-          <line>362</line>
+          <line>394</line>
           <option name="timeStamp" value="160" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/core/src/main/java/org/example/controllers/MovePiecesController.java</url>
-          <line>342</line>
+          <line>374</line>
           <option name="timeStamp" value="161" />
         </line-breakpoint>
         <breakpoint type="java-exception">

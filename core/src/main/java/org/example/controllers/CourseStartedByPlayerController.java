@@ -15,6 +15,7 @@ import org.example.board.PieceService;
 import org.example.course.CourseService;
 import org.example.course.CourseStartedByPlayerService;
 import org.example.course.SubCourseService;
+import org.example.exceptions.*;
 import org.example.player.PlayerService;
 import org.example.requests.*;
 import org.springframework.http.HttpStatus;
@@ -38,7 +39,6 @@ public class CourseStartedByPlayerController {
     private final BoardService boardService;
     private final PlayerService playerService;
 
-    //TODO: casteling + fix js
     @PostMapping("/start")
     private ResponseEntity<?> startCourse(@RequestBody StartCourseRequest startCourseRequest) {
         try {
@@ -49,15 +49,17 @@ public class CourseStartedByPlayerController {
                         course.getName());
                 Board board = courseStartedByPlayer.getBoardId();
                 return new ResponseEntity<>(board.getId(), HttpStatus.OK);
-            } catch (Exception e) {
+            } catch (CourseStartedByPlayerNotFoundException e) {
                 Board board = new Board();
                 boardService.save(board);
                 CourseStartedByPlayer courseStartedByPlayer = new CourseStartedByPlayer(player, course, board);
                 courseStartedByPlayerService.addPlayerThatStartedTheCourse(courseStartedByPlayer);
                 return new ResponseEntity<>(board.getId(), HttpStatus.OK);
             }
-        } catch (Exception e) {
+        } catch (PlayerNotFoundException | CourseNotFoundException e) {
             return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
+        } catch (Exception e) {
+            return new ResponseEntity<>("Unexpected error!\n" + e.getMessage(), HttpStatus.BAD_REQUEST);
         }
     }
 
@@ -87,7 +89,7 @@ public class CourseStartedByPlayerController {
             String moveThatShouldBePlayed = listOfMoves[moveNumber - 1];
 
             if (move.equals(moveThatShouldBePlayed)) {
-                if(moveThatShouldBePlayed.contains("0")){
+                if (moveThatShouldBePlayed.contains("0")) {
                     pieceService.doCastle(board, end, (King) start.getPieces());
                 }
                 pieceService.makeMove(board, new Move(start, end));
@@ -110,8 +112,11 @@ public class CourseStartedByPlayerController {
             } else {
                 return new ResponseEntity<>("The move you played is not the correct one! Try again", HttpStatus.BAD_REQUEST);
             }
-        } catch (Exception e) {
+        } catch (BoardNotFoundException | CourseStartedByPlayerNotFoundException | SubCourseNotFoundException |
+                 PlayerNotFoundException e) {
             return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
+        } catch (Exception e) {
+            return new ResponseEntity<>("Unexpected error!\n" + e.getMessage(), HttpStatus.BAD_REQUEST);
         }
     }
 
@@ -146,8 +151,11 @@ public class CourseStartedByPlayerController {
             }
             courseStartedByPlayerService.update(courseStartedByPlayer);
             return new ResponseEntity<>(moveThatShouldBePlayed, HttpStatus.OK);
-        } catch (Exception e) {
+        } catch (BoardNotFoundException | CourseStartedByPlayerNotFoundException | SubCourseNotFoundException |
+                 PlayerNotFoundException e) {
             return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
+        } catch (Exception e) {
+            return new ResponseEntity<>("Unexpected error!\n" + e.getMessage(), HttpStatus.BAD_REQUEST);
         }
     }
 
@@ -156,8 +164,10 @@ public class CourseStartedByPlayerController {
         Board board = null;
         try {
             board = boardService.findById(Integer.parseInt(movePiecesRequest.gameId()));
-        } catch (Exception e) {
+        } catch (BoardNotFoundException e) {
             throw new RuntimeException(e);
+        } catch (Exception e) {
+            return new ResponseEntity<>("Unexpected error!\n" + e.getMessage(), HttpStatus.BAD_REQUEST);
         }
         String start1 = movePiecesRequest.start();
         int line = start1.charAt(0) - '0';
@@ -172,7 +182,7 @@ public class CourseStartedByPlayerController {
         if (start.getPieces() instanceof King) {
             if (pieceService.canTheKingMove(board, start, end, (King) start.getPieces())) {
                 return new ResponseEntity<>(HttpStatus.OK);
-            }else if(pieceService.canCastle(board, start, end, (King) start.getPieces())){
+            } else if (pieceService.canCastle(board, start, end, (King) start.getPieces())) {
                 return new ResponseEntity<>(HttpStatus.OK);
             }
         } else if (start.getPieces() instanceof Queen) {
@@ -212,8 +222,10 @@ public class CourseStartedByPlayerController {
             board.setCellOnTheBoardMap(cell);
             boardService.updateBoard(board);
             courseStartedByPlayerService.update(courseStartedByPlayer);
-        } catch (Exception e) {
+        } catch (BoardNotFoundException | CourseStartedByPlayerNotFoundException | PlayerNotFoundException e) {
             throw new RuntimeException(e);
+        } catch (Exception e) {
+            throw new RuntimeException("Unexpected error!\n" + e.getMessage());
         }
     }
 
@@ -228,8 +240,10 @@ public class CourseStartedByPlayerController {
                     .toList();
 
             return new ResponseEntity<>(coursesFinished, HttpStatus.OK);
-        } catch (Exception e) {
+        } catch (CourseStartedByPlayerNotFoundException | PlayerNotFoundException e) {
             return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
+        } catch (Exception e) {
+            return new ResponseEntity<>("Unexpected error!\n" + e.getMessage(), HttpStatus.BAD_REQUEST);
         }
     }
 
@@ -245,13 +259,15 @@ public class CourseStartedByPlayerController {
             String[] listOfMoves = course.getMovesThatThePlayerShouldPlay().split(", ");
             String nextMove = listOfMoves[moveNumber - 1];
             return new ResponseEntity<>("Try " + nextMove, HttpStatus.OK);
-        } catch (Exception e) {
+        } catch (CourseStartedByPlayerNotFoundException | SubCourseNotFoundException | PlayerNotFoundException e) {
             return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
+        } catch (Exception e) {
+            return new ResponseEntity<>("Unexpected error!\n" + e.getMessage(), HttpStatus.BAD_REQUEST);
         }
     }
 
     @DeleteMapping("/delete")
-    public void deleteAllCoursesStartedByPlayer(){
+    public void deleteAllCoursesStartedByPlayer() {
         courseStartedByPlayerService.deleteAll();
     }
 

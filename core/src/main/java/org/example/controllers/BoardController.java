@@ -4,6 +4,8 @@ import com.example.models.board.Board;
 import com.example.models.game.Game;
 import lombok.AllArgsConstructor;
 import org.example.board.BoardService;
+import org.example.exceptions.BoardNotFoundException;
+import org.example.exceptions.GameNotFoundException;
 import org.example.game.GameService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -35,8 +37,10 @@ public class BoardController {
             Game game = gameService.getGameById(gameId);
             Board board = boardService.findById(game.getBoardId());
             return ResponseEntity.ok(board.toString() + " + " + game.isWhitesTurn());
-        } catch (Exception e) {
+        } catch (GameNotFoundException | BoardNotFoundException e) {
             return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
+        } catch (Exception e) {
+            return new ResponseEntity<>("Unexpected error!\n" + e.getMessage(), HttpStatus.BAD_REQUEST);
         }
     }
 
@@ -45,12 +49,13 @@ public class BoardController {
         try {
             Board board = boardService.findById(boardId);
             return ResponseEntity.ok(board.toString());
-        } catch (Exception e) {
+        } catch (BoardNotFoundException e) {
             return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
         }
     }
+
     @DeleteMapping("/delete")
-    public void deleteAllBoards(){
+    public void deleteAllBoards() {
         boardService.deleteAll();
     }
 }
