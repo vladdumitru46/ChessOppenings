@@ -1,8 +1,4 @@
-Here's a more polished version of your Docker README file:
-
----
-
-# Chess Openings Learning Application
+# Chess Openings
 
 ## Overview
 This application allows users to learn and practice chess openings. Developed in Java using the Spring framework and JPA Repositories, it features an intuitive front-end built with HTML, CSS, and JavaScript. The app is entirely free to use, offering a comprehensive platform for both beginner and advanced players to enhance their chess skills.
