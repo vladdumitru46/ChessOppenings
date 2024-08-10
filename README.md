@@ -21,8 +21,5 @@ This application allows users to learn and practice chess openings. Developed in
 - **`project-documentation`**: Contains the comprehensive documentation for the project.
 
 ## Getting Started
-To run the application, use the Docker Compose file located in the `docker-compose-file` branch. Detailed instructions on setting up and running the application can be found in the `project-documentation` branch.
-
----
-
-This format organizes the information in a clear, concise manner, making it easier for readers to understand the purpose and structure of your project.
+To run the application, use the Docker Compose file located in the `docker-compose-file` branch. 
+You have to pull master branch and the interfata brach,and then run the command: docker compose up.
