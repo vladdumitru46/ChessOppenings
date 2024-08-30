@@ -4,7 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="75b936ac-d5b0-4178-bee6-f97885357906" name="Changes" comment="added enPassant, fixed bugs, made ai better">
+    <list default="true" id="75b936ac-d5b0-4178-bee6-f97885357906" name="Changes" comment="exception classes">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -220,7 +220,9 @@
       <workItem from="1717926592826" duration="7509000" />
       <workItem from="1718475897593" duration="1674000" />
       <workItem from="1719673397480" duration="868000" />
-      <workItem from="1719915091401" duration="3360000" />
+      <workItem from="1719915091401" duration="6504000" />
+      <workItem from="1723309793735" duration="43000" />
+      <workItem from="1723309849654" duration="65000" />
     </task>
     <task id="LOCAL-00001" summary="tried to add a cloud instance for db, on a computer it works, on other one does not, added history for moves, improved ai">
       <option name="closed" value="true" />
@@ -358,7 +360,15 @@
       <option name="project" value="LOCAL" />
       <updated>1719673658396</updated>
     </task>
-    <option name="localTasksCounter" value="18" />
+    <task id="LOCAL-00018" summary="exception classes">
+      <option name="closed" value="true" />
+      <created>1719986306243</created>
+      <option name="number" value="00018" />
+      <option name="presentableId" value="LOCAL-00018" />
+      <option name="project" value="LOCAL" />
+      <updated>1719986306243</updated>
+    </task>
+    <option name="localTasksCounter" value="19" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -374,7 +384,8 @@
     <MESSAGE value="dockerize application" />
     <MESSAGE value="added courses for black, and resolved bugs" />
     <MESSAGE value="added enPassant, fixed bugs, made ai better" />
-    <option name="LAST_COMMIT_MESSAGE" value="added enPassant, fixed bugs, made ai better" />
+    <MESSAGE value="exception classes" />
+    <option name="LAST_COMMIT_MESSAGE" value="exception classes" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

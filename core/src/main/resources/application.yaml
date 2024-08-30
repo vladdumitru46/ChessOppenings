@@ -19,7 +19,6 @@ spring:
     host: smtp.mail.yahoo.com
     port: 587
     username: vladdumitru46@yahoo.com
-    password: blrqbnkwmidajgxz
     properties:
       mail.smtp.auth: true
       mail.smtp.starttls.enable: true
