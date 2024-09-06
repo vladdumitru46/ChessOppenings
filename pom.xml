@@ -16,11 +16,11 @@
     <packaging>pom</packaging>
     <modules>
         <module>Models</module>
-        <module>Persistence</module>
-        <module>core</module>
-        <module>server</module>
-        <module>ai</module>
-        <module>validators</module>
+        <module>Data</module>
+        <module>Controller</module>
+        <module>Business</module>
+        <module>Ai</module>
+        <module>Validators</module>
     </modules>
     <dependencies>
         <dependency>
@@ -36,7 +36,7 @@
     </dependencies>
 
     <properties>
-        <java.version>21</java.version>
+        <java.version>22</java.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
 

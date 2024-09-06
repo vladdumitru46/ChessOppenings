@@ -12,7 +12,7 @@ This application allows users to learn and practice chess openings. Developed in
 
 ## Branches Overview
 - **`master`**: Contains the Java server code.
-- **`interfata`**: Hosts the UI code.
+- **`user-interface`**: Hosts the UI code.
 - **`docker-compose-file`**: Includes the Docker Compose file used for running the application in Docker.
 - **`project-documentation`**: Contains the comprehensive documentation for the project.
 
