@@ -1,6 +1,6 @@
-let playerUOrE = localStorage.getItem("player")
+let token = localStorage.getItem("token")
 const baseUrl = "http://localhost:8080/chess";
-let url = baseUrl + "/playerInfo?userNameOrEmail=" + playerUOrE;
+let url = baseUrl + "/playerInfo?token=" + token;
 
 document.addEventListener("DOMContentLoaded", function () {
     getPlayerInfo();
@@ -94,4 +94,7 @@ async function save() {
         let error = await response.text();
         window.alert(error)
     }
+
+    let helloTitle = document.getElementById("helloTitle")
+    helloTitle.innerHTML = "Hello, " + name;
 }

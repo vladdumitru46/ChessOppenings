@@ -13,7 +13,7 @@ async function logIn() {
         headers: {
             "Content-Type": "application/json"
         },
-        body: JSON.stringify({ email: username, password: password })
+        body: JSON.stringify({ emailOrUsername: username, password: password })
 
     };
 
@@ -21,7 +21,6 @@ async function logIn() {
     if (response.ok) {
         let res = await response.text();
         localStorage.setItem("token", res)
-        localStorage.setItem("player", username)
         window.location.href = '../home_page/home-page.html'
     } else {
         let res = await response.text();

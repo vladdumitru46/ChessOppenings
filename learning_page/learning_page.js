@@ -1,12 +1,15 @@
 const baseUrl = "http://localhost:8080/chess";
 
+const token = localStorage.getItem("token");
+
+colorCompletedCourses(token);
 async function getCompletedCourses() {
-    const response = await fetch(`${baseUrl}/startCourse/getFinishedCourses?player=${player}`);
+    const response = await fetch(`${baseUrl}/startCourse/getFinishedCourses?token=${token}`);
     return await response.json();
 }
 
-async function colorCompletedCourses(playerId) {
-    const completedCourses = await getCompletedCourses(playerId);
+async function colorCompletedCourses(token) {
+    const completedCourses = await getCompletedCourses(token);
     const lis = document.querySelectorAll('.learningpage-ul li');
 
     lis.forEach(li => {
@@ -16,9 +19,6 @@ async function colorCompletedCourses(playerId) {
         }
     });
 }
-
-const player = localStorage.getItem("player");
-colorCompletedCourses(player);
 
 
 function openCourse(element) {

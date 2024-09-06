@@ -26,7 +26,7 @@ if (informationCourseElement && informationCourseValue) {
 
 async function startCourse() {
     let url = baseUrl + "/startCourse/start"
-    let playerUsername = localStorage.getItem("player");
+    let token = localStorage.getItem("token");
     let response = await fetch(url, {
         method: "POST",
         headers: {
@@ -34,7 +34,7 @@ async function startCourse() {
         },
         body: JSON.stringify({
             courseName: pageTitle.innerText,
-            playerUsername: playerUsername
+            token: token
         })
     })
     if (response.ok) {

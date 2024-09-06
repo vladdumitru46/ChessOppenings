@@ -29,7 +29,7 @@ async function loadData() {
                 "Content-Type": "application/json"
             },
             body: JSON.stringify({
-                playerId: localStorage.getItem("player"),
+                token: localStorage.getItem("token"),
                 courseName: pageTitle.innerText,
                 boardId: localStorage.getItem('boardId')
             })
@@ -53,7 +53,7 @@ async function loadData() {
                         "Content-Type": "application/json"
                     },
                     body: JSON.stringify({
-                        playerId: localStorage.getItem("player"),
+                        token: localStorage.getItem("token"),
                         courseName: pageTitle.innerText,
                         boardId: localStorage.getItem('boardId')
                     })
@@ -356,7 +356,7 @@ async function verifyMove(square1, square2, atributes) {
             "Content-Type": "application/json"
         },
         body: JSON.stringify({
-            playerUsernameOrEmail: localStorage.getItem("player"),
+            token: localStorage.getItem("token"),
             subCourseName: subCourseName,
             courseName: pageTitle.innerText,
             boardId: localStorage.getItem('boardId'),
@@ -380,7 +380,7 @@ async function verifyMove(square1, square2, atributes) {
 }
 
 async function computerMove() {
-    let url = courseUrl + "computerMove?courseName=" + pageTitle.innerText + "&subCourseName=" + subCourseName + "&boardId=" + localStorage.getItem('boardId') + "&userName=" + localStorage.getItem("player");
+    let url = courseUrl + "computerMove?courseName=" + pageTitle.innerText + "&subCourseName=" + subCourseName + "&boardId=" + localStorage.getItem('boardId') + "&token=" + localStorage.getItem("token");
 
     let computerMoveResponse = await fetch(url, null);
     if (computerMoveResponse.ok) {
@@ -457,7 +457,7 @@ async function getHint() {
             "Content-Type": "application/json"
         },
         body: JSON.stringify({
-            playerUsernameOrEmail: localStorage.getItem("player"),
+            token: localStorage.getItem("token"),
             subCourseName: subCourseName,
             courseName: pageTitle.innerText,
             boardId: localStorage.getItem('boardId')

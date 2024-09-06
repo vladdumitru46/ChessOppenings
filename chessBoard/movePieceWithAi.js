@@ -2,9 +2,11 @@ let queryString = window.location.search;
 let urlParams = new URLSearchParams(queryString);
 let newGame = urlParams.get('newGame');
 let pageTitle = document.getElementById("pageTitle");
-let player = localStorage.getItem("player")
+let token = localStorage.getItem("token")
 const baseUrl = "http://localhost:8080/chess";
-pageTitle.innerText = player + " vs AI";
+getPlayerName().then(name => {
+    pageTitle.innerText = name + " vs AI";
+});
 let boardUrl = baseUrl + "/game";
 console.log(boardUrl);
 if (newGame) {
@@ -16,8 +18,18 @@ if (newGame) {
 let moveNumber = 0;
 let maxMoveNumber = 0;
 
+async function getPlayerName() {
+    let request = await fetch(baseUrl + "/playerInfo?token=" + token);
+    if (request.ok) {
+        let response = await request.json();
+        console.log(response.name)
+        return response.name;
+    } else {
+        return "noName"
+    }
+}
+
 async function fetchData() {
-    let player = localStorage.getItem("player")
     let playerColour = localStorage.getItem("playerColour")
     console.log(boardUrl);
 
@@ -28,7 +40,7 @@ async function fetchData() {
                 "Content-Type": "application/json"
             },
             body: JSON.stringify({
-                playerEmailOrUsername: player,
+                token: token,
                 playerColour: localStorage.getItem("playerColour")
             })
         });
@@ -176,7 +188,7 @@ async function getPiece(square) {
                 let sq = document.getElementById(listOfMoves[i]);
                 const originalImageSrc = sq.querySelector('img').src;
                 console.log(sq.querySelector("img").src)
-                highlightedSquares.push({ element: sq, originalSrc: originalImageSrc });
+                highlightedSquares.push({element: sq, originalSrc: originalImageSrc});
                 if (originalImageSrc) {
                     sq.querySelector('img').src = "../pieces/posibleMove.svg";
                 }
@@ -238,6 +250,7 @@ async function getPiece(square) {
         }
     }
 }
+
 function resetHighlightedSquares() {
     for (const square of highlightedSquares) {
         const sq = square.element;
@@ -360,6 +373,7 @@ function logOut() {
 function viewProfile() {
     window.location.replace('../viewProfile/profile-page.html');
 }
+
 var coll = document.getElementsByClassName("collapsible");
 var i;
 
