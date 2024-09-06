@@ -9,6 +9,7 @@ import com.example.models.courses.CourseStatus;
 import com.example.models.courses.SubCourse;
 import com.example.models.pieces.*;
 import com.example.models.player.Player;
+import com.example.models.player.PlayerSession;
 import lombok.AllArgsConstructor;
 import org.example.board.BoardService;
 import org.example.board.PieceService;
@@ -17,14 +18,13 @@ import org.example.course.CourseStartedByPlayerService;
 import org.example.course.SubCourseService;
 import org.example.exceptions.*;
 import org.example.player.PlayerService;
+import org.example.player.PlayerSessionService;
 import org.example.requests.*;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import javax.management.DescriptorKey;
 import java.util.List;
-import java.util.Optional;
 
 @RestController
 @AllArgsConstructor
@@ -37,12 +37,13 @@ public class CourseStartedByPlayerController {
     private final SubCourseService subCourseService;
     private final PieceService pieceService;
     private final BoardService boardService;
-    private final PlayerService playerService;
+    private final PlayerSessionService playerSessionService;
 
     @PostMapping("/start")
     private ResponseEntity<?> startCourse(@RequestBody StartCourseRequest startCourseRequest) {
         try {
-            Player player = playerService.searchPlayerByUsernameOrEmail(startCourseRequest.playerUsername());
+            PlayerSession playerSession = playerSessionService.getByToken(startCourseRequest.token());
+            Player player = playerSession.getPlayer();
             Course course = courseService.findCourseByName(startCourseRequest.courseName());
             try {
                 CourseStartedByPlayer courseStartedByPlayer = courseStartedByPlayerService.getCourseStartedByPlayerAfterPlayerIdAndCourseName(player.getId(),
@@ -56,7 +57,7 @@ public class CourseStartedByPlayerController {
                 courseStartedByPlayerService.addPlayerThatStartedTheCourse(courseStartedByPlayer);
                 return new ResponseEntity<>(board.getId(), HttpStatus.OK);
             }
-        } catch (PlayerNotFoundException | CourseNotFoundException e) {
+        } catch (NoSessionException | CourseNotFoundException e) {
             return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
         } catch (Exception e) {
             return new ResponseEntity<>("Unexpected error!\n" + e.getMessage(), HttpStatus.BAD_REQUEST);
@@ -68,7 +69,8 @@ public class CourseStartedByPlayerController {
         try {
             SubCourse course = subCourseService.getByName(verifyMoveRequest.subCourseName(), verifyMoveRequest.courseName());
             Board board = boardService.findById(verifyMoveRequest.boardId());
-            Player player = playerService.searchPlayerByUsernameOrEmail(verifyMoveRequest.playerUsernameOrEmail());
+            PlayerSession playerSession = playerSessionService.getByToken(verifyMoveRequest.token());
+            Player player = playerSession.getPlayer();
             CourseStartedByPlayer courseStartedByPlayer = courseStartedByPlayerService.getCourseStartedByPlayerAfterPlayerIdAndCourseNameAndBoardId(player.getId(),
                     verifyMoveRequest.courseName(), verifyMoveRequest.boardId());
 
@@ -113,7 +115,7 @@ public class CourseStartedByPlayerController {
                 return new ResponseEntity<>("The move you played is not the correct one! Try again", HttpStatus.BAD_REQUEST);
             }
         } catch (BoardNotFoundException | CourseStartedByPlayerNotFoundException | SubCourseNotFoundException |
-                 PlayerNotFoundException e) {
+                 NoSessionException e) {
             return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
         } catch (Exception e) {
             return new ResponseEntity<>("Unexpected error!\n" + e.getMessage(), HttpStatus.BAD_REQUEST);
@@ -121,11 +123,12 @@ public class CourseStartedByPlayerController {
     }
 
     @GetMapping("/computerMove")
-    public ResponseEntity<?> computerMove(@RequestParam String courseName, @RequestParam String subCourseName, @RequestParam Integer boardId, @RequestParam String userName) {
+    public ResponseEntity<?> computerMove(@RequestParam String courseName, @RequestParam String subCourseName, @RequestParam Integer boardId, @RequestParam String token) {
         try {
             SubCourse course = subCourseService.getByName(subCourseName, courseName);
             Board board = boardService.findById(boardId);
-            Player player = playerService.searchPlayerByUsernameOrEmail(userName);
+            PlayerSession playerSession = playerSessionService.getByToken(token);
+            Player player = playerSession.getPlayer();
             CourseStartedByPlayer courseStartedByPlayer = courseStartedByPlayerService.getCourseStartedByPlayerAfterPlayerIdAndCourseNameAndBoardId(player.getId(),
                     courseName, boardId);
             int moveNumber = courseStartedByPlayer.getMoveNumber();
@@ -152,7 +155,7 @@ public class CourseStartedByPlayerController {
             courseStartedByPlayerService.update(courseStartedByPlayer);
             return new ResponseEntity<>(moveThatShouldBePlayed, HttpStatus.OK);
         } catch (BoardNotFoundException | CourseStartedByPlayerNotFoundException | SubCourseNotFoundException |
-                 PlayerNotFoundException e) {
+                 NoSessionException e) {
             return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
         } catch (Exception e) {
             return new ResponseEntity<>("Unexpected error!\n" + e.getMessage(), HttpStatus.BAD_REQUEST);
@@ -212,7 +215,8 @@ public class CourseStartedByPlayerController {
     @PostMapping("/reset")
     public void reset(@RequestBody ResetBoard resetBoard) {
         try {
-            Player player = playerService.searchPlayerByUsernameOrEmail(resetBoard.playerId());
+            PlayerSession playerSession = playerSessionService.getByToken(resetBoard.token());
+            Player player = playerSession.getPlayer();
             CourseStartedByPlayer courseStartedByPlayer = courseStartedByPlayerService.getCourseStartedByPlayerAfterPlayerIdAndCourseNameAndBoardId(player.getId(),
                     resetBoard.courseName(), resetBoard.boardId());
             courseStartedByPlayer.setMoveNumber(1);
@@ -222,7 +226,7 @@ public class CourseStartedByPlayerController {
             board.setCellOnTheBoardMap(cell);
             boardService.updateBoard(board);
             courseStartedByPlayerService.update(courseStartedByPlayer);
-        } catch (BoardNotFoundException | CourseStartedByPlayerNotFoundException | PlayerNotFoundException e) {
+        } catch (BoardNotFoundException | CourseStartedByPlayerNotFoundException | NoSessionException e) {
             throw new RuntimeException(e);
         } catch (Exception e) {
             throw new RuntimeException("Unexpected error!\n" + e.getMessage());
@@ -230,9 +234,10 @@ public class CourseStartedByPlayerController {
     }
 
     @GetMapping("/getFinishedCourses")
-    public ResponseEntity<?> getFinishedCourses(@RequestParam String player) {
+    public ResponseEntity<?> getFinishedCourses(@RequestParam String token) {
         try {
-            Integer playerId = playerService.searchPlayerByUsernameOrEmail(player).getId();
+            PlayerSession playerSession = playerSessionService.getByToken(token);
+            Integer playerId = playerSession.getPlayer().getId();
             List<String> coursesFinished = courseStartedByPlayerService.getAllCoursesByCourseStatus(CourseStatus.COMPLETED, playerId)
                     .stream()
                     .map(CourseStartedByPlayer::getCourseName)
@@ -240,7 +245,7 @@ public class CourseStartedByPlayerController {
                     .toList();
 
             return new ResponseEntity<>(coursesFinished, HttpStatus.OK);
-        } catch (CourseStartedByPlayerNotFoundException | PlayerNotFoundException e) {
+        } catch (CourseStartedByPlayerNotFoundException | NoSessionException e) {
             return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
         } catch (Exception e) {
             return new ResponseEntity<>("Unexpected error!\n" + e.getMessage(), HttpStatus.BAD_REQUEST);
@@ -251,7 +256,8 @@ public class CourseStartedByPlayerController {
     public ResponseEntity<?> getHint(@RequestBody GetHintRequest getHintRequest) {
         try {
             SubCourse course = subCourseService.getByName(getHintRequest.subCourseName(), getHintRequest.courseName());
-            Player player = playerService.searchPlayerByUsernameOrEmail(getHintRequest.playerUsernameOrEmail());
+            PlayerSession playerSession = playerSessionService.getByToken(getHintRequest.token());
+            Player player = playerSession.getPlayer();
             CourseStartedByPlayer courseStartedByPlayer = courseStartedByPlayerService.getCourseStartedByPlayerAfterPlayerIdAndCourseNameAndBoardId(player.getId(),
                     getHintRequest.courseName(), getHintRequest.boardId());
             int moveNumber = courseStartedByPlayer.getMoveNumber();
@@ -259,7 +265,7 @@ public class CourseStartedByPlayerController {
             String[] listOfMoves = course.getMovesThatThePlayerShouldPlay().split(", ");
             String nextMove = listOfMoves[moveNumber - 1];
             return new ResponseEntity<>("Try " + nextMove, HttpStatus.OK);
-        } catch (CourseStartedByPlayerNotFoundException | SubCourseNotFoundException | PlayerNotFoundException e) {
+        } catch (CourseStartedByPlayerNotFoundException | SubCourseNotFoundException | NoSessionException e) {
             return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
         } catch (Exception e) {
             return new ResponseEntity<>("Unexpected error!\n" + e.getMessage(), HttpStatus.BAD_REQUEST);

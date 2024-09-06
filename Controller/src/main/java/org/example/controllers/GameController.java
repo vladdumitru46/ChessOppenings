@@ -10,13 +10,16 @@ import com.example.models.pieces.Knight;
 import com.example.models.pieces.Queen;
 import com.example.models.pieces.Rook;
 import com.example.models.player.Player;
+import com.example.models.player.PlayerSession;
 import lombok.AllArgsConstructor;
 import org.example.board.BoardService;
 import org.example.board.PieceService;
 import org.example.exceptions.GameNotFoundException;
+import org.example.exceptions.NoSessionException;
 import org.example.exceptions.PlayerNotFoundException;
 import org.example.game.GameService;
 import org.example.player.PlayerService;
+import org.example.player.PlayerSessionService;
 import org.example.requests.GameRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -32,32 +35,34 @@ import java.util.List;
 public class GameController {
 
     private final GameService gameService;
-    private final PlayerService playerService;
     private final BoardService boardService;
     private final PieceService pieceService;
+    private final PlayerSessionService playerSessionService;
 
     @PostMapping
     public ResponseEntity<?> saveGame(@RequestBody GameRequest gameRequest) {
         try {
-            Player player = playerService.searchPlayerByUsernameOrEmail(gameRequest.playerEmailOrUsername());
+            PlayerSession playerSession = playerSessionService.getByToken(gameRequest.token());
+            Player player = playerSession.getPlayer();
             Board board = new Board();
             boardService.save(board);
             Game game = new Game(player.getId(), board.getId(), GameStatus.STARTED);
             game.setPlayerColour(gameRequest.playerColour());
             Long id = gameService.addANewGame(game);
             return new ResponseEntity<>(id, HttpStatus.OK);
-        } catch (Exception e) {
+        } catch (NoSessionException e) {
             return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
         }
     }
 
     @GetMapping("/history")
-    public ResponseEntity<?> gameHistory(@RequestParam String playerUsernameOrEmail) {
+    public ResponseEntity<?> gameHistory(@RequestParam String token) {
         try {
-            Player player = playerService.searchPlayerByUsernameOrEmail(playerUsernameOrEmail);
+            PlayerSession playerSession = playerSessionService.getByToken(token);
+            Player player = playerSession.getPlayer();
             List<Game> games = gameService.getAfterPlayerId(player.getId());
             return new ResponseEntity<>(games, HttpStatus.OK);
-        } catch (GameNotFoundException | PlayerNotFoundException e) {
+        } catch (GameNotFoundException | NoSessionException e) {
             return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
         }catch (Exception e) {
             return new ResponseEntity<>("Unexpected error!\n" + e.getMessage(), HttpStatus.BAD_REQUEST);

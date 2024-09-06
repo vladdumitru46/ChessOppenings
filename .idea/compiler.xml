@@ -1,36 +1,35 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="CompilerConfiguration">
-    <option name="USE_RELEASE_OPTION" value="false" />
     <annotationProcessing>
-      <profile default="true" name="Default" enabled="true" />
       <profile name="Maven default annotation processors profile" enabled="true">
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
-        <module name="Persistence" />
         <module name="Ai" />
-        <module name="server" />
+        <module name="Validators" />
         <module name="Models" />
-        <module name="validators" />
-        <module name="Core" />
+        <module name="Data" />
+        <module name="Controller" />
+        <module name="Business" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
-      <module name="networking" target="17" />
-      <module name="service" target="21" />
+      <module name="Core" target="1.5" />
+      <module name="Persistence" target="1.5" />
+      <module name="server" target="1.5" />
+      <module name="validators" target="1.5" />
     </bytecodeTargetLevel>
   </component>
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
       <module name="Ai" options="-parameters" />
-      <module name="Core" options="-parameters" />
+      <module name="Business" options="-parameters" />
+      <module name="Controller" options="-parameters" />
+      <module name="Data" options="-parameters" />
       <module name="Models" options="-parameters" />
-      <module name="Persistence" options="-parameters" />
-      <module name="server" options="-parameters" />
-      <module name="service" options="-parameters" />
+      <module name="Validators" options="-parameters" />
       <module name="untitled" options="-parameters" />
-      <module name="validators" options="-parameters" />
     </option>
   </component>
 </project>

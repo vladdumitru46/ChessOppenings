@@ -1,5 +1,5 @@
 package org.example.requests;
 
-public record ResetBoard(String playerId, String courseName, Integer boardId) {
+public record ResetBoard(String token, String courseName, Integer boardId) {
 
 }

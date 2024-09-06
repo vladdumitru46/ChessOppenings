@@ -1,4 +1,4 @@
 package org.example.requests;
 
-public record GameRequest(String playerEmailOrUsername, String playerColour) {
+public record GameRequest(String token, String playerColour) {
 }

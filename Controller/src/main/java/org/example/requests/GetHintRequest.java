@@ -1,4 +1,4 @@
 package org.example.requests;
 
-public record GetHintRequest(String playerUsernameOrEmail, String courseName, String subCourseName, Integer boardId) {
+public record GetHintRequest(String token, String courseName, String subCourseName, Integer boardId) {
 }

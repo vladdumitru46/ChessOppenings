@@ -4,450 +4,191 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="75b936ac-d5b0-4178-bee6-f97885357906" name="Changes" comment="exception classes">
+    <list default="true" id="3ec2422c-7e94-4655-886d-8975ad0af316" name="Changes" comment="made changes, refactored the code, redone some of the logic">
+      <change beforePath="$PROJECT_DIR$/.idea/compiler.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/compiler.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/encodings.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/encodings.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/jarRepositories.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/jarRepositories.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Ai/src/main/java/org/example/miniMax/score/bonusesAndPenalties/Bonuses.java" beforeDir="false" afterPath="$PROJECT_DIR$/Ai/src/main/java/org/example/miniMax/score/bonusesAndPenalties/Bonuses.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Controller/src/main/java/org/example/controllers/CourseStartedByPlayerController.java" beforeDir="false" afterPath="$PROJECT_DIR$/Controller/src/main/java/org/example/controllers/CourseStartedByPlayerController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Controller/src/main/java/org/example/controllers/GameController.java" beforeDir="false" afterPath="$PROJECT_DIR$/Controller/src/main/java/org/example/controllers/GameController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Controller/src/main/java/org/example/controllers/PlayerController.java" beforeDir="false" afterPath="$PROJECT_DIR$/Controller/src/main/java/org/example/controllers/PlayerController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Controller/src/main/java/org/example/requests/GameRequest.java" beforeDir="false" afterPath="$PROJECT_DIR$/Controller/src/main/java/org/example/requests/GameRequest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Controller/src/main/java/org/example/requests/GetHintRequest.java" beforeDir="false" afterPath="$PROJECT_DIR$/Controller/src/main/java/org/example/requests/GetHintRequest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Controller/src/main/java/org/example/requests/ResetBoard.java" beforeDir="false" afterPath="$PROJECT_DIR$/Controller/src/main/java/org/example/requests/ResetBoard.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Controller/src/main/java/org/example/requests/StartCourseRequest.java" beforeDir="false" afterPath="$PROJECT_DIR$/Controller/src/main/java/org/example/requests/StartCourseRequest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Controller/src/main/java/org/example/requests/UpdatePlayerRequest.java" beforeDir="false" afterPath="$PROJECT_DIR$/Controller/src/main/java/org/example/requests/UpdatePlayerRequest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Controller/src/main/java/org/example/requests/VerifyMoveRequest.java" beforeDir="false" afterPath="$PROJECT_DIR$/Controller/src/main/java/org/example/requests/VerifyMoveRequest.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
-  <component name="FileTemplateManagerImpl">
-    <option name="RECENT_TEMPLATES">
-      <list>
-        <option value="JUnit5 Test Class" />
-        <option value="Record" />
-        <option value="Class" />
-      </list>
-    </option>
-  </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
-  </component>
-  <component name="HighlightingSettingsPerFile">
-    <setting file="jar://$MAVEN_REPOSITORY$/org/apache/tomcat/embed/tomcat-embed-core/10.1.13/tomcat-embed-core-10.1.13.jar!/org/apache/catalina/core/ApplicationFilterChain.class" root0="SKIP_INSPECTION" />
-    <setting file="jar://$MAVEN_REPOSITORY$/org/springframework/spring-aop/6.0.12/spring-aop-6.0.12.jar!/org/springframework/aop/framework/CglibAopProxy.class" root0="SKIP_INSPECTION" />
-    <setting file="jar://$MAVEN_REPOSITORY$/org/springframework/spring-aop/6.0.12/spring-aop-6.0.12.jar!/org/springframework/aop/support/AopUtils.class" root0="SKIP_INSPECTION" />
-    <setting file="jar://$MAVEN_REPOSITORY$/org/springframework/spring-web/6.0.12/spring-web-6.0.12.jar!/org/springframework/web/filter/FormContentFilter.class" root0="SKIP_INSPECTION" />
-    <setting file="jar://$MAVEN_REPOSITORY$/org/springframework/spring-web/6.0.12/spring-web-6.0.12.jar!/org/springframework/web/filter/OncePerRequestFilter.class" root0="SKIP_INSPECTION" />
-    <setting file="file://$PROJECT_DIR$/ai/src/main/java/org/example/miniMax/score/Evaluation.java" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/server/src/main/java/org/example/game/GameService.java" root0="FORCE_HIGHLIGHTING" />
   </component>
   <component name="MarkdownSettingsMigration">
     <option name="stateVersion" value="1" />
   </component>
-  <component name="ProjectId" id="2ctRP6AGqGMS93wZSZPhrJrP8Q9" />
+  <component name="MavenImportPreferences">
+    <option name="generalSettings">
+      <MavenGeneralSettings>
+        <option name="useMavenConfig" value="true" />
+      </MavenGeneralSettings>
+    </option>
+  </component>
+  <component name="ProjectId" id="2lhVkuitmNxrXYK6mxDOXd0hoaK" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
-    &quot;ToolWindowRun.ShowToolbar&quot;: &quot;false&quot;,
-    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
-    &quot;com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrary&quot;: &quot;JUnit5&quot;,
-    &quot;com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrarySuperClass.JUnit5&quot;: &quot;&quot;,
-    &quot;extract.method.default.visibility&quot;: &quot;private&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;master&quot;,
-    &quot;last_opened_file_path&quot;: &quot;C:/Users/VladDumitru/Desktop/Chess Oppenings/ChessOppenings&quot;,
-    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
-    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
-    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
-    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
-    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-    &quot;project.structure.last.edited&quot;: &quot;Modules&quot;,
-    &quot;project.structure.proportion&quot;: &quot;0.15&quot;,
-    &quot;project.structure.side.proportion&quot;: &quot;0.2&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.pluginManager&quot;,
-    &quot;spring.configuration.checksum&quot;: &quot;bb315d41c30c3c46dd70de70472fb5fe&quot;,
-    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
-  },
-  &quot;keyToStringList&quot;: {
-    &quot;DatabaseDriversLRU&quot;: [
-      &quot;postgresql&quot;
-    ]
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "WebServerToolWindowFactoryState": "false",
+    "git-widget-placeholder": "master",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "project.structure.last.edited": "Project",
+    "project.structure.proportion": "0.0",
+    "project.structure.side.proportion": "0.0",
+    "vue.rearranger.settings.migration": "true"
   }
-}</component>
-  <component name="RecentsManager">
-    <key name="CreateClassDialog.RecentsKey">
-      <recent name="org.example.requests" />
-    </key>
-    <key name="CopyFile.RECENT_KEYS">
-      <recent name="C:\Users\VladDumitru\Desktop\ChessOppenings-master\server\src\test\java\org\example" />
-    </key>
-    <key name="CreateTestDialog.Recents.Supers">
-      <recent name="" />
-    </key>
-    <key name="CreateTestDialog.RecentsKey">
-      <recent name="org.example.score" />
-      <recent name="org.example" />
-      <recent name="org.example.repositoryes.pieces" />
-    </key>
-  </component>
-  <component name="RunAnythingCache">
-    <option name="myCommands">
-      <command value="mvn build package" />
-      <command value="mvn clean install" />
-    </option>
-  </component>
-  <component name="RunManager" selected="Application.MainApplication">
-    <configuration name="MainApplication" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="org.example.MainApplication" />
-      <module name="Core" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="org.example.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
+}]]></component>
+  <component name="RunManager">
+    <configuration default="true" type="DjangoTestsConfigurationType">
+      <module name="ChessOppenings" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="" />
+      <option name="IS_MODULE_SDK" value="false" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
+      <option name="TARGET" value="" />
+      <option name="SETTINGS_FILE" value="" />
+      <option name="CUSTOM_SETTINGS" value="false" />
+      <option name="USE_OPTIONS" value="false" />
+      <option name="OPTIONS" value="" />
+      <method v="2" />
+    </configuration>
+    <configuration default="true" type="JetRunConfigurationType">
+      <module name="ChessOppenings" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="KingSafetyScoreTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
-      <module name="server" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="org.example.score.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <option name="PACKAGE_NAME" value="org.example.score" />
-      <option name="MAIN_CLASS_NAME" value="org.example.score.KingSafetyScoreTest" />
-      <option name="TEST_OBJECT" value="class" />
+    <configuration default="true" type="KotlinStandaloneScriptRunConfigurationType">
+      <module name="ChessOppenings" />
+      <option name="filePath" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="MobilityScoreTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
-      <module name="server" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="org.example.score.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <option name="PACKAGE_NAME" value="org.example.score" />
-      <option name="MAIN_CLASS_NAME" value="org.example.score.MobilityScoreTest" />
-      <option name="TEST_OBJECT" value="class" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
+    <configuration default="true" type="PyBehaveRunConfigurationType" factoryName="Behave">
+      <module name="ChessOppenings" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
+      <option name="ADDITIONAL_ARGS" value="" />
+      <method v="2" />
     </configuration>
-    <configuration name="MovePieceTest.isCheckMateIn2Test" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
-      <module name="Core" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="org.example.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <option name="PACKAGE_NAME" value="org.example" />
-      <option name="MAIN_CLASS_NAME" value="org.example.MovePieceTest" />
-      <option name="METHOD_NAME" value="isCheckMateIn2Test" />
-      <option name="TEST_OBJECT" value="method" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
+    <configuration default="true" type="PythonConfigurationType" factoryName="Python">
+      <module name="ChessOppenings" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="" />
+      <option name="IS_MODULE_SDK" value="false" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
+      <option name="SCRIPT_NAME" value="" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
     </configuration>
-    <configuration name="PawnStructureScoreTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
-      <module name="server" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="org.example.score.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <option name="PACKAGE_NAME" value="org.example.score" />
-      <option name="MAIN_CLASS_NAME" value="org.example.score.PawnStructureScoreTest" />
-      <option name="TEST_OBJECT" value="class" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
+    <configuration default="true" type="Python.FlaskServer">
+      <module name="ChessOppenings" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="" />
+      <option name="IS_MODULE_SDK" value="false" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
+      <option name="launchJavascriptDebuger" value="false" />
+      <method v="2" />
     </configuration>
     <configuration name="MainApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" nameIsGenerated="true">
-      <module name="Core" />
+      <module name="Controller" />
       <option name="SPRING_BOOT_MAIN_CLASS" value="org.example.MainApplication" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <recent_temporary>
-      <list>
-        <item itemvalue="Application.MainApplication" />
-        <item itemvalue="JUnit.MovePieceTest.isCheckMateIn2Test" />
-        <item itemvalue="JUnit.PawnStructureScoreTest" />
-        <item itemvalue="JUnit.MobilityScoreTest" />
-        <item itemvalue="JUnit.KingSafetyScoreTest" />
-      </list>
-    </recent_temporary>
+    <configuration default="true" type="Tox" factoryName="Tox">
+      <module name="ChessOppenings" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="" />
+      <option name="IS_MODULE_SDK" value="false" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
+      <method v="2" />
+    </configuration>
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
-      <changelist id="75b936ac-d5b0-4178-bee6-f97885357906" name="Changes" comment="" />
-      <created>1708928860695</created>
+      <changelist id="3ec2422c-7e94-4655-886d-8975ad0af316" name="Changes" comment="" />
+      <created>1725632446489</created>
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
-      <updated>1708928860695</updated>
-      <workItem from="1709819038865" duration="2489000" />
-      <workItem from="1709902940991" duration="2826000" />
-      <workItem from="1710080638289" duration="1482000" />
-      <workItem from="1710672995523" duration="2781000" />
-      <workItem from="1710835751140" duration="631000" />
-      <workItem from="1710837759400" duration="979000" />
-      <workItem from="1711206739181" duration="13000" />
-      <workItem from="1711206979813" duration="127000" />
-      <workItem from="1711282757846" duration="5415000" />
-      <workItem from="1711459476000" duration="4440000" />
-      <workItem from="1711799460702" duration="1515000" />
-      <workItem from="1712234195519" duration="7000" />
-      <workItem from="1712400340449" duration="710000" />
-      <workItem from="1712410422860" duration="11000" />
-      <workItem from="1712485050201" duration="845000" />
-      <workItem from="1713251958020" duration="322000" />
-      <workItem from="1715507251608" duration="6752000" />
-      <workItem from="1716038528458" duration="1274000" />
-      <workItem from="1716060935681" duration="10380000" />
-      <workItem from="1716125256310" duration="5200000" />
-      <workItem from="1716291603287" duration="4491000" />
-      <workItem from="1716464852905" duration="6000" />
-      <workItem from="1716555872555" duration="84000" />
-      <workItem from="1716568910542" duration="4557000" />
-      <workItem from="1717926592826" duration="7509000" />
-      <workItem from="1718475897593" duration="1674000" />
-      <workItem from="1719673397480" duration="868000" />
-      <workItem from="1719915091401" duration="6504000" />
-      <workItem from="1723309793735" duration="43000" />
-      <workItem from="1723309849654" duration="65000" />
+      <updated>1725632446489</updated>
+      <workItem from="1725632449568" duration="1134000" />
     </task>
-    <task id="LOCAL-00001" summary="tried to add a cloud instance for db, on a computer it works, on other one does not, added history for moves, improved ai">
+    <task id="LOCAL-00001" summary="made changes, refactored the code, redone some of the logic">
       <option name="closed" value="true" />
-      <created>1709821505095</created>
+      <created>1725632553754</created>
       <option name="number" value="00001" />
       <option name="presentableId" value="LOCAL-00001" />
       <option name="project" value="LOCAL" />
-      <updated>1709821505095</updated>
+      <updated>1725632553755</updated>
     </task>
-    <task id="LOCAL-00002" summary="tried to add a cloud instance for db, on a computer it works, on other one does not, added history for moves, improved ai">
-      <option name="closed" value="true" />
-      <created>1709821518169</created>
-      <option name="number" value="00002" />
-      <option name="presentableId" value="LOCAL-00002" />
-      <option name="project" value="LOCAL" />
-      <updated>1709821518169</updated>
-    </task>
-    <task id="LOCAL-00003" summary="made moveBefore for white, also now in yaml is the old db stored localy until i fix the issue with the cloud one">
-      <option name="closed" value="true" />
-      <created>1709905714381</created>
-      <option name="number" value="00003" />
-      <option name="presentableId" value="LOCAL-00003" />
-      <option name="project" value="LOCAL" />
-      <updated>1709905714382</updated>
-    </task>
-    <task id="LOCAL-00004" summary="made moveBefore for white, also now in yaml is the old db stored localy until i fix the issue with the cloud one">
-      <option name="closed" value="true" />
-      <created>1710100759569</created>
-      <option name="number" value="00004" />
-      <option name="presentableId" value="LOCAL-00004" />
-      <option name="project" value="LOCAL" />
-      <updated>1710100759569</updated>
-    </task>
-    <task id="LOCAL-00005" summary="made moveBefore for white, also now in yaml is the old db stored localy until i fix the issue with the cloud one">
-      <option name="closed" value="true" />
-      <created>1710688186307</created>
-      <option name="number" value="00005" />
-      <option name="presentableId" value="LOCAL-00005" />
-      <option name="project" value="LOCAL" />
-      <updated>1710688186307</updated>
-    </task>
-    <task id="LOCAL-00006" summary="added move forward and backwards, fixed problem when moving a new piece not showing the latest version of the table">
-      <option name="closed" value="true" />
-      <created>1711463528027</created>
-      <option name="number" value="00006" />
-      <option name="presentableId" value="LOCAL-00006" />
-      <option name="project" value="LOCAL" />
-      <updated>1711463528027</updated>
-    </task>
-    <task id="LOCAL-00007" summary="added unitests">
-      <option name="closed" value="true" />
-      <created>1713699829747</created>
-      <option name="number" value="00007" />
-      <option name="presentableId" value="LOCAL-00007" />
-      <option name="project" value="LOCAL" />
-      <updated>1713699829747</updated>
-    </task>
-    <task id="LOCAL-00008" summary="made ai better">
-      <option name="closed" value="true" />
-      <created>1715507331902</created>
-      <option name="number" value="00008" />
-      <option name="presentableId" value="LOCAL-00008" />
-      <option name="project" value="LOCAL" />
-      <updated>1715507331902</updated>
-    </task>
-    <task id="LOCAL-00009" summary="made promotion logic and castiling for ai">
-      <option name="closed" value="true" />
-      <created>1715511007198</created>
-      <option name="number" value="00009" />
-      <option name="presentableId" value="LOCAL-00009" />
-      <option name="project" value="LOCAL" />
-      <updated>1715511007198</updated>
-    </task>
-    <task id="LOCAL-00010" summary="made promotion logic and castiling for ai">
-      <option name="closed" value="true" />
-      <created>1715512784338</created>
-      <option name="number" value="00010" />
-      <option name="presentableId" value="LOCAL-00010" />
-      <option name="project" value="LOCAL" />
-      <updated>1715512784338</updated>
-    </task>
-    <task id="LOCAL-00011" summary="made promotion logic and castiling for ai">
-      <option name="closed" value="true" />
-      <created>1716039135975</created>
-      <option name="number" value="00011" />
-      <option name="presentableId" value="LOCAL-00011" />
-      <option name="project" value="LOCAL" />
-      <updated>1716039135976</updated>
-    </task>
-    <task id="LOCAL-00012" summary="made promotion logic and castiling for ai">
-      <option name="closed" value="true" />
-      <created>1716041535274</created>
-      <option name="number" value="00012" />
-      <option name="presentableId" value="LOCAL-00012" />
-      <option name="project" value="LOCAL" />
-      <updated>1716041535274</updated>
-    </task>
-    <task id="LOCAL-00013" summary="dockerize application">
-      <option name="closed" value="true" />
-      <created>1716122466997</created>
-      <option name="number" value="00013" />
-      <option name="presentableId" value="LOCAL-00013" />
-      <option name="project" value="LOCAL" />
-      <updated>1716122466997</updated>
-    </task>
-    <task id="LOCAL-00014" summary="added courses for black, and resolved bugs">
-      <option name="closed" value="true" />
-      <created>1716291797915</created>
-      <option name="number" value="00014" />
-      <option name="presentableId" value="LOCAL-00014" />
-      <option name="project" value="LOCAL" />
-      <updated>1716291797915</updated>
-    </task>
-    <task id="LOCAL-00015" summary="added courses for black, and resolved bugs">
-      <option name="closed" value="true" />
-      <created>1716300070040</created>
-      <option name="number" value="00015" />
-      <option name="presentableId" value="LOCAL-00015" />
-      <option name="project" value="LOCAL" />
-      <updated>1716300070040</updated>
-    </task>
-    <task id="LOCAL-00016" summary="added enPassant, fixed bugs, made ai better">
-      <option name="closed" value="true" />
-      <created>1718475995829</created>
-      <option name="number" value="00016" />
-      <option name="presentableId" value="LOCAL-00016" />
-      <option name="project" value="LOCAL" />
-      <updated>1718475995829</updated>
-    </task>
-    <task id="LOCAL-00017" summary="added enPassant, fixed bugs, made ai better">
-      <option name="closed" value="true" />
-      <created>1719673658396</created>
-      <option name="number" value="00017" />
-      <option name="presentableId" value="LOCAL-00017" />
-      <option name="project" value="LOCAL" />
-      <updated>1719673658396</updated>
-    </task>
-    <task id="LOCAL-00018" summary="exception classes">
-      <option name="closed" value="true" />
-      <created>1719986306243</created>
-      <option name="number" value="00018" />
-      <option name="presentableId" value="LOCAL-00018" />
-      <option name="project" value="LOCAL" />
-      <updated>1719986306243</updated>
-    </task>
-    <option name="localTasksCounter" value="19" />
+    <option name="localTasksCounter" value="2" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="tried to add a cloud instance for db, on a computer it works, on other one does not, added history for moves, improved ai" />
-    <MESSAGE value="made moveBefore for white, also now in yaml is the old db stored localy until i fix the issue with the cloud one" />
-    <MESSAGE value="added move forward and backwards, fixed problem when moving a new piece not showing the latest version of the table" />
-    <MESSAGE value="added unitests" />
-    <MESSAGE value="made ai better" />
-    <MESSAGE value="made promotion logic and castiling for ai" />
-    <MESSAGE value="dockerize application" />
-    <MESSAGE value="added courses for black, and resolved bugs" />
-    <MESSAGE value="added enPassant, fixed bugs, made ai better" />
-    <MESSAGE value="exception classes" />
-    <option name="LAST_COMMIT_MESSAGE" value="exception classes" />
-  </component>
-  <component name="XDebuggerManager">
-    <breakpoint-manager>
-      <breakpoints>
-        <line-breakpoint type="java-line">
-          <url>file://$PROJECT_DIR$/core/src/main/java/org/example/controllers/CourseController.java</url>
-          <line>30</line>
-          <option name="timeStamp" value="75" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/core/src/main/java/org/example/controllers/GameController.java</url>
-          <line>97</line>
-          <option name="timeStamp" value="138" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/ai/src/main/java/org/example/miniMax/MiniMax.java</url>
-          <line>83</line>
-          <option name="timeStamp" value="150" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/ai/src/main/java/org/example/miniMax/MiniMax.java</url>
-          <line>92</line>
-          <option name="timeStamp" value="151" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/ai/src/main/java/org/example/miniMax/MiniMax.java</url>
-          <line>55</line>
-          <properties>
-            <option name="lambda-ordinal" value="-1" />
-          </properties>
-          <option name="timeStamp" value="152" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/ai/src/main/java/org/example/miniMax/MiniMax.java</url>
-          <line>110</line>
-          <option name="timeStamp" value="154" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/ai/src/main/java/org/example/miniMax/MiniMax.java</url>
-          <line>144</line>
-          <option name="timeStamp" value="159" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/core/src/main/java/org/example/controllers/MovePiecesController.java</url>
-          <line>394</line>
-          <option name="timeStamp" value="160" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/core/src/main/java/org/example/controllers/MovePiecesController.java</url>
-          <line>374</line>
-          <option name="timeStamp" value="161" />
-        </line-breakpoint>
-        <breakpoint type="java-exception">
-          <properties class="java.lang.NullPointerException" package="java.lang" />
-          <option name="timeStamp" value="92" />
-        </breakpoint>
-      </breakpoints>
-    </breakpoint-manager>
-    <watches-manager>
-      <configuration name="Application">
-        <watch expression="board" />
-      </configuration>
-    </watches-manager>
+    <MESSAGE value="made changes, refactored the code, redone some of the logic" />
+    <option name="LAST_COMMIT_MESSAGE" value="made changes, refactored the code, redone some of the logic" />
   </component>
 </project>
