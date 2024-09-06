@@ -6,21 +6,10 @@
   <component name="ChangeListManager">
     <list default="true" id="3ec2422c-7e94-4655-886d-8975ad0af316" name="Changes" comment="made changes, refactored the code, redone some of the logic">
       <change beforePath="$PROJECT_DIR$/.idea/compiler.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/compiler.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/encodings.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/encodings.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/jarRepositories.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/jarRepositories.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Ai/src/main/java/org/example/miniMax/score/bonusesAndPenalties/Bonuses.java" beforeDir="false" afterPath="$PROJECT_DIR$/Ai/src/main/java/org/example/miniMax/score/bonusesAndPenalties/Bonuses.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Controller/src/main/java/org/example/controllers/CourseStartedByPlayerController.java" beforeDir="false" afterPath="$PROJECT_DIR$/Controller/src/main/java/org/example/controllers/CourseStartedByPlayerController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Controller/src/main/java/org/example/controllers/GameController.java" beforeDir="false" afterPath="$PROJECT_DIR$/Controller/src/main/java/org/example/controllers/GameController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Controller/src/main/java/org/example/controllers/PlayerController.java" beforeDir="false" afterPath="$PROJECT_DIR$/Controller/src/main/java/org/example/controllers/PlayerController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Controller/src/main/java/org/example/requests/GameRequest.java" beforeDir="false" afterPath="$PROJECT_DIR$/Controller/src/main/java/org/example/requests/GameRequest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Controller/src/main/java/org/example/requests/GetHintRequest.java" beforeDir="false" afterPath="$PROJECT_DIR$/Controller/src/main/java/org/example/requests/GetHintRequest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Controller/src/main/java/org/example/requests/ResetBoard.java" beforeDir="false" afterPath="$PROJECT_DIR$/Controller/src/main/java/org/example/requests/ResetBoard.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Controller/src/main/java/org/example/requests/StartCourseRequest.java" beforeDir="false" afterPath="$PROJECT_DIR$/Controller/src/main/java/org/example/requests/StartCourseRequest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Controller/src/main/java/org/example/requests/UpdatePlayerRequest.java" beforeDir="false" afterPath="$PROJECT_DIR$/Controller/src/main/java/org/example/requests/UpdatePlayerRequest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Controller/src/main/java/org/example/requests/VerifyMoveRequest.java" beforeDir="false" afterPath="$PROJECT_DIR$/Controller/src/main/java/org/example/requests/VerifyMoveRequest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ai/src/main/java/org/example/miniMax/score/bonusesAndPenalties/Bonuses.java" beforeDir="false" afterPath="$PROJECT_DIR$/ai/src/main/java/org/example/miniMax/score/bonusesAndPenalties/Bonuses.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -47,6 +36,10 @@
   </component>
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
+    "RequestMappingsPanelOrder0": "0",
+    "RequestMappingsPanelOrder1": "1",
+    "RequestMappingsPanelWidth0": "75",
+    "RequestMappingsPanelWidth1": "75",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "WebServerToolWindowFactoryState": "false",
     "git-widget-placeholder": "master",
@@ -56,11 +49,16 @@
     "node.js.selected.package.tslint": "(autodetect)",
     "nodejs_package_manager_path": "npm",
     "project.structure.last.edited": "Project",
-    "project.structure.proportion": "0.0",
-    "project.structure.side.proportion": "0.0",
+    "project.structure.proportion": "0.15",
+    "project.structure.side.proportion": "0.2",
     "vue.rearranger.settings.migration": "true"
   }
 }]]></component>
+  <component name="RunAnythingCache">
+    <option name="myCommands">
+      <command value="mvn clean package" />
+    </option>
+  </component>
   <component name="RunManager">
     <configuration default="true" type="DjangoTestsConfigurationType">
       <module name="ChessOppenings" />
@@ -171,7 +169,7 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1725632446489</updated>
-      <workItem from="1725632449568" duration="1134000" />
+      <workItem from="1725632449568" duration="4424000" />
     </task>
     <task id="LOCAL-00001" summary="made changes, refactored the code, redone some of the logic">
       <option name="closed" value="true" />
@@ -181,7 +179,15 @@
       <option name="project" value="LOCAL" />
       <updated>1725632553755</updated>
     </task>
-    <option name="localTasksCounter" value="2" />
+    <task id="LOCAL-00002" summary="made changes, refactored the code, redone some of the logic">
+      <option name="closed" value="true" />
+      <created>1725633639488</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1725633639488</updated>
+    </task>
+    <option name="localTasksCounter" value="3" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -190,5 +196,16 @@
   <component name="VcsManagerConfiguration">
     <MESSAGE value="made changes, refactored the code, redone some of the logic" />
     <option name="LAST_COMMIT_MESSAGE" value="made changes, refactored the code, redone some of the logic" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/Business/src/main/java/org/example/player/PlayerService.java</url>
+          <line>94</line>
+          <option name="timeStamp" value="2" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
   </component>
 </project>

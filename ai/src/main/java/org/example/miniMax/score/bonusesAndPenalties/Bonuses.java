@@ -1,7 +1,6 @@
 package org.example.miniMax.score.bonusesAndPenalties;
 
 public class Bonuses {
-
     public final static int CHECK_BONUS = 10;
     public final static int CHECK_MATE_BONUS = 1000;
     public final static int MOBILITY_BONUS = 5;
